@@ -7,16 +7,16 @@
 
 - **WARNING: DO NOT PUSH `node_modeule` FOLDER TO GITHUB**
 
-## 00. Menu
-1. [Set Up](https://github.com/rockyhuiop/CSCI3100-Little-Twitter/new/main?readme=1#01-set-up)
-2. [Commands](https://github.com/rockyhuiop/CSCI3100-Little-Twitter/new/main?readme=1#02-commands)
+# 00. Menu
+1. [Set Up](#01.-Set-Up)
+2. [Commands](#02.-Commands)
 
-## 01. Set Up
+# 01. Set Up
 1. Download Node.js from this link [here](https://nodejs.org/en/download/) (LTS v18.13.0)
 2. Clone this repo to your local machine (eg. inside `C://.../Documents`) using git or [Github Desktop](https://desktop.github.com/)
 3. 
 
-## 02. Commands
+# 02. Commands
 >npm should already be installed when you install Node.js
 - `node <filename.js>` -> run a file
 - `npm i <package>` -> install package
