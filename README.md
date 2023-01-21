@@ -62,6 +62,6 @@ app.get('<url>', (req, res) => {
 decide what to show when user access the <url> 
 status code could be checked online 
 there are many more ways to send data from server, such as `res.json()` which sends json
-```
+
 Example can be seen in app.js
 
