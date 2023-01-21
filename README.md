@@ -8,8 +8,8 @@
 - **WARNING: DO NOT PUSH `node_modeule` FOLDER TO GITHUB**
 
 # 00. Menu
-1. [Set Up](#01.-Set-Up)
-2. [Commands](#02.-Commands)
+1. [Set Up](#01-set-up)
+2. [Commands](#02-commands)
 
 # 01. Set Up
 1. Download Node.js from this link [here](https://nodejs.org/en/download/) (LTS v18.13.0)
