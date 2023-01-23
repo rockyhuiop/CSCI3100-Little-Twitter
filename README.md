@@ -161,7 +161,5 @@ but this is still messy for mixing functionalities and code,
 So we can use a MVC mode
 We add controller into our code, simpliy saying is to seperate the function and detail of the function into two seperate files
 
----
-
 All of the things mentioned in section 5 can be seen in app.js as an example
 
