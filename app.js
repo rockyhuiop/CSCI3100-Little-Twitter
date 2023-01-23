@@ -1,15 +1,20 @@
 const express = require('express')
 const { user } = require('./data.js')
+const product = require('./routes/product.js')
 
 app = express()
+router = express.Router()
 
+//demo for middleware
 const midware = (req, res, next)=>{
     console.log('this is middleware')
     next()
 }
 
 app.use('/login', midware)
+app.use(express.json())
 
+//demo for basic GET function
 app.get('/', (req, res) => {
     console.log('connected to homepage')
     res.status(200).send('Home page')
@@ -26,6 +31,9 @@ app.get('/user', (req, res) => {
     console.log('connected to user page')
     return res.status(200).json(user)
 })
+
+//demo for using a router, check out product.js
+app.use('/product', product)
 
 app.all('*', (req, res) => {
     return res.status(404).send('<h1>Error 404<h1>')
