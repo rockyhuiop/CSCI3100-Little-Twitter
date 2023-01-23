@@ -45,9 +45,13 @@ It is good to know:
 ## 04. Project Structure
 - `/public` is folder for static resources(images)
 - `/node_modules` is folder for dependency (treat it as lirary)
-- `app.js` determines how the server and url will show
+- `controller` is the controller, explained in secion 5
+- `/routes` is folder storing the routes, explained in section 5
+- `app.js` determines how the server and url will run
 - `package-lock.json` keep tracks of the info of the installed package
 - `package.json` is where the detail is stored such as dependencies information
+- `.gitignore` decide what files NOT push to github
+- `.gitattributes` sorry idk
 
 ## 05. Express.js
 ### 5.1 Introduction
@@ -156,6 +160,6 @@ we could do it in one line
 but this is still messy for mixing functionalities and code,
 So we can use a MVC mode
 We add controller into our code, simpliy saying is to seperate the function and detail of the function into two seperate files
-
-all of the things mentioned in section 5 can be seen in app.js as an example
+---
+All of the things mentioned in section 5 can be seen in app.js as an example
 
