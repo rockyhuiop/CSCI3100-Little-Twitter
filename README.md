@@ -24,6 +24,7 @@
     >for windows user, use `npm install -g nodemon`
 4. Run `nodeman app.js` or `node app.js` in the terminal
 5. Open a browser and then type `localhost:<port_number>` to see the result
+6. Install [Postman](https://www.postman.com/downloads/) for development purpose
 
 ## 02. Useful Commands
 >npm should already be installed when you install Node.js
@@ -53,7 +54,7 @@ It is good to know:
 - Treat Express as a switch case, we run that top to bottom
 - Everything goes in order
 
-import express first then:
+import express first, then:
 ```
 app = express()
 ```
@@ -113,7 +114,7 @@ const middleware_fn = (req, res, **next**) => {
     **next()** 
 }
 ```
-We could also apply middleware to all of our functions using app.use()
+We could also apply middleware to all of our functions using app.use() if no path is specified
 
 In the following example:
 ```
@@ -132,5 +133,29 @@ it applies to the subpage like `/info/summer2024` or `/info/product/new/somethin
 place them in an array if multiple middleware is used 
 `app.use('<path>', [<middleware_fn_1>, <middleware_fn_2>])`
 
-Example can be seen in app.js
+### 5.5 Router middleware
+It is messy to write all the url paths in one page of app.js.
+We want the whole structure but at the same time we would like to keep the details in their own path
+In this case the concept of router is introduced
+```
+app.use('/somepath', <detail.js>)
+```
+in detail.js:
+```
+router = express.Router()
+router.get('/sth', ...)
+router.post('/sth',...)
+```
+when url `/somepath/sth` is typed, it will perform a certain task
+
+OR 
+
+we could do it in one line
+`router.route('/sth').get(...).post(...)`
+
+but this is still messy for mixing functionalities and code,
+So we can use a MVC mode
+We add controller into our code, simpliy saying is to seperate the function and detail of the function into two seperate files
+
+all of the things mentioned in section 5 can be seen in app.js as an example
 
