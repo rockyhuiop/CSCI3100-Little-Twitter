@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/meta", { title: "Tweets" }) -%>
+  </head>
+  <body>
+    <%- include("partials/nav", { user: locals.user }) -%>
+    <h1>Hello World!</h1>
+    <ul>
+      <% tweets.forEach((tweet) => { %>
+      <li>
+        <h3><%= tweet.userId %></h3>
+        <p><%= tweet.body %></p>
+      </li>
+      <% }) %>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/delete", { title: "Delete Account" }) -%>
+  </head>
+  <body>
+    <p>We're sorry to see you go.</p>
+    <form action="/delete" method="POST">
+      <button type="submit">Delete Account</button>
+    </form>
+  </body>
+</html>

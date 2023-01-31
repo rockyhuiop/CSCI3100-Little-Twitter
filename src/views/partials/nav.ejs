@@ -1,0 +1,13 @@
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/tweets">Tweets</a></li>
+    <% if (!user) { %>
+    <li><a href="/auth/register">Register</a></li>
+    <li><a href="/auth/login">Login</a></li>
+    <% } %> <% if (user) { %>
+    <p>Logged in as <span style="font-weight: bold"><%= user.name %></span></p>
+    <li><a href="/auth/logout">Logout</a></li>
+    <% } %>
+  </ul>
+</nav>

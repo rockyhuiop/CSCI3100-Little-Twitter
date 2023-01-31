@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/meta.ejs", { title: "Login" }) -%>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <% if (error) { %>
+    <div style="color: red; font-size: 2rem; font-weight: bold">
+      <%= error %>
+    </div>
+    <% } %>
+    <form action="/auth/login" method="POST">
+      <div class="form-control">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          value="prefilled@gmail.com"
+        />
+      </div>
+      <div class="form-control">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          value="testing123"
+        />
+      </div>
+      <% if (redirect) { %>
+      <input
+        value="<%= redirect %>"
+        type="hidden"
+        name="redirect"
+        id="redirect"
+      />
+      <% } %>
+      <button type="submit">Login</button>
+    </form>
+    <p>Not Registered Yet?</p>
+    <a href="/auth/register">Register Here</a>
+  </body>
+</html>
