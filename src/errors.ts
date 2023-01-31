@@ -1,9 +1,15 @@
+/**
+ * Error codes
+ */
 export const ERRORS = {
   NOT_AUTHENTICATED: 1,
   USERS_DOES_NOT_EXIST: 2,
   PASSWORD_INCORRECT: 3,
 };
 
+/**
+ * Error messages for the error codes above
+ */
 export const ERROR_MAPPINGS = {
   [ERRORS.NOT_AUTHENTICATED]: "You must be logged in before doing that action.",
   [ERRORS.USERS_DOES_NOT_EXIST]: "This user cannot be found.",
