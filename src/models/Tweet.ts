@@ -1,44 +1,53 @@
 import mongoose, { Schema, Types } from "mongoose";
+import { IUser } from "./User";
 
-interface Comment {
-  author: Types.ObjectId,
+export interface IComment {
+  authorId: Types.ObjectId;
   body: string;
   children: Comment[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-interface Tweet {
+export interface ITweet {
   body: string;
-  author: Types.ObjectId,
-  comments: Comment[];
-  reactions: {
-    // dislike or like
-    value: -1 | 1,
-    author: Types.ObjectId 
-  }[];
+  authorId: Types.ObjectId;
+  author: IUser;
+  // comments: Comment[];
+  likes: Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const commentSchema = new mongoose.Schema<Comment>({
-  body: {
-    type: String,
-    required: true
+// const commentSchema = new mongoose.Schema<IComment>(
+//   {
+//     body: {
+//       type: String,
+//       required: true,
+//     },
+//     authorId: Schema.Types.ObjectId,
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
+
+// commentSchema.add({
+//   children: [commentSchema],
+// });
+
+const schema = new mongoose.Schema<ITweet>(
+  {
+    body: {
+      type: String,
+    },
+    authorId: Schema.Types.ObjectId,
+    // comments: [commentSchema],
+    likes: [Schema.Types.ObjectId],
   },
-  author: Schema.Types.ObjectId,
-})
-
-commentSchema.add({
-  children: [commentSchema]
-})
-
-const schema = new mongoose.Schema<Tweet>({
- body: {
-  type: String 
- },
- author: Schema.Types.ObjectId,
- comments: [commentSchema],
- reactions: [{
-  value: Number,
-  author: Types.ObjectId
- }] 
-});  
+  {
+    timestamps: true,
+  }
+);
 
 export const Tweet = mongoose.model("tweet", schema);

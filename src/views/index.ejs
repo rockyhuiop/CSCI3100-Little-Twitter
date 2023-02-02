@@ -6,11 +6,29 @@
   <body>
     <%- include("partials/nav", { user: locals.user }) -%>
     <h1>Hello World!</h1>
+    <% if (locals.user) { %>
+    <a href="/tweets/add-tweet">
+      <button>Add Tweet</button>
+    </a>
+    <% } %>
     <ul>
       <% tweets.forEach((tweet) => { %>
       <li>
         <h3><%= tweet.userId %></h3>
         <p><%= tweet.body %></p>
+        <p>
+          <span style="font-weight: bold"><%= tweet.likesCount %></span> likes
+        </p>
+        <p>Posted by <%= tweet.author.name %> at <%= tweet.createdAt %></p>
+        <% if (locals.user) { %> <% if (tweet.userLiked) { %>
+        <form action="/tweets/unlike/<%= tweet._id %>" method="post">
+          <button type="submit">Unlike</button>
+        </form>
+        <% } else { %>
+        <form action="/tweets/like/<%= tweet._id %>" method="post">
+          <button type="submit">Like</button>
+        </form>
+        <% } %> <% } %>
       </li>
       <% }) %>
     </ul>

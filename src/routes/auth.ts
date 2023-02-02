@@ -82,7 +82,7 @@ authRouter
  */
 authRouter
   .route("/register")
-  .get(async (req, res) => {
+  .get(async (_req, res) => {
     res.render("register");
   })
   .post(express.urlencoded({ extended: true }), async (req, res) => {

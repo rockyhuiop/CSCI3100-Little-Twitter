@@ -5,6 +5,7 @@ import session from "express-session";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth";
 import rootRouter from "./routes/root";
+import tweetsRouter from "./routes/tweets";
 import userRouter from "./routes/user";
 
 // load env values into process.env
@@ -35,6 +36,7 @@ app.use(
 
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
+app.use("/tweets", tweetsRouter);
 app.use("/", rootRouter);
 
 app.listen(process.env.PORT, () => {
