@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/rockyhuiop/CSCI3100-Little-Twitter#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.1"
   }
 }
