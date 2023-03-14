@@ -2,7 +2,7 @@
   "name": "csci3100-little-twitter",
   "version": "1.0.0",
   "description": "- This is a guide on the project - Follow the steps below to set up the environment on your local machine - An 8hr [tutorial](https://www.youtube.com/watch?v=Oe421EPjeBE&t=186s) for learning the basics of Node.js and Express.js for reference - Good luck and happy coding! :)",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
