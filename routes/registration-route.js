@@ -7,10 +7,10 @@ router.get('/', (req, res)=>{
     res.status(200).send(`<h1>registration page</h1>`)
 })
 
-router.post('/',(req, res) =>{
+router.post('/', (req, res) =>{
     User.findOne({email: req.body.email}).then((user) => {
         if(user){
-            return res.status(400).json({email: "Account already exist"})
+            return res.status(400).json({error: "Account already exist"})
         } else {
             const newUser = new User({
                 tweetID: req.body.tweetID,
