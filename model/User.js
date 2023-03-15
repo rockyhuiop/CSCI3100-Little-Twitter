@@ -27,27 +27,27 @@ const UserSchema = new Schema({
         required: true,
     },
     followers:{
-        type: String,
+        type: Array,
         required: true,
     },
     followings:{
-        type: String,
+        type: Array,
         required: true,
     },
     likedTweetID:{
-        type: String,
+        type: Array,
         required: true,
     },
     dislikedTweetID:{
-        type: String,
+        type: Array,
         required: true
     },
     likedCommentID:{
-        type: String,
+        type: Array,
         required: true,
     },
     dislikedCommentID:{
-        type: String,
+        type: Array,
         required: true,
     },
 });
