@@ -25,7 +25,7 @@ const TweetSchema = new Schema({
         type: Number,
         required: true,
     },
-    Status:{
+    SuspensionStatus:{
         type: Boolean,
         required: true,
     },
