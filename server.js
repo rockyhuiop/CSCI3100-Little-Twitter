@@ -38,6 +38,7 @@ app.use(sessions({
 //pages
 app.use('/', home_guest)
 app.use('/login', login)
+app.use('/registration', registration)
 
 app.use((req, res, next)=>{
     if(!req.session.userid){
@@ -49,7 +50,6 @@ app.use((req, res, next)=>{
 
 app.use('/home', home_account)
 app.use('/logout', logout)
-app.use('/registration', registration)
 app.use('/profile', profile)
 app.use('/user', user)
 app.use('/dashboard', dashboard)
