@@ -1,5 +1,8 @@
 const express = require('express')
 const Tweet = require("../model/Tweet")
+const {
+    nextTweetID,
+} = require('../controller/tweet')
 
 router = express.Router()
 
@@ -10,21 +13,23 @@ router.get('/', (req, res)=>{
 router.post('/', (req, res)=>{
 
     // counting the total number of tweet existing
-
-    async function count() {
-        const tweetCount = await Tweet.estimatedDocumentCount() + 1
+    ( async () => {
+        var tweetCount = await nextTweetID()
+        tweetCount = tweetCount +1
+        
+        const newTweet = new Tweet({
+            tweetID : tweetCount,
+            CreatorUserID : req.session.userid,
+            Content : req.body.Content,
+            LikeCount: 0,
+            DisLikeCount: 0,
+            SuspensionStatus: false
+        })
+        newTweet.save()
     }
+    )()
 
-    const newTweet = new Tweet({
-        tweetID : tweetCount,
-        CreatorUserID : req.session.userid,
-        Content : req.body.Content,
-        LikeCount: 0,
-        DisLikeCount: 0,
-        SuspensionStatus: false
-    })
-    newTweet.save()
-    return res.status(200).json({message: "success, posted tweet"})
+    res.status(200).json({message: "success, posted tweet"})
 })
 
 module.exports = router
