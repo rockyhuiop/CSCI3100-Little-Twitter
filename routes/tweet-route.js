@@ -7,6 +7,7 @@ const {
     AmendTweetLike,
     AmendTweetDisLike,
     EditTweetContent,
+    EditCommentContent,
 } = require('../controller/tweet')
 
 router = express.Router()
@@ -69,7 +70,7 @@ router.patch('/dislike/:tweetID', (req, res)=>{
 })
 
 //Editing Tweet Content
-router.patch('/edit/:tweetID', (req, res)=>{
+router.patch('/editTweet/:tweetID', (req, res)=>{
 
         ( async () => {
 
@@ -85,16 +86,20 @@ router.patch('/edit/:tweetID', (req, res)=>{
 
 })
 
-//Posting Comment
+//Posting Comment on Tweet
 router.post('/comment/:tweetID', (req, res)=>{
 
     ( async () => {
+
+        const {tweetID:tweetID} = req.params
+
         var commentCount = await nextCommentID()
         commentCount = commentCount +1
         
         const newComment = new Comment({
             commentID : commentCount,
             CreatorUserID : req.session.userid,
+            corrTweetID : tweetID,
             Content : req.body.Content,
             LikeCount: 0,
             DisLikeCount: 0,
@@ -105,6 +110,49 @@ router.post('/comment/:tweetID', (req, res)=>{
     )()
 
     res.status(200).json({message: "success, posted comment"})
+})
+
+//Reply Comment
+router.post('/replycomment/:commentID', (req, res)=>{
+
+    ( async () => {
+
+        const {commentID:commentID} = req.params
+
+        var commentCount = await nextCommentID()
+        commentCount = commentCount +1
+        
+        const newComment = new Comment({
+            commentID : commentCount,
+            CreatorUserID : req.session.userid,
+            corrCommentID : commentID,
+            Content : req.body.Content,
+            LikeCount: 0,
+            DisLikeCount: 0,
+            SuspensionStatus: false
+        })
+        await newComment.save()
+    }
+    )()
+
+    res.status(200).json({message: "success, posted comment"})
+})
+
+// Edit Comment
+router.patch('/editComment/:commentID', (req, res)=>{
+
+    ( async () => {
+
+        const {commentID:commentID} = req.params
+
+        await EditCommentContent(commentID, req.body.Content)
+
+        res.status(200).json({
+            state: "Success"
+        })
+    }
+    )()
+
 })
 
 module.exports = router
