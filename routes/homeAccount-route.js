@@ -2,8 +2,8 @@ const express = require('express')
 const Tweet = require("../model/Tweet")
 const {
     nextTweetID,
-    TweetLikeStatus,
-    RemoveTweetLike,
+    AmendTweetLike,
+    AmendTweetDisLike,
 } = require('../controller/tweet')
 
 router = express.Router()
@@ -13,9 +13,6 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/', (req, res)=>{
-
-    const {tweetID} = req.params
-
 
     ( async () => {
         var tweetCount = await nextTweetID()
@@ -36,22 +33,42 @@ router.post('/', (req, res)=>{
     res.status(200).json({message: "success, posted tweet"})
 })
 
-router.put('/like/:tweetID', (req, res)=>{
+//Double Tick Like Tweet 
+router.patch('/like/:tweetID', (req, res)=>{
 
     // counting the total number of tweet existing
     ( async () => {
 
-        var LikeStatus = await TweetLikeStatus(req.body.tweetID, req.session.userid)
+        const {tweetID:tweetID} = req.params
+        const userID = req.session.userid
 
-        if (LikeStatus){
-            RemoveTweetLike()
-        }else{
-            AddTweetLike()
-        }
+        await AmendTweetLike(tweetID, userID)
+
+        res.status(200).json({
+            state: "Success"
+        })
     }
     )()
 
-    res.status(200).json({message: "tweet like count amended"})
+})
+
+//Double Tick DisLike Tweet 
+router.patch('/dislike/:tweetID', (req, res)=>{
+
+    // counting the total number of tweet existing
+    ( async () => {
+
+        const {tweetID:tweetID} = req.params
+        const userID = req.session.userid
+
+        await AmendTweetDisLike(tweetID, userID)
+
+        res.status(200).json({
+            state: "Success"
+        })
+    }
+    )()
+
 })
 
 module.exports = router
