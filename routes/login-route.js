@@ -21,6 +21,7 @@ router.post('/', async (req, res) =>{
             const result = req.body.password === user.password;
             //save in session
             req.session.userid = user.tweetID
+            req.session.userType = user.userType
             if (result) {
                 return res.status(200).redirect(`https://${req.headers.host}/home`)
             } else {
