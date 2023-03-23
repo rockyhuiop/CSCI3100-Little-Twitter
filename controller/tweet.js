@@ -1,9 +1,15 @@
 const Tweet = require ('../model/Tweet')
 const User = require ('../model/User')
+const Comment = require("../model/Comment")
 
 const nextTweetID = async () => { 
     const totalTweetCount = await Tweet.count()
     return totalTweetCount
+}
+
+const nextCommentID = async () => { 
+    const totalCommentCount = await Comment.count()
+    return totalCommentCount
 }
 
 const AmendTweetLike = async (tweetID, userID) => {
@@ -78,6 +84,7 @@ const EditTweetContent= async (tweetID, content) => {
 
 module.exports = {
     nextTweetID,
+    nextCommentID,
     AmendTweetLike,
     AmendTweetDisLike,
     EditTweetContent,

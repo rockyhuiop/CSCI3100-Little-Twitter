@@ -1,7 +1,9 @@
 const express = require('express')
 const Tweet = require("../model/Tweet")
+const Comment = require("../model/Comment")
 const {
     nextTweetID,
+    nextCommentID,
     AmendTweetLike,
     AmendTweetDisLike,
     EditTweetContent,
@@ -24,7 +26,7 @@ router.post('/', (req, res)=>{
             DisLikeCount: 0,
             SuspensionStatus: false
         })
-        newTweet.save()
+        await newTweet.save()
     }
     )()
 
@@ -81,6 +83,28 @@ router.patch('/edit/:tweetID', (req, res)=>{
         }
         )()
 
+})
+
+//Posting Comment
+router.post('/comment/:tweetID', (req, res)=>{
+
+    ( async () => {
+        var commentCount = await nextCommentID()
+        commentCount = commentCount +1
+        
+        const newComment = new Comment({
+            commentID : commentCount,
+            CreatorUserID : req.session.userid,
+            Content : req.body.Content,
+            LikeCount: 0,
+            DisLikeCount: 0,
+            SuspensionStatus: false
+        })
+        await newComment.save()
+    }
+    )()
+
+    res.status(200).json({message: "success, posted comment"})
 })
 
 module.exports = router
