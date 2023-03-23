@@ -4,6 +4,7 @@ const {
     nextTweetID,
     AmendTweetLike,
     AmendTweetDisLike,
+    EditTweetContent,
 } = require('../controller/tweet')
 
 router = express.Router()
@@ -32,8 +33,6 @@ router.post('/', (req, res)=>{
 
 //Double Tick Like Tweet 
 router.patch('/like/:tweetID', (req, res)=>{
-
-    // counting the total number of tweet existing
     ( async () => {
 
         const {tweetID:tweetID} = req.params
@@ -52,7 +51,6 @@ router.patch('/like/:tweetID', (req, res)=>{
 //Double Tick DisLike Tweet 
 router.patch('/dislike/:tweetID', (req, res)=>{
 
-    // counting the total number of tweet existing
     ( async () => {
 
         const {tweetID:tweetID} = req.params
@@ -65,6 +63,23 @@ router.patch('/dislike/:tweetID', (req, res)=>{
         })
     }
     )()
+
+})
+
+//Editing Tweet Content
+router.patch('/edit/:tweetID', (req, res)=>{
+
+        ( async () => {
+
+            const {tweetID:tweetID} = req.params
+    
+            await EditTweetContent(tweetID, req.body.Content)
+    
+            res.status(200).json({
+                state: "Success"
+            })
+        }
+        )()
 
 })
 

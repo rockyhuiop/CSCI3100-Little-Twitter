@@ -22,6 +22,7 @@ const registration = require('./routes/registration-route.js')
 const profile = require('./routes/profile-route.js')
 const user = require('./routes/user-route.js')
 const dashboard = require('./routes/dashboard-route.js')
+const tweet = require('./routes/tweet-route')
 
 
 app = express()
@@ -53,6 +54,7 @@ app.use('/logout', logout)
 app.use('/profile', profile)
 app.use('/user', user)
 app.use('/dashboard', dashboard)
+app.use('/tweet', tweet)
 
 app.all('*', (req, res)=>{
     res.status(404).send(`<h1>Not Found</h1>`)

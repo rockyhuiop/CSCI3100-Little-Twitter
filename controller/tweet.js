@@ -70,8 +70,15 @@ const AmendTweetDisLike = async (tweetID, userID) => {
     }
 }
 
+const EditTweetContent= async (tweetID, content) => {
+    const tweet = await Tweet.findOne({tweetID : tweetID})
+    tweet.Content = content
+    await tweet.save()
+}
+
 module.exports = {
     nextTweetID,
     AmendTweetLike,
     AmendTweetDisLike,
+    EditTweetContent,
 }
