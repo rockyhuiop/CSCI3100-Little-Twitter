@@ -1,0 +1,47 @@
+import {tooogle_addtw} from "../script/add_tw"
+import {auto_grow} from "../script/auto_grow"
+const Add_tw = () =>{
+    return(
+        <>
+        <div className="hp-addtw">
+                <div id="hp-addtw-click" className="center">
+                    <div className="hp-addtw-box">
+                        <div className="row" style={{ height: 24 }}>
+                            <button onClick={()=>tooogle_addtw(0)} id="hp-addtw-close">
+                                <ion-icon name="close-outline" />
+                            </button>
+                            <div id="hp-addtw-title">Add a Tweet</div>
+                        </div>
+                        <form id="hp-addtw" name="hp-addtw">
+                            <div className="row">
+                                <img id="hp-addtw-icon" className="user-icon" src="./media/default.jpg" />
+                                <textarea
+                                    onInput={()=>auto_grow("hp-addtw-con")}
+                                    placeholder="What's happening?"
+                                    id="hp-addtw-con"
+                                    name="hp-addtw-con"
+                                    defaultValue={""} 
+                                    autoFocus/>
+                            </div>
+                            <div className="row">
+                                <input id="hp-addtw-file" name="hp-addtw-file" type="file" />
+                                <label
+                                    className="label-upload"
+                                    id="hp-addtw-file-label"
+                                    htmlFor="hp-addtw-file"
+                                >
+                                    <ion-icon name="image-outline" />
+                                </label>
+                                <span id="hp-addtw-file-des">No media has been chosen</span>
+                                <button id="hp-addtw-sub" type="submit" value="Submit">
+                                    Add tweet
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+export default Add_tw
