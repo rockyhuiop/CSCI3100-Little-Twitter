@@ -25,6 +25,14 @@ const TweetSchema = new Schema({
         type: Number,
         required: true,
     },
+    ReTweetCount:{
+        type: Number,
+        required: true
+    },
+    ReTweetID:{
+        type: String,
+        required: false
+    },
     SuspensionStatus:{
         type: Boolean,
         required: true,

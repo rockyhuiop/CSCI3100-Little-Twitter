@@ -6,6 +6,7 @@ const {
     nextCommentID,
     AmendTweetLike,
     AmendTweetDisLike,
+    IncreReTweetCount,
     AmendCommentLike,
     AmendCommentDisLike,
     EditTweetContent,
@@ -85,6 +86,39 @@ router.patch('/editTweet/:tweetID', (req, res)=>{
             })
         }
         )()
+
+})
+
+//Retweet
+router.post('/retweet/:tweetID', (req, res) =>{
+    (async () => {
+        const {tweetID:retweetID} = req.params
+
+        var tweetCount = await nextTweetID()
+        tweetCount = tweetCount +1
+
+        await IncreReTweetCount(retweetID)
+        
+        const newTweet = new Tweet({
+            tweetID : tweetCount,
+            CreatorUserID : req.session.userid,
+            Content : req.body.Content,
+            LikeCount: 0,
+            DisLikeCount: 0,
+            ReTweetCount:0,
+            ReTweetID: retweetID,
+            SuspensionStatus: false
+        })
+        await newTweet.save()
+
+        //Increment Retweet Count
+        var tweetCount = await nextTweetID()
+        tweetCount = tweetCount +1
+        
+    }
+    )()
+
+    res.status(200).json({message: "success, posted retweet"})
 
 })
 

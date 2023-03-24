@@ -76,6 +76,12 @@ const AmendTweetDisLike = async (tweetID, userID) => {
     }
 }
 
+const IncreReTweetCount = async(retweetID) => {
+    const retweet = await Tweet.findOne({tweetID: retweetID})
+    retweet.ReTweetCount = retweet.ReTweetCount + 1
+    await retweet.save()
+}
+
 const EditTweetContent= async (tweetID, content) => {
     const tweet = await Tweet.findOne({tweetID : tweetID})
     tweet.Content = content
@@ -157,6 +163,7 @@ module.exports = {
     nextCommentID,
     AmendTweetLike,
     AmendTweetDisLike,
+    IncreReTweetCount,
     AmendCommentLike,
     AmendCommentDisLike,
     EditTweetContent,
