@@ -6,6 +6,8 @@ const {
     nextCommentID,
     AmendTweetLike,
     AmendTweetDisLike,
+    AmendCommentLike,
+    AmendCommentDisLike,
     EditTweetContent,
     EditCommentContent,
 } = require('../controller/tweet')
@@ -35,7 +37,7 @@ router.post('/', (req, res)=>{
 })
 
 //Double Tick Like Tweet 
-router.patch('/like/:tweetID', (req, res)=>{
+router.patch('/likeTweet/:tweetID', (req, res)=>{
     ( async () => {
 
         const {tweetID:tweetID} = req.params
@@ -52,7 +54,7 @@ router.patch('/like/:tweetID', (req, res)=>{
 })
 
 //Double Tick DisLike Tweet 
-router.patch('/dislike/:tweetID', (req, res)=>{
+router.patch('/dislikeTweet/:tweetID', (req, res)=>{
 
     ( async () => {
 
@@ -154,5 +156,42 @@ router.patch('/editComment/:commentID', (req, res)=>{
     )()
 
 })
+
+//Double Tick Like Comment 
+router.patch('/likeComment/:commentID', (req, res)=>{
+    ( async () => {
+
+        const {commentID:commentID} = req.params
+        const userID = req.session.userid
+
+        await AmendCommentLike(commentID, userID)
+
+        res.status(200).json({
+            state: "Success"
+        })
+    }
+    )()
+
+})
+
+//Double Tick DisLike Comment 
+router.patch('/dislikeComment/:commentID', (req, res)=>{
+
+    ( async () => {
+
+        const {commentID:commentID} = req.params
+        const userID = req.session.userid
+
+        await AmendCommentDisLike(commentID, userID)
+
+        res.status(200).json({
+            state: "Success"
+        })
+    }
+    )()
+
+})
+
+
 
 module.exports = router

@@ -88,12 +88,77 @@ const EditCommentContent= async (commentID, content) => {
     await comment.save()
 }
 
+const AmendCommentLike = async (commentID, userID) => {
+
+    const RelatedUser = await User.findOne({tweetID : userID})
+    const comment = await Comment.findOne({commentID : commentID})
+    if (RelatedUser){
+        // amend the user liked comment list and tweet like count
+        if(RelatedUser.likedCommentID.includes(commentID)){
+
+            const index = RelatedUser.likedCommentID.indexOf(commentID)
+            RelatedUser.likedCommentID.splice(index, 1)
+            
+            comment.LikeCount = comment.LikeCount - 1
+
+        }else{
+            RelatedUser.likedCommentID.push(commentID)
+            comment.LikeCount = comment.LikeCount + 1
+
+            if(RelatedUser.dislikedCommentID.includes(commentID)){
+
+                const index = RelatedUser.dislikedCommentID.indexOf(commentID)
+                RelatedUser.dislikedCommentID.splice(index, 1)
+                
+                comment.DisLikeCount = comment.DisLikeCount - 1
+            }
+
+        }
+
+        await RelatedUser.save()
+        await comment.save()
+    }
+}
+
+const AmendCommentDisLike = async (commentID, userID) => {
+
+    const RelatedUser = await User.findOne({tweetID : userID})
+    const comment = await Comment.findOne({commentID : commentID})
+    if (RelatedUser){
+        // amend the user liked comment list and tweet like count
+        if(RelatedUser.dislikedCommentID.includes(commentID)){
+
+            const index = RelatedUser.dislikedCommentID.indexOf(commentID)
+            RelatedUser.dislikedCommentID.splice(index, 1)
+            
+            comment.DisLikeCount = comment.DisLikeCount - 1
+
+        }else{
+            RelatedUser.dislikedCommentID.push(commentID)
+            comment.DisLikeCount = comment.DisLikeCount + 1
+
+            if(RelatedUser.likedCommentID.includes(commentID)){
+
+                const index = RelatedUser.likedCommentID.indexOf(commentID)
+                RelatedUser.likedCommentID.splice(index, 1)
+                
+                comment.LikeCount = comment.LikeCount - 1
+            }
+
+        }
+
+        await RelatedUser.save()
+        await comment.save()
+    }
+}
 
 module.exports = {
     nextTweetID,
     nextCommentID,
     AmendTweetLike,
     AmendTweetDisLike,
+    AmendCommentLike,
+    AmendCommentDisLike,
     EditTweetContent,
     EditCommentContent,
 }
