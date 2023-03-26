@@ -3,6 +3,11 @@ const User = require ('../model/User')
 const Comment = require("../model/Comment")
 const Counter = require('../model/Counter')
 
+const {
+    updateTweetCount,
+    updateCommentCount,
+} = require('../controller/counter')
+
 const nextTweetID = async () => { 
     const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
     const totalTweetCount = TweetCounter.Counter
@@ -12,16 +17,6 @@ const nextTweetID = async () => {
 const nextCommentID = async () => { 
     const CommentCounter = await Counter.findOne({TargetToCount:"Comment"})
     const totalCommentCount = CommentCounter.Counter
-    return totalCommentCount
-}
-
-const CountTweetID = async () => { 
-    const totalTweetCount = await Tweet.count()
-    return totalTweetCount
-}
-
-const CountCommentID = async () => { 
-    const totalCommentCount = await Comment.count()
     return totalCommentCount
 }
 
@@ -42,9 +37,7 @@ const CreateTweet = async (userID, Content) => {
     await newTweet.save()
 
     //Increment the Tweet Counter
-    const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
-    TweetCounter.Counter = TweetCounter.Counter +1
-    await TweetCounter.save()
+    await updateTweetCount()
 
 }
 
@@ -69,9 +62,7 @@ const ReTweet = async (retweetID,userid, Content) => {
     await IncreReTweetCount(retweetID)
 
     //Increment the Tweet Counter
-    const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
-    TweetCounter.Counter = TweetCounter.Counter +1
-    await TweetCounter.save()
+    await updateTweetCount()
 
 }
 
@@ -91,9 +82,7 @@ const CreateComment = async (tweetID, userid, Content) => {
     await newComment.save()
 
     //Increment the Comment Counter
-    const CommentCounter = await Counter.findOne({TargetToCount:"Comment"})
-    CommentCounter.Counter = CommentCounter.Counter +1
-    await CommentCounter.save()
+    await updateCommentCount()
 
 }
 
@@ -114,9 +103,7 @@ const ReplyComment = async (commentID, userid, Content) => {
     await newComment.save()
 
     //Increment the Comment Counter
-    const CommentCounter = await Counter.findOne({TargetToCount:"Comment"})
-    CommentCounter.Counter = CommentCounter.Counter +1
-    await CommentCounter.save()
+    await updateCommentCount()
 
 }
 
@@ -267,8 +254,6 @@ const AmendCommentDisLike = async (commentID, userID) => {
 }
 
 module.exports = {
-    CountTweetID,
-    CountCommentID,
     CreateTweet,
     ReTweet,
     CreateComment,
