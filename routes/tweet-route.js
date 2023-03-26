@@ -1,12 +1,14 @@
 const express = require('express')
 const Tweet = require("../model/Tweet")
 const Comment = require("../model/Comment")
+
 const {
-    nextTweetID,
-    nextCommentID,
+    CreateTweet,
+    ReTweet,
+    CreateComment,
+    ReplyComment,
     AmendTweetLike,
     AmendTweetDisLike,
-    IncreReTweetCount,
     AmendCommentLike,
     AmendCommentDisLike,
     EditTweetContent,
@@ -19,18 +21,9 @@ router = express.Router()
 router.post('/', (req, res)=>{
 
     ( async () => {
-        var tweetCount = await nextTweetID()
-        tweetCount = tweetCount +1
-        
-        const newTweet = new Tweet({
-            tweetID : tweetCount,
-            CreatorUserID : req.session.userid,
-            Content : req.body.Content,
-            LikeCount: 0,
-            DisLikeCount: 0,
-            SuspensionStatus: false
-        })
-        await newTweet.save()
+
+        await CreateTweet(req.session.userid, req.body.Content)
+
     }
     )()
 
@@ -92,29 +85,10 @@ router.patch('/editTweet/:tweetID', (req, res)=>{
 //Retweet
 router.post('/retweet/:tweetID', (req, res) =>{
     (async () => {
-        const {tweetID:retweetID} = req.params
 
-        var tweetCount = await nextTweetID()
-        tweetCount = tweetCount +1
+        const {tweetID: retweetID} = req.params
 
-        await IncreReTweetCount(retweetID)
-        
-        const newTweet = new Tweet({
-            tweetID : tweetCount,
-            CreatorUserID : req.session.userid,
-            Content : req.body.Content,
-            LikeCount: 0,
-            DisLikeCount: 0,
-            ReTweetCount:0,
-            ReTweetID: retweetID,
-            SuspensionStatus: false
-        })
-        await newTweet.save()
-
-        //Increment Retweet Count
-        var tweetCount = await nextTweetID()
-        tweetCount = tweetCount +1
-        
+        await ReTweet(retweetID, req.session.userid, req.body.Content)
     }
     )()
 
@@ -129,19 +103,8 @@ router.post('/comment/:tweetID', (req, res)=>{
 
         const {tweetID:tweetID} = req.params
 
-        var commentCount = await nextCommentID()
-        commentCount = commentCount +1
-        
-        const newComment = new Comment({
-            commentID : commentCount,
-            CreatorUserID : req.session.userid,
-            corrTweetID : tweetID,
-            Content : req.body.Content,
-            LikeCount: 0,
-            DisLikeCount: 0,
-            SuspensionStatus: false
-        })
-        await newComment.save()
+        await CreateComment(tweetID, req.session.userid, req.body.Content)
+
     }
     )()
 
@@ -155,19 +118,8 @@ router.post('/replycomment/:commentID', (req, res)=>{
 
         const {commentID:commentID} = req.params
 
-        var commentCount = await nextCommentID()
-        commentCount = commentCount +1
-        
-        const newComment = new Comment({
-            commentID : commentCount,
-            CreatorUserID : req.session.userid,
-            corrCommentID : commentID,
-            Content : req.body.Content,
-            LikeCount: 0,
-            DisLikeCount: 0,
-            SuspensionStatus: false
-        })
-        await newComment.save()
+        await ReplyComment(commentID, req.session.userid, req.body.Content)
+
     }
     )()
 

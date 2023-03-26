@@ -25,6 +25,101 @@ const CountCommentID = async () => {
     return totalCommentCount
 }
 
+const CreateTweet = async (userID, Content) => {
+
+    var tweetCount = await nextTweetID()
+    tweetCount = tweetCount +1
+    
+    const newTweet = new Tweet({
+        tweetID : tweetCount,
+        CreatorUserID : userID,
+        Content : Content,
+        LikeCount: 0,
+        DisLikeCount: 0,
+        ReTweetCount:0,
+        SuspensionStatus: false
+    })
+    await newTweet.save()
+
+    //Increment the Tweet Counter
+    const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
+    TweetCounter.Counter = TweetCounter.Counter +1
+    await TweetCounter.save()
+
+}
+
+const ReTweet = async (retweetID,userid, Content) => {
+
+    var tweetCount = await nextTweetID()
+    tweetCount = tweetCount +1
+
+    const newTweet = new Tweet({
+        tweetID : tweetCount,
+        CreatorUserID : userid,
+        Content : Content,
+        LikeCount: 0,
+        DisLikeCount: 0,
+        ReTweetCount:0,
+        ReTweetID: retweetID,
+        SuspensionStatus: false
+    })
+    await newTweet.save()
+
+    //Increment Retweet Count
+    await IncreReTweetCount(retweetID)
+
+    //Increment the Tweet Counter
+    const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
+    TweetCounter.Counter = TweetCounter.Counter +1
+    await TweetCounter.save()
+
+}
+
+const CreateComment = async (tweetID, userid, Content) => {
+    var commentCount = await nextCommentID()
+    commentCount = commentCount +1
+    
+    const newComment = new Comment({
+        commentID : commentCount,
+        CreatorUserID : userid,
+        corrTweetID : tweetID,
+        Content : Content,
+        LikeCount: 0,
+        DisLikeCount: 0,
+        SuspensionStatus: false
+    })
+    await newComment.save()
+
+    //Increment the Comment Counter
+    const CommentCounter = await Counter.findOne({TargetToCount:"Comment"})
+    CommentCounter.Counter = CommentCounter.Counter +1
+    await CommentCounter.save()
+
+}
+
+const ReplyComment = async (commentID, userid, Content) => {
+
+    var commentCount = await nextCommentID()
+    commentCount = commentCount +1
+    
+    const newComment = new Comment({
+        commentID : commentCount,
+        CreatorUserID : userid,
+        corrCommentID : commentID,
+        Content : Content,
+        LikeCount: 0,
+        DisLikeCount: 0,
+        SuspensionStatus: false
+    })
+    await newComment.save()
+
+    //Increment the Comment Counter
+    const CommentCounter = await Counter.findOne({TargetToCount:"Comment"})
+    CommentCounter.Counter = CommentCounter.Counter +1
+    await CommentCounter.save()
+
+}
+
 const AmendTweetLike = async (tweetID, userID) => {
 
     const RelatedUser = await User.findOne({tweetID : userID})
@@ -172,10 +267,12 @@ const AmendCommentDisLike = async (commentID, userID) => {
 }
 
 module.exports = {
-    nextTweetID,
-    nextCommentID,
     CountTweetID,
     CountCommentID,
+    CreateTweet,
+    ReTweet,
+    CreateComment,
+    ReplyComment,
     AmendTweetLike,
     AmendTweetDisLike,
     IncreReTweetCount,
