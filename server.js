@@ -14,6 +14,7 @@ mongoose.set('strictQuery', true)
 dotenv.config()
 
 //pages-routes
+const initizalize_db = require('./routes/initialize-route.js')
 const home_guest = require('./routes/homeGuest-route.js')
 const home_account = require('./routes/homeAccount-route.js')
 const login = require('./routes/login-route.js')
@@ -38,6 +39,7 @@ app.use(sessions({
 
 //pages
 app.use('/', home_guest)
+app.use('/initialize', initizalize_db)
 app.use('/login', login)
 app.use('/registration', registration)
 

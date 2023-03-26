@@ -1,13 +1,26 @@
 const Tweet = require ('../model/Tweet')
 const User = require ('../model/User')
 const Comment = require("../model/Comment")
+const Counter = require('../model/Counter')
 
 const nextTweetID = async () => { 
-    const totalTweetCount = await Tweet.count()
+    const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
+    const totalTweetCount = TweetCounter.Counter
     return totalTweetCount
 }
 
 const nextCommentID = async () => { 
+    const CommentCounter = await Counter.findOne({TargetToCount:"Comment"})
+    const totalCommentCount = CommentCounter.Counter
+    return totalCommentCount
+}
+
+const CountTweetID = async () => { 
+    const totalTweetCount = await Tweet.count()
+    return totalTweetCount
+}
+
+const CountCommentID = async () => { 
     const totalCommentCount = await Comment.count()
     return totalCommentCount
 }
@@ -161,6 +174,8 @@ const AmendCommentDisLike = async (commentID, userID) => {
 module.exports = {
     nextTweetID,
     nextCommentID,
+    CountTweetID,
+    CountCommentID,
     AmendTweetLike,
     AmendTweetDisLike,
     IncreReTweetCount,
