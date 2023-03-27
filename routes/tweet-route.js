@@ -13,6 +13,8 @@ const {
     AmendCommentDisLike,
     EditTweetContent,
     EditCommentContent,
+    DelComment,
+    DelTweet,
 } = require('../controller/tweet')
 
 
@@ -178,6 +180,31 @@ router.patch('/dislikeComment/:commentID', (req, res)=>{
     }
     )()
 
+})
+
+//Delete Comment
+router.delete('/deleteComment/:commentID', (req, res) => {
+    (async() => {
+        const {commentID:commentID} = req.params
+        await DelComment(commentID, req.session.userid)
+
+        res.status(200).json({
+            state: "Success"
+        })
+    })
+
+})
+
+//Delete Tweet
+router.delete('/deleteTweet/:tweeetID', (req, res) => {
+    (async() => {
+        const {tweetID:tweetID} = req.params
+        await DelTweet(tweetID, req.session.userid)
+
+        res.status(200).json({
+            state: "Success"
+        })
+    })
 })
 
 

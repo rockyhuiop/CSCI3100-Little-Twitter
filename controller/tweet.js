@@ -4,8 +4,8 @@ const Comment = require("../model/Comment")
 const Counter = require('../model/Counter')
 
 const {
-    updateTweetCount,
-    updateCommentCount,
+    IncreTweetCount,
+    IncreCommentCount,
 } = require('../controller/counter')
 
 const nextTweetID = async () => { 
@@ -37,7 +37,7 @@ const CreateTweet = async (userID, Content) => {
     await newTweet.save()
 
     //Increment the Tweet Counter
-    await updateTweetCount()
+    await IncreTweetCount()
 
 }
 
@@ -62,7 +62,7 @@ const ReTweet = async (retweetID,userid, Content) => {
     await IncreReTweetCount(retweetID)
 
     //Increment the Tweet Counter
-    await updateTweetCount()
+    await IncreTweetCount()
 
 }
 
@@ -82,7 +82,7 @@ const CreateComment = async (tweetID, userid, Content) => {
     await newComment.save()
 
     //Increment the Comment Counter
-    await updateCommentCount()
+    await IncreCommentCount()
 
 }
 
@@ -103,7 +103,7 @@ const ReplyComment = async (commentID, userid, Content) => {
     await newComment.save()
 
     //Increment the Comment Counter
-    await updateCommentCount()
+    await IncreCommentCount()
 
 }
 
@@ -253,6 +253,31 @@ const AmendCommentDisLike = async (commentID, userID) => {
     }
 }
 
+const DelComment = async(commentID, userID) => {
+    const comment = await Comment.findOne({commentID : commentID})
+    const user = await User.findOne({tweetID : userID})
+    if (comment.CreatorUserID == userID){
+        await comment.delete()
+    } else if (user.userType == 'admin') {
+        await comment.delete()
+    }else {
+        res.status(400).json({state: "fail", message: "You are not authorized to delete the comment"})
+    }
+    
+}
+
+const DelTweet = async(tweetID, userID) => {
+    const tweet = await Tweet.findOne({tweetID : tweetID})
+    const user = await User.findOne({tweetID : userID})
+    if (tweet.CreatorUserID == userID){
+        await tweet.delete()
+    } else if (user.userType == 'admin') {
+        await tweet.delete()
+    }else {
+        res.status(400).json({state: "fail", message: "You are not authorized to delete the tweet"})
+    }
+}
+
 module.exports = {
     CreateTweet,
     ReTweet,
@@ -265,4 +290,6 @@ module.exports = {
     AmendCommentDisLike,
     EditTweetContent,
     EditCommentContent,
+    DelComment,
+    DelTweet,
 }

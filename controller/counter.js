@@ -3,19 +3,19 @@ const Counter = require('../model/Counter')
 const Comment = require("../model/Comment")
 const Tweet = require ('../model/Tweet')
 
-const CountTweetID = async () => { 
+const CountTweet = async () => { 
     const totalTweetCount = await Tweet.count()
     return totalTweetCount
 }
 
-const CountCommentID = async () => { 
+const CountComment = async () => { 
     const totalCommentCount = await Comment.count()
     return totalCommentCount
 }
 
 const initializeDB = async() => {
-    var TweetCount = await CountTweetID()
-    var CommentCount = await CountCommentID()
+    var TweetCount = await CountTweet()
+    var CommentCount = await CountComment()
 
     const newTweetCounter = new Counter({
         TargetToCount: "Tweet",
@@ -30,22 +30,22 @@ const initializeDB = async() => {
     newCommentCounter.save()
 }
 
-const updateTweetCount = async() =>{
+const IncreTweetCount = async() =>{
     const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
-    TweetCounter.Counter = await CountTweetID()
+    TweetCounter.Counter = await TweetCounter.Counter + 1
     await TweetCounter.save()
 }
 
-const updateCommentCount = async() =>{
+const IncreCommentCount = async() =>{
 
     const CommentCounter = await Counter.findOne({TargetToCount:"Comment"})
-    CommentCounter.Counter = await CountCommentID()
+    CommentCounter.Counter = CommentCounter.Counter + 1
     await CommentCounter.save()
     
 }
 
 module.exports = {
     initializeDB,
-    updateTweetCount,
-    updateCommentCount,
+    IncreTweetCount,
+    IncreCommentCount,
 }
