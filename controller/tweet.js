@@ -254,7 +254,7 @@ const AmendCommentDisLike = async (commentID, userID) => {
 }
 
 const DelComment = async(commentID, userID) => {
-    const comment = Comment.findOne({commentID : commentID})
+    const comment = await Comment.findOne({commentID : commentID})
     const user = await User.findOne({tweetID : userID})
     if (comment.CreatorUserID == userID){
         await comment.deleteOne()
@@ -263,19 +263,19 @@ const DelComment = async(commentID, userID) => {
     }else {
         return res.status(400).json({state: "fail", message: "You are not authorized to delete the comment"})
     }
-    
+    return
 }
 
 const DelTweet = async(tweetID, userID) => {
-    const tweet = Tweet.findOne({tweetID : tweetID})
+    const tweet = await Tweet.findOne({tweetID : tweetID})
     const user = await User.findOne({tweetID : userID})
     if (tweet.CreatorUserID == userID || user.userType == 'admin'){
-        const result = await Tweet.deleteOne({tweetID : tweetID})
-        return true
+        await tweet.deleteOne()
     } else {
-        return false
+        return res.status(400).json({state: "fail", message: "You are not authorized to delete the tweet"})
 }
 }
+
 module.exports = {
     CreateTweet,
     ReTweet,

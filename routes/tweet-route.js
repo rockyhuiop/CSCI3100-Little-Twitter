@@ -192,29 +192,21 @@ router.delete('/deleteComment/:commentID', (req, res) => {
         res.status(200).json({
             state: "Success"
         })
-    })
+    })()
 
 })
 
 //Delete Tweet
-router.delete('/deleteTweet/:tweeetID', (req, res) => {
+router.delete('/deleteTweet/:tweetID', (req, res) => {
     (async() => {
         const {tweetID:tweetID} = req.params
 
-        flag = await DelTweet(tweetID, req.session.userid)
+        await DelTweet(tweetID, req.session.userid)
 
-        if (flag){
-            res.status(200).json({
+        res.status(200).json({
                 state: "Success"
-            })
-        } else {
-            res.status(400).json({
-                state: "fail", 
-                message: "You are not authorized to delete the tweet"
-            })
-        }
-
-    })
+         })
+    })()
 })
 
 
