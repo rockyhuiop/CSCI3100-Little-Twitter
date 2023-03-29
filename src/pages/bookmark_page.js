@@ -5,6 +5,7 @@ import Bookmark from "../components/bookmark"
 import Add_tw from "../components/add_tw"
 import {highlight} from "../script/highlight"
 import React, { useEffect } from 'react'
+import Hp_foot from "../components/hp_foot"
 
 const Bookmark_page = () =>{
     useEffect(()=>{
@@ -22,6 +23,7 @@ const Bookmark_page = () =>{
             </div>
         </div>
         <Add_tw />
+        <Hp_foot />
         </>
 
     )
