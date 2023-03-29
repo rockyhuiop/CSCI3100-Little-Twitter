@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // pages & components
-import Login from "./pages/login";
-import Reg from "./pages/reg";
 import Homepage from "./pages/homepage"
 import Explore from "./pages/explore"
 import Bookmark_page from "./pages/bookmark_page"
@@ -15,14 +13,6 @@ function App() {
         <Route 
           path="/" 
           element={<Homepage />} 
-        />
-        <Route 
-          path="/login" 
-          element={<Login />} 
-        />
-        <Route 
-          path="/reg" 
-          element={<Reg />} 
         />
         <Route 
           path="/explore" 
