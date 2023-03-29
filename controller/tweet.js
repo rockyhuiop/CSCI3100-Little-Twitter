@@ -259,8 +259,8 @@ const DelComment = async(commentID, userID) => {
     if (comment.CreatorUserID == userID || user.userType == 'admin'){
         await comment.deleteOne()
         // Update likedCommentID/dislikedCommentID List of each user
-        RemovelikeTweetID(commentID)
-        RemovedislikeTweetID(commentID)
+        RemovelikeCommentID(commentID)
+        RemovedislikeCommentID(commentID)
         return true
     } else {
         return false
