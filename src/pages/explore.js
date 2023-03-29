@@ -6,6 +6,7 @@ import Add_tw from "../components/add_tw"
 import Search from "../components/search"
 import {highlight} from "../script/highlight"
 import React, { useEffect } from 'react'
+import Hp_foot from "../components/hp_foot"
 const Explore = () =>{
     useEffect(()=>{
 
@@ -23,6 +24,7 @@ const Explore = () =>{
             </div>
         </div>
         <Add_tw />
+        <Hp_foot />
         </>
 
     )
