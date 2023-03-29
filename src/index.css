@@ -105,6 +105,43 @@ button:hover, .label-upload:hover{
 }
 
 /* homepage */
+.hp-foot{
+    position: sticky;
+    bottom: 0px;
+    background-color: #00a3df;
+    color: #ffffff;
+    width: auto;
+    height: auto;
+    font-size: 24px;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+
+.hp-foot button{
+    float: right;
+    margin: 0px 10px;
+    border-radius: 50px;
+    border: none;
+    width: auto;
+    font-size: 24px;
+
+}
+#hp-foot-log{
+    background-color: #c100d3;
+    color: #ffffff;
+}
+#hp-foot-reg{
+    background-color: #ffffff;
+}
+#hp-foot-log:hover{
+    background-color: #ffffff;
+    color: #c100d3;
+}
+#hp-foot-reg:hover{
+    background-color: rgba(0,0,0);
+    color: #ffffff;
+}
+    
 .hp-menu{
     float: left;
     width: 300px;
@@ -242,7 +279,7 @@ button:hover, .label-upload:hover{
     padding: 10px 20px;
     background-color: rgba(0,0,0,0.15);
 }
-.hp-addtw{
+.hp-addtw,.hp-log,.hp-reg{
     display: none;
     position: fixed;
     z-index: 2;
@@ -253,14 +290,32 @@ button:hover, .label-upload:hover{
     background-color: rgba(0,0,0,0.5);
     overflow: auto;
 }
+.hp-log-h{
+    min-height: 500px;
+}
+.hp-reg-h{
+    min-height: 600px;
+}
 .hp-addtw-box{
     display: block;
     background-color: #ffffff;
+    border-radius: 20px;
     padding: 20px;
     width: 500px;
     min-height: 200px;
 }
-#hp-addtw-close{
+.hp-log-box,.hp-reg-box{
+    display: block;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    width: 600px;
+    height: 500px;
+}
+.hp-reg-box{
+    height: auto;
+}
+.hp-popup-close{
     background-color: transparent;
     float: left;
     font-size: 18px;
