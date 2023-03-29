@@ -3,17 +3,16 @@ import Menu from "../components/menu"
 import Logout from "../components/logout"
 import Hp_main from "../components/hp_main"
 import Add_tw from "../components/add_tw"
+import Hp_foot from "../components/hp_foot"
 import {highlight} from "../script/highlight"
-import {detect} from "../script/detect"
-import {file_path} from "../script/file_path"
 import React, { useEffect } from 'react'
+import Login from "../components/login"
+import Reg from "../components/reg"
 
 const Homeapge = () =>{
     useEffect(()=>{
 
         highlight("hp-menu-hp");    
-        window.addEventListener('click', detect)
-        file_path();
         }, [])
     
     return (
@@ -26,6 +25,10 @@ const Homeapge = () =>{
             </div>
         </div>
         <Add_tw />
+        <Login />
+        <Reg />
+        <Hp_foot />
+        
         </>
 
     )
