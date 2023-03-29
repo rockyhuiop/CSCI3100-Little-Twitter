@@ -256,14 +256,15 @@ const AmendCommentDisLike = async (commentID, userID) => {
 const DelComment = async(commentID, userID) => {
     const comment = await Comment.findOne({commentID : commentID})
     const user = await User.findOne({tweetID : userID})
-    if (comment.CreatorUserID == userID){
+    if (comment.CreatorUserID == userID || user.userType == 'admin'){
         await comment.deleteOne()
-    } else if (user.userType == 'admin') {
-        await comment.deleteOne()
-    }else {
-        return res.status(400).json({state: "fail", message: "You are not authorized to delete the comment"})
+        // Update likedCommentID/dislikedCommentID List of each user
+        RemovelikeTweetID(commentID)
+        RemovedislikeTweetID(commentID)
+        return true
+    } else {
+        return false
     }
-    return
 }
 
 const DelTweet = async(tweetID, userID) => {
@@ -271,10 +272,44 @@ const DelTweet = async(tweetID, userID) => {
     const user = await User.findOne({tweetID : userID})
     if (tweet.CreatorUserID == userID || user.userType == 'admin'){
         await tweet.deleteOne()
+        // Update likedTweetID/dislikedTweetID List of each user
+        RemovelikeTweetID(tweetID)
+        RemovedislikeTweetID(tweetID)
+        return true
     } else {
-        return res.status(400).json({state: "fail", message: "You are not authorized to delete the tweet"})
+        return false
 }
 }
+
+const RemovelikeTweetID = async(tweetID) => {
+    const filter = {likedTweetID : {$in : [tweetID]}}
+    const query = {$pull:{likedTweetID :tweetID}}
+    const result = await User.updateMany(filter, query, {multi: true})
+    console.log(result)
+}
+
+const RemovedislikeTweetID = async(tweetID) => {
+    const filter = {dislikedTweetID : {$in : [tweetID]}}
+    const query = {$pull:{dislikedTweetID :tweetID}}
+    const result = await User.updateMany(filter, query, {multi: true})
+    console.log(result)
+}
+
+const RemovelikeCommentID = async(commentID) => {
+    const filter = {likedCommentID : {$in : [commentID]}}
+    const query = {$pull:{likedCommentID :commentID}}
+    const result = await User.updateMany(filter, query, {multi: true})
+    console.log(result)
+}
+
+const RemovedislikeCommentID = async(commentID) => {
+    const filter = {dislikedCommentID : {$in : [commentID]}}
+    const query = {$pull:{dislikedCommentID :commentID}}
+    const result = await User.updateMany(filter, query, {multi: true})
+    console.log(result)
+}
+
+
 
 module.exports = {
     CreateTweet,

@@ -187,11 +187,19 @@ router.delete('/deleteComment/:commentID', (req, res) => {
     (async() => {
         const {commentID:commentID} = req.params
 
-        await DelComment(commentID, req.session.userid)
+        const result = await DelComment(commentID, req.session.userid)
 
-        res.status(200).json({
-            state: "Success"
-        })
+        if (result){
+            res.status(200).json({
+                state: "Success"
+            })
+        }else{
+            res.status(400).json({
+                state: "fail", 
+                message: "You are not authorized to delete the comment"
+            })
+        }
+
     })()
 
 })
@@ -201,11 +209,18 @@ router.delete('/deleteTweet/:tweetID', (req, res) => {
     (async() => {
         const {tweetID:tweetID} = req.params
 
-        await DelTweet(tweetID, req.session.userid)
+        const result = await DelTweet(tweetID, req.session.userid)
 
-        res.status(200).json({
+        if (result){
+            res.status(200).json({
                 state: "Success"
-         })
+            })
+        }else{
+            res.status(400).json({
+                state: "fail", 
+                message: "You are not authorized to delete the tweet"
+            })
+        }
     })()
 })
 
