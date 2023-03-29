@@ -1,4 +1,4 @@
-import {tooogle_div} from "../script/toogle_div"
+import {toggle_div} from "../script/toggle_div"
 import {auto_grow} from "../script/auto_grow"
 const Add_tw = () =>{
     return(
@@ -7,7 +7,7 @@ const Add_tw = () =>{
                 <div className="center hp-popup-click">
                     <div className="hp-addtw-box">
                         <div className="row" style={{ height: 24 }}>
-                            <button onClick={()=>tooogle_div(0,"hp-addtw")} className="hp-popup-close">
+                            <button onClick={()=>toggle_div(0,"hp-addtw")} className="hp-popup-close">
                                 <ion-icon name="close-outline" />
                             </button>
                             <div id="hp-addtw-title">Add a Tweet</div>

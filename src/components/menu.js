@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { Home, MessageSquare, Hash, Bookmark, User } from 'react-feather';
-import {tooogle_div} from "../script/toogle_div"
+import {toggle_div} from "../script/toggle_div"
 import {file_path} from "../script/file_path"
 import {detect} from "../script/detect"
 import React, { useEffect } from 'react'
@@ -44,7 +44,7 @@ const Menu = () =>{
                 </button>
             </Link>
             <button
-                onClick={()=>tooogle_div(1,"hp-addtw")}
+                onClick={()=>toggle_div(1,"hp-addtw")}
                 type="button"
                 id="hp-menu-at"
                 className="hp-menu-button hp-tweet"

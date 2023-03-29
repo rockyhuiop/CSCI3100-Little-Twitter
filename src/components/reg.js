@@ -1,4 +1,4 @@
-import {tooogle_div} from "../script/toogle_div"
+import {toggle_div} from "../script/toggle_div"
 import {auto_grow} from "../script/auto_grow"
 import { Link } from "react-router-dom"
 import {vis,non_vis} from "../script/log_reg"
@@ -9,7 +9,7 @@ const Reg = () =>{
                 <div className="center hp-popup-click">
                     <div className="hp-reg-box">
                         <div className="row" style={{ height: 24 }}>
-                            <button onClick={()=>tooogle_div(0,"hp-reg")} className="hp-popup-close">
+                            <button onClick={()=>toggle_div(0,"hp-reg")} className="hp-popup-close">
                                 <ion-icon name="close-outline" />
                             </button>
                         </div>
