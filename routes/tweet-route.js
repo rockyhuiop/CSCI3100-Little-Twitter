@@ -224,6 +224,13 @@ router.delete('/deleteTweet/:tweetID', (req, res) => {
     })()
 })
 
+//Display Tweet to User
+router.get('/', (req, res) => {
+    (async() => {
+        
+    })()
+})
+
 
 
 module.exports = router
