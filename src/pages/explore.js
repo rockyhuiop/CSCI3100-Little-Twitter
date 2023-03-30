@@ -15,16 +15,16 @@ const Explore = () =>{
         }, [])
     return (
         <>
-        <Menu />
-        <Logout />
-        <div className="hp-main">
-            <div className="hp-main-con">
-                <Search />
-                <Filter />
+            <Menu />
+            <Logout />
+            <div className="hp-main">
+                <div className="hp-main-con">
+                    <Search />
+                    <Filter />
+                </div>
             </div>
-        </div>
-        <Add_tw />
-        <Hp_foot />
+            <Add_tw />
+            <Hp_foot />
         </>
 
     )

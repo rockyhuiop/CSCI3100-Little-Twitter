@@ -17,18 +17,17 @@ const Homeapge = () =>{
     
     return (
         <>
-        <Menu />
-        <Logout />
-        <div className="hp-main">
-            <div className="hp-main-con">
-                <Hp_main />
+            <Menu />
+            <Logout />
+            <div className="hp-main">
+                <div className="hp-main-con">
+                    <Hp_main />
+                </div>
             </div>
-        </div>
-        <Add_tw />
-        <Login />
-        <Reg />
-        <Hp_foot />
-        
+            <Add_tw />
+            <Login />
+            <Reg />
+            <Hp_foot />
         </>
 
     )

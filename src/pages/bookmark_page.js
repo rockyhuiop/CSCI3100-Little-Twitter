@@ -15,15 +15,15 @@ const Bookmark_page = () =>{
         }, [])
     return (
         <>
-        <Menu />
-        <Logout />
-        <div className="hp-main">
-            <div className="hp-main-con">
-                <Bookmark />
+            <Menu />
+            <Logout />
+            <div className="hp-main">
+                <div className="hp-main-con">
+                    <Bookmark />
+                </div>
             </div>
-        </div>
-        <Add_tw />
-        <Hp_foot />
+            <Add_tw />
+            <Hp_foot />
         </>
 
     )

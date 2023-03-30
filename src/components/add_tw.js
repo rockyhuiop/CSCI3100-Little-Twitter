@@ -3,11 +3,14 @@ import {auto_grow} from "../script/auto_grow"
 const Add_tw = () =>{
     return(
         <>
-        <div className="hp-addtw">
+            <div className="hp-addtw">
                 <div className="center hp-popup-click">
                     <div className="hp-addtw-box">
                         <div className="row" style={{ height: 24 }}>
-                            <button onClick={()=>toggle_div(0,"hp-addtw")} className="hp-popup-close">
+                            <button 
+                                onClick={()=>toggle_div(0,"hp-addtw")} 
+                                className="hp-popup-close"
+                            >
                                 <ion-icon name="close-outline" />
                             </button>
                             <div id="hp-addtw-title">Add a Tweet</div>
@@ -21,7 +24,8 @@ const Add_tw = () =>{
                                     id="hp-addtw-con"
                                     name="hp-addtw-con"
                                     defaultValue={""} 
-                                    autoFocus/>
+                                    autoFocus
+                                />
                             </div>
                             <div className="row">
                                 <input id="hp-addtw-file" name="hp-addtw-file" type="file" />
@@ -33,7 +37,11 @@ const Add_tw = () =>{
                                     <ion-icon name="image-outline" />
                                 </label>
                                 <span id="hp-addtw-file-des">No media has been chosen</span>
-                                <button id="hp-addtw-sub" type="submit" value="Submit">
+                                <button 
+                                    id="hp-addtw-sub" 
+                                    type="submit" 
+                                    value="Submit"
+                                >
                                     Add tweet
                                 </button>
                             </div>
