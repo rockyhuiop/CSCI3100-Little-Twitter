@@ -9,7 +9,7 @@
 }
 
 .branding {
-    color: #00acee;
+    color: var(--clr-primary);
     display: flex;
     gap: 16px;
     align-items: center;

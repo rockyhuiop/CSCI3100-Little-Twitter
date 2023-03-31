@@ -14,6 +14,40 @@
     box-sizing: border-box;
 }
 
+:root {
+    /* primary colour (twitter blue is the main colour of the webpage */
+    /* secondary colour is supplmentary */
+    --clr-primary: #00acee;
+    --clr-secondary: #292524;
+
+    /* use for errors and dangerous actions such as delete */
+    --clr-danger: #f43f5e;
+
+    /* an alias for the colour white (currently "true white") */
+    --clr-white: #ffffff;
+
+    /* faint grey colour for borders */
+    --clr-border-grey: #cfd9de;
+
+    /* diminished grey for small texts */
+    --clr-small-text: #78716c;
+
+    /* the grey colour for texts */
+    --clr-text: #44403c;
+    --clr-text-lighter: #68757e;
+
+    /* pink colour? */
+    --clr-pink: #c100d3;
+
+    /* transparent black */
+    --clr-darker-trans-black: rgba(0, 0, 0, 0.19);
+    --clr-trans-black: rgba(0, 0, 0, 0.24);
+    --clr-lighter-trans-black: rgba(0, 0, 0, 0.3);
+
+    /* an alias for the colour black (currently "true black") */
+    --clr-black: #000000;
+}
+
 .row {
     width: 100%;
 }
@@ -36,15 +70,12 @@
 .user-icon {
     border-radius: 50%;
 }
-.highlight {
-    background-color: rgba(0, 0, 0, 0.24);
-}
 /* log/reg */
 button,
 #eye,
 .label-upload {
     cursor: pointer;
-    background-color: #ffffff;
+    background-color: var(--clr-white);
     transition-duration: 0.2s;
 }
 
@@ -53,13 +84,13 @@ button:hover,
     /*
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
     */
-    background-color: rgba(0, 0, 0, 0.24);
+    background-color: var(--clr-trans-black);
 }
 
 .log-form {
     position: relative;
     padding: 20px;
-    border: 2px solid #000000;
+    border: 2px solid var(--clr-black);
     border-radius: 50px;
     width: 500px;
 }
@@ -72,7 +103,7 @@ button:hover,
 .log-form #log {
     border-radius: 50px;
     width: 100%;
-    background-color: #ffffff;
+    background-color: var(--clr-white);
     font-size: 24px;
 }
 .log-form .log-box label {
@@ -97,7 +128,7 @@ button:hover,
 }
 .log-form .log-box #eye:hover,
 .log-form .log-box #log:hover {
-    background-color: rgba(0, 0, 0, 0.24);
+    background-color: var(--clr-trans-black);
 }
 .log-form input {
     width: 95%;
@@ -106,10 +137,10 @@ button:hover,
     outline: none;
 }
 .log-form input:focus {
-    border: 3px solid #c100d3;
+    border: 3px solid var(--clr-pink);
 }
 .log-form input:focus ~ .log-form label {
-    color: #c100d3;
+    color: var(--clr-pink);
 }
 .log-form input:focus ~ label,
 .log-form input:not(:placeholder-shown) ~ label {
@@ -120,8 +151,8 @@ button:hover,
 .hp-foot {
     position: sticky;
     bottom: 0px;
-    background-color: #00a3df;
-    color: #ffffff;
+    background-color: var(--clr-primary);
+    color: var(--clr-white);
     width: auto;
     height: auto;
     font-size: 24px;
@@ -138,33 +169,21 @@ button:hover,
     font-size: 24px;
 }
 #hp-foot-log {
-    background-color: #c100d3;
-    color: #ffffff;
+    background-color: var(--clr-pink);
+    color: var(--clr-white);
 }
 #hp-foot-reg {
-    background-color: #ffffff;
+    background-color: var(--clr-white);
 }
 #hp-foot-log:hover {
-    background-color: #ffffff;
-    color: #c100d3;
+    background-color: var(--clr-white);
+    color: var(--clr-pink);
 }
 #hp-foot-reg:hover {
-    background-color: rgba(0, 0, 0);
-    color: #ffffff;
+    background-color: var(--clr-black);
+    color: var(--clr-white);
 }
 
-.hp-main {
-    overflow: hidden;
-    width: auto;
-    min-height: 100vh;
-    border-left: 2px solid rgba(0, 0, 0, 0.3);
-    border-right: 2px solid rgba(0, 0, 0, 0.3);
-}
-.hp-main-con {
-    width: 100%;
-    word-wrap: break-word;
-    overflow-y: auto;
-}
 .hp-rest {
     float: right;
     width: 300px;
@@ -179,10 +198,10 @@ button:hover,
 .hp-logout .hp-logout-text {
     visibility: hidden;
     width: 160px;
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-        0 17px 50px 0 rgba(0, 0, 0, 0.19);
-    background-color: #ffffff;
-    color: #ff0000;
+    box-shadow: 0 12px 16px 0 var(--clr-trans-black),
+        0 17px 50px 0 var(--clr-lighter-trans-black);
+    background-color: var(--clr-white);
+    color: var(--clr-danger);
     text-align: center;
     border-radius: 16px;
     padding: 8px 0;
@@ -193,8 +212,8 @@ button:hover,
     margin-left: -80px;
 }
 .hp-logout-text:hover {
-    background-color: #ff0000;
-    color: #ffffff;
+    background-color: var(--clr-danger);
+    color: var(--clr-white);
 }
 .hp-logout .show {
     visibility: visible;
@@ -211,8 +230,8 @@ button:hover,
 }
 .hp-search-button {
     position: absolute;
-    top: 18px;
-    right: 330px;
+    top: 14px;
+    right: 32px;
     border: none;
     border-radius: 100%;
     background-color: transparent;
@@ -221,7 +240,7 @@ button:hover,
     height: 24px;
 }
 .hp-search-button:hover {
-    background-color: rgba(0, 0, 0, 0.24);
+    background-color: var(--clr-trans-black);
     box-shadow: none;
 }
 .hp-search-tab {
@@ -232,13 +251,13 @@ button:hover,
     font-size: 18px;
     border: none;
     float: left;
-    background-color: #ffffff;
+    background-color: var(--clr-white);
 }
 .hp-search-tab button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--clr-lighter-trans-black);
 }
 .hp-search-tab button.hp-search-active {
-    background-color: rgba(0, 0, 0, 0.24);
+    background-color: var(--clr-trans-black);
     font-weight: bold;
 }
 .hp-search-con {
@@ -273,7 +292,7 @@ button:hover,
 }
 .hp-addtw-box {
     display: block;
-    background-color: #ffffff;
+    background-color: var(--clr-white);
     border-radius: 20px;
     padding: 20px;
     width: 500px;
@@ -282,7 +301,7 @@ button:hover,
 .hp-log-box,
 .hp-reg-box {
     display: block;
-    background-color: #ffffff;
+    background-color: var(--clr-white);
     border-radius: 20px;
     padding: 20px;
     width: 600px;
@@ -302,7 +321,7 @@ button:hover,
     border-radius: 50%;
 }
 #hp-addtw-close:hover {
-    background-color: rgba(0, 0, 0, 0.24);
+    background-color: var(--clr-trans-black);
     border: none;
     border-radius: 50%;
 }
@@ -330,12 +349,12 @@ button:hover,
     font-size: 18px;
     border: none;
     border-radius: 24px;
-    background-color: #00a3df;
-    color: #ffffff;
+    background-color: var(--clr-primary);
+    color: var(--clr-white);
 }
 #hp-addtw-sub:hover {
-    background-color: #ffffff;
-    color: #00a3df;
+    background-color: var(--clr-white);
+    color: var(--clr-primary);
 }
 #hp-addtw-file {
     display: none;
@@ -349,10 +368,10 @@ button:hover,
 }
 #hp-addtw-file-des {
     font-size: 18px;
-    color: #ff0000;
+    color: var(--clr-danger);
 }
 .hp-tweet-item {
     margin: auto;
-    background-color: #ffffff;
+    background-color: var(--clr-white);
     text-align: center;
 }

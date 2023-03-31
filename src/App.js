@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 // pages & components
-import Hp_foot from "./components/hp_foot";
+import FooterAction from "./components/footer/FooterAction";
 import MainContent from "./components/MainContent";
 import Navbar from "./components/navbar/Navbar";
 import "./index.css";
@@ -10,7 +10,7 @@ function App() {
         <BrowserRouter>
             <Navbar />
             <MainContent />
-            <Hp_foot />
+            <FooterAction />
         </BrowserRouter>
     );
 }

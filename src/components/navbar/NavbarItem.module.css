@@ -11,11 +11,11 @@
 }
 
 .active {
-    color: #00acee;
+    color: var(--clr-primary);
     /* background-color: rgba(0, 0, 0, 0.24); */
 }
 
 .link:hover {
     /* background-color: rgba(0, 0, 0, 0.24); */
-    color: #00acee;
+    color: var(--clr-primary);
 }
