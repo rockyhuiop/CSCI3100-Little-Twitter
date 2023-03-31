@@ -1,10 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
 /* general */
-*{
-    font-family: "Poppins";
-    margin-top: 0px;
+*,
+*::before,
+*::after {
+    /* use save fonts in case Google fails */
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+        "Helvetica Neue", sans-serif;
+
+    /* reset all spacing and all height and width are border height and width */
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
 }
-.row{
+
+.row {
     width: 100%;
 }
 .center {
@@ -14,56 +24,58 @@
     min-height: 100vh;
     width: 100%;
 }
-.center-h{
+.center-h {
     margin: auto;
     width: 200px;
 }
-.right-h{
+.right-h {
     float: right;
     padding: 10px;
     width: 280px;
 }
-.user-icon{
+.user-icon {
     border-radius: 50%;
 }
-.highlight{
-    background-color: rgba(0,0,0,0.24);
+.highlight {
+    background-color: rgba(0, 0, 0, 0.24);
 }
 /* log/reg */
-button, #eye, .label-upload{
+button,
+#eye,
+.label-upload {
     cursor: pointer;
     background-color: #ffffff;
     transition-duration: 0.2s;
 }
 
-button:hover, .label-upload:hover{
+button:hover,
+.label-upload:hover {
     /*
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
     */
-    background-color: rgba(0,0,0,0.24);
+    background-color: rgba(0, 0, 0, 0.24);
 }
 
-.log-form{
+.log-form {
     position: relative;
     padding: 20px;
     border: 2px solid #000000;
     border-radius: 50px;
     width: 500px;
-    
 }
-.log-form .log-box{
+.log-form .log-box {
     position: relative;
     margin: auto;
     padding: 20px;
 }
 
-.log-form #log{
+.log-form #log {
     border-radius: 50px;
     width: 100%;
     background-color: #ffffff;
     font-size: 24px;
 }
-.log-form .log-box label{
+.log-form .log-box label {
     position: absolute;
     left: 30px;
     top: 18px;
@@ -71,9 +83,9 @@ button:hover, .label-upload:hover{
     pointer-events: none;
     font-family: "Poppins";
     font-size: 24px;
-    transition: .25s;
+    transition: 0.25s;
 }
-.log-form .log-box #eye{
+.log-form .log-box #eye {
     position: absolute;
     border-radius: 50%;
     border: none;
@@ -83,29 +95,29 @@ button:hover, .label-upload:hover{
     right: 30px;
     transform: translateY(15px);
 }
-.log-form .log-box #eye:hover, .log-form .log-box #log:hover{
-    background-color: rgba(0,0,0,0.24);
+.log-form .log-box #eye:hover,
+.log-form .log-box #log:hover {
+    background-color: rgba(0, 0, 0, 0.24);
 }
-.log-form input{
+.log-form input {
     width: 95%;
     font-size: 24px;
     padding: 15px 10px 10px 10px;
     outline: none;
 }
-.log-form input:focus{
+.log-form input:focus {
     border: 3px solid #c100d3;
 }
-.log-form input:focus ~ .log-form label{
-    color:  #c100d3;
+.log-form input:focus ~ .log-form label {
+    color: #c100d3;
 }
 .log-form input:focus ~ label,
-.log-form input:not(:placeholder-shown) ~ label{
+.log-form input:not(:placeholder-shown) ~ label {
     transform: scale(0.6) translateX(-32%) translateY(-24%);
-
 }
 
 /* homepage */
-.hp-foot{
+.hp-foot {
     position: sticky;
     bottom: 0px;
     background-color: #00a3df;
@@ -117,87 +129,48 @@ button:hover, .label-upload:hover{
     padding-left: 30px;
 }
 
-.hp-foot button{
+.hp-foot button {
     float: right;
     margin: 0px 10px;
     border-radius: 50px;
     border: none;
     width: auto;
     font-size: 24px;
-
 }
-#hp-foot-log{
+#hp-foot-log {
     background-color: #c100d3;
     color: #ffffff;
 }
-#hp-foot-reg{
+#hp-foot-reg {
     background-color: #ffffff;
 }
-#hp-foot-log:hover{
+#hp-foot-log:hover {
     background-color: #ffffff;
     color: #c100d3;
 }
-#hp-foot-reg:hover{
-    background-color: rgba(0,0,0);
+#hp-foot-reg:hover {
+    background-color: rgba(0, 0, 0);
     color: #ffffff;
 }
-    
-.hp-menu{
-    float: left;
-    width: 300px;
-    padding-left: 23px;
-    height: 100%;
-}
-.hp-main{
+
+.hp-main {
     overflow: hidden;
     width: auto;
     min-height: 100vh;
-    border-left: 2px solid rgba(0,0,0,0.3);
-    border-right: 2px solid rgba(0,0,0,0.3);
+    border-left: 2px solid rgba(0, 0, 0, 0.3);
+    border-right: 2px solid rgba(0, 0, 0, 0.3);
 }
-.hp-main-con{
+.hp-main-con {
     width: 100%;
     word-wrap: break-word;
     overflow-y: auto;
-    
 }
-.hp-rest{
+.hp-rest {
     float: right;
     width: 300px;
     height: 100%;
 }
-.hp-menu-button{
-    text-align: left;
-    border-radius: 50px;
-    border: none;
-    width: 250px;
-    background-color: #ffffff;
-    font-size: 24px;
-    margin: 25px 0px;
-    
-}
-.hp-menu-icon{
-    font-size: 24px;
-    height: 100%;
-    margin: auto;
-    padding-right: 40px;
-    padding-left: 10px;
-
-}
-.hp-logout .hp-menu-button{
-    width: auto;
-    
-    
-}
-.hp-menu-button:hover{
-    background-color: rgba(0,0,0,0.24);
-    box-shadow: none;
-}
-.hp-tweet{
-    background-color: #00a3df;
-    color: #ffffff;
-}
-.hp-logout{
+.hp-logout {
     position: relative;
     cursor: pointer;
     user-select: none;
@@ -206,7 +179,8 @@ button:hover, .label-upload:hover{
 .hp-logout .hp-logout-text {
     visibility: hidden;
     width: 160px;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+        0 17px 50px 0 rgba(0, 0, 0, 0.19);
     background-color: #ffffff;
     color: #ff0000;
     text-align: center;
@@ -217,27 +191,27 @@ button:hover, .label-upload:hover{
     top: 100%;
     left: 50%;
     margin-left: -80px;
-  }
-.hp-logout-text:hover{
+}
+.hp-logout-text:hover {
     background-color: #ff0000;
     color: #ffffff;
 }
 .hp-logout .show {
     visibility: visible;
 }
-.hp-search{
+.hp-search {
     padding: 10px;
     padding-right: 25px;
 }
-.hp-search-box{
+.hp-search-box {
     font-size: 24px;
     border-radius: 30px;
     padding-left: 10px;
     width: 100%;
 }
-.hp-search-button{
+.hp-search-button {
     position: absolute;
-    top:18px;
+    top: 18px;
     right: 330px;
     border: none;
     border-radius: 100%;
@@ -246,40 +220,41 @@ button:hover, .label-upload:hover{
     padding: 0px 0px;
     height: 24px;
 }
-.hp-search-button:hover{
-
-    background-color: rgba(0,0,0,0.24);
+.hp-search-button:hover {
+    background-color: rgba(0, 0, 0, 0.24);
     box-shadow: none;
 }
-.hp-search-tab{
+.hp-search-tab {
     width: 100%;
 }
-.hp-search-tab button{
+.hp-search-tab button {
     width: 50%;
     font-size: 18px;
     border: none;
     float: left;
     background-color: #ffffff;
 }
-.hp-search-tab button:hover{
-    background-color: rgba(0,0,0,0.1);;
+.hp-search-tab button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
-.hp-search-tab button.hp-search-active{
-    background-color: rgba(0,0,0,0.24);
+.hp-search-tab button.hp-search-active {
+    background-color: rgba(0, 0, 0, 0.24);
     font-weight: bold;
 }
-.hp-search-con{
+.hp-search-con {
     display: none;
 }
-.hp-search-con-active{
+.hp-search-con-active {
     display: block;
 }
-.hp-bm-info{
+.hp-bm-info {
     font-size: 36px;
     padding: 10px 20px;
-    background-color: rgba(0,0,0,0.15);
+    background-color: rgba(0, 0, 0, 0.15);
 }
-.hp-addtw,.hp-log,.hp-reg{
+.hp-addtw,
+.hp-log,
+.hp-reg {
     display: none;
     position: fixed;
     z-index: 2;
@@ -287,16 +262,16 @@ button:hover, .label-upload:hover{
     height: 100%;
     top: 0px;
     left: 0px;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     overflow: auto;
 }
-.hp-log-h{
+.hp-log-h {
     min-height: 500px;
 }
-.hp-reg-h{
+.hp-reg-h {
     min-height: 600px;
 }
-.hp-addtw-box{
+.hp-addtw-box {
     display: block;
     background-color: #ffffff;
     border-radius: 20px;
@@ -304,7 +279,8 @@ button:hover, .label-upload:hover{
     width: 500px;
     min-height: 200px;
 }
-.hp-log-box,.hp-reg-box{
+.hp-log-box,
+.hp-reg-box {
     display: block;
     background-color: #ffffff;
     border-radius: 20px;
@@ -312,10 +288,10 @@ button:hover, .label-upload:hover{
     width: 600px;
     height: 500px;
 }
-.hp-reg-box{
+.hp-reg-box {
     height: auto;
 }
-.hp-popup-close{
+.hp-popup-close {
     background-color: transparent;
     float: left;
     font-size: 18px;
@@ -325,32 +301,31 @@ button:hover, .label-upload:hover{
     border: none;
     border-radius: 50%;
 }
-#hp-addtw-close:hover{
-    background-color: rgba(0,0,0,0.24);
+#hp-addtw-close:hover {
+    background-color: rgba(0, 0, 0, 0.24);
     border: none;
     border-radius: 50%;
 }
-#hp-addtw-title{
+#hp-addtw-title {
     float: left;
     font-size: 18px;
     padding-left: 10px;
 }
-#hp-addtw-icon{
+#hp-addtw-icon {
     width: 30px;
     transform: translateY(15px);
     position: absolute;
-    
 }
-#hp-addtw-con{
+#hp-addtw-con {
     resize: none;
     width: 420px;
     margin: 15px 25px;
     transform: translateX(30px);
     min-height: 100px;
     max-height: 300px;
-    border: none; 
+    border: none;
 }
-#hp-addtw-sub{
+#hp-addtw-sub {
     float: right;
     font-size: 18px;
     border: none;
@@ -358,25 +333,25 @@ button:hover, .label-upload:hover{
     background-color: #00a3df;
     color: #ffffff;
 }
-#hp-addtw-sub:hover{
+#hp-addtw-sub:hover {
     background-color: #ffffff;
     color: #00a3df;
 }
-#hp-addtw-file{
+#hp-addtw-file {
     display: none;
 }
-#hp-addtw-file-label{
+#hp-addtw-file-label {
     font-size: 18px;
     width: 28px;
     height: 28px;
     border-radius: 28px;
     padding: 5px;
 }
-#hp-addtw-file-des{
+#hp-addtw-file-des {
     font-size: 18px;
     color: #ff0000;
 }
-.hp-tweet-item{
+.hp-tweet-item {
     margin: auto;
     background-color: #ffffff;
     text-align: center;

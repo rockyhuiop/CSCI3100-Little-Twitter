@@ -1,30 +1,18 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
+import { BrowserRouter } from "react-router-dom";
 // pages & components
-import Homepage from "./pages/homepage"
-import Explore from "./pages/explore"
-import Bookmark_page from "./pages/bookmark_page"
+import Hp_foot from "./components/hp_foot";
+import MainContent from "./components/MainContent";
+import Navbar from "./components/navbar/Navbar";
 import "./index.css";
-function App() {
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route 
-          path="/" 
-          element={<Homepage />} 
-        />
-        <Route 
-          path="/explore" 
-          element={<Explore />} 
-        />
-        <Route 
-          path="/bookmark" 
-          element={<Bookmark_page />} 
-        />
-      </Routes>
-    </BrowserRouter>
-  );
+function App() {
+    return (
+        <BrowserRouter>
+            <Navbar />
+            <MainContent />
+            <Hp_foot />
+        </BrowserRouter>
+    );
 }
 
 export default App;

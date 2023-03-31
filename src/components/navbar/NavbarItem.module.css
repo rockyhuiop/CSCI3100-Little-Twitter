@@ -1,0 +1,21 @@
+.link {
+    display: flex;
+    justify-content: start;
+    gap: 1rem;
+    align-items: center;
+    width: auto;
+
+    /* remove the ugly default styling */
+    color: #44403c;
+    text-decoration: none;
+}
+
+.active {
+    color: #00acee;
+    /* background-color: rgba(0, 0, 0, 0.24); */
+}
+
+.link:hover {
+    /* background-color: rgba(0, 0, 0, 0.24); */
+    color: #00acee;
+}

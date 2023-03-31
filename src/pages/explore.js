@@ -1,22 +1,11 @@
-import { Link } from "react-router-dom"
-import Menu from "../components/menu"
-import Logout from "../components/logout"
-import Filter from "../components/filter"
-import Add_tw from "../components/add_tw"
-import Search from "../components/search"
-import {highlight} from "../script/highlight"
-import React, { useEffect } from 'react'
-import Hp_foot from "../components/hp_foot"
-const Explore = () =>{
-    useEffect(()=>{
-
-        highlight("hp-menu-ex");    
-        
-        }, [])
+import React from "react";
+import Add_tw from "../components/add_tw";
+import Filter from "../components/filter";
+import Hp_foot from "../components/hp_foot";
+import Search from "../components/search";
+const Explore = () => {
     return (
         <>
-            <Menu />
-            <Logout />
             <div className="hp-main">
                 <div className="hp-main-con">
                     <Search />
@@ -26,7 +15,6 @@ const Explore = () =>{
             <Add_tw />
             <Hp_foot />
         </>
-
-    )
-}
+    );
+};
 export default Explore;

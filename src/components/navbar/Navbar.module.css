@@ -1,0 +1,31 @@
+.navbar {
+    width: 300px;
+    padding: 32px 24px;
+
+    /* no matter where the user scrolls it stays at the left */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.branding {
+    color: #00acee;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.branding h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.links {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    /* in figma it is 64px, but I think it is too big in reality */
+    gap: 48px;
+}
