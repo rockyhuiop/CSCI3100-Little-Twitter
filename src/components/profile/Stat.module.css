@@ -1,0 +1,12 @@
+.count {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.stat span + span {
+    margin-left: 8px;
+}
+
+.stat {
+    margin-right: 1rem;
+}

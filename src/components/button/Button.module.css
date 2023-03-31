@@ -1,0 +1,28 @@
+.button {
+    color: var(--clr-white);
+    text-align: center;
+    font-weight: 500;
+    border-radius: 1rem;
+
+    /* clickable */
+    cursor: pointer;
+
+    /* for outlined buttons */
+    border-width: 1px;
+    border-style: solid;
+}
+
+.small {
+    padding: 0.25rem 1.5rem;
+    font-size: 0.75rem;
+}
+
+.medium {
+    padding: 0.5rem 2.5rem;
+    font-size: 1rem;
+}
+
+.large {
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+}

@@ -20,6 +20,7 @@
     font-size: 36px;
     font-weight: bold;
     margin-bottom: 0px;
+    color: var(--clr-primary);
 }
 
 .links {

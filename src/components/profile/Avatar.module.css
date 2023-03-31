@@ -1,0 +1,14 @@
+.avatar {
+    /* how big is the avatar */
+    --perimeter: 196px;
+
+    border: 1px solid var(--clr-border-grey);
+    border-radius: 50%;
+    width: var(--perimeter);
+    height: var(--perimeter);
+
+    /* so that is overlaps with the banner */
+    position: relative;
+    /* only overlap HALF of the circle */
+    bottom: calc(var(--perimeter) / 2);
+}

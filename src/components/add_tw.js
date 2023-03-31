@@ -1,14 +1,16 @@
-import {toggle_div} from "../script/toggle_div"
-import {auto_grow} from "../script/auto_grow"
-const Add_tw = () =>{
-    return(
+import defaultUser from "../assets/user.jpg";
+import { auto_grow } from "../script/auto_grow";
+import { toggle_div } from "../script/toggle_div";
+
+const Add_tw = () => {
+    return (
         <>
             <div className="hp-addtw">
                 <div className="center hp-popup-click">
                     <div className="hp-addtw-box">
                         <div className="row" style={{ height: 24 }}>
-                            <button 
-                                onClick={()=>toggle_div(0,"hp-addtw")} 
+                            <button
+                                onClick={() => toggle_div(0, "hp-addtw")}
                                 className="hp-popup-close"
                             >
                                 <ion-icon name="close-outline" />
@@ -17,18 +19,27 @@ const Add_tw = () =>{
                         </div>
                         <form id="hp-addtw" name="hp-addtw">
                             <div className="row">
-                                <img id="hp-addtw-icon" className="user-icon" src="./media/default.jpg" />
+                                <img
+                                    id="hp-addtw-icon"
+                                    className="user-icon"
+                                    src={defaultUser}
+                                    alt="Avatar of user"
+                                />
                                 <textarea
-                                    onInput={()=>auto_grow("hp-addtw-con")}
+                                    onInput={() => auto_grow("hp-addtw-con")}
                                     placeholder="What's happening?"
                                     id="hp-addtw-con"
                                     name="hp-addtw-con"
-                                    defaultValue={""} 
+                                    defaultValue={""}
                                     autoFocus
                                 />
                             </div>
                             <div className="row">
-                                <input id="hp-addtw-file" name="hp-addtw-file" type="file" />
+                                <input
+                                    id="hp-addtw-file"
+                                    name="hp-addtw-file"
+                                    type="file"
+                                />
                                 <label
                                     className="label-upload"
                                     id="hp-addtw-file-label"
@@ -36,10 +47,12 @@ const Add_tw = () =>{
                                 >
                                     <ion-icon name="image-outline" />
                                 </label>
-                                <span id="hp-addtw-file-des">No media has been chosen</span>
-                                <button 
-                                    id="hp-addtw-sub" 
-                                    type="submit" 
+                                <span id="hp-addtw-file-des">
+                                    No media has been chosen
+                                </span>
+                                <button
+                                    id="hp-addtw-sub"
+                                    type="submit"
                                     value="Submit"
                                 >
                                     Add tweet
@@ -50,6 +63,6 @@ const Add_tw = () =>{
                 </div>
             </div>
         </>
-    )
-}
-export default Add_tw
+    );
+};
+export default Add_tw;

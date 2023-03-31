@@ -1,12 +1,14 @@
-import Search from "./search"
-const Hp_main = () =>{
-    return(
+import tweet from "../assets/tweet.png";
+import Search from "./search";
+
+const Hp_main = () => {
+    return (
         <>
             <Search />
             <div className="hp-tweet-item">
-                <img src="/media/tweet.png" />
+                <img src={tweet} />
             </div>
         </>
-    )
-}
-export default Hp_main
+    );
+};
+export default Hp_main;

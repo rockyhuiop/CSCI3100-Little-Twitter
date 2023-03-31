@@ -3,13 +3,16 @@
     bottom: 0;
     left: 0;
     background-color: var(--clr-primary);
-    color: var(--clr-white);
 
     width: 100vw;
     padding: 1rem 10%;
 
     display: flex;
     justify-content: space-between;
+}
+
+.footer p {
+    color: var(--clr-white);
 }
 
 .button-group {

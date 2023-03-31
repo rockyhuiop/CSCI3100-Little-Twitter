@@ -48,6 +48,21 @@
     --clr-black: #000000;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+input,
+pre,
+code,
+span {
+    color: var(--clr-text);
+}
+
 .row {
     width: 100%;
 }
@@ -148,26 +163,6 @@ button:hover,
 }
 
 /* homepage */
-.hp-foot {
-    position: sticky;
-    bottom: 0px;
-    background-color: var(--clr-primary);
-    color: var(--clr-white);
-    width: auto;
-    height: auto;
-    font-size: 24px;
-    padding: 10px 0px;
-    padding-left: 30px;
-}
-
-.hp-foot button {
-    float: right;
-    margin: 0px 10px;
-    border-radius: 50px;
-    border: none;
-    width: auto;
-    font-size: 24px;
-}
 #hp-foot-log {
     background-color: var(--clr-pink);
     color: var(--clr-white);

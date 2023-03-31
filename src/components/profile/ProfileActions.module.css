@@ -1,0 +1,9 @@
+.group {
+    display: flex;
+    gap: 1rem;
+
+    /* place the buttons at the RIGHT HAND UPPER CORNER */
+    position: absolute;
+    right: 4rem;
+    top: 1rem;
+}
