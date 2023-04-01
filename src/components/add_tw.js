@@ -1,8 +1,13 @@
 import defaultUser from "../assets/default.jpg";
 import { auto_grow } from "../script/auto_grow";
 import { toggle_div } from "../script/toggle_div";
+import {file_path} from "../script/file_path"
+import React, { useEffect } from 'react'
 
 const Add_tw = () => {
+    useEffect(()=>{
+        file_path();
+        }, [])
     return (
         <>
             <div className="hp-addtw">
