@@ -34,7 +34,8 @@ const Login = () =>{
                                             id="eye"
                                         >
                                             <ion-icon 
-                                                id="open" 
+                                                id="open"
+                                                style={{ display: "block" }} 
                                                 name="eye-outline" 
                                             />
                                             <ion-icon

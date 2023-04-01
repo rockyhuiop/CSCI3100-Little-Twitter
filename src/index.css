@@ -129,6 +129,7 @@ button,
     width: 100%;
     background-color: var(--clr-white);
     font-size: 24px;
+    border: 2px solid var(--clr-black);
 }
 .log-form .log-box label {
     position: absolute;
@@ -155,9 +156,10 @@ button,
     background-color: var(--clr-trans-black);
 }
 .log-form input {
-    width: 95%;
+    width: 100%;
     font-size: 24px;
     padding: 15px 10px 10px 10px;
+    border: 2px solid var(--clr-black);
     outline: none;
 }
 .log-form input:focus {
