@@ -6,29 +6,37 @@ import styles from "./Button.module.css";
  * A reusable button component
  *
  * scheme?: what colour scheme to use? (primary, secondary etc)
- * text: button text
+ * children: button text
  * variant?: button style. Outlined or normal button?
  * size?: how big is the button? Supports "small", "medium", "large"
+ * onClick: click event handler
+ * additionalClasses?: optional set of extra class names if needed
  *
  * scheme will default "primary", variant will default "normal",
  * and size will default "medium"
  */
-const Button = ({ scheme, text, variant, size }) => {
-    const style = {};
-
-    if (variant === "outlined") {
-        style.color = `var(--clr-${scheme})`;
-        style.backgroundColor = `var(--clr-white)`;
-    } else {
-        style.backgroundColor = `var(--clr-${scheme})`;
+const Button = ({
+    scheme,
+    children,
+    variant,
+    size,
+    onClick,
+    additionalClasses,
+}) => {
+    if (!scheme) {
+        scheme = "primary";
     }
 
+    const buttonClasses = classnames(
+        styles.button,
+        variant ? styles[`${scheme}-${variant}`] : styles[scheme],
+        styles[size] || styles.medium,
+        additionalClasses || ""
+    );
+
     return (
-        <button
-            className={classnames(styles.button, styles[size || "medium"])}
-            style={style}
-        >
-            {text}
+        <button className={buttonClasses} onClick={onClick}>
+            {children}
         </button>
     );
 };

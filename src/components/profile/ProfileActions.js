@@ -4,8 +4,10 @@ import styles from "./ProfileActions.module.css";
 const ProfileActions = () => {
     return (
         <div className={styles.group}>
-            <Button scheme={"primary"} text={"Follow"} />
-            <Button scheme={"primary"} variant={"outlined"} text={"Edit"} />
+            <Button scheme={"primary"}>Follow</Button>
+            <Button scheme={"primary"} variant={"outlined"}>
+                Edit
+            </Button>
         </div>
     );
 };

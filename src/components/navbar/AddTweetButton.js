@@ -1,16 +1,16 @@
 import { toggle_div } from "../../script/toggle_div";
+import Button from "../button/Button";
 import styles from "./AddTweetButton.module.css";
 
 const AddTweetButton = () => {
     return (
-        <button
+        <Button
             onClick={() => toggle_div(1, "hp-addtw")}
-            type="button"
             id="hp-menu-at"
-            className={styles.button}
+            additionalClasses={styles.special}
         >
-            Add tweet
-        </button>
+            Add Tweet
+        </Button>
     );
 };
 

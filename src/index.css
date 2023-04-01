@@ -23,6 +23,16 @@
     /* use for errors and dangerous actions such as delete */
     --clr-danger: #f43f5e;
 
+    /* a darker variant for main colours */
+    --clr-primary-darker: #0891b2;
+    --clr-secondary-darker: #1c1917;
+    --clr-danger-darker: #be123c;
+
+    /* a lighter variant for main colours */
+    --clr-primary-lighter: #7dd3fc;
+    --clr-secondary-lighter: #d6d3d1;
+    --clr-danger-lighter: #fda4af;
+
     /* an alias for the colour white (currently "true white") */
     --clr-white: #ffffff;
 
@@ -92,14 +102,6 @@ button,
     cursor: pointer;
     background-color: var(--clr-white);
     transition-duration: 0.2s;
-}
-
-button:hover,
-.label-upload:hover {
-    /*
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-    */
-    background-color: var(--clr-trans-black);
 }
 
 .log-form {

@@ -10,12 +10,14 @@
     text-decoration: none;
 }
 
-.active {
+.active svg,
+.active span {
     color: var(--clr-primary);
     /* background-color: rgba(0, 0, 0, 0.24); */
 }
 
-.link:hover {
+.link:hover span,
+.link:hover svg {
     /* background-color: rgba(0, 0, 0, 0.24); */
     color: var(--clr-primary);
 }

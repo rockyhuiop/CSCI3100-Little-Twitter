@@ -6,10 +6,6 @@
 
     /* clickable */
     cursor: pointer;
-
-    /* for outlined buttons */
-    border-width: 1px;
-    border-style: solid;
 }
 
 .small {
@@ -25,4 +21,64 @@
 .large {
     padding: 1rem 3rem;
     font-size: 1.5rem;
+}
+
+.primary {
+    color: var(--clr-white);
+    background-color: var(--clr-primary);
+}
+
+.secondary {
+    color: var(--clr-white);
+    background-color: var(--clr-secondary);
+}
+
+.danger {
+    color: var(--clr-white);
+    background-color: var(--clr-danger);
+}
+
+.primary-outlined {
+    background-color: var(--clr-white);
+    color: var(--clr-primary);
+    border: 1px solid var(--clr-primary);
+}
+
+.secondary-outlined {
+    background-color: var(--clr-white);
+    color: var(--clr-secondary);
+    border: 1px solid var(--clr-secondary);
+}
+
+.danger-outlined {
+    background-color: var(--clr-white);
+    color: var(--clr-danger);
+    border: 1px solid var(--clr-danger);
+}
+
+.primary:hover {
+    background-color: var(--clr-primary-darker);
+}
+
+.secondary:hover {
+    background-color: var(--clr-secondary-darker);
+}
+
+.danger:hover {
+    background-color: var(--clr-danger-darker);
+}
+
+.primary-outlined:hover {
+    background-color: var(--clr-primary);
+    color: var(--clr-white);
+}
+
+.secondary-outlined:hover {
+    background-color: var(--clr-secondary);
+    color: var(--clr-white);
+}
+
+.danger-outlined:hover {
+    background-color: var(--clr-danger);
+    color: var(--clr-white);
 }
