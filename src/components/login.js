@@ -25,11 +25,11 @@ const Login = () =>{
                                         <label htmlFor="">Username</label>
                                     </div>
                                     <div className="log-box">
-                                        <input id="pw" type="password" placeholder=" " required="" />
+                                        <input id="logpw" type="password" placeholder=" " required="" />
                                         <label>Password</label>
                                         <button
-                                            onMouseDown={vis}
-                                            onMouseUp={non_vis}
+                                            onMouseDown={()=>vis("log")}
+                                            onMouseUp={()=>non_vis("log")}
                                             type="button"
                                             id="eye"
                                         >

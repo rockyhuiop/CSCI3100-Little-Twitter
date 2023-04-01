@@ -29,15 +29,15 @@ const Reg = () =>{
                                         <label htmlFor="">E-mail</label>
                                     </div>
                                     <div className="log-box">
-                                        <input id="pw" type="password" placeholder=" " required="" />
+                                        <input id="regpw" type="password" placeholder=" " required="" />
                                         <label>Password</label>
                                     </div>
                                     <div className="log-box">
-                                        <input id="conpw" type="password" placeholder=" " required="" />
+                                        <input id="regconpw" type="password" placeholder=" " required="" />
                                         <label>Confirm Password</label>
                                         <button
-                                            onMouseDown={vis}
-                                            onMouseUp={non_vis}
+                                            onMouseDown={()=>vis("reg")}
+                                            onMouseUp={()=>non_vis("reg")}
                                             type="button"
                                             id="eye"
                                         >
