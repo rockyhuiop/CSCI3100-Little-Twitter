@@ -13,7 +13,7 @@
 }
 
 .table thead th:nth-child(1) {
-    width: 15%;
+    width: 10%;
 }
 
 .table thead th:nth-child(2) {
@@ -25,16 +25,11 @@
 }
 
 .table thead th:nth-child(4) {
-    width: 35%;
+    width: 40%;
 }
 
 .table td,
 .table th {
     padding: 20px;
     font-weight: 500;
-}
-
-.buttons {
-    display: flex;
-    gap: 16px;
 }

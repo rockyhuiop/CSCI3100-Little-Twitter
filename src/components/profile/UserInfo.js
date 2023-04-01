@@ -15,17 +15,17 @@ const UserInfo = ({ user }) => {
     return (
         <div className={styles.info}>
             <div className={styles["avatar-with-name"]}>
-                <Avatar {...user} />
-                <DisplayNameWithHandle {...user} />
+                <Avatar user={user} />
+                <DisplayNameWithHandle user={user} />
             </div>
-            <ProfileActions />
-            <Biography {...user} />
+            <ProfileActions user={user} />
+            <Biography user={user} />
             <div className={styles.stats}>
                 <Stat name={"Following"} count={user.following} />
                 <Stat name={"Followers"} count={user.followers} />
             </div>
-            <FollowInfo {...user} />
-            <Tabs {...user} />
+            <FollowInfo user={user} />
+            <Tabs user={user} />
         </div>
     );
 };

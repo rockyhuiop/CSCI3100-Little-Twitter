@@ -1,6 +1,6 @@
 import styles from "./DisplayNameWithHandle.module.css";
 
-const DisplayNameWithHandle = ({ username, handle }) => {
+const DisplayNameWithHandle = ({ user: { username, handle } }) => {
     return (
         <div>
             <h1 className={styles.username}>{username || "Lorem Ipsum"}</h1>

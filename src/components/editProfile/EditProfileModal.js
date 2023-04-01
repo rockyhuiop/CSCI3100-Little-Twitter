@@ -1,53 +1,44 @@
-import { useContext } from "react";
-import { Camera, X } from "react-feather";
-import { ProfileContext } from "../../pages/Profile";
+import { Camera } from "react-feather";
 import Avatar from "../profile/Avatar";
 import Button from "../reusable/Button";
+import Modal from "../reusable/modal/Modal";
+import ModalBody from "../reusable/modal/ModalBody";
+import ModalCross from "../reusable/modal/ModalCross";
+import ModalHeader from "../reusable/modal/ModalHeader";
 import TextInput from "../reusable/TextInput";
 import styles from "./EditProfileModal.module.css";
 
-const EditProfileModal = ({ username, biography }) => {
-    const { closeEditInfo } = useContext(ProfileContext);
-
-    // The modal has a black overlay outside of the actual modal box
-    // most users expects that when that black overlay is clicked
-    // the modal will be closed
-    const closeIfBlackAreaClicked = (event) => {
-        if (event.target === event.currentTarget) {
-            closeEditInfo();
-        }
-    };
-
+const EditProfileModal = ({ user, onClose, isShowing }) => {
     return (
-        <div className={styles.wrapper} onClick={closeIfBlackAreaClicked}>
-            <div className={styles.modal}>
-                <div className={styles.header}>
-                    <div className={styles.left}>
-                        <X onClick={closeEditInfo} />
-                        <span>Edit Profile</span>
-                    </div>
-                    <Button scheme={"secondary"} onClick={closeEditInfo}>
-                        Save
-                    </Button>
+        <Modal isShowing={isShowing} onClose={onClose}>
+            <ModalHeader>
+                <div className={styles.left}>
+                    <ModalCross />
+                    <span>Edit Profile</span>
                 </div>
+                <Button scheme={"secondary"} onClick={onClose}>
+                    Save
+                </Button>
+            </ModalHeader>
+            <ModalBody>
                 <div className={styles.banner}>
                     <div className={styles.edit}>
                         <Camera />
                     </div>
                 </div>
                 <div className={styles.avatar}>
-                    <Avatar size="smaller" editable={true} />
+                    <Avatar size="smaller" editable={true} user={user} />
                 </div>
                 <form className={styles.form}>
-                    <TextInput label={"Name"} defaultValue={username} />
+                    <TextInput label={"Name"} defaultValue={user.username} />
                     <TextInput
                         label={"Biography"}
                         type={"textarea"}
-                        defaultValue={biography}
+                        defaultValue={user.biography}
                     />
                 </form>
-            </div>
-        </div>
+            </ModalBody>
+        </Modal>
     );
 };
 

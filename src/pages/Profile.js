@@ -1,6 +1,4 @@
-import { createContext, useState } from "react";
-import { createPortal } from "react-dom";
-import EditProfileModal from "../components/editProfile/EditProfileModal";
+import { createContext } from "react";
 import Banner from "../components/profile/Banner";
 import UserInfo from "../components/profile/UserInfo";
 
@@ -26,36 +24,11 @@ export const ProfileContext = createContext({
 });
 
 const Profile = () => {
-    // a state for managing edit profile modal open and close
-    const [editInfoOpened, setEditInfoOpened] = useState(false);
-
-    const openEditInfo = () => {
-        setEditInfoOpened(true);
-    };
-
-    const closeEditInfo = () => {
-        setEditInfoOpened(false);
-    };
-
     return (
         <div>
-            <ProfileContext.Provider
-                value={{
-                    editInfoOpened,
-                    openEditInfo,
-                    closeEditInfo,
-                }}
-            >
-                <Banner user={user} />
-                <UserInfo user={user} />
-                {/* pull the modal out of the profile component */}
-                {editInfoOpened
-                    ? createPortal(
-                          <EditProfileModal {...user} />,
-                          document.body
-                      )
-                    : null}
-            </ProfileContext.Provider>
+            <Banner user={user} />
+            <UserInfo user={user} />
+            {/* pull the modal out of the profile component */}
         </div>
     );
 };

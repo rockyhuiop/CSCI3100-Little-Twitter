@@ -3,7 +3,7 @@ import RepliesTab from "./RepliesTab";
 import styles from "./Tabs.module.css";
 import TweetTab from "./TweetTab";
 
-const Tabs = (user) => {
+const Tabs = ({ user }) => {
     // can either be tweets or replies
     const [currentTab, setCurrentTab] = useState("tweets");
 

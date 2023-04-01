@@ -3,7 +3,7 @@ import { Camera } from "react-feather";
 import defaultUser from "../../assets/default.jpg";
 import styles from "./Avatar.module.css";
 
-const Avatar = ({ avatar, username, size, editable }) => {
+const Avatar = ({ user: { avatar, username }, editable, size }) => {
     if (!size) {
         size = "larger";
     }
