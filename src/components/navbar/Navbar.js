@@ -8,9 +8,7 @@ import {
     User,
 } from "react-feather";
 import { Link } from "react-router-dom";
-// import Login from "../login";
-// import Logout from "../logout";
-// import Reg from "../reg";
+import Add_tw from "../add_tw";
 import AddTweetButton from "./AddTweetButton";
 import styles from "./Navbar.module.css";
 import NavbarItem from "./NavbarItem";
@@ -49,31 +47,31 @@ const links = [
 
 const Navbar = () => {
     return (
-        <div className={styles.navbar}>
-            {/* shows twitter logo and text */}
-            <Link to="/" className={styles.branding}>
-                <Twitter size={36} />
-                <h2>Twitter</h2>
-            </Link>
-            {/* render links */}
-            <div className={styles.links}>
-                {links.map(({ to, icon, name }, index) => {
-                    return (
-                        <NavbarItem
-                            to={to}
-                            icon={icon}
-                            name={name}
-                            key={`nav-item-${index}`}
-                        />
-                    );
-                })}
+        <>
+            <div className={styles.navbar}>
+                {/* shows twitter logo and text */}
+                <Link to="/" className={styles.branding}>
+                    <Twitter size={36} />
+                    <h2>Twitter</h2>
+                </Link>
+                {/* render links */}
+                <div className={styles.links}>
+                    {links.map(({ to, icon, name }, index) => {
+                        return (
+                            <NavbarItem
+                                to={to}
+                                icon={icon}
+                                name={name}
+                                key={`nav-item-${index}`}
+                            />
+                        );
+                    })}
+                </div>
+                {/* actions */}
+                <AddTweetButton />
             </div>
-            {/* actions */}
-            <AddTweetButton />
-            {/* <Login />
-            <Logout />
-            <Reg /> */}
-        </div>
+            <Add_tw />
+        </>
     );
 };
 export default Navbar;
