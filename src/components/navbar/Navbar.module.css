@@ -6,6 +6,9 @@
     position: fixed;
     top: 0;
     left: 0;
+
+    /* add a nice border to separate the main content with itself */
+    border-right: 1px solid var(--clr-border-grey);
 }
 
 .branding {

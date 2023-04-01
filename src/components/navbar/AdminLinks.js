@@ -4,7 +4,7 @@ import NavbarItems from "./NavbarItems";
 
 const adminLinks = [
     {
-        to: "/manage/user",
+        to: "/manage/users",
         icon: Users,
         name: "User Management",
     },

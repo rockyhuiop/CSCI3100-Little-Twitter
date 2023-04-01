@@ -25,27 +25,25 @@ const Navbar = () => {
     };
 
     return (
-        <>
-            <Add_twContext.Provider
-                value={{
-                    Add_twActive,
-                    openAddTw,
-                    closeAddTw,
-                }}
-            >
-                <div className={styles.navbar}>
-                    {/* shows twitter logo and text */}
-                    <Link to="/" className={styles.branding}>
-                        <Twitter size={36} />
-                        <h2>Twitter</h2>
-                    </Link>
-                    <UserLinks />
-                    <AdminLinks />
-                    <AddTweetButton />
-                </div>
-                {Add_twActive ? <Add_tw /> : ""}
-            </Add_twContext.Provider>
-        </>
+        <Add_twContext.Provider
+            value={{
+                Add_twActive,
+                openAddTw,
+                closeAddTw,
+            }}
+        >
+            <div className={styles.navbar}>
+                {/* shows twitter logo and text */}
+                <Link to="/" className={styles.branding}>
+                    <Twitter size={36} />
+                    <h2>Twitter</h2>
+                </Link>
+                <UserLinks />
+                <AdminLinks />
+                <AddTweetButton />
+            </div>
+            {Add_twActive ? <Add_tw /> : ""}
+        </Add_twContext.Provider>
     );
 };
 export default Navbar;
