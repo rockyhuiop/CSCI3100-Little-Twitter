@@ -1,0 +1,28 @@
+.group {
+    margin-bottom: 2rem;
+    width: 90%;
+}
+
+.group label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.group input,
+.group textarea {
+    border-bottom: 3px solid var(--clr-border-grey);
+    outline: none;
+    transition: border-bottom 150ms ease-in 0s;
+    width: 100%;
+
+    font-size: 1.25rem;
+}
+
+.group input:focus,
+.group textarea:focus {
+    border-bottom: 3px solid var(--clr-primary);
+}
+
+.group textarea {
+    resize: none;
+}

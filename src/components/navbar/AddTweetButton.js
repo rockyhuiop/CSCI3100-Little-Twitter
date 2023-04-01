@@ -1,5 +1,5 @@
 import { toggle_div } from "../../script/toggle_div";
-import Button from "../button/Button";
+import Button from "../reusable/Button";
 import styles from "./AddTweetButton.module.css";
 
 const AddTweetButton = () => {

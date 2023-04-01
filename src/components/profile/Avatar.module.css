@@ -1,7 +1,4 @@
 .avatar {
-    /* how big is the avatar */
-    --perimeter: 196px;
-
     border: 1px solid var(--clr-border-grey);
     border-radius: 50%;
     width: var(--perimeter);
@@ -11,4 +8,37 @@
     position: relative;
     /* only overlap HALF of the circle */
     bottom: calc(var(--perimeter) / 2);
+}
+
+.avatar-smaller {
+    --perimeter: 128px;
+}
+
+.avatar-larger {
+    --perimeter: 196px;
+}
+
+.edit {
+    display: inline-block;
+    position: relative;
+    bottom: calc(var(--perimeter) + 32px);
+    left: calc(var(--perimeter) / 2 - 24px);
+
+    background-color: var(--clr-white);
+    border: 1px solid var(--clr-border-grey);
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+}
+
+.edit-smaller {
+    --perimeter: 128px;
+}
+
+.edit-larger {
+    --perimeter: 196px;
 }

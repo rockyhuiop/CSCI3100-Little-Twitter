@@ -1,0 +1,81 @@
+.wrapper {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* transparent black */
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal {
+    background-color: var(--clr-white);
+    border-radius: 1rem;
+
+    width: 80%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+
+    border-bottom: 1px solid var(--clr-border-grey);
+}
+
+.header span {
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+/* the left section of the header */
+.left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.left svg {
+    cursor: pointer;
+}
+
+.banner {
+    background: var(--primary-gradient);
+    width: 100%;
+    height: 256px;
+}
+
+/* move the avatar and the form slightly to the right */
+.avatar,
+.form {
+    margin-left: 1rem;
+}
+
+.avatar {
+    margin-bottom: -2rem;
+}
+
+.banner {
+    bottom: calc(var(--perimeter) + 32px);
+    left: calc(var(--perimeter) / 2 - 24px);
+}
+
+.edit {
+    position: relative;
+    left: calc(50% - 24px);
+    top: calc(50% - 24px);
+
+    background-color: var(--clr-white);
+    border: 1px solid var(--clr-border-grey);
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

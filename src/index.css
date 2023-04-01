@@ -56,6 +56,12 @@
 
     /* an alias for the colour black (currently "true black") */
     --clr-black: #000000;
+
+    --primary-gradient: linear-gradient(
+        90.13deg,
+        var(--clr-primary) 0.1%,
+        rgba(0, 172, 238, 0.75) 92.68%
+    );
 }
 
 h1,
@@ -69,7 +75,8 @@ label,
 input,
 pre,
 code,
-span {
+span,
+textarea {
     color: var(--clr-text);
 }
 
