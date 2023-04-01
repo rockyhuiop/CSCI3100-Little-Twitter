@@ -309,6 +309,35 @@ const RemovedislikeCommentID = async(commentID) => {
     console.log(result)
 }
 
+const FetchFollowing = async(userID) => {
+    const targetUser = await User.findOne({tweetID:userID})
+    const followings = await targetUser.followings
+    return followings
+    
+}
+
+const FetchTweet = async(userID) => {
+    const FetchTweetList = await Tweet.find({CreatorUserID:userID, SuspensionStatus:false})
+    var TweetList =[]
+    var tweet = {}
+    for (let i =0, len = followings.length; i<len; i++){
+        FetchTweetList = await FetchTweet(followings[i])
+        for (let i = 0, len = FetchTweetList.length; i<len; i++){
+            var fetchTweet = FetchTweetList[i]
+            tweet = {
+                CreatorUserID : fetchTweet.CreatorUserID,
+                Content : fetchTweet.Content,
+                LikeCount : fetchTweet.LikeCount,
+                DisLikeCount : fetchTweet.DisLikeCount,
+                ReTweetCount : fetchTweet.ReTweetCount,
+            }
+            TweetList.push(tweet)
+        }
+    }
+    
+    return TweetList
+}
+
 
 
 module.exports = {
@@ -325,4 +354,6 @@ module.exports = {
     EditCommentContent,
     DelComment,
     DelTweet,
+    FetchFollowing,
+    FetchTweet,
 }

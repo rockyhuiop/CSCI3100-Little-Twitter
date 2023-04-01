@@ -1,6 +1,4 @@
 const express = require('express')
-const Tweet = require("../model/Tweet")
-const Comment = require("../model/Comment")
 
 const {
     CreateTweet,
@@ -15,7 +13,10 @@ const {
     EditCommentContent,
     DelComment,
     DelTweet,
+    FetchFollowing,
+    FetchTweet,
 } = require('../controller/tweet')
+const { del } = require('express/lib/application')
 
 
 
@@ -225,9 +226,13 @@ router.delete('/deleteTweet/:tweetID', (req, res) => {
 })
 
 //Display Tweet to User
-router.get('/', (req, res) => {
+router.get('/fetchTweet', (req, res) => {
     (async() => {
-        
+        const userID = req.session.userid
+        const followings = await FetchFollowing(userID)
+       
+        console.log(TweetList)
+        res.status(200).json({message : followings})
     })()
 })
 
