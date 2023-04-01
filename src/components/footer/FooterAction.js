@@ -10,17 +10,18 @@ const FooterAction = () => {
                 <p>Login to enjoy more function</p>
                 <div className={styles["button-group"]}>
                     <button
-                        id="hp-foot-reg"
-                        onClick={() => toggle_div(1, "hp-reg")}
-                    >
-                        Register
-                    </button>
-                    <button
                         id="hp-foot-log"
                         onClick={() => toggle_div(1, "hp-log")}
                     >
                         Login
                     </button>
+                    <button
+                        id="hp-foot-reg"
+                        onClick={() => toggle_div(1, "hp-reg")}
+                    >
+                        Register
+                    </button>
+                    
                 </div>
             </div>
             <Login />
