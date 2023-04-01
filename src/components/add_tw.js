@@ -1,4 +1,4 @@
-import defaultUser from "../assets/user.jpg";
+import defaultUser from "../assets/default.jpg";
 import { auto_grow } from "../script/auto_grow";
 import { toggle_div } from "../script/toggle_div";
 
