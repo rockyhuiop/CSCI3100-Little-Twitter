@@ -282,7 +282,7 @@ button,
 .hp-addtw,
 .hp-log,
 .hp-reg {
-    display: none;
+    display: block;
     position: fixed;
     z-index: 2;
     width: 100%;

@@ -1,8 +1,9 @@
-import {toggle_div} from "../script/toggle_div"
 import { Link } from "react-router-dom";
 import {vis,non_vis} from "../script/log_reg"
-import {auto_grow} from "../script/auto_grow"
+import { useContext } from "react";
+import { FormContext } from "./footer/FooterAction";
 const Login = () =>{
+    const { closeAll, openReg } = useContext(FormContext);
     return(
         <>
             <div className="hp-log">
@@ -10,7 +11,7 @@ const Login = () =>{
                     <div className="hp-log-box">
                         <div className="row" style={{ height: 24 }}>
                             <button 
-                                onClick={()=>toggle_div(0,"hp-log")} 
+                                onClick={closeAll} 
                                 className="hp-popup-close"
                             >
                                 <ion-icon name="close-outline" />
@@ -48,7 +49,7 @@ const Login = () =>{
                                     <div className="log-box">
                                         <button id="log">Login</button>
                                     </div>
-                                    <p>Do not have a account? <Link onClick={()=>{toggle_div(0,"hp-log");toggle_div(1,"hp-reg")}}>Register</Link></p>
+                                    <p>Do not have a account? <Link onClick={openReg}>Register</Link></p>
                                 </form>
                             </div>
                         </div>

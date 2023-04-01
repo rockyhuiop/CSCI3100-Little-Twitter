@@ -2,6 +2,8 @@ import defaultUser from "../assets/default.jpg";
 import { auto_grow } from "../script/auto_grow";
 import { toggle_div } from "../script/toggle_div";
 import React, { useEffect, useState } from 'react'
+import { useContext } from "react";
+import { Add_twContext } from "./navbar/Navbar";
 
 const Add_tw = () => {
     const [file, setFile] = useState("")
@@ -12,6 +14,7 @@ const Add_tw = () => {
             return file.split("\\").slice(-1);
         }
     }
+    const { closeAddTw } = useContext(Add_twContext);
     return (
         <>
             <div className="hp-addtw">
@@ -19,7 +22,7 @@ const Add_tw = () => {
                     <div className="hp-addtw-box">
                         <div className="row" style={{ height: 24 }}>
                             <button
-                                onClick={() => toggle_div(0, "hp-addtw")}
+                                onClick={closeAddTw}
                                 className="hp-popup-close"
                             >
                                 <ion-icon name="close-outline" />
