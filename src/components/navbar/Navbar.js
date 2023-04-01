@@ -1,50 +1,11 @@
-import React from "react";
-import {
-    Bookmark,
-    Hash,
-    Home,
-    MessageSquare,
-    Twitter,
-    User,
-} from "react-feather";
+import React, { createContext, useState } from "react";
+import { Twitter } from "react-feather";
 import { Link } from "react-router-dom";
 import Add_tw from "../add_tw";
 import AddTweetButton from "./AddTweetButton";
+import AdminLinks from "./AdminLinks";
 import styles from "./Navbar.module.css";
-import NavbarItem from "./NavbarItem";
-import { useState, createContext } from 'react'
-
-/**
- * This stores the properties required for each link in the navigation bar
- * Also see `NavbarItem.js` for more details.
- */
-const links = [
-    {
-        to: "/",
-        icon: Home,
-        name: "Homepage",
-    },
-    {
-        to: "/explore",
-        icon: Hash,
-        name: "Explore",
-    },
-    {
-        to: "/bookmark",
-        icon: Bookmark,
-        name: "Bookmark",
-    },
-    {
-        to: "/message",
-        icon: MessageSquare,
-        name: "Message",
-    },
-    {
-        to: "/profile",
-        icon: User,
-        name: "Profile",
-    },
-];
+import UserLinks from "./UserLinks";
 
 export const Add_twContext = createContext({
     Add_twActive: false,
@@ -53,8 +14,8 @@ export const Add_twContext = createContext({
 });
 
 const Navbar = () => {
-    const [Add_twActive, setAdd_twActive] = useState(false)
-    
+    const [Add_twActive, setAdd_twActive] = useState(false);
+
     const openAddTw = () => {
         setAdd_twActive(true);
     };
@@ -62,7 +23,7 @@ const Navbar = () => {
     const closeAddTw = () => {
         setAdd_twActive(false);
     };
-    
+
     return (
         <>
             <Add_twContext.Provider
@@ -78,20 +39,8 @@ const Navbar = () => {
                         <Twitter size={36} />
                         <h2>Twitter</h2>
                     </Link>
-                    {/* render links */}
-                    <div className={styles.links}>
-                        {links.map(({ to, icon, name }, index) => {
-                            return (
-                                <NavbarItem
-                                    to={to}
-                                    icon={icon}
-                                    name={name}
-                                    key={`nav-item-${index}`}
-                                />
-                            );
-                        })}
-                    </div>
-                    {/* actions */}
+                    <UserLinks />
+                    <AdminLinks />
                     <AddTweetButton />
                 </div>
                 {Add_twActive ? <Add_tw /> : ""}

@@ -1,0 +1,13 @@
+.container {
+    border-top: 1px solid var(--clr-border-grey);
+    border-bottom: 1px solid var(--clr-border-grey);
+
+    margin-top: 64px;
+    padding: 12px 0px;
+}
+
+.small {
+    text-transform: capitalize;
+    font-size: 14px;
+    margin-bottom: 12px;
+}

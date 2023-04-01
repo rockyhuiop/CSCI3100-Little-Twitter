@@ -22,11 +22,3 @@
     margin-bottom: 0px;
     color: var(--clr-primary);
 }
-
-.links {
-    margin-top: 64px;
-    display: flex;
-    flex-direction: column;
-    /* in figma it is 64px, but I think it is too big in reality */
-    gap: 48px;
-}
