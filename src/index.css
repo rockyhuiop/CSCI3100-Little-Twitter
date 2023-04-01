@@ -42,9 +42,10 @@
     /* diminished grey for small texts */
     --clr-small-text: #78716c;
 
-    /* the grey colour for texts */
+    /* the grey colour for texts / input background */
     --clr-text: #44403c;
     --clr-text-lighter: #68757e;
+    --clr-text-lightest: #e8eff2;
 
     /* pink colour? */
     --clr-pink: #c100d3;

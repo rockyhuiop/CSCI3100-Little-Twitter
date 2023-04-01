@@ -1,0 +1,28 @@
+.bar {
+    background-color: var(--clr-text-lightest);
+    width: 90%;
+    margin: 48px auto;
+
+    border-radius: 40px;
+    height: 64px;
+
+    padding: 20px 24px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.bar svg {
+    color: var(--clr-text-lighter);
+}
+
+.bar input {
+    flex: 1;
+    height: 64px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: var(--clr-text-lighter);
+    font-size: 24px;
+}
