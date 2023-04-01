@@ -77,7 +77,8 @@ input,
 pre,
 code,
 span,
-textarea {
+textarea,
+table {
     color: var(--clr-text);
 }
 

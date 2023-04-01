@@ -1,0 +1,40 @@
+.table {
+    border: 1px solid var(--clr-border-grey);
+    margin: 3rem 2rem;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    text-align: left;
+    width: 90%;
+}
+
+.table thead th {
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.table thead th:nth-child(1) {
+    width: 15%;
+}
+
+.table thead th:nth-child(2) {
+    width: 25%;
+}
+
+.table thead th:nth-child(3) {
+    width: 25%;
+}
+
+.table thead th:nth-child(4) {
+    width: 35%;
+}
+
+.table td,
+.table th {
+    padding: 20px;
+    font-weight: 500;
+}
+
+.buttons {
+    display: flex;
+    gap: 16px;
+}

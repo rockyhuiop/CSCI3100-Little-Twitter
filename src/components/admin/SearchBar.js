@@ -5,8 +5,12 @@ import styles from "./SearchBar.module.css";
 /**
  *  Custom search input... with a div
  *  used in admin pages
+ *
+ *  placeholder?: placeholder text for the input
+ *  onInputChange: lifting state up
+ *  value: as it is controlled by parent, value is also needed
  */
-const SearchBar = ({ placeholder }) => {
+const SearchBar = ({ placeholder, onInputChange, value }) => {
     const ref = useRef(null);
 
     /*
@@ -24,7 +28,12 @@ const SearchBar = ({ placeholder }) => {
     return (
         <div className={styles.bar} onClick={onClick}>
             <Search />
-            <input placeholder={placeholder} ref={ref} />
+            <input
+                placeholder={placeholder}
+                ref={ref}
+                onChange={(e) => onInputChange(e.target.value)}
+                value={value}
+            />
         </div>
     );
 };
