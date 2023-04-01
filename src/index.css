@@ -175,9 +175,11 @@ button,
 #hp-foot-log {
     background-color: var(--clr-pink);
     color: var(--clr-white);
+    font-size: 18px;
 }
 #hp-foot-reg {
     background-color: var(--clr-white);
+    font-size: 18px;
 }
 #hp-foot-log:hover {
     background-color: var(--clr-white);
