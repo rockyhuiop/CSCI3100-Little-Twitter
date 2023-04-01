@@ -58,7 +58,7 @@ const Reg = () =>{
                                             Register
                                         </button>
                                     </div>
-                                    <p>Already have a account? <Link to="/login">Login</Link></p>
+                                    <p>Already have a account? <Link onClick={()=>{toggle_div(1,"hp-log");toggle_div(0,"hp-reg")}}>Login</Link></p>
                                 </form>
                             </div>
                         </div>

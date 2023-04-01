@@ -48,7 +48,7 @@ const Login = () =>{
                                     <div className="log-box">
                                         <button id="log">Login</button>
                                     </div>
-                                    <p>Do not have a account? <Link to="/reg">Register</Link></p>
+                                    <p>Do not have a account? <Link onClick={()=>{toggle_div(0,"hp-log");toggle_div(1,"hp-reg")}}>Register</Link></p>
                                 </form>
                             </div>
                         </div>
