@@ -15,12 +15,6 @@
     height: 256px;
 }
 
-/* move the avatar and the form slightly to the right */
-.avatar,
-.form {
-    margin-left: 1rem;
-}
-
 .banner {
     bottom: calc(var(--perimeter) + 32px);
     left: calc(var(--perimeter) / 2 - 24px);
@@ -42,6 +36,7 @@
     justify-content: center;
 }
 
+/* there is a lot of space between the displaced avatar and the form */
 .form {
-    margin-top: -6rem;
+    margin-top: -8rem;
 }

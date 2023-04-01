@@ -7,7 +7,7 @@
     /* so that is overlaps with the banner */
     position: relative;
     /* only overlap HALF of the circle */
-    bottom: calc(var(--perimeter) / 2);
+    bottom: calc(var(--perimeter) / 2 + 2rem);
 }
 
 .avatar-smaller {
@@ -21,7 +21,7 @@
 .edit {
     display: inline-block;
     position: relative;
-    bottom: calc(var(--perimeter) + 32px);
+    bottom: calc(var(--perimeter) + 32px + 2rem);
     left: calc(var(--perimeter) / 2 - 24px);
 
     background-color: var(--clr-white);

@@ -20,12 +20,13 @@ const EditProfileModal = ({ user, onClose, isShowing }) => {
                     Save
                 </Button>
             </ModalHeader>
-            <ModalBody>
-                <div className={styles.banner}>
-                    <div className={styles.edit}>
-                        <Camera />
-                    </div>
+            {/* I placed the banner OUTSIDE of the modal body because banner need to have no margin. Noramlly all contents should be inside modal body */}
+            <div className={styles.banner}>
+                <div className={styles.edit}>
+                    <Camera />
                 </div>
+            </div>
+            <ModalBody>
                 <div className={styles.avatar}>
                     <Avatar size="smaller" editable={true} user={user} />
                 </div>

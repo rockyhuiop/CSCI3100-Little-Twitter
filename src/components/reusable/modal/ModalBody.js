@@ -1,7 +1,7 @@
-import { Fragment } from "react";
+import styles from "./ModalBody.module.css";
 
 const ModalBody = ({ children }) => {
-    return <Fragment>{children}</Fragment>;
+    return <div className={styles.body}>{children}</div>;
 };
 
 export default ModalBody;
