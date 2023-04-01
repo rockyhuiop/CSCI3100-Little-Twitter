@@ -1,13 +1,17 @@
 import defaultUser from "../assets/default.jpg";
 import { auto_grow } from "../script/auto_grow";
 import { toggle_div } from "../script/toggle_div";
-import {file_path} from "../script/file_path"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Add_tw = () => {
-    useEffect(()=>{
-        file_path();
-        }, [])
+    const [file, setFile] = useState("")
+    const fileNameShown = ()=>{
+        if (file==""){
+            return "No media has been chosen";
+        } else {
+            return file.split("\\").slice(-1);
+        }
+    }
     return (
         <>
             <div className="hp-addtw">
@@ -42,6 +46,8 @@ const Add_tw = () => {
                             <div className="row">
                                 <input
                                     id="hp-addtw-file"
+                                    onChange={(e) => setFile(e.target.value)} 
+                                    value={file}
                                     name="hp-addtw-file"
                                     type="file"
                                 />
@@ -53,7 +59,7 @@ const Add_tw = () => {
                                     <ion-icon name="image-outline" />
                                 </label>
                                 <span id="hp-addtw-file-des">
-                                    No media has been chosen
+                                    {fileNameShown()}
                                 </span>
                                 <button
                                     id="hp-addtw-sub"
