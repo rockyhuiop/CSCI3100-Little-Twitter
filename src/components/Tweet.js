@@ -33,14 +33,15 @@ const Tweet = ({ tweet }) => {
                 <div className="tweet__container">
                     <div className="tweet__userinfo">
                         <span className="tweet__username">John Doe</span>
-                        <span className="tweet__timestamp">2h ago</span>
+                        <span className="tweet__uid">@johndoe033</span>
+                        <span className="tweet__timestamp">&nbsp;· 2h ago</span>
                     </div>
                     <div className="tweet__content">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </div>
                     <div className="tweet__actions">
                         <div className="tweet__action">
-                            <FontAwesomeIcon icon={faHeart} />
+                            <FontAwesomeIcon icon={faComment} />
                             <span>12</span>
                         </div>
                         <div className="tweet__action">
@@ -48,7 +49,7 @@ const Tweet = ({ tweet }) => {
                             <span>5</span>
                         </div>
                         <div className="tweet__action">
-                            <FontAwesomeIcon icon={faComment} />
+                            <FontAwesomeIcon icon={faHeart} />
                             <span>5</span>
                         </div>
                         <div className="tweet__action">

@@ -166,11 +166,37 @@ button,
     padding: 10px;
     padding-right: 25px;
 }
+label {
+    color: #68757e;
+}
 .hp-search-box {
-    font-size: 24px;
+    background-color: rgba(217, 228, 234, 0.42);
+    font-size: 16px;
     border-radius: 30px;
-    padding-left: 10px;
+    border: 1px solid #cfd9de;
+    padding: 10px 20px;
+    margin-left: 10px;
     width: 100%;
+}
+.hp-search-box-oninput {
+    font-size: 16px;
+    border-radius: 30px;
+    border: 1px solid #00acee;
+    padding: 10px 20px;
+    margin-left: 10px;
+    width: 100%;
+    background-color: #fff;
+}
+.hp-search-box-oninput label {
+    color: #00acee;
+}
+.hp-search-text {
+    font-size: 16px;
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    width: 80%;
+    outline: none;
 }
 .hp-search-button {
     position: absolute;
@@ -216,7 +242,6 @@ button,
     background-color: rgba(0, 0, 0, 0.15);
 }
 .hp-tweet-item {
-    margin: auto;
     background-color: var(--clr-white);
     text-align: center;
 }
