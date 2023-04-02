@@ -1,10 +1,10 @@
-import tweet from "../assets/tweet.png";
 import { useState } from "react";
 import Search from "./search";
-import Tweet from "./Tweet";
+import Tweet from "./tweet/Tweet";
 import "./hp_main.css";
 
 const Hp_main = () => {
+    const donothing = () => {};
     const [tweets, setTweets] = useState([
         {
             id: 1,
