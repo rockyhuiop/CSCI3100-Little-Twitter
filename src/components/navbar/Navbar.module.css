@@ -25,3 +25,51 @@
     margin-bottom: 0px;
     color: var(--clr-primary);
 }
+
+.menu {
+    display: none;
+}
+
+@media (max-width: 960px) {
+    .navbar {
+        background-color: var(--clr-white);
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        width: 100vw;
+        padding: 0;
+    }
+
+    .menu {
+        display: inline-block;
+        height: 2rem;
+        cursor: pointer;
+    }
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 0.5rem 1rem;
+    }
+
+    .branding {
+        display: flex;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .body {
+        padding-left: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--clr-border-grey);
+    }
+}
