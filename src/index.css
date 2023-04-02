@@ -48,7 +48,9 @@
     --clr-text-lightest: #e8eff2;
 
     /* pink colour? */
-    --clr-pink: #c100d3;
+    --clr-pink: #d946ef;
+    --clr-pink-darker: #a21caf;
+    --clr-pink-lighter: #f0abfc;
 
     /* transparent black */
     --clr-darker-trans-black: rgba(0, 0, 0, 0.19);
@@ -111,68 +113,6 @@ button,
     cursor: pointer;
     background-color: var(--clr-white);
     transition-duration: 0.2s;
-}
-
-.log-form {
-    position: relative;
-    padding: 20px;
-    border: 2px solid var(--clr-black);
-    border-radius: 50px;
-    width: 500px;
-}
-.log-form .log-box {
-    position: relative;
-    margin: auto;
-    padding: 20px;
-}
-
-.log-form #log {
-    border-radius: 50px;
-    width: 100%;
-    background-color: var(--clr-white);
-    font-size: 24px;
-    border: 2px solid var(--clr-black);
-}
-.log-form .log-box label {
-    position: absolute;
-    left: 30px;
-    top: 18px;
-    transform: translateY(15px);
-    pointer-events: none;
-    font-family: "Poppins";
-    font-size: 24px;
-    transition: 0.25s;
-}
-.log-form .log-box #eye {
-    position: absolute;
-    border-radius: 50%;
-    border: none;
-    background-color: transparent;
-    font-size: 33px;
-    top: 16px;
-    right: 30px;
-    transform: translateY(15px);
-}
-.log-form .log-box #eye:hover,
-.log-form .log-box #log:hover {
-    background-color: var(--clr-trans-black);
-}
-.log-form input {
-    width: 100%;
-    font-size: 24px;
-    padding: 15px 10px 10px 10px;
-    border: 2px solid var(--clr-black);
-    outline: none;
-}
-.log-form input:focus {
-    border: 3px solid var(--clr-pink);
-}
-.log-form input:focus ~ .log-form label {
-    color: var(--clr-pink);
-}
-.log-form input:focus ~ label,
-.log-form input:not(:placeholder-shown) ~ label {
-    transform: scale(0.6) translateX(-32%) translateY(-24%);
 }
 
 /* homepage */

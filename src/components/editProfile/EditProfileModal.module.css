@@ -11,13 +11,7 @@
 
 .banner {
     background: var(--primary-gradient);
-    width: 100%;
     height: 256px;
-}
-
-.banner {
-    bottom: calc(var(--perimeter) + 32px);
-    left: calc(var(--perimeter) / 2 - 24px);
 }
 
 .edit {

@@ -1,0 +1,46 @@
+.box {
+    position: relative;
+    padding: 1rem 0rem;
+}
+
+.eye {
+    position: absolute;
+    right: 1rem;
+    bottom: 2rem;
+    cursor: pointer;
+    color: var(--clr-text);
+}
+
+.input {
+    width: 100%;
+    font-size: 20px;
+    padding: 15px 10px 10px 10px;
+    border: 2px solid var(--clr-text);
+    border-radius: 12px;
+    outline: none;
+}
+
+.input:focus {
+    border: 2px solid var(--clr-pink);
+}
+
+.label {
+    transform: scale(0.6) translateX(-32%) translateY(-24%);
+    position: absolute;
+    left: 10px;
+    font-size: 20px;
+    pointer-events: none;
+    transition: border 0.25s ease-out 0s;
+}
+
+.input:focus ~ .label {
+    color: var(--clr-pink);
+}
+
+/* This is very cool, but the label will overlap with the text when
+the input is blurred (lose focus) */
+/* .input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+    transform: scale(0.6) translateX(-32%) translateY(-24%);
+    color: var(--clr-pink);
+} */

@@ -1,11 +1,11 @@
 import { Camera } from "react-feather";
 import Avatar from "../profile/Avatar";
 import Button from "../reusable/Button";
+import TextInput from "../reusable/form/TextInput";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
 import ModalCross from "../reusable/modal/ModalCross";
 import ModalHeader from "../reusable/modal/ModalHeader";
-import TextInput from "../reusable/TextInput";
 import styles from "./EditProfileModal.module.css";
 
 const EditProfileModal = ({ user, onClose, isShowing }) => {

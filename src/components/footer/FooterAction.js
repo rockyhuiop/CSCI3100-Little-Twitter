@@ -1,62 +1,53 @@
-import { toggle_div } from "../../script/toggle_div";
-import { useState, createContext } from 'react'
+import Login from "../footerAction/Login";
+import Register from "../footerAction/Register";
+import Button from "../reusable/Button";
+import { useModal } from "../reusable/modal/useModal";
 import styles from "./FooterAction.module.css";
-import Login from "../login";
-import Reg from "../reg";
-
-export const FormContext = createContext({
-    FormActive: "",
-    openLog: () => {},
-    openReg: () => {},
-    closeAll: () => {}
-});
 
 const FooterAction = () => {
-    const [FormActive, setFormActive] = useState("log")
+    const {
+        isShowing: isLogShowing,
+        onClose: onLogClose,
+        onOpen: onLogOpen,
+    } = useModal();
+    const {
+        isShowing: isRegShowing,
+        onClose: onRegClose,
+        onOpen: onRegOpen,
+    } = useModal();
 
-    const openLog = () => {
-        setFormActive("log");
+    const showLogin = () => {
+        onRegClose();
+        onLogOpen();
     };
 
-    const openReg = () => {
-        setFormActive("reg");
-    };
-
-    const closeAll = () => {
-        setFormActive("");
+    const showRegister = () => {
+        onLogClose();
+        onRegOpen();
     };
 
     return (
-        <>
-            <FormContext.Provider
-                value={{
-                    FormActive,
-                    openLog,
-                    openReg,
-                    closeAll
-                }}
-            >
-                <div className={styles.footer}>
-                    <p>Login to enjoy more function</p>
-                    <div className={styles["button-group"]}>
-                        <button
-                            id="hp-foot-log"
-                            onClick={openLog}
-                        >
-                            Login
-                        </button>
-                        <button
-                            id="hp-foot-reg"
-                            onClick={openReg}
-                        >
-                            Register
-                        </button>
-                        
-                    </div>
-                </div>
-                {FormActive=="log" ? <Login /> : FormActive=="reg" ? <Reg /> : ""}
-            </FormContext.Provider>
-        </>
+        <div className={styles.footer}>
+            <p>Login to tweet, comment, follow people and more!</p>
+            <div className={styles["button-group"]}>
+                <Button onClick={onLogOpen} scheme={"secondary"}>
+                    Login
+                </Button>
+                <Button onClick={onRegOpen} scheme={"pink"}>
+                    Register
+                </Button>
+            </div>
+            <Login
+                isShowing={isLogShowing}
+                onClose={onLogClose}
+                showRegister={showRegister}
+            />
+            <Register
+                isShowing={isRegShowing}
+                onClose={onRegClose}
+                showLogin={showLogin}
+            />
+        </div>
     );
 };
 export default FooterAction;
