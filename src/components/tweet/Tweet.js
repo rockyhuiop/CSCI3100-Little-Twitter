@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { faEllipsis, faRetweet } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "@mui/material/IconButton";
+import IconMenu from "../reusable/IconMenu.js";
 
 const Tweet = ({ tweet }) => {
     const [likes, setLikes] = useState(0);
@@ -44,11 +45,7 @@ const Tweet = ({ tweet }) => {
                                 &nbsp;· 2h ago
                             </span>
                         </div>
-                        <div className="menubutton">
-                            <IconButton size="small">
-                                <FontAwesomeIcon icon={faEllipsis} />
-                            </IconButton>
-                        </div>
+                        <IconMenu />
                     </div>
                     <div className="tweet__content">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
