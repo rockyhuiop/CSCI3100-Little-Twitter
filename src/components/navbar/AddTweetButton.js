@@ -1,19 +1,22 @@
-import { toggle_div } from "../../script/toggle_div";
-import { useContext } from "react";
-import { Add_twContext } from "./Navbar";
+import { Fragment } from "react";
 import Button from "../reusable/Button";
+import { useModal } from "../reusable/modal/useModal";
+import AddTweet from "./AddTweet";
 import styles from "./AddTweetButton.module.css";
 
 const AddTweetButton = () => {
-    const { openAddTw } = useContext(Add_twContext);
+    const { isShowing, onClose, onOpen } = useModal();
     return (
-        <Button
-            onClick={openAddTw}
-            id="hp-menu-at"
-            additionalClasses={styles.special}
-        >
-            Add Tweet
-        </Button>
+        <Fragment>
+            <Button
+                onClick={onOpen}
+                id="hp-menu-at"
+                additionalClasses={styles.special}
+            >
+                Add Tweet
+            </Button>
+            <AddTweet isShowing={isShowing} onClose={onClose} />
+        </Fragment>
     );
 };
 

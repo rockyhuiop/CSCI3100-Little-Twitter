@@ -1,5 +1,5 @@
-import Login from "../footerAction/Login";
-import Register from "../footerAction/Register";
+import Login from "../login/Login";
+import Register from "../register/Register";
 import Button from "../reusable/Button";
 import { useModal } from "../reusable/modal/useModal";
 import styles from "./FooterAction.module.css";

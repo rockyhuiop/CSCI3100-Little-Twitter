@@ -84,9 +84,6 @@ table {
     color: var(--clr-text);
 }
 
-.row {
-    width: 100%;
-}
 .center {
     display: flex;
     justify-content: center;
@@ -102,9 +99,6 @@ table {
     float: right;
     padding: 10px;
     width: 280px;
-}
-.user-icon {
-    border-radius: 50%;
 }
 /* log/reg */
 button,
@@ -220,105 +214,6 @@ button,
     font-size: 36px;
     padding: 10px 20px;
     background-color: rgba(0, 0, 0, 0.15);
-}
-.hp-addtw,
-.hp-log,
-.hp-reg {
-    display: block;
-    position: fixed;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    background-color: rgba(0, 0, 0, 0.5);
-    overflow: auto;
-}
-.hp-log-h {
-    min-height: 500px;
-}
-.hp-reg-h {
-    min-height: 600px;
-}
-.hp-addtw-box {
-    display: block;
-    background-color: var(--clr-white);
-    border-radius: 20px;
-    padding: 20px;
-    width: 500px;
-    min-height: 200px;
-}
-.hp-log-box,
-.hp-reg-box {
-    display: block;
-    background-color: var(--clr-white);
-    border-radius: 20px;
-    padding: 20px;
-    width: 600px;
-    height: 500px;
-}
-.hp-reg-box {
-    height: auto;
-}
-.hp-popup-close {
-    background-color: transparent;
-    float: left;
-    font-size: 18px;
-    padding: 0px;
-    width: 24px;
-    height: 24px;
-    border: none;
-    border-radius: 50%;
-}
-#hp-addtw-close:hover {
-    background-color: var(--clr-trans-black);
-    border: none;
-    border-radius: 50%;
-}
-#hp-addtw-title {
-    float: left;
-    font-size: 18px;
-    padding-left: 10px;
-}
-#hp-addtw-icon {
-    width: 30px;
-    transform: translateY(15px);
-    position: absolute;
-}
-#hp-addtw-con {
-    resize: none;
-    width: 420px;
-    margin: 15px 25px;
-    transform: translateX(30px);
-    min-height: 100px;
-    max-height: 300px;
-    border: none;
-}
-#hp-addtw-sub {
-    float: right;
-    font-size: 18px;
-    border: none;
-    border-radius: 24px;
-    background-color: var(--clr-primary);
-    color: var(--clr-white);
-}
-#hp-addtw-sub:hover {
-    background-color: var(--clr-white);
-    color: var(--clr-primary);
-}
-#hp-addtw-file {
-    display: none;
-}
-#hp-addtw-file-label {
-    font-size: 18px;
-    width: 28px;
-    height: 28px;
-    border-radius: 28px;
-    padding: 5px;
-}
-#hp-addtw-file-des {
-    font-size: 18px;
-    color: var(--clr-danger);
 }
 .hp-tweet-item {
     margin: auto;
