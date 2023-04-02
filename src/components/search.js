@@ -17,7 +17,7 @@ const Search = () => {
             <div className="hp-search">
                 <form action="">
                     <div className={onInput}>
-                        <label for="search">
+                        <label htmlFor="search">
                             <FontAwesomeIcon icon={faSearch} />
                         </label>
                         <input
