@@ -11,7 +11,7 @@ const adminLinks = [
     {
         to: "/manage/tweets",
         icon: MessageSquare,
-        name: "Message Managment",
+        name: "Tweets Managment",
     },
 ];
 
