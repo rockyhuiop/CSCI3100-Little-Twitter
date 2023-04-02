@@ -37,7 +37,7 @@ const FancyInput = ({ placeholder, required, label, name, type }) => {
     return (
         <div className={styles.box}>
             <input
-                type="text"
+                type={type}
                 placeholder={placeholder}
                 required={required}
                 name={name}

@@ -23,17 +23,18 @@ const Reg = ({ onClose, isShowing, showLogin }) => {
                     <FancyInput
                         label={"Username"}
                         name="username"
+                        type="text"
                         placeholder={"Enter username..."}
                     />
                     <FancyInput
                         label={"E-mail"}
                         name="email"
+                        type="email"
                         placeholder={"Enter email..."}
                     />
                     <FancyInput
                         label="Password"
                         name="password"
-                        password="password"
                         type="password"
                         placeholder={"Enter password..."}
                     />

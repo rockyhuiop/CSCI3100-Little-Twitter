@@ -23,6 +23,7 @@ const Login = ({ isShowing, onClose, showRegister }) => {
                     <FancyInput
                         label={"Username"}
                         name="username"
+                        type="text"
                         placeholder={"Enter username..."}
                     />
                     <FancyInput
