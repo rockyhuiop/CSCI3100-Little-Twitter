@@ -76,7 +76,7 @@
 }
 
 .primary:hover {
-    background-color: var(--clr-primary-darker);
+    background-color: #338bd7;
 }
 
 .secondary:hover {

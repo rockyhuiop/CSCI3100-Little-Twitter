@@ -22,14 +22,16 @@ const Tweet = ({ tweet }) => {
     };
 
     return (
-        <div className="tweet">
+        <a href="#" className="tweet">
             <div className="tweet__header">
                 <div className="tweet__headercontainer">
-                    <img
-                        src="https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png"
-                        alt="Avatar"
-                        className="tweet__avatar"
-                    />
+                    <a href="/profile">
+                        <img
+                            src="https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png"
+                            alt="Avatar"
+                            className="tweet__avatar"
+                        />
+                    </a>
                 </div>
                 <div className="tweet__container">
                     <div className="tweet__title">
@@ -42,7 +44,7 @@ const Tweet = ({ tweet }) => {
                                 &nbsp;· 2h ago
                             </span>
                         </div>
-                        <div>
+                        <div className="menubutton">
                             <IconButton size="small">
                                 <FontAwesomeIcon icon={faEllipsis} />
                             </IconButton>
@@ -79,7 +81,7 @@ const Tweet = ({ tweet }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     );
 };
 

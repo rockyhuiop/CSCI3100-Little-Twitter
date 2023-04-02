@@ -1,9 +1,9 @@
 .special {
-    margin-top: 1rem;
-
-    font-size: 20px;
+    margin-top: 2rem;
+    border-radius: 50px;
+    font-size: 16px;
     padding: 0.75rem 3.5rem;
-    box-shadow: 0px 1px 8px var(--clr-lighter-trans-black);
+    box-shadow: 0px 0px 4px var(--clr-lighter-trans-black);
 }
 
 @media (max-width: 960px) {
