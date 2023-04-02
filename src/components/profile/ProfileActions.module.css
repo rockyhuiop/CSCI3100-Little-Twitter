@@ -7,3 +7,13 @@
     right: 4rem;
     top: 1rem;
 }
+
+/* This is really a magic number. I probably need to tune it according to the longest name */
+@media (max-width: 1440px) {
+    .group {
+        position: relative;
+        right: 0;
+        top: 0;
+        margin: 0.5rem 0;
+    }
+}

@@ -11,7 +11,7 @@ export const ModalContext = createContext({
  * onClose: what to do when the modal closes
  * isShowing: is the modal showing?
  */
-const Modal = ({ onClose, isShowing, children }) => {
+const Modal = ({ onClose, isShowing, children, width }) => {
     // The modal has a black overlay outside of the actual modal box
     // most users expects that when that black overlay is clicked
     // the modal will be closed
@@ -49,7 +49,14 @@ const Modal = ({ onClose, isShowing, children }) => {
             }}
         >
             <div className={styles.wrapper} onClick={closeIfBlackAreaClicked}>
-                <div className={styles.modal}>{children}</div>
+                <div
+                    className={styles.modal}
+                    style={{
+                        maxWidth: width || "80%",
+                    }}
+                >
+                    {children}
+                </div>
             </div>
         </ModalContext.Provider>,
         document.body

@@ -15,7 +15,7 @@ const UserInfo = ({ user }) => {
     return (
         <div className={styles.info}>
             <div className={styles["avatar-with-name"]}>
-                <Avatar user={user} />
+                <Avatar user={user} reduceMargin={true} />
                 <DisplayNameWithHandle user={user} />
             </div>
             <ProfileActions user={user} />

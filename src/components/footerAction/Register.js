@@ -7,7 +7,7 @@ import FooterActionForm from "./FooterActionForm";
 
 const Reg = ({ onClose, isShowing, showLogin }) => {
     return (
-        <Modal isShowing={isShowing} onClose={onClose}>
+        <Modal isShowing={isShowing} onClose={onClose} width={"420px"}>
             <ModalHeader>
                 <ModalCross />
             </ModalHeader>

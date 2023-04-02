@@ -10,6 +10,12 @@
     bottom: calc(var(--perimeter) / 2 + 2rem);
 }
 
+@media (max-width: 1280px) {
+    .reduce-margin {
+        margin-bottom: -8rem;
+    }
+}
+
 .avatar-smaller {
     --perimeter: 128px;
 }

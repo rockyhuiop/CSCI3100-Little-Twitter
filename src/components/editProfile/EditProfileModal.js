@@ -10,7 +10,7 @@ import styles from "./EditProfileModal.module.css";
 
 const EditProfileModal = ({ user, onClose, isShowing }) => {
     return (
-        <Modal isShowing={isShowing} onClose={onClose}>
+        <Modal isShowing={isShowing} onClose={onClose} width={"640px"}>
             <ModalHeader>
                 <div className={styles.left}>
                     <ModalCross />

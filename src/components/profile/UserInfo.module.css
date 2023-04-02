@@ -15,3 +15,10 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+@media (max-width: 1280px) {
+    .avatar-with-name {
+        flex-direction: column;
+        margin-bottom: 0rem;
+    }
+}

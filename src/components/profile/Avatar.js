@@ -3,12 +3,21 @@ import { Camera } from "react-feather";
 import defaultUser from "../../assets/default.jpg";
 import styles from "./Avatar.module.css";
 
-const Avatar = ({ user: { avatar, username }, editable, size }) => {
+const Avatar = ({
+    user: { avatar, username },
+    editable,
+    size,
+    reduceMargin,
+}) => {
     if (!size) {
         size = "larger";
     }
 
-    const className = classnames(styles.avatar, styles[`avatar-${size}`]);
+    const className = classnames(
+        styles.avatar,
+        styles[`avatar-${size}`],
+        reduceMargin ? styles["reduce-margin"] : ""
+    );
     const editClassName = classnames(styles.edit, styles[`edit-${size}`]);
 
     return (

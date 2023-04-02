@@ -3,17 +3,18 @@
     bottom: 0;
     left: 0;
     background-color: var(--clr-primary);
-    font-size: 24px;
 
     width: 100vw;
     padding: 1rem 10%;
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .footer p {
     color: var(--clr-white);
+    font-size: 24px;
 }
 
 .button-group {
@@ -24,4 +25,14 @@
 .button-group button {
     border-radius: 50px;
     padding: 0.5rem 1rem;
+}
+
+@media (max-width: 960px) {
+    .footer {
+        padding: 0.25rem 5%;
+    }
+
+    .footer p {
+        font-size: 1rem;
+    }
 }
