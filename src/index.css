@@ -181,14 +181,14 @@ label {
 .hp-search-box-oninput {
     font-size: 16px;
     border-radius: 30px;
-    border: 1px solid #00acee;
+    border: 1px solid var(--clr-primary);
     padding: 10px 20px;
     margin-left: 10px;
     width: 100%;
     background-color: #fff;
 }
 .hp-search-box-oninput label {
-    color: #00acee;
+    color: var(--clr-primary);
 }
 .hp-search-text {
     font-size: 16px;
@@ -237,9 +237,9 @@ label {
     display: block;
 }
 .hp-bm-info {
-    font-size: 36px;
+    font-size: 22px;
+    font-weight: bold;
     padding: 10px 20px;
-    background-color: rgba(0, 0, 0, 0.15);
 }
 .hp-tweet-item {
     background-color: var(--clr-white);
