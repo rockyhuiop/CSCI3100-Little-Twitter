@@ -1,6 +1,7 @@
 .navbar {
     width: 300px;
     padding: 32px 24px;
+    height: 100%;
 
     /* no matter where the user scrolls it stays at the left */
     position: fixed;
