@@ -231,9 +231,6 @@ label {
     font-weight: bold;
 }
 .hp-search-con {
-    display: none;
-}
-.hp-search-con-active {
     display: block;
 }
 .hp-bm-info {
