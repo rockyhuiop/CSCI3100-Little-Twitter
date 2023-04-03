@@ -213,26 +213,6 @@ label {
     background-color: var(--clr-trans-black);
     box-shadow: none;
 }
-.hp-search-tab {
-    width: 100%;
-}
-.hp-search-tab button {
-    width: 50%;
-    font-size: 18px;
-    border: none;
-    float: left;
-    background-color: var(--clr-white);
-}
-.hp-search-tab button:hover {
-    background-color: var(--clr-lighter-trans-black);
-}
-.hp-search-tab button.hp-search-active {
-    background-color: var(--clr-trans-black);
-    font-weight: bold;
-}
-.hp-search-con {
-    display: block;
-}
 .hp-tweet-item {
     background-color: var(--clr-white);
     text-align: center;

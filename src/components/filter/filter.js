@@ -1,5 +1,6 @@
-import Tweet from "./tweet/Tweet";
+import Tweet from "../tweet/Tweet";
 import { useState } from "react";
+import styles from "./filter.module.css"
 
 const Filter = () => {
     const [ tab, setTab] = useState(0)
@@ -24,7 +25,7 @@ const Filter = () => {
         },
     ]);
     const tabCon =[
-        <div className="hp-search-con">
+        <div className={styles.con}>
             <div className="hp-tweet-item">
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.id} tweet={tweet} />
@@ -32,7 +33,7 @@ const Filter = () => {
             </div>
         </div>
         ,
-        <div className="hp-search-con">
+        <div className={styles.con}>
             <div className="hp-tweet-item">
                 second tab test
             </div>
@@ -40,17 +41,17 @@ const Filter = () => {
     ]
     return (
         <>
-            <div className="hp-search-tab">
+            <div className={styles.tab}>
                 <button
                     id="hp-search-tab-po"
                     onClick={() => setTab(0)}
-                    className={tab==0 ? "hp-search-active" : ""}
+                    className={tab==0 ? styles.active : ""}
                 >
                     Popular
                 </button>
                 <button id="hp-search-tab-re" 
                     onClick={() => setTab(1)}
-                    className={tab==1 ? "hp-search-active" : ""}
+                    className={tab==1 ? styles.active : ""}
                 >
                     Recent
                 </button>

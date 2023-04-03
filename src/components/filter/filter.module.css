@@ -1,0 +1,20 @@
+.tab {
+    width: 100%;
+}
+.tab button {
+    width: 50%;
+    font-size: 20px;
+    border: none;
+    float: left;
+    background-color: var(--clr-white);
+}
+.tab button:hover {
+    background-color: var(--clr-lighter-trans-black);
+}
+.tab button.active {
+    background-color: var(--clr-trans-black);
+    font-weight: bold;
+}
+.con {
+    display: block;
+}

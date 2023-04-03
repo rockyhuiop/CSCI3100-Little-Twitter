@@ -1,5 +1,5 @@
 import React from "react";
-import Filter from "../components/filter";
+import Filter from "../components/filter/filter";
 import Search from "../components/search";
 
 const Explore = () => {
