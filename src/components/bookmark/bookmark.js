@@ -18,11 +18,9 @@ const Bookmark = () => {
     return (
         <>
             <div className={styles.title}>Bookmarks</div>
-            <div className="hp-tweet-item">
-                {tweets.map((tweet) => (
-                    <Tweet key={tweet.id} tweet={tweet} />
-                ))}
-            </div>
+            {tweets.map((tweet) => (
+                <Tweet key={tweet.id} tweet={tweet} />
+            ))}
         </>
     );
 };

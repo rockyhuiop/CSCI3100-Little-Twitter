@@ -26,17 +26,13 @@ const Filter = () => {
     ]);
     const tabCon =[
         <div className={styles.con}>
-            <div className="hp-tweet-item">
-                {tweets.map((tweet) => (
-                    <Tweet key={tweet.id} tweet={tweet} />
-                ))}
-            </div>
+            {tweets.map((tweet) => (
+                <Tweet key={tweet.id} tweet={tweet} />
+            ))}
         </div>
         ,
-        <div className={styles.con}>
-            <div className="hp-tweet-item">
-                second tab test
-            </div>
+        <div className={styles.con}>          
+            second tab test
         </div>
     ]
     return (
