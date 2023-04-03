@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Search from "./search";
+import Search from "./search/search";
 import Tweet from "./tweet/Tweet";
 import "./hp_main.css";
 

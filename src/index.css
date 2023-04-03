@@ -164,56 +164,8 @@ button,
     visibility: visible;
 }
 */
-.hp-search {
-    padding: 10px;
-    padding-right: 25px;
-}
 label {
     color: #68757e;
-}
-.hp-search-box {
-    background-color: rgba(217, 228, 234, 0.42);
-    font-size: 16px;
-    border-radius: 30px;
-    border: 1px solid #cfd9de;
-    padding: 10px 20px;
-    margin-left: 10px;
-    width: 100%;
-}
-.hp-search-box-oninput {
-    font-size: 16px;
-    border-radius: 30px;
-    border: 1px solid var(--clr-primary);
-    padding: 10px 20px;
-    margin-left: 10px;
-    width: 100%;
-    background-color: #fff;
-}
-.hp-search-box-oninput label {
-    color: var(--clr-primary);
-}
-.hp-search-text {
-    font-size: 16px;
-    margin-left: 10px;
-    background-color: transparent;
-    border: none;
-    width: 80%;
-    outline: none;
-}
-.hp-search-button {
-    position: absolute;
-    top: 14px;
-    right: 32px;
-    border: none;
-    border-radius: 100%;
-    background-color: transparent;
-    font-size: 24px;
-    padding: 0px 0px;
-    height: 24px;
-}
-.hp-search-button:hover {
-    background-color: var(--clr-trans-black);
-    box-shadow: none;
 }
 .hp-tweet-item {
     background-color: var(--clr-white);

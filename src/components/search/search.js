@@ -1,20 +1,21 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import styles from "./search.module.css";
 
 const Search = () => {
-    const [onInput, setOnInput] = useState("hp-search-box");
+    const [onInput, setOnInput] = useState(styles.box);
 
     const handleOnInput = () => {
-        setOnInput("hp-search-box-oninput");
+        setOnInput(styles.box+" "+styles.oninput);
     };
     const handleOnBlur = () => {
-        setOnInput("hp-search-box");
+        setOnInput(styles.box);
     };
 
     return (
         <>
-            <div className="hp-search">
+            <div className={styles.search}>
                 <form action="">
                     <div className={onInput}>
                         <label htmlFor="search">
@@ -22,7 +23,7 @@ const Search = () => {
                         </label>
                         <input
                             id="search"
-                            className="hp-search-text"
+                            className={styles.text}
                             type="text"
                             placeholder="Search Twitter"
                             name="search"
@@ -31,7 +32,7 @@ const Search = () => {
                         />
                     </div>
 
-                    <button className="hp-search-button" type="submit">
+                    <button className={styles.button} type="submit">
                         <ion-icon name="search-outline" />
                     </button>
                 </form>
