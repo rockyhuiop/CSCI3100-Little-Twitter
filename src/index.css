@@ -233,11 +233,6 @@ label {
 .hp-search-con {
     display: block;
 }
-.hp-bm-info {
-    font-size: 22px;
-    font-weight: bold;
-    padding: 10px 20px;
-}
 .hp-tweet-item {
     background-color: var(--clr-white);
     text-align: center;

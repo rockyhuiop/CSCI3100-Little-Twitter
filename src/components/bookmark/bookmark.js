@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Tweet from "./tweet/Tweet";
+import styles from "./bookmark.module.css"
+import Tweet from "../tweet/Tweet";
 
 const Bookmark = () => {
     const [tweets, setTweets] = useState([
@@ -16,7 +17,7 @@ const Bookmark = () => {
     ]);
     return (
         <>
-            <div className="hp-bm-info">Bookmarks</div>
+            <div className={styles.title}>Bookmarks</div>
             <div className="hp-tweet-item">
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.id} tweet={tweet} />
