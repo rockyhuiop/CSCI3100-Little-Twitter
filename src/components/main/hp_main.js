@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Search from "./search/search";
-import Tweet from "./tweet/Tweet";
-import "./hp_main.css";
+import Search from "../search/search";
+import Tweet from "../tweet/Tweet";
+import styles from "./hp_main.module.css";
 
 const Hp_main = () => {
     const donothing = () => {};
@@ -27,9 +27,9 @@ const Hp_main = () => {
     ]);
     return (
         <>
-            <div className="container">
-                <div className="content">
-                    <div className="header">
+            <div className={styles.container}>
+                <div className={styles.content}>
+                    <div className={styles.header}>
                         <h3>Home</h3>
                     </div>
 
@@ -39,7 +39,7 @@ const Hp_main = () => {
                         ))}
                     </div>
                 </div>
-                <div className="searchBar">
+                <div className={styles.searchBar}>
                     <Search />
                 </div>
             </div>
