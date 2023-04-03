@@ -83,6 +83,9 @@ textarea,
 table {
     color: var(--clr-text);
 }
+button{
+    cursor: pointer;
+}
 /*
 .hp-logout {
     position: relative;
