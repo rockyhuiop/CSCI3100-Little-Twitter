@@ -83,15 +83,6 @@ textarea,
 table {
     color: var(--clr-text);
 }
-/* log/reg */
-button,
-#eye,
-.label-upload {
-    cursor: pointer;
-    background-color: var(--clr-white);
-    transition-duration: 0.2s;
-}
-
 /*
 .hp-logout {
     position: relative;
