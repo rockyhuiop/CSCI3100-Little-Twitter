@@ -133,6 +133,7 @@ button,
     width: 300px;
     height: 100%;
 }
+/*
 .hp-logout {
     position: relative;
     cursor: pointer;
@@ -162,6 +163,7 @@ button,
 .hp-logout .show {
     visibility: visible;
 }
+*/
 .hp-search {
     padding: 10px;
     padding-right: 25px;
