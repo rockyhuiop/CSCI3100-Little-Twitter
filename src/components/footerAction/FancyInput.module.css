@@ -25,12 +25,12 @@
 }
 
 .label {
-    transform: scale(0.6) translateX(-32%) translateY(-24%);
+    transform: scale(1) translateX(0) translateY(50%);
     position: absolute;
     left: 10px;
     font-size: 20px;
     pointer-events: none;
-    transition: border 0.25s ease-out 0s;
+    transition: border 0.25s ease-out 0s, transform 0.2s;
 }
 
 .input:focus ~ .label {
@@ -39,8 +39,7 @@
 
 /* This is very cool, but the label will overlap with the text when
 the input is blurred (lose focus) */
-/* .input:focus ~ .label,
+.input:focus ~ .label,
 .input:not(:placeholder-shown) ~ .label {
     transform: scale(0.6) translateX(-32%) translateY(-24%);
-    color: var(--clr-pink);
-} */
+} 
