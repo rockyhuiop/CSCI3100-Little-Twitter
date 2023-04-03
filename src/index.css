@@ -83,23 +83,6 @@ textarea,
 table {
     color: var(--clr-text);
 }
-
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
-}
-.center-h {
-    margin: auto;
-    width: 200px;
-}
-.right-h {
-    float: right;
-    padding: 10px;
-    width: 280px;
-}
 /* log/reg */
 button,
 #eye,
@@ -109,30 +92,6 @@ button,
     transition-duration: 0.2s;
 }
 
-/* homepage */
-#hp-foot-log {
-    background-color: var(--clr-pink);
-    color: var(--clr-white);
-    font-size: 18px;
-}
-#hp-foot-reg {
-    background-color: var(--clr-white);
-    font-size: 18px;
-}
-#hp-foot-log:hover {
-    background-color: var(--clr-white);
-    color: var(--clr-pink);
-}
-#hp-foot-reg:hover {
-    background-color: var(--clr-black);
-    color: var(--clr-white);
-}
-
-.hp-rest {
-    float: right;
-    width: 300px;
-    height: 100%;
-}
 /*
 .hp-logout {
     position: relative;
