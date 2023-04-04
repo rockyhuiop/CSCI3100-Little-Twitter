@@ -86,37 +86,6 @@ table {
 button{
     cursor: pointer;
 }
-/*
-.hp-logout {
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-    float: right;
-}
-.hp-logout .hp-logout-text {
-    visibility: hidden;
-    width: 160px;
-    box-shadow: 0 12px 16px 0 var(--clr-trans-black),
-        0 17px 50px 0 var(--clr-lighter-trans-black);
-    background-color: var(--clr-white);
-    color: var(--clr-danger);
-    text-align: center;
-    border-radius: 16px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    top: 100%;
-    left: 50%;
-    margin-left: -80px;
-}
-.hp-logout-text:hover {
-    background-color: var(--clr-danger);
-    color: var(--clr-white);
-}
-.hp-logout .show {
-    visibility: visible;
-}
-*/
 label {
     color: #68757e;
 }
