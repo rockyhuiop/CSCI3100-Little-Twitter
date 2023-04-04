@@ -1,6 +1,6 @@
 .link {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     gap: 1rem;
     align-items: center;
     width: auto;

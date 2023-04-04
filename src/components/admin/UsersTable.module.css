@@ -4,7 +4,10 @@
     padding: 1rem 2rem;
     border-radius: 1rem;
     text-align: left;
-    width: 90%;
+
+    /* prevent overflowing the main content div */
+    table-layout: fixed;
+    width: 95%;
 }
 
 .table thead th {
@@ -32,4 +35,37 @@
 .table th {
     padding: 20px;
     font-weight: 500;
+}
+
+@media (max-width: 640px) {
+    .table {
+        font-size: 16px;
+        margin: 1rem;
+    }
+
+    .table thead th {
+        font-size: 12px;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .table thead th:nth-child(4) {
+        width: 10%;
+    }
+
+    .table thead th:nth-child(3) {
+        width: 35%;
+    }
+
+    .table thead th:nth-child(1) {
+        width: 15%;
+    }
+
+    .table thead th:nth-child(2) {
+        width: 25%;
+    }
 }

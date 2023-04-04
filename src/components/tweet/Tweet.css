@@ -32,7 +32,7 @@ a:link {
 .tweet__header {
     display: flex;
     justify-content: flex-start;
-    align-items: start;
+    align-items: flex-start;
     margin-bottom: 8px;
 }
 .tweet__headercontainer {
@@ -52,7 +52,7 @@ a:link {
     flex-direction: column;
     justify-content: flex-start;
     flex-grow: 1;
-    align-items: start;
+    align-items: flex-start;
     padding: 0 8px;
     margin-bottom: 8px;
 }

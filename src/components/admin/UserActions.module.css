@@ -1,4 +1,19 @@
-.buttons {
+.large {
     display: flex;
     gap: 12px;
+    flex-wrap: wrap;
+}
+
+.small {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .small {
+        display: block;
+    }
+
+    .large {
+        display: none;
+    }
 }

@@ -1,9 +1,10 @@
 import {
+    faBookmark,
     faComment,
     faHeart,
     faShareFromSquare,
 } from "@fortawesome/free-regular-svg-icons";
-import { faRetweet } from "@fortawesome/free-solid-svg-icons";
+import { faRetweet, faUserXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IconButton from "@mui/material/IconButton";
 import React, { useState } from "react";
@@ -45,7 +46,15 @@ const Tweet = ({ tweet }) => {
                                 &nbsp;· 2h ago
                             </span>
                         </div>
-                        <IconMenu />
+                        <IconMenu
+                            clickHandlers={[null, null]}
+                            icons={[
+                                <FontAwesomeIcon icon={faUserXmark} />,
+                                <FontAwesomeIcon icon={faBookmark} />,
+                            ]}
+                            names={["Unfollow", "Bookmark"]}
+                            keySuffix={tweet.id}
+                        />
                     </div>
                     <div className="tweet__content">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.

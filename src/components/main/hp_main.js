@@ -16,7 +16,7 @@ const Hp_main = () => {
             },
         },
         {
-            id: 1,
+            id: 2,
             text: "Hello, Twitter!",
             user: {
                 name: "John Doe",
@@ -26,21 +26,19 @@ const Hp_main = () => {
         },
     ]);
     return (
-        <>
-            <div className={styles.container}>
-                <div className={styles.content}>
-                    <div className={styles.header}>
-                        <h3>Home</h3>
-                    </div>
-                    {tweets.map((tweet) => (
-                        <Tweet key={tweet.id} tweet={tweet} />
-                    ))}
+        <div className={styles.container}>
+            <div className={styles.content}>
+                <div className={styles.header}>
+                    <h3>Home</h3>
                 </div>
-                <div className={styles.searchBar}>
-                    <Search />
-                </div>
+                {tweets.map((tweet) => (
+                    <Tweet key={tweet.id} tweet={tweet} />
+                ))}
             </div>
-        </>
+            <div className={styles.searchBar}>
+                <Search />
+            </div>
+        </div>
     );
 };
 export default Hp_main;
