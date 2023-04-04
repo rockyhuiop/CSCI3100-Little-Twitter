@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import "./Tweet.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faComment,
     faHeart,
     faShareFromSquare,
 } from "@fortawesome/free-regular-svg-icons";
-import { faEllipsis, faRetweet } from "@fortawesome/free-solid-svg-icons";
+import { faRetweet } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IconButton from "@mui/material/IconButton";
+import React, { useState } from "react";
 import IconMenu from "../reusable/IconMenu.js";
+import "./Tweet.css";
 
 const Tweet = ({ tweet }) => {
     const [likes, setLikes] = useState(0);
@@ -23,7 +23,7 @@ const Tweet = ({ tweet }) => {
     };
 
     return (
-        <a href="#" className="tweet">
+        <div href="#" className="tweet">
             <div className="tweet__header">
                 <div className="tweet__headercontainer">
                     <a href="/profile">
@@ -78,7 +78,7 @@ const Tweet = ({ tweet }) => {
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     );
 };
 
