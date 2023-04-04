@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Eye, EyeOff } from "react-feather";
 import styles from "./FancyInput.module.css";
 
-const FancyInput = ({ placeholder, required, label, name, type }) => {
+const FancyInput = ({ onChange, required, label, name, type }) => {
     const [isPasswordShowing, setIsPasswordShowing] = useState(false);
 
     if (type === "password") {
         return (
             <div className={styles.box}>
                 <input
+                    onChange={onChange}
                     placeholder={" "}
                     name={name}
                     className={styles.input}
@@ -37,6 +38,7 @@ const FancyInput = ({ placeholder, required, label, name, type }) => {
     return (
         <div className={styles.box}>
             <input
+                onChange={onChange}
                 type={type}
                 placeholder={" "}
                 required={required}

@@ -1,8 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./bookmark.module.css"
 import Tweet from "../tweet/Tweet";
+import { useNavigate } from "react-router-dom";
 
 const Bookmark = () => {
+    const nav=useNavigate()
+    useEffect(() => {
+        const checklog = async () =>{
+            const response = await fetch("/checklog",{
+                method: "GET",
+                headers: {
+                    "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8"
+                }
+            })
+            const json = await response.json()
+            if (!response.ok){
+                console.log(json);
+                nav("/", { replace: true });
+            } else if (response.ok){
+                console.log("ok");
+            }
+        }
+        checklog();
+      });
     const [tweets, setTweets] = useState([
         {
             id: 1,
