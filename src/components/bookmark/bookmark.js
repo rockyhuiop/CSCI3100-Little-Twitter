@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const Bookmark = () => {
     const nav=useNavigate()
+    
     useEffect(() => {
         const checklog = async () =>{
-            const response = await fetch("/checklog",{
+            const response = await fetch("/tweet/fetchTweet",{
                 method: "GET",
                 headers: {
                     "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8"
@@ -23,6 +24,7 @@ const Bookmark = () => {
         }
         checklog();
       });
+      
     const [tweets, setTweets] = useState([
         {
             id: 1,

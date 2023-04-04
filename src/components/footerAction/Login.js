@@ -39,7 +39,7 @@ const Login = ({ isShowing, onClose, showRegister }) => {
         const json = await response.json()
         if (!response.ok){
             setError(json.error);
-            console.log(error);
+            console.log(json.error);
         } else if (response.ok){
             setUsername("");
             setPassword("");
