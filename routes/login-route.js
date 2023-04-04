@@ -25,10 +25,10 @@ router.post('/', async (req, res) =>{
             if (result) {
                 return res.status(200).redirect(`https://${req.headers.host}/home`)
             } else {
-                return res.status(400).json({error: "password doesn't match" });
+                return res.status(401).json({error: "password doesn't match" });
             }
         } else {
-            return res.status(400).json({ error: "User doesn't exist" });
+            return res.status(401).json({ error: "User doesn't exist" });
         }
     } catch (error) {
         return res.status(400).json({ error: error });

@@ -2,7 +2,7 @@ const express = require('express')
 router = express.Router()
 
 router.get('/', (req, res)=>{
-    res.status(200).send(`<h1>guest in home</h1>`)
+    res.status(200).json({state: "Success", data: {}})
 })
 
 module.exports = router
