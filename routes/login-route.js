@@ -23,7 +23,7 @@ router.post('/', async (req, res) =>{
             req.session.userid = user.tweetID
             req.session.userType = user.userType
             if (result) {
-                return res.status(200).redirect(`https://${req.headers.host}/home`)
+                return res.status(200).json({state: "Success", data:{}});
             } else {
                 return res.status(401).json({error: "password doesn't match" });
             }
