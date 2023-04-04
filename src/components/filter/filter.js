@@ -1,9 +1,9 @@
-import Tweet from "../tweet/Tweet";
 import { useState } from "react";
-import styles from "./filter.module.css"
+import Tabs from "../reusable/Tabs";
+import Tweet from "../tweet/Tweet";
+import styles from "./filter.module.css";
 
 const Filter = () => {
-    const [ tab, setTab] = useState(0)
     const [tweets, setTweets] = useState([
         {
             id: 1,
@@ -24,39 +24,15 @@ const Filter = () => {
             },
         },
     ]);
-    const tabCon =[
-        <div className={styles.con}>
-            {tweets.map((tweet) => (
-                <Tweet key={tweet.id} tweet={tweet} />
-            ))}
-        </div>
-        ,
-        <div className={styles.con}>          
-            second tab test
-        </div>
-    ]
     return (
-        <>
-            <div className={styles.tab}>
-                <button
-                    id="hp-search-tab-po"
-                    onClick={() => setTab(0)}
-                    className={tab==0 ? styles.active : ""}
-                >
-                    Popular
-                </button>
-                <button id="hp-search-tab-re" 
-                    onClick={() => setTab(1)}
-                    className={tab==1 ? styles.active : ""}
-                >
-                    Recent
-                </button>
+        <Tabs tabNames={["Popular", "Recent"]}>
+            <div className={styles.con}>
+                {tweets.map((tweet) => (
+                    <Tweet key={tweet.id} tweet={tweet} />
+                ))}
             </div>
-            {tabCon[tab]}
-            
-            
-            
-        </>
+            <div className={styles.con}>second tab test</div>
+        </Tabs>
     );
 };
 export default Filter;
