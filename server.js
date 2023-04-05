@@ -46,7 +46,7 @@ app.use('/registration', registration)
 app.use((req, res, next)=>{
     if(!req.session.userid){
         console.log('not logged in')
-        return res.status(401).redirect({error: "Not logged in"})
+        return res.status(401).json({error: "Not logged in"})
     }
     next()
 })
