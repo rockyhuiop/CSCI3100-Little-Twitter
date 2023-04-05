@@ -20,7 +20,6 @@ const Profile = () => {
         <div>
             <Banner user={user} />
             <UserInfo user={user} />
-            {/* pull the modal out of the profile component */}
         </div>
     );
 };

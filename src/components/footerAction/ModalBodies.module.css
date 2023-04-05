@@ -5,6 +5,10 @@
     max-width: 500px;
 }
 
+.container h2 {
+    text-align: center;
+}
+
 .hint {
     margin-top: 1rem;
 }

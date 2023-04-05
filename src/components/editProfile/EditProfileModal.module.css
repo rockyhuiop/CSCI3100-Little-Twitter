@@ -8,29 +8,3 @@
 .left svg {
     cursor: pointer;
 }
-
-.banner {
-    background: var(--primary-gradient);
-    height: 256px;
-}
-
-.edit {
-    position: relative;
-    left: calc(50% - 24px);
-    top: calc(50% - 24px);
-
-    background-color: var(--clr-white);
-    border: 1px solid var(--clr-border-grey);
-    width: 48px;
-    height: 48px;
-    cursor: pointer;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* there is a lot of space between the displaced avatar and the form */
-.form {
-    margin-top: -8rem;
-}

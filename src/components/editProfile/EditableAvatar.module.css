@@ -10,6 +10,10 @@
     bottom: calc(var(--perimeter) / 2 + 2rem);
 }
 
+.hide {
+    display: none;
+}
+
 @media (max-width: 1280px) {
     .reduce-margin {
         margin-bottom: -8rem;
@@ -39,4 +43,12 @@
     justify-content: center;
     width: 48px;
     height: 48px;
+}
+
+.edit-smaller {
+    --perimeter: 128px;
+}
+
+.edit-larger {
+    --perimeter: 196px;
 }

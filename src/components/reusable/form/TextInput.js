@@ -1,42 +1,22 @@
-import { useState } from "react";
+import { useField } from "formik";
 import styles from "./TextInput.module.css";
 
 /**
  * TextInput is a form input element that is for passwords, text, numbers
  * etc. and also textarea. Don't use this component if the input is a radio group, list etc.
  */
-const TextInput = ({
-    label,
-    type = "text",
-    placeholder,
-    disabled,
-    defaultValue,
-}) => {
-    const [text, setText] = useState(defaultValue);
-
-    const onChange = (event) => {
-        setText(event.target.value);
-    };
+const TextInput = ({ label, ...props }) => {
+    const [field, meta] = useField(props);
 
     return (
         <div className={styles.group}>
             <label htmlFor="name">{label}</label>
-            {type !== "textarea" ? (
-                <input
-                    type={type}
-                    onChange={onChange}
-                    value={text}
-                    placeholder={placeholder}
-                    disabled={disabled}
-                />
+            {props.type !== "textarea" ? (
+                <input {...field} {...props} />
             ) : (
-                <textarea
-                    onChange={onChange}
-                    placeholder={placeholder}
-                    disabled={disabled}
-                    value={text}
-                ></textarea>
+                <textarea {...field} {...props}></textarea>
             )}
+            {meta.touched && meta.error ? <p>{meta.error}</p> : null}
         </div>
     );
 };
