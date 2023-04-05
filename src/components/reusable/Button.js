@@ -10,6 +10,7 @@ import styles from "./Button.module.css";
  * variant?: button style. Outlined or normal button?
  * size?: how big is the button? Supports "small", "medium", "large"
  * onClick: click event handler
+ * type?: if it is a normal button, this field can be empty
  * additionalClasses?: optional set of extra class names if needed
  *
  * scheme will default "primary", variant will default "normal",
@@ -21,6 +22,7 @@ const Button = ({
     variant,
     size,
     onClick,
+    type,
     additionalClasses,
 }) => {
     if (!scheme) {
@@ -35,7 +37,7 @@ const Button = ({
     );
 
     return (
-        <button className={buttonClasses} onClick={onClick}>
+        <button className={buttonClasses} onClick={onClick} type={type}>
             {children}
         </button>
     );

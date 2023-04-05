@@ -48,7 +48,14 @@ const Modal = ({ onClose, isShowing, children, width }) => {
                 onClose,
             }}
         >
-            <div className={styles.wrapper} onClick={closeIfBlackAreaClicked}>
+            <div
+                className={styles.wrapper}
+                // it should not trigger if the user dragged the mouse
+                // from the modal to the black area
+                // I missed this edge case
+                // so this one should be onMouseDown instead of onClick
+                onMouseDown={closeIfBlackAreaClicked}
+            >
                 <div
                     className={styles.modal}
                     style={{

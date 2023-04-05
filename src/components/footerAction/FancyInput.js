@@ -1,53 +1,21 @@
-import { useState } from "react";
-import { Eye, EyeOff } from "react-feather";
+import { useField } from "formik";
 import styles from "./FancyInput.module.css";
 
-const FancyInput = ({ onChange, required, label, name, type }) => {
-    const [isPasswordShowing, setIsPasswordShowing] = useState(false);
-
-    if (type === "password") {
-        return (
-            <div className={styles.box}>
-                <input
-                    onChange={onChange}
-                    placeholder={" "}
-                    name={name}
-                    className={styles.input}
-                    type={isPasswordShowing ? "text" : "password"}
-                />
-                <label htmlFor={name} className={styles.label}>
-                    {label}
-                </label>
-                {isPasswordShowing ? (
-                    <Eye
-                        id="open"
-                        className={styles.eye}
-                        onClick={() => setIsPasswordShowing(false)}
-                    />
-                ) : (
-                    <EyeOff
-                        id="close"
-                        className={styles.eye}
-                        onClick={() => setIsPasswordShowing(true)}
-                    />
-                )}
-            </div>
-        );
-    }
+const FancyInput = ({ label, ...props }) => {
+    const [field, meta] = useField(props);
 
     return (
         <div className={styles.box}>
             <input
-                onChange={onChange}
-                type={type}
-                placeholder={" "}
-                required={required}
-                name={name}
+                {...field}
+                {...props}
                 className={styles.input}
+                placeholder={props.name}
             />
-            <label htmlFor={name} className={styles.label}>
+            <label htmlFor={props.name || props.id} className={styles.label}>
                 {label}
             </label>
+            {meta.touched && meta.error ? <p>{meta.error}</p> : null}
         </div>
     );
 };
