@@ -397,8 +397,8 @@ const FetchComment = async(tweetID) => {
 
 }
 
-const FetchTweet = async(userID) => {
-    const FetchTweetList = await Tweet.find({CreatorUserID:userID, SuspensionStatus:false})
+const FetchTweet = async(tweetID) => {
+    const FetchTweetList = await Tweet.find({tweetID:tweetID, SuspensionStatus:false})
     var TweetList = []
     var tweet = {}
     // collecting the tweet from the followings
@@ -468,6 +468,79 @@ const FetchTweet = async(userID) => {
     return TweetList
 }
 
+const FetchHomeTweet = async(userID) => {
+
+    const FetchTweetList = await Tweet.find({CreatorUserID:userID, SuspensionStatus:false})
+    var TweetList = []
+    var tweet = {}
+    // collecting the tweet from the followings
+
+    for (let i = 0, len = FetchTweetList.length; i<len; i++){
+
+        var fetchTweet = FetchTweetList[i]
+
+        //determine whether it is a retweet
+        let reTweet =  fetchTweet.ReTweetID
+        
+        if (reTweet !== undefined){
+
+            tweet = {
+
+                CreatorUserID : fetchTweet.CreatorUserID,
+                Content : fetchTweet.Content,
+                LikeCount : fetchTweet.LikeCount,
+                DisLikeCount : fetchTweet.DisLikeCount,
+                ReTweetCount : fetchTweet.ReTweetCount,
+                }
+
+            const ReTweetInfo = await Tweet.find({tweetID: fetchTweet.ReTweetID, SuspensionStatus:false})
+
+            if (ReTweetInfo.length == 0){
+                tweet['ReTweet'] = {
+                    Status: "fail", 
+                    message : "The Tweet is banned or removed!"
+                }
+
+            }else{
+
+                tweet['ReTweet'] = {
+                    Status: "Success",
+                    CreatorUserID: ReTweetInfo[0].CreatorUserID,
+                    Content: ReTweetInfo[0].Content,
+                }
+            }
+
+        }else{
+
+            tweet = {
+
+                CreatorUserID : fetchTweet.CreatorUserID,
+                Content : fetchTweet.Content,
+                LikeCount : fetchTweet.LikeCount,
+                DisLikeCount : fetchTweet.DisLikeCount,
+                ReTweetCount : fetchTweet.ReTweetCount,
+    
+                }
+
+        }
+
+        
+
+        //collecting the related comments
+
+        const CommentList = await Comment.find({corrTweetID: fetchTweet.tweetID, SuspensionStatus:false})
+
+        tweet['CommentCount'] = CommentList.length
+
+        TweetList.push(tweet)
+
+        }
+
+    
+    return TweetList
+
+}
+
 
 
 module.exports = {
@@ -486,4 +559,5 @@ module.exports = {
     DelTweet,
     FetchFollowing,
     FetchTweet,
+    FetchHomeTweet,
 }

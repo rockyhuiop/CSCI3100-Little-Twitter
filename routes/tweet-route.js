@@ -15,6 +15,7 @@ const {
     DelTweet,
     FetchFollowing,
     FetchTweet,
+    FetchHomeTweet,
 } = require('../controller/tweet')
 const { del } = require('express/lib/application')
 
@@ -233,14 +234,26 @@ router.delete('/deleteTweet/:tweetID', (req, res) => {
     })()
 })
 
-//Display Tweet to User
-router.get('/fetchTweet', (req, res) => {
+//Display Tweet to User in Home Page
+//It is expected to be used in homepage
+router.get('/fetchHomeTweet', (req, res) => {
     (async() => {
         const userID = req.session.userid
         const followings = await FetchFollowing(userID)
         var relatedUserId = followings
         relatedUserId.push(userID)
-        const fetchedTweet = await FetchTweet(relatedUserId)
+        const fetchedTweet = await FetchHomeTweet(relatedUserId)
+        res.status(200).json({message : fetchedTweet})
+    })()
+})
+
+//Display Particular Tweet to User in Tweet Page
+//It is expected to be used in Tweet Page
+
+router.get('/fetchTweet/:tweetID', (req, res) => {
+    (async() => {
+        const {tweetID:tweetID} = req.params
+        const fetchedTweet = await FetchTweet(tweetID)
         res.status(200).json({message : fetchedTweet})
     })()
 })
