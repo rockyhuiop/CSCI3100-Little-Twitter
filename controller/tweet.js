@@ -136,6 +136,12 @@ const AmendTweetLike = async (tweetID, userID) => {
 
         await RelatedUser.save()
         await tweet.save()
+
+        return ({
+            LikeCount: tweet.LikeCount,
+            DisLikeCount: tweet.DisLikeCount,
+        })
+
     }
 }
 
@@ -168,6 +174,11 @@ const AmendTweetDisLike = async (tweetID, userID) => {
 
         await RelatedUser.save()
         await tweet.save()
+
+        return ({
+            LikeCount: tweet.LikeCount,
+            DisLikeCount: tweet.DisLikeCount,
+        })
     }
 }
 
@@ -218,6 +229,12 @@ const AmendCommentLike = async (commentID, userID) => {
 
         await RelatedUser.save()
         await comment.save()
+
+        return ({
+            LikeCount: comment.LikeCount,
+            DisLikeCount: comment.DisLikeCount,
+        })
+        
     }
 }
 
@@ -250,6 +267,12 @@ const AmendCommentDisLike = async (commentID, userID) => {
 
         await RelatedUser.save()
         await comment.save()
+
+        
+        return ({
+            LikeCount: comment.LikeCount,
+            DisLikeCount: comment.DisLikeCount,
+        })
     }
 }
 
@@ -402,14 +425,14 @@ const FetchTweet = async(userID) => {
 
             if (ReTweetInfo.length == 0){
                 tweet['ReTweet'] = {
-                    SuspensionStatus: true, 
-                    message : "The Tweet is banned!"
+                    Status: "fail", 
+                    message : "The Tweet is banned or removed!"
                 }
 
             }else{
 
                 tweet['ReTweet'] = {
-                    SuspensionStatus: false,
+                    Status: "Success",
                     CreatorUserID: ReTweetInfo[0].CreatorUserID,
                     Content: ReTweetInfo[0].Content,
                 }

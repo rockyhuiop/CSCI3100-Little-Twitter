@@ -42,10 +42,12 @@ router.patch('/likeTweet/:tweetID', (req, res)=>{
         const {tweetID:tweetID} = req.params
         const userID = req.session.userid
 
-        await AmendTweetLike(tweetID, userID)
+        const {LikeCount, DisLikeCount} = await AmendTweetLike(tweetID, userID)
 
         res.status(200).json({
-            state: "Success"
+            state: "Success",
+            LikeCount: LikeCount,
+            DisLikeCount: DisLikeCount,
         })
     }
     )()
@@ -60,10 +62,12 @@ router.patch('/dislikeTweet/:tweetID', (req, res)=>{
         const {tweetID:tweetID} = req.params
         const userID = req.session.userid
 
-        await AmendTweetDisLike(tweetID, userID)
+        const {LikeCount, DisLikeCount} = await AmendTweetDisLike(tweetID, userID)
 
         res.status(200).json({
-            state: "Success"
+            state: "Success",
+            LikeCount: LikeCount,
+            DisLikeCount: DisLikeCount,
         })
     }
     )()
@@ -155,10 +159,12 @@ router.patch('/likeComment/:commentID', (req, res)=>{
         const {commentID:commentID} = req.params
         const userID = req.session.userid
 
-        await AmendCommentLike(commentID, userID)
+        const {LikeCount, DisLikeCount} = await AmendCommentLike(commentID, userID)
 
         res.status(200).json({
-            state: "Success"
+            state: "Success",
+            LikeCount: LikeCount,
+            DisLikeCount: DisLikeCount,
         })
     }
     )()
@@ -173,10 +179,12 @@ router.patch('/dislikeComment/:commentID', (req, res)=>{
         const {commentID:commentID} = req.params
         const userID = req.session.userid
 
-        await AmendCommentDisLike(commentID, userID)
+        const {LikeCount, DisLikeCount} = await AmendCommentDisLike(commentID, userID)
 
         res.status(200).json({
-            state: "Success"
+            state: "Success",
+            LikeCount: LikeCount,
+            DisLikeCount: DisLikeCount,
         })
     }
     )()
@@ -233,7 +241,6 @@ router.get('/fetchTweet', (req, res) => {
         var relatedUserId = followings
         relatedUserId.push(userID)
         const fetchedTweet = await FetchTweet(relatedUserId)
-        console.log(fetchedTweet)
         res.status(200).json({message : fetchedTweet})
     })()
 })
