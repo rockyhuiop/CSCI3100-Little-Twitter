@@ -14,6 +14,10 @@ import "./Tweet.css";
 const Tweet = ({ tweet }) => {
     const [likes, setLikes] = useState(0);
     const [retweets, setRetweets] = useState(0);
+    const [userId, setUserId] = useState();
+
+    const userUrl = "/" + tweet.user.userId;
+    const tweetUrl = userUrl + "/" + tweet.tweetId;
 
     const handleLike = () => {
         setLikes(likes + 1);
@@ -24,10 +28,10 @@ const Tweet = ({ tweet }) => {
     };
 
     return (
-        <div href="#" className="tweet">
+        <a href={tweetUrl} className="tweet">
             <div className="tweet__header">
                 <div className="tweet__headercontainer">
-                    <a href="/profile">
+                    <a href={userUrl}>
                         <img
                             src="https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png"
                             alt="Avatar"
@@ -39,9 +43,11 @@ const Tweet = ({ tweet }) => {
                     <div className="tweet__title">
                         <div className="tweet__userinfo">
                             <span className="tweet__username">
-                                <a href="/profile">John Doe</a>{" "}
+                                <a href={userUrl}>{tweet.user.name}</a>{" "}
                             </span>
-                            <span className="tweet__uid">@johndoe033</span>
+                            <span className="tweet__uid">
+                                @{tweet.user.userId}
+                            </span>
                             <span className="tweet__timestamp">
                                 &nbsp;· 2h ago
                             </span>
@@ -53,41 +59,38 @@ const Tweet = ({ tweet }) => {
                                 <FontAwesomeIcon icon={faBookmark} />,
                             ]}
                             names={["Unfollow", "Bookmark"]}
-                            keySuffix={tweet.id}
+                            keySuffix={tweet.tweetId}
                         />
                     </div>
-                    <div className="tweet__content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </div>
+                    <div className="tweet__content">{tweet.text}</div>
                     <div className="tweet__actions">
                         <div className="tweet__action comment">
                             <IconButton size="small">
                                 <FontAwesomeIcon icon={faComment} />
                             </IconButton>
-                            <span>12</span>
+                            <span>{tweet.commentCount}</span>
                         </div>
                         <div className="tweet__action retweet">
                             <IconButton size="small">
                                 <FontAwesomeIcon icon={faRetweet} />
                             </IconButton>
-                            <span>5</span>
+                            <span>{tweet.retweetCount}</span>
                         </div>
                         <div className="tweet__action like">
                             <IconButton size="small">
                                 <FontAwesomeIcon icon={faHeart} />
                             </IconButton>
-                            <span>5</span>
+                            <span>{tweet.likeCount}</span>
                         </div>
                         <div className="tweet__action share">
                             <IconButton size="small">
                                 <FontAwesomeIcon icon={faShareFromSquare} />
                             </IconButton>
-                            <span>5</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     );
 };
 

@@ -5,6 +5,7 @@ import Homepage from "../pages/homepage";
 import Profile from "../pages/Profile";
 import UserManagement from "../pages/UserManagement";
 import Message_page from "../pages/message_page";
+import TweetPage from "../pages/TweetPage";
 import styles from "./MainContent.module.css";
 
 const MainContent = () => {
@@ -13,7 +14,11 @@ const MainContent = () => {
             <Routes>
                 <Route exact path="/" element={<Homepage />} />
                 <Route path="/explore" element={<Explore />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile />}>
+                    {" "}
+                    {/* need to be ":userId" */}
+                    <Route path="tweet" element={<TweetPage />} />
+                </Route>
                 <Route path="/bookmark" element={<Bookmark_page />} />
                 <Route path="/message" element={<Message_page />} />
                 <Route path="/manage/users" element={<UserManagement />} />
