@@ -23,7 +23,7 @@ router.post('/', async (req, res) =>{
             const result = req.body.password === user.password;
             //save in session
             req.session.name = user.name
-            req.session.tweetID = user.tweetID
+            req.session.userID = user.tweetID
             req.session.userType = user.userType
             if (result) {
                 return res.status(200).json({state: "Success", data:{}});
