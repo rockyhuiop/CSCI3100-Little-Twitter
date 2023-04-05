@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IconButton from "@mui/material/IconButton";
 import React, { useState } from "react";
-import "./Tweet.css";
+//import "./Tweet.css";
 
 const TweetActions = ({ tweetStatistic }) => {
     const [likes, setLikes] = useState(tweetStatistic.likeCount);
@@ -39,7 +39,7 @@ const TweetActions = ({ tweetStatistic }) => {
 
     return (
         <div className="tweet__actions">
-            <div className="tweet__action comment">
+            <div className="tweet__action primary">
                 <IconButton size="small" onClick={handleComment}>
                     <FontAwesomeIcon icon={faComment} />
                 </IconButton>
@@ -57,7 +57,7 @@ const TweetActions = ({ tweetStatistic }) => {
                 </IconButton>
                 <span>{likes}</span>
             </div>
-            <div className="tweet__action share">
+            <div className="tweet__action primary">
                 <IconButton size="small" onClick={handleShare}>
                     <FontAwesomeIcon icon={faShareFromSquare} />
                 </IconButton>

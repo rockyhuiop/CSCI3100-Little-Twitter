@@ -12,7 +12,7 @@ const IconMenu = ({ names, icons, clickHandlers, keySuffix }) => {
         <PopupState variant="popover" popupId="demo-popup-menu">
             {(popupState) => (
                 <React.Fragment>
-                    <div className="menubutton">
+                    <div className="primary">
                         <IconButton
                             size="small"
                             variant="contained"

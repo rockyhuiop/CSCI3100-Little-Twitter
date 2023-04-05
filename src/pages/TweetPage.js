@@ -7,7 +7,8 @@ const tweet = {
     user: {
         userId: "john_doe",
         name: "John Doe",
-        profile_image_url: "https://example.com/john_doe.jpg",
+        profile_image_url:
+            "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
     },
     media: "",
     date: "",

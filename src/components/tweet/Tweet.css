@@ -14,7 +14,15 @@
     transition: 200ms;
 }
 
-.menubutton {
+.tweet__static {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    /*border: 1px solid #ddd;*/
+    padding: 16px 16px 0px 16px;
+    border-bottom: 1px solid #e7e5e4;
+
+    cursor: initial;
 }
 
 a {
@@ -119,9 +127,7 @@ a:link {
     color: #68757e;
 }
 
-.comment button:hover,
-.share button:hover,
-.menubutton button:hover {
+.primary button:hover {
     color: #1da1f2;
     background-color: #e3f2fc;
 }

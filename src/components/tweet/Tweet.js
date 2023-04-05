@@ -1,12 +1,6 @@
-import {
-    faBookmark,
-    faComment,
-    faHeart,
-    faShareFromSquare,
-} from "@fortawesome/free-regular-svg-icons";
-import { faRetweet, faUserXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faUserXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import IconButton from "@mui/material/IconButton";
 import React, { useState } from "react";
 import IconMenu from "../reusable/IconMenu.js";
 import "./Tweet.css";
@@ -31,7 +25,7 @@ const Tweet = ({ tweet }) => {
                 <div className="tweet__headercontainer">
                     <a href={userUrl}>
                         <img
-                            src="https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png"
+                            src={tweet.user.profile_image_url}
                             alt="Avatar"
                             className="tweet__avatar"
                         />
