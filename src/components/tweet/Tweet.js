@@ -10,22 +10,18 @@ import IconButton from "@mui/material/IconButton";
 import React, { useState } from "react";
 import IconMenu from "../reusable/IconMenu.js";
 import "./Tweet.css";
+import TweetActions from "./TweetActions.js";
 
 const Tweet = ({ tweet }) => {
-    const [likes, setLikes] = useState(0);
-    const [retweets, setRetweets] = useState(0);
-    const [userId, setUserId] = useState();
+    const tweetStatistic = {
+        commentCount: tweet.commentCount,
+        retweetCount: tweet.retweetCount,
+        likeCount: tweet.likeCount,
+        viewCount: tweet.viewCount,
+    };
 
     const userUrl = "/" + tweet.user.userId;
     const tweetUrl = userUrl + "/" + tweet.tweetId;
-
-    const handleLike = () => {
-        setLikes(likes + 1);
-    };
-
-    const handleRetweet = () => {
-        setRetweets(retweets + 1);
-    };
 
     return (
         <a href={tweetUrl} className="tweet">
@@ -52,42 +48,24 @@ const Tweet = ({ tweet }) => {
                                 &nbsp;· 2h ago
                             </span>
                         </div>
-                        <IconMenu
-                            clickHandlers={[null, null]}
-                            icons={[
-                                <FontAwesomeIcon icon={faUserXmark} />,
-                                <FontAwesomeIcon icon={faBookmark} />,
-                            ]}
-                            names={["Unfollow", "Bookmark"]}
-                            keySuffix={tweet.tweetId}
-                        />
+                        <div
+                            onClick={(e) => {
+                                e.preventDefault();
+                            }}
+                        >
+                            <IconMenu
+                                clickHandlers={[null, null]}
+                                icons={[
+                                    <FontAwesomeIcon icon={faUserXmark} />,
+                                    <FontAwesomeIcon icon={faBookmark} />,
+                                ]}
+                                names={["Unfollow", "Bookmark"]}
+                                keySuffix={tweet.tweetId}
+                            />
+                        </div>
                     </div>
                     <div className="tweet__content">{tweet.text}</div>
-                    <div className="tweet__actions">
-                        <div className="tweet__action comment">
-                            <IconButton size="small">
-                                <FontAwesomeIcon icon={faComment} />
-                            </IconButton>
-                            <span>{tweet.commentCount}</span>
-                        </div>
-                        <div className="tweet__action retweet">
-                            <IconButton size="small">
-                                <FontAwesomeIcon icon={faRetweet} />
-                            </IconButton>
-                            <span>{tweet.retweetCount}</span>
-                        </div>
-                        <div className="tweet__action like">
-                            <IconButton size="small">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </IconButton>
-                            <span>{tweet.likeCount}</span>
-                        </div>
-                        <div className="tweet__action share">
-                            <IconButton size="small">
-                                <FontAwesomeIcon icon={faShareFromSquare} />
-                            </IconButton>
-                        </div>
-                    </div>
+                    <TweetActions tweetStatistic={tweetStatistic} />
                 </div>
             </div>
         </a>
