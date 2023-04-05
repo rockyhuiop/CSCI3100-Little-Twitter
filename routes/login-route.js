@@ -15,12 +15,15 @@ router.post('/', async (req, res) =>{
     const password = req.body.password
     try {
         // check if the email exists
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({
+            $or: [{ email: req.body.email }, { tweetID: req.body.email }]
+          });
         if (user) {
             //check if password matches
             const result = req.body.password === user.password;
             //save in session
-            req.session.userid = user.tweetID
+            req.session.name = user.name
+            req.session.tweetID = user.tweetID
             req.session.userType = user.userType
             if (result) {
                 return res.status(200).json({state: "Success", data:{}});
