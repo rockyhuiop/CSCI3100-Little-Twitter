@@ -30,7 +30,11 @@ const tweet = require('./routes/tweet-route')
 app = express()
 router = express.Router()
 
-app.use(cors())
+const corsOption = {
+    origin: 'http://localhost:8123'
+};
+
+app.use(cors(corsOption))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessions({
     secret: process.env.SECRET,
