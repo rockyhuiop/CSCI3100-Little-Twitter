@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const https = require('https')
 const fs = require("fs");
+const cors = require("cors")
 
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
@@ -29,6 +30,7 @@ const tweet = require('./routes/tweet-route')
 app = express()
 router = express.Router()
 
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessions({
     secret: process.env.SECRET,
