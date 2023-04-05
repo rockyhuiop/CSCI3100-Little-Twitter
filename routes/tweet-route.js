@@ -230,8 +230,11 @@ router.get('/fetchTweet', (req, res) => {
     (async() => {
         const userID = req.session.userid
         const followings = await FetchFollowing(userID)
-        console.log(followings)
-        res.status(200).json({message : followings})
+        var relatedUserId = followings
+        relatedUserId.push(userID)
+        const fetchedTweet = await FetchTweet(relatedUserId)
+        console.log(fetchedTweet)
+        res.status(200).json({message : fetchedTweet})
     })()
 })
 

@@ -316,14 +316,40 @@ const FetchFollowing = async(userID) => {
     
 }
 
+const FetchReplyComment = async(commentID) => {
+
+    const FetchReplyCommentList = await Comment.find({corrCommentID:commentID, SuspensionStatus:false})
+
+    var ReplyCommentList = []
+    var replyComment = {}
+
+    for (let i = 0, len = FetchReplyCommentList.length; i<len; i++){
+
+        var fetchReplyComment = FetchReplyCommentList[i]
+
+        replyComment = {
+            CreatorUserID: fetchReplyComment.CreatorUserID,
+            Content: fetchReplyComment.Content,
+            LikeCount: fetchReplyComment.LikeCount,
+            DisLikeCount: fetchReplyComment.DisLikeCount,
+        }
+
+        ReplyCommentList.push(replyComment)
+
+    }
+
+    return ReplyCommentList
+}
+
 const FetchComment = async(tweetID) => {
     const FetchCommentList = await Comment.find({corrTweetID:tweetID, SuspensionStatus:false})
+    
     var CommentList = []
     var comment = {}
 
     //collecting the related comment accordingly
 
-    for (let i = 0, len = FetchCommentList; i<len; i++){
+    for (let i = 0, len = FetchCommentList.length; i<len; i++){
 
         var fetchComment = FetchCommentList[i]
 
@@ -336,6 +362,10 @@ const FetchComment = async(tweetID) => {
 
         //collecting the reply accordingly
 
+        const ReplyCommentList = await FetchReplyComment(fetchComment.commentID)
+
+        comment['ReplyComment'] = ReplyCommentList
+
         CommentList.push(comment)
 
     }
@@ -347,31 +377,33 @@ const FetchComment = async(tweetID) => {
 const FetchTweet = async(userID) => {
     const FetchTweetList = await Tweet.find({CreatorUserID:userID, SuspensionStatus:false})
     var TweetList = []
-    var CommentList = []
     var tweet = {}
     // collecting the tweet from the followings
-    for (let i =0, len = followings.length; i<len; i++){
 
-        for (let i = 0, len = FetchTweetList.length; i<len; i++){
-            var fetchTweet = FetchTweetList[i]
-            tweet = {
-                CreatorUserID : fetchTweet.CreatorUserID,
-                Content : fetchTweet.Content,
-                LikeCount : fetchTweet.LikeCount,
-                DisLikeCount : fetchTweet.DisLikeCount,
-                ReTweetCount : fetchTweet.ReTweetCount,
+    for (let i = 0, len = FetchTweetList.length; i<len; i++){
+
+        var fetchTweet = FetchTweetList[i]
+
+        tweet = {
+
+            CreatorUserID : fetchTweet.CreatorUserID,
+            Content : fetchTweet.Content,
+            LikeCount : fetchTweet.LikeCount,
+            DisLikeCount : fetchTweet.DisLikeCount,
+            ReTweetCount : fetchTweet.ReTweetCount,
+
             }
 
-            //collecting the related tweet
+        //collecting the related comments
 
-            CommentList = await FetchComment(fetchTweet.tweetID)
+        const CommentList = await FetchComment(fetchTweet.tweetID)
 
-            tweet['Comment'] = CommentList
+        tweet['Comment'] = CommentList
 
-            TweetList.push(tweet)
+        TweetList.push(tweet)
+
         }
 
-    }
     
     return TweetList
 }
