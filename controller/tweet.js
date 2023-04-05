@@ -384,15 +384,52 @@ const FetchTweet = async(userID) => {
 
         var fetchTweet = FetchTweetList[i]
 
-        tweet = {
+        //determine whether it is a retweet
+        let reTweet =  fetchTweet.ReTweetID
+        
+        if (reTweet !== undefined){
 
-            CreatorUserID : fetchTweet.CreatorUserID,
-            Content : fetchTweet.Content,
-            LikeCount : fetchTweet.LikeCount,
-            DisLikeCount : fetchTweet.DisLikeCount,
-            ReTweetCount : fetchTweet.ReTweetCount,
+            tweet = {
 
+                CreatorUserID : fetchTweet.CreatorUserID,
+                Content : fetchTweet.Content,
+                LikeCount : fetchTweet.LikeCount,
+                DisLikeCount : fetchTweet.DisLikeCount,
+                ReTweetCount : fetchTweet.ReTweetCount,
+                }
+
+            const ReTweetInfo = await Tweet.find({tweetID: fetchTweet.ReTweetID, SuspensionStatus:false})
+
+            if (ReTweetInfo.length == 0){
+                tweet['ReTweet'] = {
+                    SuspensionStatus: true, 
+                    message : "The Tweet is banned!"
+                }
+
+            }else{
+
+                tweet['ReTweet'] = {
+                    SuspensionStatus: false,
+                    CreatorUserID: ReTweetInfo[0].CreatorUserID,
+                    Content: ReTweetInfo[0].Content,
+                }
             }
+
+        }else{
+
+            tweet = {
+
+                CreatorUserID : fetchTweet.CreatorUserID,
+                Content : fetchTweet.Content,
+                LikeCount : fetchTweet.LikeCount,
+                DisLikeCount : fetchTweet.DisLikeCount,
+                ReTweetCount : fetchTweet.ReTweetCount,
+    
+                }
+
+        }
+
+        
 
         //collecting the related comments
 
