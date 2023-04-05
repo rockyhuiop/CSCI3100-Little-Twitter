@@ -14,11 +14,9 @@ const MainContent = () => {
             <Routes>
                 <Route exact path="/" element={<Homepage />} />
                 <Route path="/explore" element={<Explore />} />
-                <Route path="/profile" element={<Profile />}>
-                    {" "}
-                    {/* need to be ":userId" */}
-                    <Route path="tweet" element={<TweetPage />} />
-                </Route>
+                <Route path="/profile" element={<Profile />} />{" "}
+                {/* need to be ":userId" */}
+                <Route path="/profile/tweet" element={<TweetPage />} />
                 <Route path="/bookmark" element={<Bookmark_page />} />
                 <Route path="/message" element={<Message_page />} />
                 <Route path="/manage/users" element={<UserManagement />} />

@@ -20,8 +20,10 @@ const Tweet = ({ tweet }) => {
         viewCount: tweet.viewCount,
     };
 
-    const userUrl = "/" + tweet.user.userId;
-    const tweetUrl = userUrl + "/" + tweet.tweetId;
+    // const userUrl = "/" + tweet.user.userId;
+    const userUrl = "/profile";
+    // const tweetUrl = userUrl + "/" + tweet.tweetId;
+    const tweetUrl = userUrl + "/tweet";
 
     return (
         <a href={tweetUrl} className="tweet">
