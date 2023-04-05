@@ -1,4 +1,3 @@
-import { createContext } from "react";
 import Banner from "../components/profile/Banner";
 import UserInfo from "../components/profile/UserInfo";
 
@@ -15,13 +14,6 @@ const user = {
     tweets: [],
     replies: [],
 };
-
-// reduce prop drilling into the buttons component
-export const ProfileContext = createContext({
-    editInfoOpened: false,
-    openEditInfo: () => {},
-    closeEditInfo: () => {},
-});
 
 const Profile = () => {
     return (
