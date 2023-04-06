@@ -10,6 +10,8 @@ const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 const bodyParser = require('body-parser');
 
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
 
 mongoose.set('strictQuery', true)
 dotenv.config()
