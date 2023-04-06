@@ -28,28 +28,30 @@ const UserSchema = new Schema({
     },
     followers:{
         type: Array,
-        required: true,
     },
     followings:{
         type: Array,
-        required: true,
     },
     likedTweetID:{
         type: Array,
-        required: true,
     },
     dislikedTweetID:{
         type: Array,
-        required: true
     },
     likedCommentID:{
         type: Array,
-        required: true,
     },
     dislikedCommentID:{
         type: Array,
-        required: true,
     },
+    avatar:{
+        data: Buffer,
+        contentType: String,
+    },
+    banner:{
+        data: Buffer,
+        contentType: String,
+    }
 });
 
 module.exports = User = mongoose.model("User", UserSchema);
