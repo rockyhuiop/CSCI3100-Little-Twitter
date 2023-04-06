@@ -15,7 +15,9 @@ const FancyInput = ({ label, ...props }) => {
             <label htmlFor={props.name || props.id} className={styles.label}>
                 {label}
             </label>
-            {meta.touched && meta.error ? <p>{meta.error}</p> : null}
+            {meta.touched && meta.error ? (
+                <p className={styles.error}>{meta.error}</p>
+            ) : null}
         </div>
     );
 };

@@ -26,3 +26,7 @@
 .group textarea {
     resize: none;
 }
+
+.error {
+    color: var(--clr-danger);
+}

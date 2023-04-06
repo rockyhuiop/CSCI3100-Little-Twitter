@@ -3,3 +3,25 @@
     width: 100%;
     margin-top: 1rem;
 }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.row div {
+    width: 48%;
+}
+
+@media (max-width: 640px) {
+    .row {
+        flex-direction: column;
+        gap: 0px;
+    }
+
+    .row div {
+        width: 100%;
+    }
+}

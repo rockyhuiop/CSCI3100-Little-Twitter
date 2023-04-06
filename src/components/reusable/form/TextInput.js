@@ -16,7 +16,9 @@ const TextInput = ({ label, ...props }) => {
             ) : (
                 <textarea {...field} {...props}></textarea>
             )}
-            {meta.touched && meta.error ? <p>{meta.error}</p> : null}
+            {meta.touched && meta.error ? (
+                <p className={styles.error}>{meta.error}</p>
+            ) : null}
         </div>
     );
 };

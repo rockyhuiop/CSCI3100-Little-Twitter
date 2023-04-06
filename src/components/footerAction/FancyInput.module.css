@@ -49,3 +49,7 @@
 .input:not(:placeholder-shown) ~ .label {
     transform: scale(0.6) translateX(-32%) translateY(-24%);
 }
+
+.error {
+    color: var(--clr-danger);
+}

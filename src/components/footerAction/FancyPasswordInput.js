@@ -35,7 +35,9 @@ const FancyPasswordInput = ({ label, ...props }) => {
                     />
                 )}
             </div>
-            {meta.touched && meta.error ? <p>{meta.error}</p> : null}
+            {meta.touched && meta.error ? (
+                <p className={styles.error}>{meta.error}</p>
+            ) : null}
         </div>
     );
 };

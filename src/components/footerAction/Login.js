@@ -1,4 +1,5 @@
 import qs from "qs";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
@@ -8,21 +9,31 @@ import LoginForm from "./LoginForm";
 import styles from "./ModalBodies.module.css";
 
 const Login = ({ isShowing, onClose, showRegister }) => {
+    const [error, setError] = useState("");
     const nav = useNavigate();
     const handleSubmit = async (values) => {
-        const response = await fetch("/login", {
-            method: "POST",
-            body: qs.stringify(values),
-            headers: {
-                "Content-Type":
-                    "application/x-www-form-urlencoded;charset=UTF-8",
-            },
-        });
-        const json = await response.json();
-        if (!response.ok) {
-            console.error(json.error);
+        try {
+            const response = await fetch("/login", {
+                method: "POST",
+                body: qs.stringify(values),
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
+            const json = await response.json();
+            console.log(json);
+            if (!response.ok) {
+                throw new Error(json.error);
+            }
+            setError("");
+            // close the modal and redirect to profile page
+            onClose();
+            nav("/profile", { replace: true });
+        } catch (err) {
+            console.error(err);
+            setError(err.message);
         }
-        nav("/bookmark", { replace: true });
     };
 
     return (
@@ -37,8 +48,11 @@ const Login = ({ isShowing, onClose, showRegister }) => {
                     <p className={styles.hint}>
                         Do not have an account?
                         <span onClick={showRegister}>Register</span>
-                        one here
+                        one here.
                     </p>
+                    {error ? (
+                        <p className={styles.error}>Error: {error}</p>
+                    ) : null}
                 </div>
             </ModalBody>
         </Modal>

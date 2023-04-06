@@ -19,3 +19,7 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+.error {
+    color: var(--clr-danger);
+}

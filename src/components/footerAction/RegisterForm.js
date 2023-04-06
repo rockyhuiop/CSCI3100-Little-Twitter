@@ -9,33 +9,44 @@ const LoginForm = ({ handleSubmit }) => {
     return (
         <Formik
             initialValues={{
-                username: "",
+                name: "",
+                tweetID: "",
                 email: "",
                 password: "",
                 password2: "",
             }}
             validationSchema={Yup.object({
-                username: Yup.string().required(),
+                name: Yup.string().required(),
+                tweetID: Yup.string().required(),
                 password: Yup.string().required(),
                 email: Yup.string()
                     .email("This should be a valid email.")
                     .required(),
                 // password2  must equal password
-                password2: Yup.string().oneOf(
-                    [Yup.ref("password"), null],
-                    "This does not match the password."
-                ),
+                password2: Yup.string()
+                    .oneOf(
+                        [Yup.ref("password"), null],
+                        "This does not match the password."
+                    )
+                    .required("Confirm password is a required field"),
             })}
             onSubmit={handleSubmit}
         >
             {(formik) => {
                 return (
                     <form onSubmit={formik.handleSubmit}>
-                        <FancyInput
-                            label={"Username"}
-                            name="username"
-                            type="text"
-                        />
+                        <div className={styles.row}>
+                            <FancyInput
+                                label={"Username"}
+                                name="name"
+                                type="text"
+                            />
+                            <FancyInput
+                                label={"Tweet ID"}
+                                name="tweetID"
+                                type="text"
+                            />
+                        </div>
                         <FancyInput label={"Email"} name="email" type="text" />
                         <FancyPasswordInput
                             label={"Password"}

@@ -9,11 +9,11 @@ const LoginForm = ({ handleSubmit }) => {
     return (
         <Formik
             initialValues={{
-                username: "",
+                email: "",
                 password: "",
             }}
             validationSchema={Yup.object({
-                username: Yup.string().required(),
+                email: Yup.string().email().required(),
                 password: Yup.string().required(),
             })}
             onSubmit={handleSubmit}
@@ -21,11 +21,7 @@ const LoginForm = ({ handleSubmit }) => {
             {(formik) => {
                 return (
                     <form onSubmit={formik.handleSubmit}>
-                        <FancyInput
-                            label={"Username"}
-                            name="username"
-                            type="text"
-                        />
+                        <FancyInput label={"Email"} name="email" type="text" />
                         <FancyPasswordInput
                             label={"Password"}
                             name="password"
