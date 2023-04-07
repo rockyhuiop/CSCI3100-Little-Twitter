@@ -8,7 +8,10 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/', (req, res) =>{
-    User.findOne({email: req.body.email}).then((user) => {
+    User.findOne({$or: [
+        { email: req.body.email },
+        { tweetID: req.body.tweetID}
+      ]}).then((user) => {
         if(user){
             return res.status(400).json({error: "Account already exist"})
         } else {
@@ -26,7 +29,7 @@ router.post('/', (req, res) =>{
                 dislikedCommentID: []
             })
             newUser.save()
-            return res.status(200).json({message: "success, return to login page"})
+            return res.status(200).json({message: "account created"})
         }
     })
 })
