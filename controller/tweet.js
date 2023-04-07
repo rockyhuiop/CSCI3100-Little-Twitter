@@ -350,7 +350,7 @@ const FetchReplyComment = async(commentID) => {
 
         var fetchReplyComment = FetchReplyCommentList[i]
 
-        const Creator = await User.find({tweetID:fetchReplyComment.CreatorUserID})
+        const Creator = await User.findOne({tweetID:fetchReplyComment.CreatorUserID})
         const CreatorUserName = Creator.name
 
         replyComment = {
@@ -380,7 +380,7 @@ const FetchComment = async(tweetID) => {
 
         var fetchComment = FetchCommentList[i]
 
-        const Creator = await User.find({tweetID:fetchComment.CreatorUserID})
+        const Creator = await User.findOne({tweetID:fetchComment.CreatorUserID})
         const CreatorUserName = Creator.name
 
         comment = {
@@ -415,7 +415,7 @@ const FetchTweet = async(tweetID) => {
 
         var fetchTweet = FetchTweetList[i]
 
-        const Creator = await User.find({tweetID:fetchTweet.CreatorUserID})
+        const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
 
         //determine whether it is a retweet
@@ -443,7 +443,7 @@ const FetchTweet = async(tweetID) => {
 
             }else{
 
-                const ReTweetCreator = await User.find({tweetID:ReTweetInfo[0].CreatorUserID})
+                const ReTweetCreator = await User.findOne({tweetID:ReTweetInfo[0].CreatorUserID})
                 const ReTweetCreatorUserName = ReTweetCreator.name
 
                 tweet['ReTweet'] = {
@@ -495,7 +495,7 @@ const FetchHomeTweet = async(userID) => {
     for (let i = 0, len = FetchTweetList.length; i<len; i++){
 
         var fetchTweet = FetchTweetList[i]
-        const Creator = await User.find({tweetID:fetchTweet.CreatorUserID})
+        const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
 
         //determine whether it is a retweet
@@ -523,7 +523,7 @@ const FetchHomeTweet = async(userID) => {
 
             }else{
 
-                const ReTweetCreator = await User.find({tweetID:ReTweetInfo[0].CreatorUserID})
+                const ReTweetCreator = await User.findOne({tweetID:ReTweetInfo[0].CreatorUserID})
                 const ReTweetCreatorUserName = ReTweetCreator.name
 
                 tweet['ReTweet'] = {
