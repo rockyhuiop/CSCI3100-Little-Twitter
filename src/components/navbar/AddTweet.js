@@ -7,6 +7,7 @@ import ModalBody from "../reusable/modal/ModalBody";
 import ModalCross from "../reusable/modal/ModalCross";
 import ModalHeader from "../reusable/modal/ModalHeader";
 import styles from "./AddTweet.module.css";
+import AddTweetReuse from "../reusable/AddTweetReuse";
 
 const WORD_LIMIT = 120;
 
@@ -36,46 +37,7 @@ const AddTweet = ({ isShowing, onClose }) => {
                 <ModalCross />
             </ModalHeader>
             <ModalBody>
-                <form className={styles.form} name="hp-addtw">
-                    <div className={styles.row}>
-                        <img
-                            className={styles.avatar}
-                            src={defaultUser}
-                            alt="Avatar of user"
-                        />
-                        {/* It should probably not grow since there is a word limit in Twitter  */}
-                        <textarea
-                            onChange={(e) => updateTextarea(e)}
-                            value={text}
-                            placeholder="What's happening?"
-                            className={styles.input}
-                            rows={6}
-                            ref={textareaRef}
-                            autoFocus
-                        />
-                    </div>
-                    <p className={styles.limit}>
-                        {WORD_LIMIT - text.length} characters left.
-                    </p>
-                    <div className={styles["add-file-row"]}>
-                        <div className={styles.left}>
-                            <Image
-                                onClick={choosePicture}
-                                className={styles.select}
-                            />
-                            {/* hide the file input */}
-                            <input
-                                className={styles.file}
-                                onChange={(e) => setFile(e.target.files[0])}
-                                type="file"
-                                multiple={false}
-                                ref={ref}
-                            />
-                            <span>{getFileNames()}</span>
-                        </div>
-                        <Button>Add tweet</Button>
-                    </div>
-                </form>
+                <AddTweetReuse />
             </ModalBody>
         </Modal>
     );

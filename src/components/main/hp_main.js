@@ -2,7 +2,7 @@ import { useState } from "react";
 import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
-
+import AddTweetReuse from "../reusable/AddTweetReuse";
 const Hp_main = () => {
     const [tweets, setTweets] = useState([
         {
@@ -45,6 +45,7 @@ const Hp_main = () => {
                 <div className={styles.header}>
                     <h3>Home</h3>
                 </div>
+                <AddTweetReuse />
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}
