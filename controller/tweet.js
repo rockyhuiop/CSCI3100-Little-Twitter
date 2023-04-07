@@ -350,8 +350,12 @@ const FetchReplyComment = async(commentID) => {
 
         var fetchReplyComment = FetchReplyCommentList[i]
 
+        const Creator = await User.find({tweetID:fetchReplyComment.CreatorUserID})
+        const CreatorUserName = Creator.name
+
         replyComment = {
             CreatorUserID: fetchReplyComment.CreatorUserID,
+            CreatorUserName: CreatorUserName,
             Content: fetchReplyComment.Content,
             LikeCount: fetchReplyComment.LikeCount,
             DisLikeCount: fetchReplyComment.DisLikeCount,
@@ -376,8 +380,12 @@ const FetchComment = async(tweetID) => {
 
         var fetchComment = FetchCommentList[i]
 
+        const Creator = await User.find({tweetID:fetchComment.CreatorUserID})
+        const CreatorUserName = Creator.name
+
         comment = {
             CreatorUserID: fetchComment.CreatorUserID,
+            CreatorUserName: CreatorUserName,
             Content: fetchComment.Content,
             LikeCount: fetchComment.LikeCount,
             DisLikeCount: fetchComment.DisLikeCount,
@@ -407,6 +415,9 @@ const FetchTweet = async(tweetID) => {
 
         var fetchTweet = FetchTweetList[i]
 
+        const Creator = await User.find({tweetID:fetchTweet.CreatorUserID})
+        const CreatorUserName = Creator.name
+
         //determine whether it is a retweet
         let reTweet =  fetchTweet.ReTweetID
         
@@ -415,6 +426,7 @@ const FetchTweet = async(tweetID) => {
             tweet = {
 
                 CreatorUserID : fetchTweet.CreatorUserID,
+                CreatorUserName: CreatorUserName,
                 Content : fetchTweet.Content,
                 LikeCount : fetchTweet.LikeCount,
                 DisLikeCount : fetchTweet.DisLikeCount,
@@ -431,9 +443,13 @@ const FetchTweet = async(tweetID) => {
 
             }else{
 
+                const ReTweetCreator = await User.find({tweetID:ReTweetInfo[0].CreatorUserID})
+                const ReTweetCreatorUserName = ReTweetCreator.name
+
                 tweet['ReTweet'] = {
                     Status: "Success",
                     CreatorUserID: ReTweetInfo[0].CreatorUserID,
+                    CreatorUserName: ReTweetCreatorUserName,
                     Content: ReTweetInfo[0].Content,
                 }
             }
@@ -443,6 +459,7 @@ const FetchTweet = async(tweetID) => {
             tweet = {
 
                 CreatorUserID : fetchTweet.CreatorUserID,
+                CreatorUserName: CreatorUserName,
                 Content : fetchTweet.Content,
                 LikeCount : fetchTweet.LikeCount,
                 DisLikeCount : fetchTweet.DisLikeCount,
@@ -478,6 +495,8 @@ const FetchHomeTweet = async(userID) => {
     for (let i = 0, len = FetchTweetList.length; i<len; i++){
 
         var fetchTweet = FetchTweetList[i]
+        const Creator = await User.find({tweetID:fetchTweet.CreatorUserID})
+        const CreatorUserName = Creator.name
 
         //determine whether it is a retweet
         let reTweet =  fetchTweet.ReTweetID
@@ -487,6 +506,7 @@ const FetchHomeTweet = async(userID) => {
             tweet = {
 
                 CreatorUserID : fetchTweet.CreatorUserID,
+                CreatorUserName: CreatorUserName,
                 Content : fetchTweet.Content,
                 LikeCount : fetchTweet.LikeCount,
                 DisLikeCount : fetchTweet.DisLikeCount,
@@ -503,9 +523,13 @@ const FetchHomeTweet = async(userID) => {
 
             }else{
 
+                const ReTweetCreator = await User.find({tweetID:ReTweetInfo[0].CreatorUserID})
+                const ReTweetCreatorUserName = ReTweetCreator.name
+
                 tweet['ReTweet'] = {
                     Status: "Success",
                     CreatorUserID: ReTweetInfo[0].CreatorUserID,
+                    CreatorUserName: ReTweetCreatorUserName,
                     Content: ReTweetInfo[0].Content,
                 }
             }
@@ -515,6 +539,7 @@ const FetchHomeTweet = async(userID) => {
             tweet = {
 
                 CreatorUserID : fetchTweet.CreatorUserID,
+                CreatorUserName: CreatorUserName,
                 Content : fetchTweet.Content,
                 LikeCount : fetchTweet.LikeCount,
                 DisLikeCount : fetchTweet.DisLikeCount,
@@ -540,8 +565,6 @@ const FetchHomeTweet = async(userID) => {
     return TweetList
 
 }
-
-
 
 module.exports = {
     CreateTweet,
