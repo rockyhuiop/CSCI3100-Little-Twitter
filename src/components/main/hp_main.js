@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
@@ -38,6 +38,50 @@ const Hp_main = () => {
             viewCount: 20000,
         },
     ]);
+
+    useEffect(() => {
+        const checklog = async () => {
+            const response = await fetch("/tweet/fetchHomeTweet", {
+                method: "GET",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
+            const json = await response.json();
+            if (!response.ok) {
+
+            } else if (response.ok) {
+                console.log("ok");
+                const new_tw=[]
+                for (var i=0;i<json.message.length;i++){
+                    new_tw.push(
+                        {
+                            tweetId: [i],
+                            text: json.message[i].Content,
+                            user: {
+                                name: json.message[i].CreatorUserName,
+                                screen_name: json.message[i].CreatorUserName,
+                                profile_image_url: "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                            },
+                            media: "",
+                            date: "",
+                            likeCount: json.message[i].LikeCount,
+                            commentCount: json.message[i].CommentCount,
+                            retweetCount: json.message[i].ReTweetCount,
+                            viewCount: 1000,
+                        }
+                    );
+                    
+                }
+                setTweets(new_tw);
+                console.log(json.message)
+            }
+        };
+        checklog();
+        
+        
+    },[]);
 
     return (
         <div className={styles.container}>
