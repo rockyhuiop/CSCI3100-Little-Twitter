@@ -4,7 +4,7 @@ const User = require("../model/User")
 router = express.Router()
 
 router.get('/', (req, res)=>{
-    res.status(200).send(`<h1>registration page</h1>`)
+    res.status(200).json({state: "Success"})
 })
 
 router.post('/', (req, res) =>{
