@@ -46,7 +46,7 @@ const Hp_main = () => {
                     <h3>Home</h3>
                 </div>
                 {tweets.map((tweet) => (
-                    <Tweet key={tweet.id} tweet={tweet} />
+                    <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}
             </div>
             <div className={styles.searchBar}>

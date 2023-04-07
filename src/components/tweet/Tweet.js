@@ -1,12 +1,14 @@
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faUserXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import IconMenu from "../reusable/IconMenu.js";
 import "./Tweet.css";
 import TweetActions from "./TweetActions.js";
 
 const Tweet = ({ tweet }) => {
+    const navigate = useNavigate();
     const tweetStatistic = {
         commentCount: tweet.commentCount,
         retweetCount: tweet.retweetCount,
@@ -19,23 +21,27 @@ const Tweet = ({ tweet }) => {
     // const tweetUrl = userUrl + "/" + tweet.tweetId;
     const tweetUrl = userUrl + "/tweet";
 
+    const navigateToTweetUrl = () => {
+        navigate(tweetUrl);
+    };
+
     return (
-        <a href={tweetUrl} className="tweet">
+        <div className="tweet" onClick={navigateToTweetUrl}>
             <div className="tweet__header">
                 <div className="tweet__headercontainer">
-                    <a href={userUrl}>
+                    <Link to={userUrl}>
                         <img
                             src={tweet.user.profile_image_url}
                             alt="Avatar"
                             className="tweet__avatar"
                         />
-                    </a>
+                    </Link>
                 </div>
                 <div className="tweet__container">
                     <div className="tweet__title">
                         <div className="tweet__userinfo">
                             <span className="tweet__username">
-                                <a href={userUrl}>{tweet.user.name}</a>{" "}
+                                <Link to={userUrl}>{tweet.user.name}</Link>{" "}
                             </span>
                             <span className="tweet__uid">
                                 @{tweet.user.userId}
@@ -64,7 +70,7 @@ const Tweet = ({ tweet }) => {
                     <TweetActions tweetStatistic={tweetStatistic} />
                 </div>
             </div>
-        </a>
+        </div>
     );
 };
 

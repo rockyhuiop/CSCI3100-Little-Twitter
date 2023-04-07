@@ -6,7 +6,7 @@ import styles from "./filter.module.css";
 const Filter = () => {
     const [tweets, setTweets] = useState([
         {
-            id: 1,
+            tweetId: 1,
             text: "Hello, Twitter!",
             user: {
                 name: "John Doe",
@@ -15,7 +15,7 @@ const Filter = () => {
             },
         },
         {
-            id: 1,
+            tweetId: 2,
             text: "Hello, Twitter!",
             user: {
                 name: "John Doe",
@@ -28,7 +28,7 @@ const Filter = () => {
         <Tabs tabNames={["Popular", "Recent"]}>
             <div className={styles.con}>
                 {tweets.map((tweet) => (
-                    <Tweet key={tweet.id} tweet={tweet} />
+                    <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}
             </div>
             <div className={styles.con}>second tab test</div>

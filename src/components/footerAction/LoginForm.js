@@ -6,6 +6,10 @@ import FancyPasswordInput from "./FancyPasswordInput";
 import styles from "./Forms.module.css";
 
 const LoginForm = ({ handleSubmit }) => {
+    // just name the email or tweetID field as email to make it simpler
+    // since the user now can type tweetID in the input box
+    // it may not be an email
+    // so the email validation must be removed
     return (
         <Formik
             initialValues={{
@@ -13,7 +17,7 @@ const LoginForm = ({ handleSubmit }) => {
                 password: "",
             }}
             validationSchema={Yup.object({
-                email: Yup.string().email().required(),
+                email: Yup.string().required(),
                 password: Yup.string().required(),
             })}
             onSubmit={handleSubmit}
@@ -21,7 +25,11 @@ const LoginForm = ({ handleSubmit }) => {
             {(formik) => {
                 return (
                     <form onSubmit={formik.handleSubmit}>
-                        <FancyInput label={"Email"} name="email" type="text" />
+                        <FancyInput
+                            label={"Email or TweetID"}
+                            name="email"
+                            type="text"
+                        />
                         <FancyPasswordInput
                             label={"Password"}
                             name="password"
