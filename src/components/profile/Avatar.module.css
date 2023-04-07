@@ -3,6 +3,8 @@
     border-radius: 50%;
     width: var(--perimeter);
     height: var(--perimeter);
+    background-repeat: no-repeat;
+    background-size: cover;
 
     /* so that is overlaps with the banner */
     position: relative;

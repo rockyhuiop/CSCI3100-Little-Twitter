@@ -1,5 +1,6 @@
 .avatar {
     border: 1px solid var(--clr-border-grey);
+    background-repeat: no-repeat;
     border-radius: 50%;
     width: var(--perimeter);
     height: var(--perimeter);

@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import styles from "./Banner.module.css";
 
-const Banner = ({ banner }) => {
+const Banner = ({ user: { banner } }) => {
     // I will supply the banner as a CSS property than an actual image
     // maybe bad for accessibility but it should be easier
     let style = {};
@@ -11,7 +11,7 @@ const Banner = ({ banner }) => {
     // The gradient-banner class is the background
     // This class will not be applied when there is a banner url
     if (banner) {
-        style.background = `url(${banner})`;
+        style.backgroundImage = `url(${banner})`;
     }
 
     return (

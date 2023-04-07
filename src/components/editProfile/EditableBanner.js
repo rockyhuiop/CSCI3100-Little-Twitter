@@ -15,7 +15,7 @@ const EditableBanner = ({ url, onBannerChange }) => {
             style={
                 url
                     ? {
-                          background: `url(${url})`,
+                          backgroundImage: `url(${url})`,
                       }
                     : null
             }

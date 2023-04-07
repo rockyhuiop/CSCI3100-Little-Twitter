@@ -21,11 +21,25 @@ const EditProfileModal = ({ user, onClose, isShowing }) => {
         }
     };
 
+    const formData = new FormData();
+
     // we still have to pass this down to the form... :(
-    const handleSubmit = (values) => {
-        console.log(values);
-        console.log(banner);
-        console.log(avatar);
+    const handleSubmit = async (values) => {
+        formData.append("name", values.name);
+        formData.append("biography", values.biography);
+        // don't send null files to the server
+        if (banner) {
+            formData.append("banner", banner);
+        }
+        if (avatar) {
+            formData.append("avatar", avatar);
+        }
+        const response = await fetch("/profile/update", {
+            method: "POST",
+            body: formData,
+        });
+        const json = await response.json();
+        console.log(json);
     };
 
     const bannerChanged = (file) => {
@@ -51,7 +65,11 @@ const EditProfileModal = ({ user, onClose, isShowing }) => {
                     <ModalCross />
                     <span>Edit Profile</span>
                 </div>
-                <Button scheme={"secondary"} onClick={initiateSubmit}>
+                <Button
+                    scheme={"secondary"}
+                    onClick={initiateSubmit}
+                    type="submit"
+                >
                     Save
                 </Button>
             </ModalHeader>

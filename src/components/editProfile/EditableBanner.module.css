@@ -1,5 +1,6 @@
 .banner {
     background: var(--primary-gradient);
+    background-repeat: no-repeat;
     background-size: cover;
     height: 256px;
 }

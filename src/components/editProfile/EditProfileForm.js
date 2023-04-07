@@ -10,12 +10,12 @@ const EditProfileForm = forwardRef(({ user, handleSubmit }, ref) => {
     return (
         <Formik
             initialValues={{
-                username: user.username,
+                name: user.name,
                 biography: user.biography,
             }}
             validationSchema={Yup.object({
-                username: Yup.string().required(),
-                biography: Yup.string().required(),
+                name: Yup.string().required(),
+                biography: Yup.string(),
             })}
             innerRef={ref}
             onSubmit={handleSubmit}
@@ -26,11 +26,7 @@ const EditProfileForm = forwardRef(({ user, handleSubmit }, ref) => {
                         className={styles.form}
                         onSubmit={formik.handleSubmit}
                     >
-                        <TextInput
-                            label={"Username"}
-                            name="username"
-                            type="text"
-                        />
+                        <TextInput label={"Username"} name="name" type="text" />
                         <TextInput
                             label={"Biography"}
                             type={"textarea"}

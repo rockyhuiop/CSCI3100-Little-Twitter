@@ -23,8 +23,8 @@ const UserInfo = ({ user }) => {
             <ProfileActions user={user} />
             <Biography user={user} />
             <div className={styles.stats}>
-                <Stat name={"Following"} count={user.following} />
-                <Stat name={"Followers"} count={user.followers} />
+                <Stat name={"Following"} count={user.followings.length} />
+                <Stat name={"Followers"} count={user.followers.length} />
             </div>
             <FollowInfo user={user} />
             <Tabs tabNames={["Tweets", "Replies"]}>

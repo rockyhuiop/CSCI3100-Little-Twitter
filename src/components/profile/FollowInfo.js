@@ -1,6 +1,20 @@
-const FollowInfo = () => {
-    // TODO: It should be based on what the current user follows
-    return <p>Followed by lorem1, lorem2 and others</p>;
+import { useMemo } from "react";
+
+const FollowInfo = ({ user }) => {
+    const firstFewFollowers = useMemo(() => {
+        if (!user.followers.length) {
+            return "nobody";
+        }
+        const names = user.followers.slice(0, 3).reduce((acc, follower) => {
+            return acc + follower.name + ", ";
+        }, "");
+        return (
+            names.slice(0, -2) +
+            (user.followers.length > 3 ? " and others" : "")
+        );
+    }, [user.followers]);
+
+    return <p>Followed by {firstFewFollowers}</p>;
 };
 
 export default FollowInfo;

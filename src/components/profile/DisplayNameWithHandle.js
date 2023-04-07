@@ -1,10 +1,12 @@
 import styles from "./DisplayNameWithHandle.module.css";
 
-const DisplayNameWithHandle = ({ user: { username, handle } }) => {
+const DisplayNameWithHandle = ({
+    user: { name: username, tweetID: handle },
+}) => {
     return (
         <div>
-            <h1 className={styles.username}>{username || "Lorem Ipsum"}</h1>
-            <span className={styles.handle}>@{handle || "lorem1"}</span>
+            <h1 className={styles.username}>{username}</h1>
+            <span className={styles.handle}>@{handle}</span>
         </div>
     );
 };
