@@ -37,10 +37,10 @@ router.post('/update', upload.fields([{ name: "avatar" }, { name: "banner" }]) ,
       });
     } else {
       user.avatar.data = req.files['avatar'][0].buffer
-      user.avatar.contentType = req.files['avatar'][0].buffer
+      user.avatar.contentType = req.files['avatar'][0].mimetype
       // saving the object into the database
       user.banner.data = req.files['banner'][0].buffer
-      user.banner.contentType = req.files['banner'][0].buffer
+      user.banner.contentType = req.files['banner'][0].mimetype
       
     }
     if(name){
