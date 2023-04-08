@@ -1,46 +1,31 @@
-import { useEffect, useState } from "react";
 import Banner from "../components/profile/Banner";
 import UserInfo from "../components/profile/UserInfo";
-
-function createURLFromBytes(file) {
-    const base64 = btoa(
-        file.data.data.map((d) => String.fromCharCode(d)).join("")
-    );
-    return `data:${file.contentType};base64,${base64}`;
-}
+import CenteredError from "../components/reusable/error/CenteredError";
+import { useProfile } from "../utils/useProfile";
 
 const Profile = () => {
-    const [status, setStatus] = useState("idle");
-    const [user, setUser] = useState(null);
+    const { data, error, isLoading } = useProfile();
 
-    useEffect(() => {
-        (async () => {
-            setStatus("loading");
-            const response = await fetch("/profile", {
-                method: "GET",
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
-            const json = await response.json();
-            json.data.avatar = createURLFromBytes(json.data.avatar);
-            json.data.banner = createURLFromBytes(json.data.banner);
-            setUser(json.data);
-            setStatus("done");
-        })();
-    }, []);
-
-    if (status === "done" && user) {
+    if (isLoading) {
+        return <p>Trying to load user profile...</p>;
+    } else if (error === "Not logged in") {
         return (
-            <div>
-                <Banner user={user} />
-                <UserInfo user={user} />
-            </div>
+            <CenteredError>
+                There is no profile to show since the user is not logged in.
+            </CenteredError>
         );
-    } else {
-        return <div>Trying to load user profile...</div>;
+    } else if (error) {
+        return (
+            <CenteredError>Some horrible errors occured: {error}</CenteredError>
+        );
     }
+
+    return (
+        <div>
+            <Banner user={data} />
+            <UserInfo user={data} />
+        </div>
+    );
 };
 
 export default Profile;

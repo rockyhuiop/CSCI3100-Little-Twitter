@@ -8,3 +8,7 @@
 .left svg {
     cursor: pointer;
 }
+
+.error {
+    color: var(--clr-danger);
+}
