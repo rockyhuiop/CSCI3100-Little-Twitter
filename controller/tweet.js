@@ -20,7 +20,7 @@ const nextCommentID = async () => {
     return totalCommentCount
 }
 
-const CreateTweet = async (userID, body) => {
+const CreateTweet = async (userID, body, files) => {
 
     const Content = body.Content
     const UrlList = body.UrlList
@@ -49,6 +49,20 @@ const CreateTweet = async (userID, body) => {
         newTweet.UrlList = UrlList
     }
 
+    if (files.length > 0){
+
+        var ImageList = []
+
+        for (let i = 0, len = files.length; i<len; i++){
+            ImageList.push(files[i].path)
+        }
+
+        newTweet.ImageList = ImageList
+
+    }
+
+    
+
     await newTweet.save()
 
     //Increment the Tweet Counter
@@ -56,7 +70,7 @@ const CreateTweet = async (userID, body) => {
 
 }
 
-const ReTweet = async (retweetID,userid, body) => {
+const ReTweet = async (retweetID,userid, body, files) => {
 
     const Content = body.Content
     const UrlList = body.UrlList
@@ -84,6 +98,18 @@ const ReTweet = async (retweetID,userid, body) => {
 
     if (UrlList !== undefined){
         newTweet.UrlList = UrlList
+    }
+
+    if (files.length > 0){
+
+        var ImageList = []
+
+        for (let i = 0, len = files.length; i<len; i++){
+            ImageList.push(files[i].path)
+        }
+
+        newTweet.ImageList = ImageList
+
     }
 
 
@@ -562,8 +588,10 @@ const FetchTweet = async(tweetID) => {
             tweet["UrlList"] = fetchTweet.UrlList
         }
 
+        if (fetchTweet.ImageList !== undefined){
+            tweet["ImageList"] = fetchTweet.ImageList
+        }
         
-
         //collecting the related comments
 
         const CommentList = await FetchComment(fetchTweet.tweetID)
@@ -649,7 +677,11 @@ const FetchHomeTweet = async(userID) => {
             tweet["UrlList"] = fetchTweet.UrlList
         }
 
-        //collecting the related comments
+        if (fetchTweet.ImageList !== undefined){
+            tweet["ImageList"] = fetchTweet.ImageList
+        }
+
+        //counting the related comments
 
         const CommentList = await Comment.find({corrTweetID: fetchTweet.tweetID, SuspensionStatus:false})
 

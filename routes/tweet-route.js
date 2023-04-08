@@ -1,5 +1,5 @@
 const express = require('express')
-
+const path = require('path')
 const {
     CreateTweet,
     ReTweet,
@@ -19,17 +19,29 @@ const {
 } = require('../controller/tweet')
 const { del } = require('express/lib/application')
 
+const multer = require('multer')
+//const storage = multer.memoryStorage()
+//const upload = multer({ storage: storage })
 
-
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  })
+  
+const upload = multer({ storage })
 
 router = express.Router()
 
 //Posting Tweet
-router.post('/', (req, res)=>{
+router.post('/', upload.array('images', 10), (req, res)=>{
 
     ( async () => {
 
-        await CreateTweet(req.session.userid, req.body)
+        await CreateTweet(req.session.userid, req.body, req.files)
 
     }
     )()
@@ -94,12 +106,12 @@ router.patch('/editTweet/:tweetID', (req, res)=>{
 })
 
 //Retweet
-router.post('/retweet/:tweetID', (req, res) =>{
+router.post('/retweet/:tweetID', upload.array('images', 10), (req, res) =>{
     (async () => {
 
         const {tweetID: retweetID} = req.params
 
-        await ReTweet(retweetID, req.session.userid, req.body)
+        await ReTweet(retweetID, req.session.userid, req.body, req.files)
     }
     )()
 
