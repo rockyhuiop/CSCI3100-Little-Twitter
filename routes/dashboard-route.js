@@ -30,6 +30,13 @@ router.delete('/:tweetID', async (req, res)=>{
     console.log(req.params.tweetID)
     let result = await User.deleteOne({tweetID: req.params.tweetID})
 
+    await User.updateMany({}, { $pull: { followers: req.params.tweetID, followings: req.params.tweetID } }).then(result => {
+        console.log(`Deleted ${result.nModified} instances of 'stringToDelete'`);
+      }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: "Server error"})
+      });
+
     return res.status(200).json({
         data: result,
         state: "Success"
