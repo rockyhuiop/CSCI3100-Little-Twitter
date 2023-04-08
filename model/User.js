@@ -44,6 +44,9 @@ const UserSchema = new Schema({
     dislikedCommentID:{
         type: Array,
     },
+    bookmark:{
+        type: Array
+    },
     avatar:{
         data: Buffer,
         contentType: String,
