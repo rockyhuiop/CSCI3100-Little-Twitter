@@ -1,0 +1,23 @@
+.tweet__static__userinfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.tweet__static .tweet__actions {
+    justify-content: space-around;
+}
+
+.info {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e7e5e4;
+}
+.tweet__statistic span {
+    padding-right: 1rem;
+}
+
+.info span {
+    color: #68757e;
+}
+.info b {
+    color: #000;
+}

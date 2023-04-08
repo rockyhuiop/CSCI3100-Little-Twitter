@@ -62,7 +62,6 @@ a:link {
     flex-grow: 1;
     align-items: flex-start;
     padding: 0 8px;
-    margin-bottom: 8px;
 }
 
 .tweet__avatar {
@@ -102,6 +101,7 @@ a:link {
     justify-content: space-between;
     align-self: stretch;
     align-items: center;
+    margin-bottom: 8px;
 }
 
 .tweet__action {

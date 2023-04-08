@@ -11,10 +11,11 @@
 
 .input {
     resize: none;
-    border: 1px solid var(--clr-border-grey);
+    border-bottom: 1px solid var(--clr-border-grey);
     padding: 1rem 0.5rem;
     font-size: 20px;
     flex-grow: 1;
+    outline: none;
 }
 
 .add-file-row {
@@ -22,7 +23,7 @@
     align-items: center;
     justify-content: space-between;
 
-    margin: 2rem 0;
+    margin: 0;
 }
 
 .left {
@@ -42,4 +43,9 @@
 
 .limit {
     margin: 1rem 0;
+}
+
+.form {
+    padding: 1rem;
+    border-bottom: 1px solid #e7e5e4;
 }

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { IconButton } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import AddTweetReuse from "../reusable/AddTweetReuse";
 
 const TweetInfo = ({ tweet }) => {
     let navigate = useNavigate();
@@ -26,6 +27,7 @@ const TweetInfo = ({ tweet }) => {
                     <h3>Tweet</h3>
                 </div>
                 <TweetDetails tweet={tweet} />
+                <AddTweetReuse />
             </div>
             <div className="searchBar">
                 <Search />

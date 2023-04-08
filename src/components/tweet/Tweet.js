@@ -21,8 +21,13 @@ const Tweet = ({ tweet }) => {
     // const tweetUrl = userUrl + "/" + tweet.tweetId;
     const tweetUrl = userUrl + "/tweet";
 
-    const navigateToTweetUrl = () => {
-        navigate(tweetUrl);
+    const navigateToTweetUrl = (e) => {
+        if (
+            e.target.tagName == "DIV" &&
+            !e.target.classList.contains("MuiBackdrop-root")
+        ) {
+            navigate(tweetUrl);
+        }
     };
 
     return (
