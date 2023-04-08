@@ -44,43 +44,70 @@ router.get('/:id', async (req, res)=>{
 //follow user
 router.post('/:id', async(req, res)=>{
     const { id } = req.params
-    try {
+    let user = User.findOne({tweetID: id})
 
-        let follow_user = await User.findOne({ tweetID: id}).select('-password');
-        let user = await User.findOne({ tweetID: req.session.userid}).select('-password');
-        
-        // either follow or unfollow, check user exist
-        if (follow_user) {
-            if(follow_user.followers.includes(user.tweetID)){
-                follow_user.followers.pop(user.tweetID)
-            }else{
-                follow_user.followers.push(req.session.userid)
+    if(user.followers.includes(req.session.userid)){
+        await User.updateOne(
+            { tweetID: id },
+            { $pull: { followers : req.session.userid } },
+            function(err, result) {
+                if (err) {
+                console.log(err);
+                return res.status(500).json({ error: "Server error" })
+                } else if (result.nModified === 0) {
+                console.log('No documents were modified.');
+                return res.status(400).json({ error: "no user found" })
+                }
             }
-        } else {
-            return res.status(400).json({ error: "User you try to follow doesn't exist" });
-        }
-        
-        //authenticate the session
-        if (user){
-            if(user.followings.includes(follow_user.tweetID)){
-                user.followings.pop(follow_user.tweetID)
-            }else{
-                user.followings.push(follow_user.tweetID)
+        );
+    
+        await User.updateOne(
+            { tweetID: req.session.id },
+            { $pull: { followings : id } },
+            function(err, result) {
+                if (err) {
+                console.log(err);
+                return res.status(500).json({ error: "Server error" })
+                } else if (result.nModified === 0) {
+                console.log('No documents were modified.');
+                return res.status(400).json({ error: "no user found" })
+                }
             }
-        }else{
-            return res.status(401).json({ error: "Not authenticated" });
-        }
-        
-        await follow_user.save()
-        await user.save()
+        );
+    }else{
+        await User.updateOne(
+            { tweetID: id },
+            { $push: { followers : req.session.userid } },
+            function(err, result) {
+                if (err) {
+                console.log(err);
+                return res.status(500).json({ error: "Server error" })
+                } else if (result.nModified === 0) {
+                console.log('No documents were modified.');
+                return res.status(400).json({ error: "no user found" })
+                }
+            }
+        );
+    
+        await User.updateOne(
+            { tweetID: req.session.id },
+            { $push: { followings : id } },
+            function(err, result) {
+                if (err) {
+                console.log(err);
+                return res.status(500).json({ error: "Server error" })
+                } else if (result.nModified === 0) {
+                console.log('No documents were modified.');
+                return res.status(400).json({ error: "no user found" })
+                }
+            }
+        );
+    }
+    
+    return res.status(200).json({
+        state: "Success"
+    })
 
-        return res.status(200).json({
-            state: "Success"
-        })
-
-    } catch (error) {
-        console.log(error)
-        return res.status(400).json({ error: error });
-    } 
 })
+
 module.exports = router
