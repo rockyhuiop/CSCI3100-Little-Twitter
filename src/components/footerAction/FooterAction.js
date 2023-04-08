@@ -4,7 +4,8 @@ import styles from "./FooterAction.module.css";
 import Login from "./Login";
 import Register from "./Register";
 
-const FooterAction = () => {
+
+const FooterAction = ({identity}) => {
     const {
         isShowing: isLogShowing,
         onClose: onLogClose,
@@ -25,9 +26,8 @@ const FooterAction = () => {
         onLogClose();
         onRegOpen();
     };
-
-    return (
-        <div className={styles.footer}>
+    return (  
+        <div className={identity=="guest" ? styles.footer : styles.disable}>
             <p>Login to tweet, comment, follow people and more!</p>
             <div className={styles["button-group"]}>
                 <Button onClick={onLogOpen} scheme={"secondary"}>
@@ -47,7 +47,7 @@ const FooterAction = () => {
                 onClose={onRegClose}
                 showLogin={showLogin}
             />
-        </div>
+        </div>      
     );
 };
 export default FooterAction;

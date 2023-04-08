@@ -26,6 +26,9 @@
     border-radius: 50px;
     padding: 0.5rem 1rem;
 }
+.disable {
+    display: none;
+}
 
 @media (max-width: 960px) {
     .footer {

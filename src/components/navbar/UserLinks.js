@@ -33,11 +33,23 @@ const links = [
         name: "Profile",
     },
 ];
+const linksnl = [
+    {
+        to: "/",
+        icon: Home,
+        name: "Homepage",
+    },
+    {
+        to: "/explore",
+        icon: Hash,
+        name: "Explore",
+    },
+];
 
-const UserLinks = () => {
+const UserLinks = ({log}) => {
     return (
         <div className={styles.container}>
-            <NavbarItems links={links} />
+            <NavbarItems links={log ? links : linksnl} />
         </div>
     );
 };

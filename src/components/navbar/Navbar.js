@@ -7,9 +7,9 @@ import AdminLinks from "./AdminLinks";
 import styles from "./Navbar.module.css";
 import UserLinks from "./UserLinks";
 
-const Navbar = () => {
-    const [isShowing, setIsShowing] = useState(false);
 
+const Navbar = ({identity}) => {
+    const [isShowing, setIsShowing] = useState(false);
     const toggleMenu = () => {
         setIsShowing(!isShowing);
     };
@@ -30,9 +30,9 @@ const Navbar = () => {
                     isShowing ? styles.show : styles.hide
                 )}
             >
-                <UserLinks />
-                <AdminLinks />
-                <AddTweetButton />
+                <UserLinks log={identity=="guest" ? false : true}/>
+                {identity=="admin" ? <AdminLinks /> : " "}
+                {identity=="guest" ? " " :<AddTweetButton />}
             </div>
         </div>
     );
