@@ -8,6 +8,10 @@ const CommentSchema = new Schema({
         required: true,
         unique: true
     },
+    CreateTime:{
+        type: Date,
+        required: true,
+    },
     corrTweetID:{
         type: String,
         required: false,

@@ -9,6 +9,10 @@ const TweetSchema = new Schema({
         required: true,
         unique: true
     },
+    CreateTime:{
+        type: Date,
+        required: true,
+    },
     CreatorUserID:{
         type: String,
         required: true,

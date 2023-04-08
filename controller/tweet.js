@@ -24,9 +24,12 @@ const CreateTweet = async (userID, Content) => {
 
     var tweetCount = await nextTweetID()
     tweetCount = tweetCount +1
+
+    const d = new Date()
     
     const newTweet = new Tweet({
         tweetID : tweetCount,
+        CreateTime : d,
         CreatorUserID : userID,
         Content : Content,
         LikeCount: 0,
@@ -46,8 +49,11 @@ const ReTweet = async (retweetID,userid, Content) => {
     var tweetCount = await nextTweetID()
     tweetCount = tweetCount +1
 
+    const d = new Date()
+
     const newTweet = new Tweet({
         tweetID : tweetCount,
+        CreateTime : d,
         CreatorUserID : userid,
         Content : Content,
         LikeCount: 0,
@@ -69,9 +75,12 @@ const ReTweet = async (retweetID,userid, Content) => {
 const CreateComment = async (tweetID, userid, Content) => {
     var commentCount = await nextCommentID()
     commentCount = commentCount +1
+
+    const d = new Date()
     
     const newComment = new Comment({
         commentID : commentCount,
+        CreateTime : d,
         CreatorUserID : userid,
         corrTweetID : tweetID,
         Content : Content,
@@ -90,9 +99,12 @@ const ReplyComment = async (commentID, userid, Content) => {
 
     var commentCount = await nextCommentID()
     commentCount = commentCount +1
+
+    const d = new Date()
     
     const newComment = new Comment({
         commentID : commentCount,
+        CreateTime : d,
         CreatorUserID : userid,
         corrCommentID : commentID,
         Content : Content,
@@ -356,6 +368,7 @@ const FetchReplyComment = async(commentID) => {
         replyComment = {
             CreatorUserID: fetchReplyComment.CreatorUserID,
             CreatorUserName: CreatorUserName,
+            CreatTime : fetchReplyComment.CreateTime,
             Content: fetchReplyComment.Content,
             LikeCount: fetchReplyComment.LikeCount,
             DisLikeCount: fetchReplyComment.DisLikeCount,
@@ -386,6 +399,7 @@ const FetchComment = async(tweetID) => {
         comment = {
             CreatorUserID: fetchComment.CreatorUserID,
             CreatorUserName: CreatorUserName,
+            CreatTime : fetchComment.CreateTime,
             Content: fetchComment.Content,
             LikeCount: fetchComment.LikeCount,
             DisLikeCount: fetchComment.DisLikeCount,
@@ -427,6 +441,7 @@ const FetchTweet = async(tweetID) => {
 
                 CreatorUserID : fetchTweet.CreatorUserID,
                 CreatorUserName: CreatorUserName,
+                CreateTime : fetchTweet.CreateTime,
                 Content : fetchTweet.Content,
                 LikeCount : fetchTweet.LikeCount,
                 DisLikeCount : fetchTweet.DisLikeCount,
@@ -450,6 +465,7 @@ const FetchTweet = async(tweetID) => {
                     Status: "Success",
                     CreatorUserID: ReTweetInfo[0].CreatorUserID,
                     CreatorUserName: ReTweetCreatorUserName,
+                    CreateTime : ReTweetInfo[0].CreateTime,
                     Content: ReTweetInfo[0].Content,
                 }
             }
@@ -460,6 +476,7 @@ const FetchTweet = async(tweetID) => {
 
                 CreatorUserID : fetchTweet.CreatorUserID,
                 CreatorUserName: CreatorUserName,
+                CreateTime : fetchTweet.CreateTime,
                 Content : fetchTweet.Content,
                 LikeCount : fetchTweet.LikeCount,
                 DisLikeCount : fetchTweet.DisLikeCount,
@@ -507,6 +524,7 @@ const FetchHomeTweet = async(userID) => {
 
                 CreatorUserID : fetchTweet.CreatorUserID,
                 CreatorUserName: CreatorUserName,
+                CreateTime : fetchTweet.CreateTime,
                 Content : fetchTweet.Content,
                 LikeCount : fetchTweet.LikeCount,
                 DisLikeCount : fetchTweet.DisLikeCount,
@@ -530,6 +548,7 @@ const FetchHomeTweet = async(userID) => {
                     Status: "Success",
                     CreatorUserID: ReTweetInfo[0].CreatorUserID,
                     CreatorUserName: ReTweetCreatorUserName,
+                    CreateTime : ReTweetInfo[0].CreateTime,
                     Content: ReTweetInfo[0].Content,
                 }
             }
@@ -540,6 +559,7 @@ const FetchHomeTweet = async(userID) => {
 
                 CreatorUserID : fetchTweet.CreatorUserID,
                 CreatorUserName: CreatorUserName,
+                CreateTime : fetchTweet.CreateTime,
                 Content : fetchTweet.Content,
                 LikeCount : fetchTweet.LikeCount,
                 DisLikeCount : fetchTweet.DisLikeCount,
