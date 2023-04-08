@@ -39,6 +39,9 @@ const Hp_main = () => {
         },
     ]);
 
+    const msg = "What's happening?";
+    const btn = "Tweet";
+
     useEffect(() => {
         const checklog = async () => {
             const response = await fetch("/tweet/fetchHomeTweet", {
@@ -50,37 +53,32 @@ const Hp_main = () => {
             });
             const json = await response.json();
             if (!response.ok) {
-
             } else if (response.ok) {
                 console.log("ok");
-                const new_tw=[]
-                for (var i=0;i<json.message.length;i++){
-                    new_tw.push(
-                        {
-                            tweetId: [i],
-                            text: json.message[i].Content,
-                            user: {
-                                userId: json.message[i].CreatorUserID,
-                                name: json.message[i].CreatorUserName,
-                                profile_image_url: "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
-                            },
-                            media: "",
-                            date: "",
-                            likeCount: json.message[i].LikeCount,
-                            commentCount: json.message[i].CommentCount,
-                            retweetCount: json.message[i].ReTweetCount,
-                            viewCount: 1000,
-                        }
-                    );
-                    
+                const new_tw = [];
+                for (var i = 0; i < json.message.length; i++) {
+                    new_tw.push({
+                        tweetId: [i],
+                        text: json.message[i].Content,
+                        user: {
+                            userId: json.message[i].CreatorUserID,
+                            name: json.message[i].CreatorUserName,
+                            profile_image_url:
+                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                        },
+                        media: "",
+                        date: "",
+                        likeCount: json.message[i].LikeCount,
+                        commentCount: json.message[i].CommentCount,
+                        retweetCount: json.message[i].ReTweetCount,
+                        viewCount: 1000,
+                    });
                 }
                 setTweets(new_tw);
             }
         };
         checklog();
-        
-        
-    },[]);
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -88,7 +86,7 @@ const Hp_main = () => {
                 <div className={styles.header}>
                     <h3>Home</h3>
                 </div>
-                <AddTweetReuse />
+                <AddTweetReuse msg={msg} btn={btn} />
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}

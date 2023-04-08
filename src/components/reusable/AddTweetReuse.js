@@ -5,7 +5,7 @@ import { Image } from "react-feather";
 import { useState, useRef } from "react";
 import { useEffect } from "react";
 
-const AddTweetReuse = () => {
+const AddTweetReuse = ({ msg, btn }) => {
     const WORD_LIMIT = 120;
     const [file, setFile] = useState("");
     const [text, setText] = useState("");
@@ -34,7 +34,7 @@ const AddTweetReuse = () => {
 
             // We then set the height directly, outside of the render loop
             // Trying to set this with state or a ref will product an incorrect value.
-            textareaRef.current.style.height = scrollHeight + 1 + "px";
+            textareaRef.current.style.height = scrollHeight + "px";
         }
     }, [textareaRef, text]);
 
@@ -50,7 +50,7 @@ const AddTweetReuse = () => {
                 <textarea
                     onChange={(e) => updateTextarea(e)}
                     value={text}
-                    placeholder="What's happening?"
+                    placeholder={msg}
                     className={addtw_styles.input}
                     rows={1}
                     ref={textareaRef}
@@ -76,7 +76,7 @@ const AddTweetReuse = () => {
                     />
                     <span>{getFileNames()}</span>
                 </div>
-                <Button>Add tweet</Button>
+                <Button>{btn}</Button>
             </div>
         </form>
     );

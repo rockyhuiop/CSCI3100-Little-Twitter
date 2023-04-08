@@ -14,6 +14,10 @@ const WORD_LIMIT = 120;
 const AddTweet = ({ isShowing, onClose }) => {
     const [file, setFile] = useState("");
     const [text, setText] = useState("");
+
+    const msg = "What's happening?";
+    const btn = "Tweet";
+
     const ref = useRef(null);
     const textareaRef = useRef(null);
 
@@ -37,7 +41,7 @@ const AddTweet = ({ isShowing, onClose }) => {
                 <ModalCross />
             </ModalHeader>
             <ModalBody>
-                <AddTweetReuse />
+                <AddTweetReuse msg={msg} btn={btn} />
             </ModalBody>
         </Modal>
     );

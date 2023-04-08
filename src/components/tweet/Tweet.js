@@ -7,7 +7,7 @@ import IconMenu from "../reusable/IconMenu.js";
 import "./Tweet.css";
 import TweetActions from "./TweetActions.js";
 
-const Tweet = ({ tweet }) => {
+const Tweet = ({ tweet, isComment }) => {
     const navigate = useNavigate();
     const tweetStatistic = {
         commentCount: tweet.commentCount,
@@ -70,6 +70,9 @@ const Tweet = ({ tweet }) => {
                                 keySuffix={tweet.tweetId}
                             />
                         </div>
+                    </div>
+                    <div>
+                        <span>{isComment ? "Replying to " : ""}</span>
                     </div>
                     <div className="tweet__content">{tweet.text}</div>
                     <TweetActions tweetStatistic={tweetStatistic} />

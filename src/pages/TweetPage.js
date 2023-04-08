@@ -15,26 +15,10 @@ const tweet = {
     likeCount: 4,
     commentCount: 5,
     retweetCount: 6,
-    screenViewCount: "",
     viewCount: 1000,
 };
 
-const handleViewCount = (viewCount) => {
-    let screenViewCount = 0;
-    if (viewCount >= 1000000) {
-        screenViewCount = parseFloat(viewCount / 1000000.0).toFixed(1) + "M";
-    } else if (viewCount >= 1000) {
-        screenViewCount = parseFloat(viewCount / 1000.0).toFixed(1) + "K";
-    } else {
-        screenViewCount = "" + viewCount;
-    }
-    return screenViewCount;
-};
-
 const TweetPage = () => {
-    useEffect(() => {
-        tweet.screenViewCount = handleViewCount(tweet.viewCount);
-    });
     return <TweetInfo tweet={tweet} />;
 };
 export default TweetPage;

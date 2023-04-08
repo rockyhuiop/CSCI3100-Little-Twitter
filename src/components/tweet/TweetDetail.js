@@ -6,14 +6,34 @@ import { Link, useNavigate } from "react-router-dom";
 import IconMenu from "../reusable/IconMenu.js";
 import "./TweetDetail.css";
 import TweetActions from "./TweetActions.js";
+import { useEffect } from "react";
 
 const TweetDetails = ({ tweet }) => {
+    const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
+
     const tweetStatistic = {
         commentCount: tweet.commentCount,
         retweetCount: tweet.retweetCount,
         likeCount: tweet.likeCount,
         viewCount: tweet.viewCount,
     };
+
+    const handleViewCount = (viewCount) => {
+        let screenViewCount = 0;
+        if (viewCount >= 1000000) {
+            screenViewCount =
+                parseFloat(viewCount / 1000000.0).toFixed(1) + "M";
+        } else if (viewCount >= 1000) {
+            screenViewCount = parseFloat(viewCount / 1000.0).toFixed(1) + "K";
+        } else {
+            screenViewCount = "" + viewCount;
+        }
+        return screenViewCount;
+    };
+
+    useEffect(() => {
+        setScreenViewCount(handleViewCount(tweet.viewCount));
+    }, [screenViewCount]);
 
     // const userUrl = "/" + tweet.user.userId;
     const userUrl = "/profile";
@@ -65,7 +85,7 @@ const TweetDetails = ({ tweet }) => {
                 <span>{tweet.created_at}</span>
                 <span>
                     {" · "}
-                    <b>{tweet.screenViewCount}</b>
+                    <b>{screenViewCount}</b>
                     {" Views"}
                 </span>
             </div>
