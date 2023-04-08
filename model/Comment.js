@@ -28,6 +28,10 @@ const CommentSchema = new Schema({
         type: String,
         required: true,
     },
+    UrlList:{
+        type: Array,
+        required: false,
+    },
     LikeCount:{
         type: Number,
         required: true,

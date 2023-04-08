@@ -21,6 +21,7 @@ const { del } = require('express/lib/application')
 
 
 
+
 router = express.Router()
 
 //Posting Tweet
@@ -28,7 +29,7 @@ router.post('/', (req, res)=>{
 
     ( async () => {
 
-        await CreateTweet(req.session.userid, req.body.Content)
+        await CreateTweet(req.session.userid, req.body)
 
     }
     )()
@@ -82,7 +83,7 @@ router.patch('/editTweet/:tweetID', (req, res)=>{
 
             const {tweetID:tweetID} = req.params
     
-            await EditTweetContent(tweetID, req.body.Content)
+            await EditTweetContent(tweetID, req.body)
     
             res.status(200).json({
                 state: "Success"
@@ -98,7 +99,7 @@ router.post('/retweet/:tweetID', (req, res) =>{
 
         const {tweetID: retweetID} = req.params
 
-        await ReTweet(retweetID, req.session.userid, req.body.Content)
+        await ReTweet(retweetID, req.session.userid, req.body)
     }
     )()
 
@@ -113,7 +114,7 @@ router.post('/comment/:tweetID', (req, res)=>{
 
         const {tweetID:tweetID} = req.params
 
-        await CreateComment(tweetID, req.session.userid, req.body.Content)
+        await CreateComment(tweetID, req.session.userid, req.body)
 
     }
     )()
@@ -128,7 +129,7 @@ router.post('/replycomment/:commentID', (req, res)=>{
 
         const {commentID:commentID} = req.params
 
-        await ReplyComment(commentID, req.session.userid, req.body.Content)
+        await ReplyComment(commentID, req.session.userid, req.body)
 
     }
     )()
@@ -143,7 +144,7 @@ router.patch('/editComment/:commentID', (req, res)=>{
 
         const {commentID:commentID} = req.params
 
-        await EditCommentContent(commentID, req.body.Content)
+        await EditCommentContent(commentID, req.body)
 
         res.status(200).json({
             state: "Success"

@@ -20,7 +20,14 @@ const nextCommentID = async () => {
     return totalCommentCount
 }
 
-const CreateTweet = async (userID, Content) => {
+const CreateTweet = async (userID, body) => {
+
+    const Content = body.Content
+    const UrlList = body.UrlList
+
+    if (Content == undefined){
+        Content = ""
+    }
 
     var tweetCount = await nextTweetID()
     tweetCount = tweetCount +1
@@ -37,6 +44,11 @@ const CreateTweet = async (userID, Content) => {
         ReTweetCount:0,
         SuspensionStatus: false
     })
+
+    if (UrlList !== undefined){
+        newTweet.UrlList = UrlList
+    }
+
     await newTweet.save()
 
     //Increment the Tweet Counter
@@ -44,7 +56,14 @@ const CreateTweet = async (userID, Content) => {
 
 }
 
-const ReTweet = async (retweetID,userid, Content) => {
+const ReTweet = async (retweetID,userid, body) => {
+
+    const Content = body.Content
+    const UrlList = body.UrlList
+
+    if (Content == undefined){
+        Content = ""
+    }
 
     var tweetCount = await nextTweetID()
     tweetCount = tweetCount +1
@@ -62,6 +81,12 @@ const ReTweet = async (retweetID,userid, Content) => {
         ReTweetID: retweetID,
         SuspensionStatus: false
     })
+
+    if (UrlList !== undefined){
+        newTweet.UrlList = UrlList
+    }
+
+
     await newTweet.save()
 
     //Increment Retweet Count
@@ -72,7 +97,15 @@ const ReTweet = async (retweetID,userid, Content) => {
 
 }
 
-const CreateComment = async (tweetID, userid, Content) => {
+const CreateComment = async (tweetID, userid, body) => {
+    
+    var Content = body.Content
+    const UrlList = body.UrlList
+
+    if (Content == undefined){
+        Content = ""
+    }
+    
     var commentCount = await nextCommentID()
     commentCount = commentCount +1
 
@@ -88,6 +121,11 @@ const CreateComment = async (tweetID, userid, Content) => {
         DisLikeCount: 0,
         SuspensionStatus: false
     })
+
+    if (UrlList !== undefined){
+        newComment.UrlList = UrlList
+    }
+
     await newComment.save()
 
     //Increment the Comment Counter
@@ -95,7 +133,14 @@ const CreateComment = async (tweetID, userid, Content) => {
 
 }
 
-const ReplyComment = async (commentID, userid, Content) => {
+const ReplyComment = async (commentID, userid, body) => {
+
+    const Content = body.Content
+    const UrlList = body.UrlList
+
+    if (Content == undefined){
+        Content = ""
+    }
 
     var commentCount = await nextCommentID()
     commentCount = commentCount +1
@@ -112,6 +157,11 @@ const ReplyComment = async (commentID, userid, Content) => {
         DisLikeCount: 0,
         SuspensionStatus: false
     })
+
+    if (UrlList !== undefined){
+        newComment.UrlList = UrlList
+    }
+
     await newComment.save()
 
     //Increment the Comment Counter
@@ -200,15 +250,29 @@ const IncreReTweetCount = async(retweetID) => {
     await retweet.save()
 }
 
-const EditTweetContent= async (tweetID, content) => {
+const EditTweetContent= async (tweetID, body) => {
+    const content = body.Content
+    const UrlList = body.UrlList
     const tweet = await Tweet.findOne({tweetID : tweetID})
-    tweet.Content = content
+    if (content !== undefined){
+        tweet.Content = content
+    } 
+    if (UrlList !== undefined){
+        tweet.UrlList = UrlList
+    }
     await tweet.save()
 }
 
-const EditCommentContent= async (commentID, content) => {
+const EditCommentContent= async (commentID, body) => {
+    const content = body.Content
+    const UrlList = body.UrlList
     const comment = await Comment.findOne({commentID : commentID})
-    comment.Content = content
+    if (content !== undefined){
+        comment.Content = content
+    }
+    if (UrlList !== undefined){
+        comment.UrlList = UrlList
+    }
     await comment.save()
 }
 
@@ -374,6 +438,10 @@ const FetchReplyComment = async(commentID) => {
             DisLikeCount: fetchReplyComment.DisLikeCount,
         }
 
+        if (fetchReplyComment.UrlList !== undefined){
+            replyComment["UrlList"] = fetchReplyComment.UrlList
+        }
+
         ReplyCommentList.push(replyComment)
 
     }
@@ -403,6 +471,10 @@ const FetchComment = async(tweetID) => {
             Content: fetchComment.Content,
             LikeCount: fetchComment.LikeCount,
             DisLikeCount: fetchComment.DisLikeCount,
+        }
+
+        if (fetchComment.UrlList !== undefined){
+            comment["UrlList"] = fetchComment.UrlList
         }
 
         //collecting the reply accordingly
@@ -484,6 +556,10 @@ const FetchTweet = async(tweetID) => {
     
                 }
 
+        }
+
+        if (fetchTweet.UrlList !== undefined){
+            tweet["UrlList"] = fetchTweet.UrlList
         }
 
         
@@ -569,7 +645,9 @@ const FetchHomeTweet = async(userID) => {
 
         }
 
-        
+        if (fetchTweet.UrlList !== undefined){
+            tweet["UrlList"] = fetchTweet.UrlList
+        }
 
         //collecting the related comments
 

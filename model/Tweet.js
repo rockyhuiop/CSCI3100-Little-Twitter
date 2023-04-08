@@ -21,6 +21,14 @@ const TweetSchema = new Schema({
         type: String,
         required: true,
     },
+    UrlList:{
+        type: Array,
+        required: false,
+    },
+    ImageList:{
+        type: Array,
+        required: false,
+    },
     LikeCount:{
         type: Number,
         required: true,
