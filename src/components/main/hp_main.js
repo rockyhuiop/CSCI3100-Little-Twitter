@@ -60,8 +60,8 @@ const Hp_main = () => {
                             tweetId: [i],
                             text: json.message[i].Content,
                             user: {
+                                userId: json.message[i].CreatorUserID,
                                 name: json.message[i].CreatorUserName,
-                                screen_name: json.message[i].CreatorUserName,
                                 profile_image_url: "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                             },
                             media: "",
@@ -75,7 +75,6 @@ const Hp_main = () => {
                     
                 }
                 setTweets(new_tw);
-                console.log(json.message)
             }
         };
         checklog();
