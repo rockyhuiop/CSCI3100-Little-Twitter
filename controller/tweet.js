@@ -61,8 +61,6 @@ const CreateTweet = async (userID, body, files) => {
 
     }
 
-    
-
     await newTweet.save()
 
     //Increment the Tweet Counter
@@ -696,6 +694,16 @@ const FetchHomeTweet = async(userID) => {
 
 }
 
+const TweetRecommandation = async(relatedUserList) => {
+
+    const filter = relatedUserList.length ? { CreatorUserID: { $nin: relatedUserList } } : {}
+    filter["SuspensionStatus"] = false
+    console.log(filter)
+    const possibleTweet = await Tweet.find(filter)
+    console.log(possibleTweet)
+    return []
+}
+
 module.exports = {
     CreateTweet,
     ReTweet,
@@ -713,4 +721,5 @@ module.exports = {
     FetchFollowing,
     FetchTweet,
     FetchHomeTweet,
+    TweetRecommandation,
 }
