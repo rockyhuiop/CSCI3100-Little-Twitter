@@ -620,9 +620,17 @@ const FetchTweet = async(tweetID) => {
     return TweetList
 }
 
+
 const FetchHomeTweet = async(userID) => {
 
-    const FetchTweetList = await Tweet.find({CreatorUserID:userID, SuspensionStatus:false})
+    var FetchTweetList = []
+
+    if (userID == ""){
+        FetchTweetList = await Tweet.find({SuspensionStatus:false})
+    }else{
+        FetchTweetList = await Tweet.find({CreatorUserID:userID, SuspensionStatus:false})
+    }
+
     var TweetList = []
     var tweet = {}
     // collecting the tweet from the followings
