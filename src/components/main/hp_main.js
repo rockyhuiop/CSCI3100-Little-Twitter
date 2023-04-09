@@ -7,7 +7,7 @@ import styles from "./hp_main.module.css";
 const Hp_main = () => {
     const { isLoggedIn } = useUser();
     const [tweets, setTweets] = useState([
-        {
+        /*{
             tweetId: "1",
             text: "Hello, Twitter!",
             user: {
@@ -38,7 +38,7 @@ const Hp_main = () => {
             commentCount: 8,
             retweetCount: 9,
             viewCount: 20000,
-        },
+        },*/
     ]);
 
     const msg = "What's happening?";
@@ -46,33 +46,64 @@ const Hp_main = () => {
 
     useEffect(() => {
         const checklog = async () => {
-            const response = await fetch("/tweet/fetchHomeTweet", {
+            
+            const login = await fetch("/home/fetchHomeTweet", {
                 method: "GET",
                 headers: {
                     "Content-Type":
                         "application/x-www-form-urlencoded;charset=UTF-8",
                 },
             });
-            const json = await response.json();
-            if (!response.ok) {
-            } else if (response.ok) {
-                console.log("ok");
+            const log_json = await login.json();
+            
+            if (!login.ok) {
+                const not_login = await fetch("/home/FetchAllTweet", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded;charset=UTF-8",
+                    },
+                });
+                const not_log_json = await not_login.json();
+                
                 const new_tw = [];
-                for (var i = 0; i < json.message.length; i++) {
+                for (var i = 0; i < not_log_json.message.length; i++) {
                     new_tw.push({
-                        tweetId: [i],
-                        text: json.message[i].Content,
+                        tweetId: i,
+                        text: not_log_json.message[i].Content,
                         user: {
-                            userId: json.message[i].CreatorUserID,
-                            name: json.message[i].CreatorUserName,
+                            userId: not_log_json.message[i].CreatorUserID,
+                            name: not_log_json.message[i].CreatorUserName,
                             profile_image_url:
                                 "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                         },
                         media: "",
                         date: "",
-                        likeCount: json.message[i].LikeCount,
-                        commentCount: json.message[i].CommentCount,
-                        retweetCount: json.message[i].ReTweetCount,
+                        likeCount: not_log_json.message[i].LikeCount,
+                        commentCount: not_log_json.message[i].CommentCount,
+                        retweetCount: not_log_json.message[i].ReTweetCount,
+                        viewCount: 1000,
+                    });
+                }
+                setTweets(new_tw);
+                
+            } else if (login.ok) {
+                const new_tw = [];
+                for (var i = 0; i < log_json.message.length; i++) {
+                    new_tw.push({
+                        tweetId: i,
+                        text: log_json.message[i].Content,
+                        user: {
+                            userId: log_json.message[i].CreatorUserID,
+                            name: log_json.message[i].CreatorUserName,
+                            profile_image_url:
+                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                        },
+                        media: "",
+                        date: "",
+                        likeCount: log_json.message[i].LikeCount,
+                        commentCount: log_json.message[i].CommentCount,
+                        retweetCount: log_json.message[i].ReTweetCount,
                         viewCount: 1000,
                     });
                 }
@@ -80,6 +111,7 @@ const Hp_main = () => {
             }
         };
         checklog();
+        
     }, []);
 
     return (
