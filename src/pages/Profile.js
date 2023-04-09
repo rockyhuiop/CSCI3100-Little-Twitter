@@ -1,8 +1,8 @@
 import Banner from "../components/profile/Banner";
+import ProfileTabs from "../components/profile/ProfileTabs";
 import UserInfo from "../components/profile/UserInfo";
 import CenteredStatus from "../components/reusable/CenteredStatus";
 import { useUser } from "../utils/UserContext";
-
 const Profile = () => {
     const { isLoggedIn, user, isProfileLoading } = useUser();
 
@@ -22,6 +22,7 @@ const Profile = () => {
         <div>
             <Banner user={user} />
             <UserInfo user={user} />
+            <ProfileTabs user={user} />
         </div>
     );
 };

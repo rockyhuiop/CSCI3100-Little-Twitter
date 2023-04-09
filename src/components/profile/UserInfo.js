@@ -1,12 +1,9 @@
-import Tabs from "../reusable/Tabs";
 import Avatar from "./Avatar";
 import Biography from "./Biography";
 import DisplayNameWithHandle from "./DisplayNameWithHandle";
 import FollowInfo from "./FollowInfo";
 import ProfileActions from "./ProfileActions";
-import RepliesTab from "./RepliesTab";
 import Stat from "./Stat";
-import TweetTab from "./TweetTab";
 import styles from "./UserInfo.module.css";
 
 /**
@@ -27,10 +24,6 @@ const UserInfo = ({ user }) => {
                 <Stat name={"Followers"} count={user.followers.length} />
             </div>
             <FollowInfo user={user} />
-            <Tabs tabNames={["Tweets", "Replies"]}>
-                <TweetTab user={user} />
-                <RepliesTab user={user} />
-            </Tabs>
         </div>
     );
 };
