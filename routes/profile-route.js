@@ -46,7 +46,6 @@ router.post('/update', upload.fields([{ name: "avatar" }, { name: "banner" }]) ,
             fs.unlink(path.resolve(user.avatar), (err) => {
                 if (err) {
                 console.error(err);
-                return;
                 }
                 console.log('File deleted successfully');
             });
@@ -57,8 +56,7 @@ router.post('/update', upload.fields([{ name: "avatar" }, { name: "banner" }]) ,
         if(user.banner){
             fs.unlink(path.resolve(user.banner), (err) => {
                 if (err) {
-                console.error(err);
-                return;
+                    console.error(err);
                 }
                 console.log('File deleted successfully');
             });
