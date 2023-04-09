@@ -297,16 +297,5 @@ router.get('/FetchComment/:tweetID', (req, res) => {
     })()
 })
 
-//Fetch all Tweet
-
-router.get('/FetchAllTweet/', (req, res) => {
-    (async() => {
-
-        const TweetList = await FetchAllTweet()
-        res.status(200).json({message: TweetList})
-
-    })()
-})
-
 
 module.exports = router
