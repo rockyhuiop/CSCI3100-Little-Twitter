@@ -1,6 +1,6 @@
 import styles from "./CenteredStatus.module.css";
 
-const CenteredError = ({ children }) => {
+const CenteredStatus = ({ children }) => {
     return (
         <div className={styles.center}>
             <p>{children}</p>
@@ -8,4 +8,4 @@ const CenteredError = ({ children }) => {
     );
 };
 
-export default CenteredError;
+export default CenteredStatus;

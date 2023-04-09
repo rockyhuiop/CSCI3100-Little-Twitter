@@ -1,17 +1,11 @@
 import { useRef } from "react";
 import { Search } from "react-feather";
 import styles from "./SearchBar.module.css";
+import { useUserMangement } from "./UserManagementContext";
 
-/**
- *  Custom search input... with a div
- *  used in admin pages
- *
- *  placeholder?: placeholder text for the input
- *  onInputChange: lifting state up
- *  value: as it is controlled by parent, value is also needed
- */
-const SearchBar = ({ placeholder, onInputChange, value }) => {
+const SearchBar = () => {
     const ref = useRef(null);
+    const { setQuery, query } = useUserMangement();
 
     /*
       The user does not know that this component
@@ -25,14 +19,18 @@ const SearchBar = ({ placeholder, onInputChange, value }) => {
         ref.current.focus();
     };
 
+    const onInputChange = (text) => {
+        setQuery(text);
+    };
+
     return (
         <div className={styles.bar} onClick={onClick}>
             <Search />
             <input
-                placeholder={placeholder}
+                placeholder={"Search Users"}
                 ref={ref}
                 onChange={(e) => onInputChange(e.target.value)}
-                value={value}
+                value={query}
             />
         </div>
     );

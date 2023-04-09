@@ -1,6 +1,5 @@
 import { useMemo, useRef, useState } from "react";
 import { useImage } from "../../utils/useImage";
-import { useUser } from "../../utils/UserContext";
 import Button from "../reusable/Button";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
@@ -12,7 +11,6 @@ import EditProfileForm from "./EditProfileForm";
 import styles from "./EditProfileModal.module.css";
 
 const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
-    const { setUser } = useUser();
     const formRef = useRef(null);
     const [error, setError] = useState(null);
 
@@ -55,8 +53,7 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
             if (json.error) {
                 throw new Error(json.error);
             } else {
-                setUser(json.data);
-                editCallback();
+                editCallback(json.data);
                 onClose();
             }
         } catch (error) {

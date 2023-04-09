@@ -1,5 +1,6 @@
 import { Snackbar } from "@mui/material";
 import { useState } from "react";
+import { useUser } from "../../utils/UserContext";
 import EditProfile from "../editProfile/EditProfileModal";
 import Button from "../reusable/Button";
 import { useModal } from "../reusable/modal/useModal";
@@ -8,10 +9,12 @@ import styles from "./ProfileActions.module.css";
 
 const ProfileActions = ({ user }) => {
     const { onClose, isShowing, onOpen } = useModal();
+    const { setUser } = useUser();
     const [open, setOpen] = useState(false);
 
-    const afterEdit = () => {
+    const afterEdit = (data) => {
         setOpen(true);
+        setUser(data);
     };
 
     const handleClose = () => {

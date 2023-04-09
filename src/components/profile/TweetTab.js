@@ -1,5 +1,4 @@
 const TweetTab = ({ user }) => {
-    console.log(user);
     return <div>Hi</div>;
 };
 
