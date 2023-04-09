@@ -69,7 +69,7 @@ app.use('/dashboard', dashboard)
 app.use('/tweet', tweet)
 
 app.all('*', (req, res)=>{
-    res.status(404).send(`<h1>Not Found</h1>`)
+    res.status(404).json({error: "Not Found"})
 })
 
 // connect to database
