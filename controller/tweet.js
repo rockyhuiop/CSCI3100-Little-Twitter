@@ -408,8 +408,21 @@ const AdminDelTweet = async(adminUserID, userID) => {
     const ReqUser = await User.findOne({tweetID: adminUserID})
     if (ReqUser.userType == 'admin'){
         const filter = {CreatorUserID : userID}
-        const query = {$pull:{CreatorUserID :userID}}
         const result = await Tweet.deleteMany(filter,{multi: true})
+        console.log(result)
+        return true
+    }else{
+        return false
+    }
+
+    
+}
+
+const AdminDelComment = async(adminUserID, userID) => {
+    const ReqUser = await User.findOne({tweetID: adminUserID})
+    if (ReqUser.userType == 'admin'){
+        const filter = {CreatorUserID : userID}
+        const result = await Comment.deleteMany(filter,{multi: true})
         console.log(result)
         return true
     }else{
@@ -708,6 +721,7 @@ module.exports = {
     DelComment,
     DelTweet,
     AdminDelTweet,
+    AdminDelComment,
     FetchFollowing,
     FetchTweet,
     FetchHomeTweet,

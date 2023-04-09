@@ -2,6 +2,7 @@ const express = require('express')
 const User = require('../model/User.js')
 const {
     AdminDelTweet,
+    AdminDelComment,
 } = require('../controller/tweet.js')
 
 
@@ -71,5 +72,28 @@ router.delete('/AdminDeleteTweet/:userID', (req, res) => {
 
 })
 
+//ADMIN Funciton : Delete Comment by userID
+router.delete('/AdminDeleteComment/:userID', (req, res) => {
+
+    (async() => {
+        const AdminUserID = req.session.userid
+        const {userID:userID} = req.params
+
+        const result = await AdminDelComment(AdminUserID, userID)
+
+        if (result){
+            res.status(200).json({
+                state: "Success"
+            })
+        }else{
+            res.status(400).json({
+                state: "fail", 
+                message: "You are not authorized to delete the tweet"
+            })
+        }
+
+    })()
+
+})
 
 module.exports = router
