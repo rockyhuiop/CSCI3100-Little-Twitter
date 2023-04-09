@@ -1,13 +1,13 @@
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconButton } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import AddTweet from "../reusable/AddTweet";
 import Search from "../search/search";
+import Tweet from "./Tweet";
 import TweetDetails from "./TweetDetail";
 import "./TweetInfo.css";
-import { useNavigate } from "react-router";
-import { IconButton } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import AddTweetReuse from "../reusable/AddTweetReuse";
-import { useState } from "react";
-import Tweet from "./Tweet";
 
 const TweetInfo = ({ tweet }) => {
     let navigate = useNavigate();
@@ -66,7 +66,7 @@ const TweetInfo = ({ tweet }) => {
                     <h3>Tweet</h3>
                 </div>
                 <TweetDetails tweet={tweet} />
-                <AddTweetReuse msg={msg} btn={btn} />
+                <AddTweet msg={msg} btn={btn} />
                 {comments.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}

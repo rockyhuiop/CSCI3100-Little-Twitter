@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Image } from "react-feather";
 import defaultUser from "../../assets/default.jpg";
-import addtw_styles from "../navbar/AddTweet.module.css";
+import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
 
-const AddTweetReuse = ({ msg, btn }) => {
+const AddTweet = ({ msg, btn }) => {
     const WORD_LIMIT = 120;
     const [file, setFile] = useState("");
     const [text, setText] = useState("");
@@ -38,10 +38,10 @@ const AddTweetReuse = ({ msg, btn }) => {
     }, [textareaRef, text]);
 
     return (
-        <form className={addtw_styles.form} name="hp-addtw">
-            <div className={addtw_styles.row}>
+        <form className={styles.form} name="hp-addtw">
+            <div className={styles.row}>
                 <img
-                    className={addtw_styles.avatar}
+                    className={styles.avatar}
                     src={defaultUser}
                     alt="Avatar of user"
                 />
@@ -49,24 +49,21 @@ const AddTweetReuse = ({ msg, btn }) => {
                     onChange={(e) => updateTextarea(e)}
                     value={text}
                     placeholder={msg}
-                    className={addtw_styles.input}
+                    className={styles.input}
                     rows={1}
                     ref={textareaRef}
                     autoFocus
                 />
             </div>
-            <p className={addtw_styles.limit}>
+            <p className={styles.limit}>
                 {WORD_LIMIT - text.length} characters left.
             </p>
-            <div className={addtw_styles["add-file-row"]}>
-                <div className={addtw_styles.left}>
-                    <Image
-                        onClick={choosePicture}
-                        className={addtw_styles.select}
-                    />
+            <div className={styles["add-file-row"]}>
+                <div className={styles.left}>
+                    <Image onClick={choosePicture} className={styles.select} />
                     {/* hide the file input */}
                     <input
-                        className={addtw_styles.file}
+                        className={styles.file}
                         onChange={(e) => setFile(e.target.files[0])}
                         type="file"
                         multiple={false}
@@ -79,4 +76,4 @@ const AddTweetReuse = ({ msg, btn }) => {
         </form>
     );
 };
-export default AddTweetReuse;
+export default AddTweet;

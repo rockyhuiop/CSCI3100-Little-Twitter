@@ -1,5 +1,6 @@
 import qs from "qs";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext({});
 
@@ -10,6 +11,7 @@ export const useUser = () => {
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const fetchProfileAndSetUser = async () => {
         console.log("[UserContext] fetching user profile...");
@@ -49,6 +51,7 @@ const UserProvider = ({ children }) => {
         if (response.ok) {
             console.log("[UserContext] user has logged out");
             setUser(null);
+            navigate("/");
         } else {
             console.error("[UserContext] cannot logout user!");
         }

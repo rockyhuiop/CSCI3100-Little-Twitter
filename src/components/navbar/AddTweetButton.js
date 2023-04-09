@@ -2,8 +2,8 @@ import { Fragment } from "react";
 import { useUser } from "../../utils/UserContext";
 import Button from "../reusable/Button";
 import { useModal } from "../reusable/modal/useModal";
-import AddTweet from "./AddTweet";
 import styles from "./AddTweetButton.module.css";
+import NavAddTweet from "./NavAddTweet";
 
 const AddTweetButton = () => {
     const { isShowing, onClose, onOpen } = useModal();
@@ -22,7 +22,7 @@ const AddTweetButton = () => {
             >
                 Add Tweet
             </Button>
-            <AddTweet isShowing={isShowing} onClose={onClose} />
+            <NavAddTweet isShowing={isShowing} onClose={onClose} />
         </Fragment>
     );
 };

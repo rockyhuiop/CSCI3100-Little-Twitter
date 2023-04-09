@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../../utils/UserContext";
-import AddTweetReuse from "../reusable/AddTweetReuse";
+import AddTweet from "../reusable/AddTweet";
 import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
@@ -88,7 +88,7 @@ const Hp_main = () => {
                 <div className={styles.header}>
                     <h3>Home</h3>
                 </div>
-                {isLoggedIn ? <AddTweetReuse msg={msg} btn={btn} /> : null}
+                {isLoggedIn ? <AddTweet msg={msg} btn={btn} /> : null}
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}
