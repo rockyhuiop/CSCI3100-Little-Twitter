@@ -100,6 +100,7 @@ const UserProvider = ({ children }) => {
             setUser(null);
             setMessage({ variant: "success", message: "Logged out" });
             navigate("/");
+            window.location.reload(true);
         } else {
             console.error("[UserContext] cannot logout user!");
             setMessage({
