@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from "react";
-import { useImage } from "../../utils/useImage";
 import Button from "../reusable/Button";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
@@ -17,11 +16,6 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
     // these two fields stores the changes
     const [banner, setBanner] = useState(null);
     const [avatar, setAvatar] = useState(null);
-
-    // these two fields stores the avatar and banner that the user
-    // is using before they changed anything
-    const initialAvatar = useImage(user.avatar);
-    const initialBanner = useImage(user.banner);
 
     // when the save button is clicked, call this
     const initiateSubmit = () => {
@@ -95,14 +89,14 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
             {/* I placed the banner OUTSIDE of the modal body because banner need to have no margin. Noramlly all contents should be inside modal body */}
             <EditableBanner
                 onBannerChange={bannerChanged}
-                url={bannerURL || initialBanner}
+                url={bannerURL || user.banner}
             />
             <ModalBody>
                 <div className={styles.avatar}>
                     <EditableAvatar
                         size="smaller"
                         onAvatarChange={avatarChanged}
-                        avatar={avatarURL || initialAvatar}
+                        avatar={avatarURL || user.avatar}
                         username={user.username}
                     />
                 </div>

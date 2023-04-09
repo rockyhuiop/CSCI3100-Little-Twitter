@@ -1,18 +1,12 @@
 import classnames from "classnames";
 import defaultUser from "../../assets/default.jpg";
-import { useImage } from "../../utils/useImage";
+import { SERVER_ADDRESS } from "../../utils/constants";
 import styles from "./Avatar.module.css";
 
-const Avatar = ({
-    user: { avatar: _avatar, username },
-    size,
-    reduceMargin,
-}) => {
+const Avatar = ({ user: { avatar, username }, size, reduceMargin }) => {
     if (!size) {
         size = "larger";
     }
-
-    const avatar = useImage(_avatar);
 
     const className = classnames(
         styles.avatar,
@@ -25,7 +19,7 @@ const Avatar = ({
             <img
                 className={className}
                 alt={`Avatar of user ${username}`}
-                src={avatar || defaultUser}
+                src={avatar ? SERVER_ADDRESS + avatar : defaultUser}
             ></img>
         </div>
     );
