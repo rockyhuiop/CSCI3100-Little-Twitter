@@ -52,7 +52,7 @@ const Tweet = ({ tweet, isComment }) => {
                                 @{tweet.user.userId}
                             </span>
                             <span className="tweet__timestamp">
-                                &nbsp;· 2h ago
+                                &nbsp;· {tweet.date+ " ago"}
                             </span>
                         </div>
                         <div

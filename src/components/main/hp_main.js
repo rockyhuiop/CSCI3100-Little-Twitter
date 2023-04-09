@@ -4,6 +4,7 @@ import AddTweet from "../reusable/AddTweet";
 import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
+import {CalTime} from "../reusable/CalTime"
 const Hp_main = () => {
     const { isLoggedIn } = useUser();
     const [tweets, setTweets] = useState([
@@ -40,7 +41,7 @@ const Hp_main = () => {
             viewCount: 20000,
         },*/
     ]);
-
+    
     const msg = "What's happening?";
     const btn = "Tweet";
 
@@ -100,7 +101,7 @@ const Hp_main = () => {
                                 "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                         },
                         media: "",
-                        date: "",
+                        date: CalTime(log_json.message[i].CreateTime),
                         likeCount: log_json.message[i].LikeCount,
                         commentCount: log_json.message[i].CommentCount,
                         retweetCount: log_json.message[i].ReTweetCount,
@@ -112,6 +113,7 @@ const Hp_main = () => {
         };
         checklog();
         
+    
     }, []);
 
     return (
