@@ -404,6 +404,21 @@ const DelTweet = async(tweetID, userID) => {
 }
 }
 
+const AdminDelTweet = async(adminUserID, userID) => {
+    const ReqUser = await User.findOne({tweetID: adminUserID})
+    if (ReqUser.userType == 'admin'){
+        const filter = {CreatorUserID : userID}
+        const query = {$pull:{CreatorUserID :userID}}
+        const result = await Tweet.deleteMany(filter,{multi: true})
+        console.log(result)
+        return true
+    }else{
+        return false
+    }
+
+    
+}
+
 const RemovelikeTweetID = async(tweetID) => {
     const filter = {likedTweetID : {$in : [tweetID]}}
     const query = {$pull:{likedTweetID :tweetID}}
@@ -454,6 +469,7 @@ const FetchReplyComment = async(commentID) => {
         const CreatorUserName = Creator.name
 
         replyComment = {
+            CommentID: fetchReplyComment.commentID,
             CreatorUserID: fetchReplyComment.CreatorUserID,
             CreatorUserName: CreatorUserName,
             CreatTime : fetchReplyComment.CreateTime,
@@ -489,6 +505,7 @@ const FetchComment = async(tweetID) => {
         const CreatorUserName = Creator.name
 
         comment = {
+            CommentID: fetchComment.commentID,
             CreatorUserID: fetchComment.CreatorUserID,
             CreatorUserName: CreatorUserName,
             CreatTime : fetchComment.CreateTime,
@@ -528,21 +545,21 @@ const FetchTweet = async(tweetID) => {
         const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
 
+        tweet = {
+            TweetID: fetchTweet.tweetID,
+            CreatorUserID : fetchTweet.CreatorUserID,
+            CreatorUserName: CreatorUserName,
+            CreateTime : fetchTweet.CreateTime,
+            Content : fetchTweet.Content,
+            LikeCount : fetchTweet.LikeCount,
+            DisLikeCount : fetchTweet.DisLikeCount,
+            ReTweetCount : fetchTweet.ReTweetCount,
+            }
+
         //determine whether it is a retweet
         let reTweet =  fetchTweet.ReTweetID
         
         if (reTweet !== undefined){
-
-            tweet = {
-
-                CreatorUserID : fetchTweet.CreatorUserID,
-                CreatorUserName: CreatorUserName,
-                CreateTime : fetchTweet.CreateTime,
-                Content : fetchTweet.Content,
-                LikeCount : fetchTweet.LikeCount,
-                DisLikeCount : fetchTweet.DisLikeCount,
-                ReTweetCount : fetchTweet.ReTweetCount,
-                }
 
             const ReTweetInfo = await Tweet.find({tweetID: fetchTweet.ReTweetID, SuspensionStatus:false})
 
@@ -559,26 +576,13 @@ const FetchTweet = async(tweetID) => {
 
                 tweet['ReTweet'] = {
                     Status: "Success",
+                    TweetID: ReTweetInfo[0].tweetID,
                     CreatorUserID: ReTweetInfo[0].CreatorUserID,
                     CreatorUserName: ReTweetCreatorUserName,
                     CreateTime : ReTweetInfo[0].CreateTime,
                     Content: ReTweetInfo[0].Content,
                 }
             }
-
-        }else{
-
-            tweet = {
-
-                CreatorUserID : fetchTweet.CreatorUserID,
-                CreatorUserName: CreatorUserName,
-                CreateTime : fetchTweet.CreateTime,
-                Content : fetchTweet.Content,
-                LikeCount : fetchTweet.LikeCount,
-                DisLikeCount : fetchTweet.DisLikeCount,
-                ReTweetCount : fetchTweet.ReTweetCount,
-    
-                }
 
         }
 
@@ -600,7 +604,6 @@ const FetchTweet = async(tweetID) => {
 
         }
 
-    
     return TweetList
 }
 
@@ -617,21 +620,21 @@ const FetchHomeTweet = async(userID) => {
         const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
 
+        tweet = {
+            TweetID: fetchTweet.tweetID,
+            CreatorUserID : fetchTweet.CreatorUserID,
+            CreatorUserName: CreatorUserName,
+            CreateTime : fetchTweet.CreateTime,
+            Content : fetchTweet.Content,
+            LikeCount : fetchTweet.LikeCount,
+            DisLikeCount : fetchTweet.DisLikeCount,
+            ReTweetCount : fetchTweet.ReTweetCount,
+            }
+
         //determine whether it is a retweet
         let reTweet =  fetchTweet.ReTweetID
         
         if (reTweet !== undefined){
-
-            tweet = {
-
-                CreatorUserID : fetchTweet.CreatorUserID,
-                CreatorUserName: CreatorUserName,
-                CreateTime : fetchTweet.CreateTime,
-                Content : fetchTweet.Content,
-                LikeCount : fetchTweet.LikeCount,
-                DisLikeCount : fetchTweet.DisLikeCount,
-                ReTweetCount : fetchTweet.ReTweetCount,
-                }
 
             const ReTweetInfo = await Tweet.find({tweetID: fetchTweet.ReTweetID, SuspensionStatus:false})
 
@@ -654,20 +657,6 @@ const FetchHomeTweet = async(userID) => {
                     Content: ReTweetInfo[0].Content,
                 }
             }
-
-        }else{
-
-            tweet = {
-
-                CreatorUserID : fetchTweet.CreatorUserID,
-                CreatorUserName: CreatorUserName,
-                CreateTime : fetchTweet.CreateTime,
-                Content : fetchTweet.Content,
-                LikeCount : fetchTweet.LikeCount,
-                DisLikeCount : fetchTweet.DisLikeCount,
-                ReTweetCount : fetchTweet.ReTweetCount,
-    
-                }
 
         }
 
@@ -718,8 +707,10 @@ module.exports = {
     EditCommentContent,
     DelComment,
     DelTweet,
+    AdminDelTweet,
     FetchFollowing,
     FetchTweet,
     FetchHomeTweet,
+    FetchComment,
     TweetRecommandation,
 }

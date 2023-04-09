@@ -16,6 +16,7 @@ const {
     FetchFollowing,
     FetchTweet,
     FetchHomeTweet,
+    FetchComment,
     TweetRecommandation,
 } = require('../controller/tweet')
 const { del } = require('express/lib/application')
@@ -283,6 +284,16 @@ router.get('/TweetRecommend/', (req, res) => {
         res.status(200).json({message: "success"})
         //const recommandedTweet = await FetchHomeTweet(recommandTweetIDList)
         //res.status(200).json({message : recommandedTweet})
+    })()
+})
+
+//Fetch Comment by related tweetID
+
+router.get('/FetchComment/:tweetID', (req, res) => {
+    (async() => {
+        const {tweetID:tweetID} = req.params
+        const CommentList = await FetchComment(tweetID)
+        res.status(200).json({message: CommentList})
     })()
 })
 
