@@ -45,7 +45,7 @@ app.use(sessions({
     resave: false 
 }));
 
-app.use(express.static("uploads"))
+app.use('/uploads', express.static("uploads"))
 
 //pages
 app.use('/', home_guest)
