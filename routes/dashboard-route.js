@@ -42,6 +42,15 @@ router.delete('/:tweetID', async (req, res)=>{
         return res.status(500).json({error: "Server error"})
       });
 
+    try {
+        await AdminDelTweet(req.session.userid, req.params.tweetID)
+        await AdminDelComment(req.session.userid, req.params.tweetID)
+    }
+    catch (err){
+        console.log(err)
+        return res.status(500).json({error: "Server error"})
+    }
+
     return res.status(200).json({
         data: result,
         state: "Success"
