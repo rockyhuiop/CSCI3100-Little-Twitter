@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { useUser } from "../../utils/UserContext";
 import Button from "../reusable/Button";
 import { useModal } from "../reusable/modal/useModal";
 import AddTweet from "./AddTweet";
@@ -6,6 +7,12 @@ import styles from "./AddTweetButton.module.css";
 
 const AddTweetButton = () => {
     const { isShowing, onClose, onOpen } = useModal();
+    const { isLoggedIn } = useUser();
+
+    if (!isLoggedIn) {
+        return null;
+    }
+
     return (
         <Fragment>
             <Button

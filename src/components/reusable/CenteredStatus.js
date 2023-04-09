@@ -1,4 +1,4 @@
-import styles from "./CenteredError.module.css";
+import styles from "./CenteredStatus.module.css";
 
 const CenteredError = ({ children }) => {
     return (

@@ -1,11 +1,13 @@
+import { useUser } from "../../utils/UserContext";
 import Button from "../reusable/Button";
 import { useModal } from "../reusable/modal/useModal";
 import styles from "./FooterAction.module.css";
 import Login from "./Login";
 import Register from "./Register";
 
+const FooterAction = () => {
+    const { isLoggedIn } = useUser();
 
-const FooterAction = ({identity}) => {
     const {
         isShowing: isLogShowing,
         onClose: onLogClose,
@@ -26,8 +28,14 @@ const FooterAction = ({identity}) => {
         onLogClose();
         onRegOpen();
     };
-    return (  
-        <div className={identity=="guest" ? styles.footer : styles.disable}>
+
+    if (isLoggedIn) {
+        return null;
+    }
+
+    return (
+        // styles.disable
+        <div className={styles.footer}>
             <p>Login to tweet, comment, follow people and more!</p>
             <div className={styles["button-group"]}>
                 <Button onClick={onLogOpen} scheme={"secondary"}>
@@ -47,7 +55,7 @@ const FooterAction = ({identity}) => {
                 onClose={onRegClose}
                 showLogin={showLogin}
             />
-        </div>      
+        </div>
     );
 };
 export default FooterAction;

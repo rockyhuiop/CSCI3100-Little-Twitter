@@ -1,9 +1,8 @@
-import addtw_styles from "../navbar/AddTweet.module.css";
-import defaultUser from "../../assets/default.jpg";
-import Button from "./Button";
+import { useEffect, useRef, useState } from "react";
 import { Image } from "react-feather";
-import { useState, useRef } from "react";
-import { useEffect } from "react";
+import defaultUser from "../../assets/default.jpg";
+import addtw_styles from "../navbar/AddTweet.module.css";
+import Button from "./Button";
 
 const AddTweetReuse = ({ msg, btn }) => {
     const WORD_LIMIT = 120;
@@ -46,7 +45,6 @@ const AddTweetReuse = ({ msg, btn }) => {
                     src={defaultUser}
                     alt="Avatar of user"
                 />
-                {/* It should probably not grow since there is a word limit in Twitter  */}
                 <textarea
                     onChange={(e) => updateTextarea(e)}
                     value={text}

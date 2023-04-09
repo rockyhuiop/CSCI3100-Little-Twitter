@@ -1,29 +1,27 @@
 import Banner from "../components/profile/Banner";
 import UserInfo from "../components/profile/UserInfo";
-import CenteredError from "../components/reusable/error/CenteredError";
-import { useProfile } from "../utils/useProfile";
+import CenteredStatus from "../components/reusable/CenteredStatus";
+import { useUser } from "../utils/UserContext";
 
 const Profile = () => {
-    const { data, error, isLoading } = useProfile();
+    const { isLoggedIn, user, isProfileLoading } = useUser();
 
-    if (isLoading) {
-        return <p>Trying to load user profile...</p>;
-    } else if (error === "Not logged in") {
+    if (isProfileLoading) {
+        return <CenteredStatus>Loading user profile...</CenteredStatus>;
+    }
+
+    if (!isLoggedIn) {
         return (
-            <CenteredError>
-                There is no profile to show since the user is not logged in.
-            </CenteredError>
-        );
-    } else if (error) {
-        return (
-            <CenteredError>Some horrible errors occured: {error}</CenteredError>
+            <CenteredStatus>
+                There is no profile to show since the user is not logged in yet.
+            </CenteredStatus>
         );
     }
 
     return (
         <div>
-            <Banner user={data} />
-            <UserInfo user={data} />
+            <Banner user={user} />
+            <UserInfo user={user} />
         </div>
     );
 };

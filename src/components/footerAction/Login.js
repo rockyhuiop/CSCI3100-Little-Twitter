@@ -1,6 +1,6 @@
-import qs from "qs";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../utils/UserContext";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
 import ModalCross from "../reusable/modal/ModalCross";
@@ -9,30 +9,18 @@ import LoginForm from "./LoginForm";
 import styles from "./ModalBodies.module.css";
 
 const Login = ({ isShowing, onClose, showRegister }) => {
+    const { login } = useUser();
     const [error, setError] = useState("");
     const nav = useNavigate();
     const handleSubmit = async (values) => {
-        try {
-            const response = await fetch("/login", {
-                method: "POST",
-                body: qs.stringify(values),
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
-            const json = await response.json();
-            console.log(json);
-            if (!response.ok) {
-                throw new Error(json.error);
-            }
+        const error = await login(values);
+        if (!error) {
             setError("");
             // close the modal and redirect to profile page
             onClose();
             nav("/profile", { replace: true });
-        } catch (err) {
-            console.error(err);
-            setError(err.message);
+        } else {
+            setError(error);
         }
     };
 

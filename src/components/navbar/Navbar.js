@@ -2,13 +2,16 @@ import classnames from "classnames";
 import React, { useState } from "react";
 import { Menu, Twitter } from "react-feather";
 import { Link } from "react-router-dom";
+import { useUser } from "../../utils/UserContext";
 import AddTweetButton from "./AddTweetButton";
 import AdminLinks from "./AdminLinks";
+import LogoutLink from "./LogoutLink";
 import styles from "./Navbar.module.css";
 import UserLinks from "./UserLinks";
 
+const Navbar = () => {
+    const { isAdmin } = useUser();
 
-const Navbar = ({identity}) => {
     const [isShowing, setIsShowing] = useState(false);
     const toggleMenu = () => {
         setIsShowing(!isShowing);
@@ -30,9 +33,10 @@ const Navbar = ({identity}) => {
                     isShowing ? styles.show : styles.hide
                 )}
             >
-                <UserLinks log={identity=="guest" ? false : true}/>
-                {identity=="admin" ? <AdminLinks /> : " "}
-                {identity=="guest" ? " " :<AddTweetButton />}
+                <UserLinks />
+                <LogoutLink />
+                {isAdmin ? <AdminLinks /> : null}
+                <AddTweetButton />
             </div>
         </div>
     );

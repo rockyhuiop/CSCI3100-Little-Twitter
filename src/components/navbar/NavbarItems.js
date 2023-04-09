@@ -1,7 +1,7 @@
 import NavbarItem from "./NavbarItem";
 import styles from "./NavbarItems.module.css";
 
-const NavbarItems = ({ links, spacing = 48 }) => {
+const NavbarItems = ({ links, spacing = 32 }) => {
     return (
         <div
             className={styles.links}

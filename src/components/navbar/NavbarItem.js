@@ -7,10 +7,20 @@ import styles from "./NavbarItem.module.css";
  * to: href of the current item
  * name: link text, such as "Home", "Profile"
  */
-const NavbarItem = ({ icon: Icon, to, name }) => {
+const NavbarItem = ({ icon: Icon, to, name, customHandler }) => {
     const getClassNames = ({ isActive }) => {
         return classnames(styles.link, isActive ? styles.active : "");
     };
+
+    if (customHandler) {
+        return (
+            <div onClick={customHandler} className={styles.link}>
+                <Icon size={24} />
+                <span>{name}</span>
+            </div>
+        );
+    }
+
     return (
         <NavLink to={to} className={getClassNames}>
             <Icon size={24} />
