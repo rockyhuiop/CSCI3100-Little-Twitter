@@ -79,6 +79,8 @@ export const CalTime = (mon_time) =>{
         dur+=(time[i]-t[i])*(60**(2-i))
     }
     var final=0;
+    dur-=(parseInt(region.slice(4,6))*60*60)
+    day+=(dur/60/60/24)
     if (day==0){
         if (dur<60){
             final=dur+" sec";
@@ -88,7 +90,7 @@ export const CalTime = (mon_time) =>{
             final=Math.round((dur/(60*60)))+" h";
         }
     } else if (day<30){
-        final=day+" d";
+        final=Math.round(day)+" d";
     } else if (day<365){
         final=Math.round(day/30)+" mon";
     } else {
