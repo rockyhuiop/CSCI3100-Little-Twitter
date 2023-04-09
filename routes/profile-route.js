@@ -1,9 +1,19 @@
 const express = require('express')
 const User = require('../model/User.js')
 //setting options for multer
+const path = require('path')
+const fs = require('fs')
 const multer = require('multer')
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  })
+  
+const upload = multer({ storage })
 
 router = express.Router()
 
@@ -32,12 +42,28 @@ router.post('/update', upload.fields([{ name: "avatar" }, { name: "banner" }]) ,
     let {name, email, password} = req.body
 
     if(req.files.avatar){
-        user.avatar.data = req.files['avatar'][0].buffer
-        user.avatar.contentType = req.files['avatar'][0].mimetype
+        if(user.avatar){
+            fs.unlink(path.resolve(user.avatar), (err) => {
+                if (err) {
+                console.error(err);
+                return;
+                }
+                console.log('File deleted successfully');
+            });
+        }
+        user.avatar = req.files['avatar'][0].path
     }
     if(req.files.banner){
-        user.banner.data = req.files['banner'][0].buffer
-        user.banner.contentType = req.files['banner'][0].mimetype
+        if(user.banner){
+            fs.unlink(path.resolve(user.banner), (err) => {
+                if (err) {
+                console.error(err);
+                return;
+                }
+                console.log('File deleted successfully');
+            });
+        }
+        user.banner = req.files['banner'][0].path
     }
     if(name){
         user.name = name
