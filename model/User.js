@@ -48,12 +48,13 @@ const UserSchema = new Schema({
         type: Array
     },
     avatar:{
-        data: Buffer,
-        contentType: String,
+        type: String
     },
     banner:{
-        data: Buffer,
-        contentType: String,
+        type: String
+    },
+    biography:{
+        type: String
     }
 });
 
