@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1rem;
+    font-weight: 500;
+
+    padding: 0.4rem 3rem;
+
+    border-radius: 1rem;
+
+    box-shadow: var(--shadow-elevation-medium);
+}
+
+.success {
+    background-color: var(--clr-success);
+    color: white;
+}
+
+.danger {
+    background-color: var(--clr-danger);
+    color: white;
+}

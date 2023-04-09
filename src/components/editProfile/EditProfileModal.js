@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { useImage } from "../../utils/useImage";
+import { useUser } from "../../utils/UserContext";
 import Button from "../reusable/Button";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
@@ -10,7 +11,8 @@ import EditableBanner from "./EditableBanner";
 import EditProfileForm from "./EditProfileForm";
 import styles from "./EditProfileModal.module.css";
 
-const EditProfileModal = ({ user, onClose, isShowing }) => {
+const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
+    const { setUser } = useUser();
     const formRef = useRef(null);
     const [error, setError] = useState(null);
 
@@ -34,21 +36,30 @@ const EditProfileModal = ({ user, onClose, isShowing }) => {
 
     // we still have to pass this down to the form... :(
     const handleSubmit = async (values) => {
-        formData.append("name", values.name);
-        formData.append("biography", values.biography);
-        // don't send null files to the server
-        if (banner) {
-            formData.append("banner", banner);
-        }
-        if (avatar) {
-            formData.append("avatar", avatar);
-        }
-        const response = await fetch("/profile/update", {
-            method: "POST",
-            body: formData,
-        });
-        const json = await response.json();
-        if (json.error) {
+        try {
+            formData.append("name", values.name);
+            formData.append("biography", values.biography);
+            // don't send null files to the server
+            if (banner) {
+                formData.append("banner", banner);
+            }
+            if (avatar) {
+                formData.append("avatar", avatar);
+            }
+            const response = await fetch("/profile/update", {
+                method: "POST",
+                body: formData,
+            });
+            const json = await response.json();
+
+            if (json.error) {
+                throw new Error(json.error);
+            } else {
+                setUser(json.data);
+                editCallback();
+                onClose();
+            }
+        } catch (error) {
             setError(error);
         }
     };
@@ -103,7 +114,7 @@ const EditProfileModal = ({ user, onClose, isShowing }) => {
                     ref={formRef}
                     handleSubmit={handleSubmit}
                 />
-                {error ? <p>Error: {error.message}</p> : null}
+                {error ? <p className={styles.error}>{error.message}</p> : null}
             </ModalBody>
         </Modal>
     );

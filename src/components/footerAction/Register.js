@@ -1,6 +1,5 @@
-import qs from "qs";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useUser } from "../../utils/UserContext";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
 import ModalCross from "../reusable/modal/ModalCross";
@@ -9,7 +8,7 @@ import styles from "./ModalBodies.module.css";
 import RegisterForm from "./RegisterForm";
 
 const Register = ({ onClose, isShowing, showLogin }) => {
-    const nav = useNavigate();
+    const { register } = useUser();
     const [error, setError] = useState("");
     const handleSubmit = async (values, helpers) => {
         if (values.password !== values.password2) {
@@ -18,24 +17,13 @@ const Register = ({ onClose, isShowing, showLogin }) => {
                 "This does not match the password."
             );
         }
-        try {
-            const response = await fetch("/registration", {
-                method: "POST",
-                body: qs.stringify(values),
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
-            const json = await response.json();
-            if (!response.ok) {
-                throw new Error(json.error);
-            }
+        const error = await register(values);
+        if (error) {
+            console.error(error);
+            setError(error.message);
+        } else {
             setError("");
             showLogin();
-        } catch (err) {
-            console.error(err);
-            setError(err.message);
         }
     };
 
