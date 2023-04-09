@@ -15,18 +15,21 @@ router.post('/', async (req, res) =>{
     const password = req.body.password
     try {
         // check if the email exists
-        const user = await User.findOne({
+        const user_pw = await User.findOne({
             $or: [{ email: req.body.email }, { tweetID: req.body.tweetID }]
-          });
-        if (user) {
+          }).select("+password");
+        if (user_pw) {
             //check if password matches
-            const result = req.body.password === user.password;
+            const result = req.body.password === user_pw.password;
             //save in session
+            const user = await User.findOne({
+                $or: [{ email: req.body.email }, { tweetID: req.body.tweetID }]
+              }).select("-password");
             req.session.name = user.name
             req.session.userid = user.tweetID
             req.session.userType = user.userType
             if (result) {
-                return res.status(200).json({state: "Success", data:{}});
+                return res.status(200).json({state: "Success", data: user});
             } else {
                 return res.status(401).json({error: "password doesn't match" });
             }
