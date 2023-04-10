@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../model/User.js')
 const Tweet = require("../model/Tweet.js")
+const Follow = require("../model/Follow.js")
 
 router = express.Router()
 
@@ -28,7 +29,7 @@ router.post('/bookmark/:tweet_post_ID', async (req, res) =>{
     let tweet = await Tweet.findOne({ tweetID: tweet_post_ID });
     let user = await User.findOne({tweetID: req.session.userid})
 
-    if(tweet === undefined){
+    if(tweet === null){
         return res.status(400).json({error:"no tweet found"})
     }
     
@@ -108,6 +109,50 @@ router.post('/follow/:id', async (req, res) => {
       return res.status(500).json({ error: "Server error" });
     }
   });
+
+
+//get update
+router.get('/notification' , async(req, res) =>{
+    let user_follow = await Follow.findOne({tweetID: req.session.userid})
+    let user = await User.findOne({tweetID: req.session.userid})
+    let old_list;
+    let new_list;
+
+    if(user_follow === null || user_follow.followers === null){
+        old_list = []
+    }else{
+        old_list = user_follow.followers
+    }
+
+    if(user === undefined){
+        return res.status(400).json({error: "no user found"})
+    }
+
+    if(user.followers === undefined){
+        new_list = []
+    }else{
+        new_list = user.followers
+    }
+    
+    const set1 = new Set(new_list);
+    const set2 = new Set(old_list);
+    let new_followers = []
+
+    for (const element of set1) {
+        if (!set2.has(element)) {
+            new_followers.push(element)
+        }
+    }
+
+    let new_followers_detail = [];
+    for (let i = 0; i<new_followers.length; i++){
+        let user_info = await User.findOne({tweetID: new_followers[i]}).select("tweetID name")
+        new_followers_detail.push(user_info)
+    }
+
+    return res.status(200).json({data: new_followers_detail})
+})
+
 
 
 //find user
