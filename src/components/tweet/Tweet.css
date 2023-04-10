@@ -85,8 +85,18 @@ a:link {
     color: #68757e;
 }
 
-.tweet__replyinfo a {
+.tweet__replyinfo_static {
+    margin-top: 8px;
+    color: #68757e;
+}
+
+.tweet__replyinfo a,
+.tweet__replyinfo_static a {
     color: var(--clr-primary);
+}
+.tweet__replyinfo a:hover,
+.tweet__replyinfo_static a:hover {
+    text-decoration: underline;
 }
 
 .tweet__header a:hover {

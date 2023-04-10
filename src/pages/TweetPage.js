@@ -3,6 +3,8 @@ import TweetInfo from "../components/tweet/TweetInfo";
 
 const tweet = {
     commentId: "1",
+    in_reply_to_tweetId: "1",
+    in_reply_to_userId: "hellokitty",
     rootTweet: {
         tweetId: "1",
         text: "root here!",
