@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../utils/UserContext";
 import styles from "./notification.module.css"
 
 
 const Notification = () => {
-    
+    const { isLoggedIn } = useUser();
+    const nav = useNavigate();
+    useEffect(() => {
+        if (!isLoggedIn) {
+            nav("/", { replace: true });
+        }
+    });
     return (
         <>
             <div className={styles.title}>Notification</div>

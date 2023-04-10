@@ -6,7 +6,7 @@ import { useUser } from "../../utils/UserContext";
 import { CalTime } from "../reusable/CalTime";
 const Bookmark = () => {
     const nav = useNavigate();
-    const { user: currentUser } = useUser();
+    const { isLoggedIn, user: currentUser } = useUser();
     const [tweets, setTweets] = useState([
         /*{
             tweetId: 1,
@@ -20,16 +20,9 @@ const Bookmark = () => {
     ]);
     useEffect(() => {
         const fetchBookmark = async () => {
-            const check_login = await fetch("/home", {
-                method: "GET",
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
-            if (!check_login.ok) {
+            if (!isLoggedIn) {
                 nav("/", { replace: true });
-            } else if (check_login.ok) {
+            } else if (isLoggedIn) {
                 const new_tw = [];
                 for (var j = 0; j < currentUser.bookmark.length; j++) {
                     const bookmark = await fetch(

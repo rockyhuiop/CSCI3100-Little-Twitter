@@ -48,16 +48,8 @@ const Hp_main = () => {
 
     useEffect(() => {
         const checklog = async () => {
-            const login = await fetch("/home/fetchHomeTweet", {
-                method: "GET",
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
-            const log_json = await login.json();
-
-            if (!login.ok) {
+            const new_tw = [];
+            if (!isLoggedIn) {
                 const not_login = await fetch("/FetchAllTweet", {
                     method: "GET",
                     headers: {
@@ -66,8 +58,6 @@ const Hp_main = () => {
                     },
                 });
                 const not_log_json = await not_login.json();
-
-                const new_tw = [];
                 for (var i = 0; i < not_log_json.message.length; i++) {
                     new_tw.push({
                         tweetId: not_log_json.message[i].TweetID,
@@ -87,8 +77,15 @@ const Hp_main = () => {
                     });
                 }
                 setTweets(new_tw);
-            } else if (login.ok) {
-                const new_tw = [];
+            } else if (isLoggedIn) {
+                const login = await fetch("/home/fetchHomeTweet", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded;charset=UTF-8",
+                    },
+                });
+                const log_json = await login.json();
                 for (var i = 0; i < log_json.message.length; i++) {
                     new_tw.push({
                         tweetId: log_json.message[i].TweetID,
