@@ -460,6 +460,21 @@ const RemovedislikeCommentID = async(commentID) => {
     console.log(result)
 }
 
+const TweetCommentCount = async(tweetID) => {
+    var commentCount = 0
+    const CommentList = await Comment.find({corrTweetID: tweetID, SuspensionStatus:false})
+
+    commentCount += CommentList.length
+
+    var ReplyCommentList = []
+    for (let i = 0, len = CommentList.length; i<len; i++){
+        ReplyCommentList = await Comment.find({corrCommentID: CommentList[i].commentID, SuspensionStatus:false})
+        commentCount += ReplyCommentList.length
+    }
+
+    return commentCount
+}
+
 const FetchFollowing = async(userID) => {
     const targetUser = await User.findOne({tweetID:userID})
     const followings = await targetUser.followings
@@ -620,6 +635,67 @@ const FetchTweet = async(tweetID) => {
     return TweetList
 }
 
+const AggregTweetSummary = async(fetchTweet, CreatorUserName) => {
+
+    var tweet = {}
+
+    tweet = {
+        TweetID: fetchTweet.tweetID,
+        CreatorUserID : fetchTweet.CreatorUserID,
+        CreatorUserName: CreatorUserName,
+        CreateTime : fetchTweet.CreateTime,
+        Content : fetchTweet.Content,
+        LikeCount : fetchTweet.LikeCount,
+        DisLikeCount : fetchTweet.DisLikeCount,
+        ReTweetCount : fetchTweet.ReTweetCount,
+        }
+
+    //determine whether it is a retweet
+    let reTweet =  fetchTweet.ReTweetID
+    
+    if (reTweet !== undefined){
+
+        const ReTweetInfo = await Tweet.find({tweetID: fetchTweet.ReTweetID, SuspensionStatus:false})
+
+        if (ReTweetInfo.length == 0){
+            tweet['ReTweet'] = {
+                Status: "fail", 
+                message : "The Tweet is banned or removed!"
+            }
+
+        }else{
+
+            const ReTweetCreator = await User.findOne({tweetID:ReTweetInfo[0].CreatorUserID})
+            const ReTweetCreatorUserName = ReTweetCreator.name
+
+            tweet['ReTweet'] = {
+                Status: "Success",
+                CreatorUserID: ReTweetInfo[0].CreatorUserID,
+                CreatorUserName: ReTweetCreatorUserName,
+                CreateTime : ReTweetInfo[0].CreateTime,
+                Content: ReTweetInfo[0].Content,
+            }
+        }
+
+    }
+
+    if (fetchTweet.UrlList !== undefined){
+        tweet["UrlList"] = fetchTweet.UrlList
+    }
+
+    if (fetchTweet.ImageList !== undefined){
+        tweet["ImageList"] = fetchTweet.ImageList
+    }
+
+    //counting the related comments
+
+    const commentCount  = await TweetCommentCount(fetchTweet.tweetID)
+
+    tweet['CommentCount'] = commentCount
+
+    return tweet
+}
+
 
 const FetchHomeTweet = async(userID) => {
 
@@ -641,59 +717,7 @@ const FetchHomeTweet = async(userID) => {
         const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
 
-        tweet = {
-            TweetID: fetchTweet.tweetID,
-            CreatorUserID : fetchTweet.CreatorUserID,
-            CreatorUserName: CreatorUserName,
-            CreateTime : fetchTweet.CreateTime,
-            Content : fetchTweet.Content,
-            LikeCount : fetchTweet.LikeCount,
-            DisLikeCount : fetchTweet.DisLikeCount,
-            ReTweetCount : fetchTweet.ReTweetCount,
-            }
-
-        //determine whether it is a retweet
-        let reTweet =  fetchTweet.ReTweetID
-        
-        if (reTweet !== undefined){
-
-            const ReTweetInfo = await Tweet.find({tweetID: fetchTweet.ReTweetID, SuspensionStatus:false})
-
-            if (ReTweetInfo.length == 0){
-                tweet['ReTweet'] = {
-                    Status: "fail", 
-                    message : "The Tweet is banned or removed!"
-                }
-
-            }else{
-
-                const ReTweetCreator = await User.findOne({tweetID:ReTweetInfo[0].CreatorUserID})
-                const ReTweetCreatorUserName = ReTweetCreator.name
-
-                tweet['ReTweet'] = {
-                    Status: "Success",
-                    CreatorUserID: ReTweetInfo[0].CreatorUserID,
-                    CreatorUserName: ReTweetCreatorUserName,
-                    CreateTime : ReTweetInfo[0].CreateTime,
-                    Content: ReTweetInfo[0].Content,
-                }
-            }
-
-        }
-
-        if (fetchTweet.UrlList !== undefined){
-            tweet["UrlList"] = fetchTweet.UrlList
-        }
-
-        if (fetchTweet.ImageList !== undefined){
-            tweet["ImageList"] = fetchTweet.ImageList
-        }
-
-        //counting the related comments
-
-        const CommentList = await Comment.find({corrTweetID: fetchTweet.tweetID, SuspensionStatus:false})
-
-        tweet['CommentCount'] = CommentList.length
+        tweet = await AggregTweetSummary(fetchTweet, CreatorUserName)
 
         TweetList.push(tweet)
 
@@ -706,12 +730,91 @@ const FetchHomeTweet = async(userID) => {
 
 const TweetRecommandation = async(relatedUserList) => {
 
+    var possibleTweet = []
     const filter = relatedUserList.length ? { CreatorUserID: { $nin: relatedUserList } } : {}
     filter["SuspensionStatus"] = false
-    console.log(filter)
-    const possibleTweet = await Tweet.find(filter)
-    console.log(possibleTweet)
-    return []
+    
+    // fetching all tweets that the creator is not linked to the users
+    possibleTweet = await Tweet.find(filter)
+    if (possibleTweet.length == 0){
+        possibleTweet = await Tweet.find({CreatorUserID: { $ne : relatedUserList[relatedUserList.length-1]}, SuspensionStatus: false})
+    }
+
+    console.log(possibleTweet.length)
+
+    // ranking the fetched tweets
+    const TotalUser = await User.find({userType : {$ne : "admin"}})
+    const TotalUserCount = TotalUser.length 
+    const FollowingCount = relatedUserList.length - 1
+    var RankedTweetList = []
+    var fetchedTweet = {}
+    var score = 0.0
+    var commentCount = 0.0
+    var FollowingLikeCount = 0
+    var FollowingDisLikeCount = 0
+    var LikedFollowingUserList = []
+    var DisLikedFollowingUserList = []
+    var LikedFollowingUserIDList = []
+    var DisLikedFollowingUserIDList = []
+
+    for (let i = 0, len = possibleTweet.length; i<len; i++){
+        console.log(i)
+        score = 0.0
+        FollowingLikeCount = 0
+        FollowingDisLikeCount = 0
+        fetchedTweet = possibleTweet[i]
+        // adding the score according to the like count and dislike count
+        score += (fetchedTweet.LikeCount - fetchedTweet.DisLikeCount) * 2.0
+        // adding the score according to the comment numbers (reflecting the activities)
+        commentCount = await TweetCommentCount(fetchedTweet.tweetID)
+        score += commentCount * 1.0
+        // adding the score according to followings behaviors
+        if (FollowingCount > 0){
+            LikedFollowingUserList = await User.find({likedTweetID : {$in : [fetchedTweet.tweetID]}})
+            LikedFollowingUserIDList = LikedFollowingUserList.map(user => user.tweetID)
+            DisLikedFollowingUserList = await User.find({dislikedTweetID : {$in : [fetchedTweet.tweetID]}})
+            DisLikedFollowingUserIDList = DisLikedFollowingUserList.map(user => user.tweetID)
+            for (j = 0; j < FollowingCount; j++){
+                if (relatedUserList[j] in LikedFollowingUserIDList){
+                    FollowingLikeCount += 1
+                }
+                if (relatedUserList[j] in DisLikedFollowingUserIDList){
+                    FollowingDisLikeCount += 1
+                }
+            }
+            score += (FollowingLikeCount - FollowingDisLikeCount) * (TotalUserCount / FollowingCount)
+        }
+
+        RankedTweetList.push({
+            tweetID: fetchedTweet.tweetID,
+            score: score
+        })
+
+    }
+
+    //sorting the tweetID by score
+    RankedTweetList.sort((a,b) => b.score - a.score)
+    RecommendedTweetIDList = RankedTweetList.map(rankedTweetObject => rankedTweetObject.tweetID)
+    
+    var RecommendedTweetList = []
+    var tweet = {}
+    // collecting the tweet from the followings
+
+    for (let i = 0, len = RecommendedTweetIDList.length; i<len; i++){
+
+        var recommandedTweet = await Tweet.findOne({tweetID: RecommendedTweetIDList[i]})
+        const Creator = await User.findOne({tweetID:recommandedTweet.CreatorUserID})
+        const CreatorUserName = Creator.name
+
+        tweet = await AggregTweetSummary(recommandedTweet, CreatorUserName)
+
+        RecommendedTweetList.push(tweet)
+
+        }
+
+
+    return RecommendedTweetList
+    
 }
 
 module.exports = {
