@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require('../model/User.js')
+const Follow = require('../model/Follow.js')
 
 router = express.Router()
 
@@ -33,6 +34,9 @@ router.post('/', async (req, res) =>{
             } else {
                 return res.status(401).json({error: "password doesn't match" });
             }
+
+           
+
         } else {
             return res.status(401).json({ error: "User doesn't exist" });
         }
