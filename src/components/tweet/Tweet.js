@@ -82,7 +82,7 @@ const Tweet = ({ tweet, type }) => {
                             />
                         </div>
                     </div>
-                    <small class="tweet__replyinfo">
+                    <small className="tweet__replyinfo">
                         {type == "comment" ? (
                             <div>
                                 Replying to{" "}
