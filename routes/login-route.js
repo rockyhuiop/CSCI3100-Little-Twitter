@@ -16,7 +16,7 @@ router.post('/', async (req, res) =>{
     try {
         // check if the email exists
         const user_pw = await User.findOne({
-            $or: [{ email: req.body.email }, { tweetID: req.body.tweetID }]
+            $or: [{ email: req.body.email }, { tweetID: req.body.email }]
           }).select("+password");
         if (user_pw) {
             //check if password matches
