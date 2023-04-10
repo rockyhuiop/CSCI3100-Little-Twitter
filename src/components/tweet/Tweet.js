@@ -7,7 +7,7 @@ import IconMenu from "../reusable/IconMenu.js";
 import "./Tweet.css";
 import TweetActions from "./TweetActions.js";
 
-const Tweet = ({ tweet, isComment }) => {
+const Tweet = ({ tweet, type }) => {
     const navigate = useNavigate();
     const tweetStatistic = {
         commentCount: tweet.commentCount,
@@ -31,17 +31,24 @@ const Tweet = ({ tweet, isComment }) => {
     };
 
     return (
-        <div className="tweet" onClick={navigateToTweetUrl}>
+        <div
+            className={type == "root" ? "tweet_root" : "tweet"}
+            onClick={navigateToTweetUrl}
+        >
             <div className="tweet__header">
-                <div className="tweet__headercontainer">
-                    <Link to={userUrl}>
-                        <img
-                            src={tweet.user.profile_image_url}
-                            alt="Avatar"
-                            className="tweet__avatar"
-                        />
-                    </Link>
+                <div className="avatarColumn">
+                    <div className="tweet__headercontainer">
+                        <Link to={userUrl}>
+                            <img
+                                src={tweet.user.profile_image_url}
+                                alt="Avatar"
+                                className="tweet__avatar"
+                            />
+                        </Link>
+                    </div>
+                    {type == "root" ? <div className="stick"></div> : ""}
                 </div>
+
                 <div className="tweet__container">
                     <div className="tweet__title">
                         <div className="tweet__userinfo">
@@ -68,13 +75,15 @@ const Tweet = ({ tweet, isComment }) => {
                                 ]}
                                 names={["Unfollow", "Bookmark"]}
                                 keySuffix={
-                                    isComment ? tweet.tweetId : tweet.commentId
+                                    type == "comment"
+                                        ? tweet.tweetId
+                                        : tweet.commentId
                                 }
                             />
                         </div>
                     </div>
                     <small class="tweet__replyinfo">
-                        {isComment ? (
+                        {type == "comment" ? (
                             <div>
                                 Replying to{" "}
                                 <Link to={userUrl}>

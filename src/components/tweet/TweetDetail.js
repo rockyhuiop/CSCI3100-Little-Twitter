@@ -8,7 +8,7 @@ import "./TweetDetail.css";
 import TweetActions from "./TweetActions.js";
 import { useEffect } from "react";
 
-const TweetDetails = ({ tweet }) => {
+const TweetDetails = ({ tweet, type }) => {
     const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
 
     const tweetStatistic = {
@@ -41,19 +41,38 @@ const TweetDetails = ({ tweet }) => {
     const tweetUrl = userUrl + "/tweet";
 
     return (
-        <div className="tweet__static">
+        <div
+            className={
+                type == "comment" ? "tweet__static_bottom" : "tweet__static"
+            }
+        >
             <div className="tweet__header">
-                <div className="tweet__headercontainer">
-                    <Link to={userUrl}>
-                        <img
-                            src={tweet.user.profile_image_url}
-                            alt="Avatar"
-                            className="tweet__avatar"
-                        />
-                    </Link>
+                <div className="avatarColumn">
+                    {type == "comment" ? (
+                        <div className="stick_bottom"></div>
+                    ) : (
+                        ""
+                    )}
+
+                    <div className="tweet__headercontainer">
+                        <Link to={userUrl}>
+                            <img
+                                src={tweet.user.profile_image_url}
+                                alt="Avatar"
+                                className="tweet__avatar"
+                            />
+                        </Link>
+                    </div>
                 </div>
+
                 <div className="tweet__container">
-                    <div className="tweet__title">
+                    <div
+                        className={
+                            type == "comment"
+                                ? "tweet__title_bottom"
+                                : "tweet__title"
+                        }
+                    >
                         <div className="tweet__static__userinfo">
                             <span className="tweet__username">
                                 <Link to={userUrl}>{tweet.user.name}</Link>{" "}
@@ -80,7 +99,8 @@ const TweetDetails = ({ tweet }) => {
                     </div>
                 </div>
             </div>
-            <div className="tweet__content">{tweet.text}</div>
+
+            <div className="tweet__static__content">{tweet.text}</div>
             <div className="tweet__timeInfo info">
                 <span>{tweet.created_at}</span>
                 <span>
