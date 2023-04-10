@@ -71,7 +71,7 @@ const Hp_main = () => {
                 const new_tw = [];
                 for (var i = 0; i < not_log_json.message.length; i++) {
                     new_tw.push({
-                        tweetId: i,
+                        tweetId: not_log_json.message[i].TweetID,
                         text: not_log_json.message[i].Content,
                         user: {
                             userId: not_log_json.message[i].CreatorUserID,
@@ -80,7 +80,7 @@ const Hp_main = () => {
                                 "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                         },
                         media: "",
-                        date: CalTime(not_log_json.message[i].CreateTime),
+                        date: CalTime(not_log_json.message[i].CreateTime)[0],
                         likeCount: not_log_json.message[i].LikeCount,
                         commentCount: not_log_json.message[i].CommentCount,
                         retweetCount: not_log_json.message[i].ReTweetCount,
@@ -93,7 +93,7 @@ const Hp_main = () => {
                 const new_tw = [];
                 for (var i = 0; i < log_json.message.length; i++) {
                     new_tw.push({
-                        tweetId: i,
+                        tweetId: log_json.message[i].TweetID,
                         text: log_json.message[i].Content,
                         user: {
                             userId: log_json.message[i].CreatorUserID,
@@ -102,7 +102,7 @@ const Hp_main = () => {
                                 "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                         },
                         media: "",
-                        date: CalTime(log_json.message[i].CreateTime),
+                        date: CalTime(log_json.message[i].CreateTime)[0],
                         likeCount: log_json.message[i].LikeCount,
                         commentCount: log_json.message[i].CommentCount,
                         retweetCount: log_json.message[i].ReTweetCount,
@@ -110,7 +110,6 @@ const Hp_main = () => {
                     });
                 }
                 setTweets(new_tw);
-                console.log(log_json)
             }
         };
         checklog();
