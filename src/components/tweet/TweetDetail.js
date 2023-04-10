@@ -134,7 +134,7 @@ const TweetDetails = ({ tweet, type }) => {
                     ""
                 )}
             </div>
-            <TweetActions tweetStatistic={tweetStatistic} />
+            <TweetActions tweetStatistic={tweetStatistic} tweet={tweet} />
         </div>
     );
 };

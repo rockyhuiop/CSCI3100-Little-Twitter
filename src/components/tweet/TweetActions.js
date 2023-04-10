@@ -7,12 +7,22 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IconButton from "@mui/material/IconButton";
 import React, { useState } from "react";
+import { useUser } from "../../utils/UserContext";
+import { useModal } from "../reusable/modal/useModal";
+import NavAddTweet from "../navbar/NavAddTweet";
+
 //import "./Tweet.css";
 
-const TweetActions = ({ tweetStatistic }) => {
+const TweetActions = ({ tweetStatistic, tweet }) => {
     const [likes, setLikes] = useState(tweetStatistic.likeCount);
     const [isLiked, setIsLiked] = useState(false);
     const [retweets, setRetweets] = useState(tweetStatistic.retweetCount);
+    const { isShowing, onClose, onOpen } = useModal();
+    const { isLoggedIn } = useUser();
+
+    if (!isLoggedIn) {
+        return null;
+    }
 
     const handleLike = (e) => {
         e.preventDefault();
@@ -31,6 +41,7 @@ const TweetActions = ({ tweetStatistic }) => {
 
     const handleComment = (e) => {
         e.preventDefault();
+        onOpen();
     };
 
     const handleShare = (e) => {
@@ -43,6 +54,12 @@ const TweetActions = ({ tweetStatistic }) => {
                 <IconButton size="small" onClick={handleComment}>
                     <FontAwesomeIcon icon={faComment} />
                 </IconButton>
+                <NavAddTweet
+                    isShowing={isShowing}
+                    onClose={onClose}
+                    tweet={tweet}
+                    isReply={true}
+                />
                 <span>{tweetStatistic.commentCount}</span>
             </div>
             <div className="tweet__action retweet">

@@ -95,7 +95,10 @@ const Tweet = ({ tweet, type }) => {
                         )}
                     </small>
                     <div className="tweet__content">{tweet.text}</div>
-                    <TweetActions tweetStatistic={tweetStatistic} />
+                    <TweetActions
+                        tweetStatistic={tweetStatistic}
+                        tweet={tweet}
+                    />
                 </div>
             </div>
         </div>

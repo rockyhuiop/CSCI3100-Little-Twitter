@@ -4,8 +4,8 @@ import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
 import ModalCross from "../reusable/modal/ModalCross";
 import ModalHeader from "../reusable/modal/ModalHeader";
-
-const NavAddTweet = ({ isShowing, onClose }) => {
+import Tweet from "../tweet/Tweet";
+const NavAddTweet = ({ isShowing, onClose, isReply, tweet }) => {
     const msg = "What's happening?";
     const btn = "Tweet";
 
@@ -15,7 +15,8 @@ const NavAddTweet = ({ isShowing, onClose }) => {
                 <ModalCross />
             </ModalHeader>
             <ModalBody>
-                <AddTweet msg={msg} btn={btn} />
+                {isReply ? <Tweet tweet={tweet} type={"root"} /> : ""}
+                <AddTweet msg={msg} btn={btn} tweet={tweet} />
             </ModalBody>
         </Modal>
     );
