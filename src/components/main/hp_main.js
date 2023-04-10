@@ -5,6 +5,7 @@ import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
 import {CalTime} from "../reusable/CalTime"
+
 const Hp_main = () => {
     const { isLoggedIn } = useUser();
     const [tweets, setTweets] = useState([
@@ -58,7 +59,7 @@ const Hp_main = () => {
             const log_json = await login.json();
             
             if (!login.ok) {
-                const not_login = await fetch("/home/FetchAllTweet", {
+                const not_login = await fetch("/FetchAllTweet", {
                     method: "GET",
                     headers: {
                         "Content-Type":
@@ -79,7 +80,7 @@ const Hp_main = () => {
                                 "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                         },
                         media: "",
-                        date: "",
+                        date: CalTime(not_log_json.message[i].CreateTime),
                         likeCount: not_log_json.message[i].LikeCount,
                         commentCount: not_log_json.message[i].CommentCount,
                         retweetCount: not_log_json.message[i].ReTweetCount,
@@ -109,6 +110,7 @@ const Hp_main = () => {
                     });
                 }
                 setTweets(new_tw);
+                console.log(log_json)
             }
         };
         checklog();
