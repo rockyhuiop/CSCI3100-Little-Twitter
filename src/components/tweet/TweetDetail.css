@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 
-.tweet__static,
+.tweet__static .tweet__actions,
 .tweet__static_bottom .tweet__actions {
     justify-content: space-around;
 }

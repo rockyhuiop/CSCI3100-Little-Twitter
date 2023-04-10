@@ -99,7 +99,16 @@ const TweetDetails = ({ tweet, type }) => {
                     </div>
                 </div>
             </div>
-
+            <small className="tweet__replyinfo_static">
+                {type == "comment" ? (
+                    <div>
+                        Replying to{" "}
+                        <Link to={userUrl}>@{tweet.in_reply_to_userId}</Link>
+                    </div>
+                ) : (
+                    ""
+                )}
+            </small>
             <div className="tweet__static__content">{tweet.text}</div>
             <div className="tweet__timeInfo info">
                 <span>{tweet.created_at}</span>
