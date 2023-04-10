@@ -6,8 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import IconMenu from "../reusable/IconMenu.js";
 import "./Tweet.css";
 import TweetActions from "./TweetActions.js";
+import { useUser } from "../../utils/UserContext";
 
 const Tweet = ({ tweet, type }) => {
+    const { isLoggedIn } = useUser();
     const navigate = useNavigate();
     const tweetStatistic = {
         commentCount: tweet.commentCount,
@@ -67,6 +69,7 @@ const Tweet = ({ tweet, type }) => {
                                 e.preventDefault();
                             }}
                         >
+                            {isLoggedIn ?
                             <IconMenu
                                 clickHandlers={[null, null]}
                                 icons={[
@@ -80,6 +83,8 @@ const Tweet = ({ tweet, type }) => {
                                         : tweet.commentId
                                 }
                             />
+                            : " "
+                            }
                         </div>
                     </div>
                     <small className="tweet__replyinfo">
