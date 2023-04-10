@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require("../model/User")
+const Follow = require("../model/Follow.js")
 
 router = express.Router()
 
@@ -26,8 +27,14 @@ router.post('/', (req, res) =>{
                 likedTweetID: [],
                 dislikedTweetID: [],
                 likedCommentID: [],
-                dislikedCommentID: []
+                dislikedCommentID: [],
+                bookmark: []
             })
+            const newFollow = new Follow({
+                tweetID: req.body.tweetID,
+                followers: []
+            })
+            newFollow.save()
             newUser.save()
             return res.status(200).json({message: "account created"})
         }
