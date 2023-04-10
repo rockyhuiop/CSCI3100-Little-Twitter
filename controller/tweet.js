@@ -740,8 +740,6 @@ const TweetRecommandation = async(relatedUserList) => {
         possibleTweet = await Tweet.find({CreatorUserID: { $ne : relatedUserList[relatedUserList.length-1]}, SuspensionStatus: false})
     }
 
-    console.log(possibleTweet.length)
-
     // ranking the fetched tweets
     const TotalUser = await User.find({userType : {$ne : "admin"}})
     const TotalUserCount = TotalUser.length 
@@ -758,7 +756,6 @@ const TweetRecommandation = async(relatedUserList) => {
     var DisLikedFollowingUserIDList = []
 
     for (let i = 0, len = possibleTweet.length; i<len; i++){
-        console.log(i)
         score = 0.0
         FollowingLikeCount = 0
         FollowingDisLikeCount = 0
