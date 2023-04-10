@@ -7,9 +7,10 @@ import IconMenu from "../reusable/IconMenu.js";
 import "./Tweet.css";
 import TweetActions from "./TweetActions.js";
 import { useUser } from "../../utils/UserContext";
+import { Bookmark } from "react-feather";
 
 const Tweet = ({ tweet, type }) => {
-    const { isLoggedIn } = useUser();
+    const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
     const navigate = useNavigate();
     const tweetStatistic = {
         commentCount: tweet.commentCount,
@@ -31,6 +32,27 @@ const Tweet = ({ tweet, type }) => {
             navigate(tweetUrl);
         }
     };
+
+    const checkbookmark = async(id) =>{
+        if (currentUser.bookmark.includes(id)){
+            return true;
+        } else {
+            return false
+        }
+    }
+
+    const bookmark = async(id) =>{
+        const bm = await fetch("/user/bookmark/"+id, {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                    "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+        });
+        const bm_json = await bm.json();
+        console.log(bm_json);
+        refreshUser();
+    }
 
     return (
         <div
@@ -71,7 +93,7 @@ const Tweet = ({ tweet, type }) => {
                         >
                             {isLoggedIn ?
                             <IconMenu
-                                clickHandlers={[null, null]}
+                                clickHandlers={[null, ()=>bookmark(tweet.tweetId)]}
                                 icons={[
                                     <FontAwesomeIcon icon={faUserXmark} />,
                                     <FontAwesomeIcon icon={faBookmark} />,
