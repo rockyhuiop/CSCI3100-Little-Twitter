@@ -1,12 +1,12 @@
 import { useState } from "react";
-import styles from "./message.module.css"
+import styles from "./notification.module.css"
 
 
-const Message = () => {
+const Notification = () => {
     
     return (
         <>
-            <div className={styles.title}>Message</div>
+            <div className={styles.title}>Notification</div>
             <div className={styles.message}>
                 Testing message 1
             </div>
@@ -19,4 +19,4 @@ const Message = () => {
         </>
     );
 };
-export default Message;
+export default Notification;
