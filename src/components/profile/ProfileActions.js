@@ -9,7 +9,7 @@ import styles from "./ProfileActions.module.css";
 
 const ProfileActions = ({ user }) => {
     const { onClose, isShowing, onOpen } = useModal();
-    const { setUser } = useUser();
+    const { setUser, user: currentUser } = useUser();
     const [open, setOpen] = useState(false);
 
     const afterEdit = (data) => {
@@ -21,12 +21,24 @@ const ProfileActions = ({ user }) => {
         setOpen(false);
     };
 
+    const isCurrentUser = () => {
+        return currentUser && currentUser.tweetID === user.tweetID;
+    };
+
     return (
         <div className={styles.group}>
-            <Button scheme={"primary"}>Follow</Button>
-            <Button scheme={"primary"} variant={"outlined"} onClick={onOpen}>
-                Edit
-            </Button>
+            {!isCurrentUser() ? (
+                <Button scheme={"primary"}>Follow</Button>
+            ) : null}
+            {isCurrentUser() ? (
+                <Button
+                    scheme={"primary"}
+                    variant={"outlined"}
+                    onClick={onOpen}
+                >
+                    Edit
+                </Button>
+            ) : null}
             <EditProfile
                 isShowing={isShowing}
                 onClose={onClose}

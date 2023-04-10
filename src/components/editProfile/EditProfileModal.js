@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import { SERVER_ADDRESS } from "../../utils/constants";
 import Button from "../reusable/Button";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
@@ -89,15 +90,18 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
             {/* I placed the banner OUTSIDE of the modal body because banner need to have no margin. Noramlly all contents should be inside modal body */}
             <EditableBanner
                 onBannerChange={bannerChanged}
-                url={bannerURL || user.banner}
+                url={bannerURL || (user.banner && SERVER_ADDRESS + user.banner)}
             />
             <ModalBody>
                 <div className={styles.avatar}>
                     <EditableAvatar
                         size="smaller"
                         onAvatarChange={avatarChanged}
-                        avatar={avatarURL || user.avatar}
-                        username={user.username}
+                        avatar={
+                            avatarURL ||
+                            (user.avatar && SERVER_ADDRESS + user.avatar)
+                        }
+                        username={user.name}
                     />
                 </div>
                 <EditProfileForm
