@@ -6,7 +6,7 @@ const FollowInfo = ({ user }) => {
             return "nobody";
         }
         const names = user.followers.slice(0, 3).reduce((acc, follower) => {
-            return acc + follower.name + ", ";
+            return acc + follower + ", ";
         }, "");
         return (
             names.slice(0, -2) +

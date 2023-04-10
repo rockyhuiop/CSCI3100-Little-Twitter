@@ -25,6 +25,7 @@ const Profile = () => {
         isLoading,
         error,
         makeRequest,
+        setData,
     } = useFetch(url, {}, true);
 
     // I don't start the request immediately since the request may not be needed
@@ -63,7 +64,7 @@ const Profile = () => {
         <div>
             <ProfileHeader user={userShown} />
             <Banner user={userShown} />
-            <UserInfo user={userShown} />
+            <UserInfo user={userShown} setData={setData} />
             <ProfileTabs user={userShown} />
         </div>
     );

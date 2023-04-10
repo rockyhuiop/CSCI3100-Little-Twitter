@@ -127,6 +127,7 @@ const UserProvider = ({ children }) => {
                     isProfileLoading: isLoading,
                     isLoggedIn: user !== null,
                     isAdmin: user && user.userType === "admin",
+                    refreshUser: fetchProfileAndSetUser,
                 }}
             >
                 {children}

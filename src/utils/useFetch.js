@@ -27,5 +27,5 @@ export const useFetch = (url, options, manual = false) => {
         }
     }, [manual, makeRequest]);
 
-    return { data, isLoading, error, makeRequest };
+    return { data, isLoading, error, makeRequest, setData };
 };
