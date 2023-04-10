@@ -33,6 +33,15 @@ a:link {
     text-decoration: none;
 }
 
+.tweet__replyinfo {
+    margin-bottom: 4px;
+    color: #68757e;
+}
+
+.tweet__replyinfo a {
+    color: var(--clr-primary);
+}
+
 .tweet__header a:hover {
     text-decoration: underline;
 }

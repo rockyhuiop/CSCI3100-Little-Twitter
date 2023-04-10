@@ -52,7 +52,7 @@ const Tweet = ({ tweet, isComment }) => {
                                 @{tweet.user.userId}
                             </span>
                             <span className="tweet__timestamp">
-                                &nbsp;· {tweet.date+ " ago"}
+                                &nbsp;· {tweet.date + " ago"}
                             </span>
                         </div>
                         <div
@@ -67,13 +67,24 @@ const Tweet = ({ tweet, isComment }) => {
                                     <FontAwesomeIcon icon={faBookmark} />,
                                 ]}
                                 names={["Unfollow", "Bookmark"]}
-                                keySuffix={tweet.tweetId}
+                                keySuffix={
+                                    isComment ? tweet.tweetId : tweet.commentId
+                                }
                             />
                         </div>
                     </div>
-                    <div>
-                        <span>{isComment ? "Replying to " : ""}</span>
-                    </div>
+                    <small class="tweet__replyinfo">
+                        {isComment ? (
+                            <div>
+                                Replying to{" "}
+                                <Link to={userUrl}>
+                                    @{tweet.in_reply_to_userId}
+                                </Link>
+                            </div>
+                        ) : (
+                            ""
+                        )}
+                    </small>
                     <div className="tweet__content">{tweet.text}</div>
                     <TweetActions tweetStatistic={tweetStatistic} />
                 </div>

@@ -16,7 +16,9 @@ const TweetInfo = ({ tweet }) => {
 
     const [comments, setComments] = useState([
         {
-            tweetId: "1",
+            commentId: "1",
+            in_reply_to_tweetId: tweet.tweetId,
+            in_reply_to_userId: tweet.user.userId,
             text: "Hello, Twitter!",
             user: {
                 userId: "john_doe",
@@ -32,7 +34,9 @@ const TweetInfo = ({ tweet }) => {
             viewCount: 1000,
         },
         {
-            tweetId: "2",
+            commentId: "2",
+            in_reply_to_tweetId: tweet.tweetId,
+            in_reply_to_userId: tweet.user.userId,
             text: "Hello, Twitter!",
             user: {
                 userId: "john_doe",
@@ -68,7 +72,11 @@ const TweetInfo = ({ tweet }) => {
                 <TweetDetails tweet={tweet} />
                 <AddTweet msg={msg} btn={btn} />
                 {comments.map((tweet) => (
-                    <Tweet key={tweet.tweetId} tweet={tweet} />
+                    <Tweet
+                        key={tweet.commentId}
+                        tweet={tweet}
+                        isComment={true}
+                    />
                 ))}
             </div>
             <div className="searchBar">
