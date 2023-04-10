@@ -273,20 +273,6 @@ router.get('/fetchTweet/:tweetID', (req, res) => {
     })()
 })
 
-//Tweet Recommandation
-
-router.get('/TweetRecommend/', (req, res) => {
-    (async() => {
-        const userID = req.session.userid
-        var relatedUserList = await FetchFollowing(userID)
-        relatedUserList.push(userID)
-        const recommandTweetIDList = await TweetRecommandation(relatedUserList)
-        res.status(200).json({message: "success"})
-        //const recommandedTweet = await FetchHomeTweet(recommandTweetIDList)
-        //res.status(200).json({message : recommandedTweet})
-    })()
-})
-
 //Fetch Comment by related tweetID
 
 router.get('/FetchComment/:tweetID', (req, res) => {
@@ -294,6 +280,18 @@ router.get('/FetchComment/:tweetID', (req, res) => {
         const {tweetID:tweetID} = req.params
         const CommentList = await FetchComment(tweetID)
         res.status(200).json({message: CommentList})
+    })()
+})
+
+//Tweet Recommandation
+
+router.get('/TweetRecommend/', (req, res) => {
+    (async() => {
+        const userID = req.session.userid
+        var relatedUserList = await FetchFollowing(userID)
+        relatedUserList.push(userID)
+        const recommandedTweet = await TweetRecommandation(relatedUserList)
+        res.status(200).json({message : recommandedTweet})
     })()
 })
 
