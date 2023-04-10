@@ -27,6 +27,14 @@ const Filter = () => {
             },
         },*/
     ]);
+    const [tweetsPop, setTweetsPop] = useState([
+
+    ]);
+    const [tweetsRec, setTweetsRec] = useState([
+
+    ]);
+
+
     useEffect(() => {
         const fetchall = async () => {
             if (!isLoggedIn) {
@@ -88,23 +96,35 @@ const Filter = () => {
                         viewCount: 1000,
                     });
                 }
-                setTweets(new_tw);
+                console.log(new_tw)
+                setTweets(new_tw);       
+                const new_tw_pop=[...new_tw].sort((a, b) => b.likeCount - a.likeCount);
+                const new_tw_rec=[...new_tw].sort((a, b) => a.dur - b.dur);
+                setTweetsPop(new_tw_pop);
+                setTweetsRec(new_tw_rec);
             }
         };
         fetchall();
-    }, []);
+    }, [isLoggedIn]);
     return (
-        <Tabs tabNames={["Popular", "Recent"]}>
+        <Tabs tabNames={isLoggedIn ? ["Recommend", "Popular", "Recent"] : ["Popular", "Recent"]}>
             <div className={styles.con}>
                 {tweets
-                    .sort((a, b) => b.likeCount - a.likeCount)
+                    //.sort((a, b) => b.likeCount - a.likeCount)
                     .map((tweet) => (
                         <Tweet key={tweet.tweetId} tweet={tweet} />
                     ))}
             </div>
             <div className={styles.con}>
-                {tweets
-                    .sort((a, b) => a.dur - b.dur)
+                {tweetsPop
+                    //.sort((a, b) => b.likeCount - a.likeCount)
+                    .map((tweet) => (
+                        <Tweet key={tweet.tweetId} tweet={tweet} />
+                    ))}
+            </div>
+            <div className={styles.con}>
+                {tweetsRec
+                    //.sort((a, b) => a.dur - b.dur)
                     .map((tweet) => (
                         <Tweet key={tweet.tweetId} tweet={tweet} />
                     ))}
