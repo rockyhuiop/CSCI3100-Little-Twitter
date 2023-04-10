@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Banner from "../components/profile/Banner";
+import ProfileHeader from "../components/profile/ProfileHeader";
 import ProfileTabs from "../components/profile/ProfileTabs";
 import UserInfo from "../components/profile/UserInfo";
 import CenteredStatus from "../components/reusable/CenteredStatus";
@@ -60,6 +61,7 @@ const Profile = () => {
 
     return (
         <div>
+            <ProfileHeader user={userShown} />
             <Banner user={userShown} />
             <UserInfo user={userShown} />
             <ProfileTabs user={userShown} />
