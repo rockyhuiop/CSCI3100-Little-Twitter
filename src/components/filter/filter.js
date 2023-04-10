@@ -27,36 +27,74 @@ const Filter = () => {
     ]);
     useEffect(() => {
         const fetchall = async () => {
-            const not_login = await fetch("/FetchAllTweet", {
+            const check_login = await fetch("/home", {
                 method: "GET",
                 headers: {
                     "Content-Type":
                         "application/x-www-form-urlencoded;charset=UTF-8",
                 },
             });
-            const not_log_json = await not_login.json();
-            console.log(not_log_json.message)
-            const new_tw = [];
-            for (var i = 0; i < not_log_json.message.length; i++) {
-                new_tw.push({
-                    tweetId: i,
-                    text: not_log_json.message[i].Content,
-                    user: {
-                        userId: not_log_json.message[i].CreatorUserID,
-                        name: not_log_json.message[i].CreatorUserName,
-                        profile_image_url:
-                            "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+            if (!check_login.ok) {
+                const not_login = await fetch("/FetchAllTweet", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded;charset=UTF-8",
                     },
-                    media: "",
-                    dur: CalTime(not_log_json.message[i].CreateTime)[1],
-                    date: CalTime(not_log_json.message[i].CreateTime)[0],
-                    likeCount: not_log_json.message[i].LikeCount,
-                    commentCount: not_log_json.message[i].CommentCount,
-                    retweetCount: not_log_json.message[i].ReTweetCount,
-                    viewCount: 1000,
                 });
+                const not_log_json = await not_login.json();
+                const new_tw = [];
+                for (var i = 0; i < not_log_json.message.length; i++) {
+                    new_tw.push({
+                        tweetId: i,
+                        text: not_log_json.message[i].Content,
+                        user: {
+                            userId: not_log_json.message[i].CreatorUserID,
+                            name: not_log_json.message[i].CreatorUserName,
+                            profile_image_url:
+                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                        },
+                        media: "",
+                        dur: CalTime(not_log_json.message[i].CreateTime)[1],
+                        date: CalTime(not_log_json.message[i].CreateTime)[0],
+                        likeCount: not_log_json.message[i].LikeCount,
+                        commentCount: not_log_json.message[i].CommentCount,
+                        retweetCount: not_log_json.message[i].ReTweetCount,
+                        viewCount: 1000,
+                    });
+                }
+                setTweets(new_tw);
+            } else if (check_login.ok) {
+                const not_login = await fetch("/home/TweetRecommend", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded;charset=UTF-8",
+                    },
+                });
+                const not_log_json = await not_login.json();
+                const new_tw = [];
+                for (var i = 0; i < not_log_json.message.length; i++) {
+                    new_tw.push({
+                        tweetId: i,
+                        text: not_log_json.message[i].Content,
+                        user: {
+                            userId: not_log_json.message[i].CreatorUserID,
+                            name: not_log_json.message[i].CreatorUserName,
+                            profile_image_url:
+                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                        },
+                        media: "",
+                        dur: CalTime(not_log_json.message[i].CreateTime)[1],
+                        date: CalTime(not_log_json.message[i].CreateTime)[0],
+                        likeCount: not_log_json.message[i].LikeCount,
+                        commentCount: not_log_json.message[i].CommentCount,
+                        retweetCount: not_log_json.message[i].ReTweetCount,
+                        viewCount: 1000,
+                    });
+                }
+                setTweets(new_tw);
             }
-            setTweets(new_tw);
             
         }
         fetchall();
