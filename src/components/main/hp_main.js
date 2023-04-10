@@ -4,7 +4,8 @@ import AddTweet from "../reusable/AddTweet";
 import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
-import {CalTime} from "../reusable/CalTime"
+import { CalTime } from "../reusable/CalTime";
+
 const Hp_main = () => {
     const { isLoggedIn } = useUser();
     const [tweets, setTweets] = useState([
@@ -41,13 +42,12 @@ const Hp_main = () => {
             viewCount: 20000,
         },*/
     ]);
-    
+
     const msg = "What's happening?";
     const btn = "Tweet";
 
     useEffect(() => {
         const checklog = async () => {
-            
             const login = await fetch("/home/fetchHomeTweet", {
                 method: "GET",
                 headers: {
@@ -56,9 +56,9 @@ const Hp_main = () => {
                 },
             });
             const log_json = await login.json();
-            
+
             if (!login.ok) {
-                const not_login = await fetch("/home/FetchAllTweet", {
+                const not_login = await fetch("/FetchAllTweet", {
                     method: "GET",
                     headers: {
                         "Content-Type":
@@ -66,11 +66,11 @@ const Hp_main = () => {
                     },
                 });
                 const not_log_json = await not_login.json();
-                
+
                 const new_tw = [];
                 for (var i = 0; i < not_log_json.message.length; i++) {
                     new_tw.push({
-                        tweetId: i,
+                        tweetId: not_log_json.message[i].TweetID,
                         text: not_log_json.message[i].Content,
                         user: {
                             userId: not_log_json.message[i].CreatorUserID,
@@ -79,7 +79,7 @@ const Hp_main = () => {
                                 "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                         },
                         media: "",
-                        date: "",
+                        date: CalTime(not_log_json.message[i].CreateTime)[0],
                         likeCount: not_log_json.message[i].LikeCount,
                         commentCount: not_log_json.message[i].CommentCount,
                         retweetCount: not_log_json.message[i].ReTweetCount,
@@ -87,12 +87,11 @@ const Hp_main = () => {
                     });
                 }
                 setTweets(new_tw);
-                
             } else if (login.ok) {
                 const new_tw = [];
                 for (var i = 0; i < log_json.message.length; i++) {
                     new_tw.push({
-                        tweetId: i,
+                        tweetId: log_json.message[i].TweetID,
                         text: log_json.message[i].Content,
                         user: {
                             userId: log_json.message[i].CreatorUserID,
@@ -101,7 +100,7 @@ const Hp_main = () => {
                                 "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                         },
                         media: "",
-                        date: CalTime(log_json.message[i].CreateTime),
+                        date: CalTime(log_json.message[i].CreateTime)[0],
                         likeCount: log_json.message[i].LikeCount,
                         commentCount: log_json.message[i].CommentCount,
                         retweetCount: log_json.message[i].ReTweetCount,
@@ -112,8 +111,6 @@ const Hp_main = () => {
             }
         };
         checklog();
-        
-    
     }, []);
 
     return (
