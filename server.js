@@ -27,6 +27,7 @@ const profile = require('./routes/profile-route.js')
 const user = require('./routes/user-route.js')
 const dashboard = require('./routes/dashboard-route.js')
 const tweet = require('./routes/tweet-route')
+const search = require('./routes/search-route.js')
 
 
 app = express()
@@ -52,6 +53,7 @@ app.use('/', home_guest)
 app.use('/initialize', initizalize_db)
 app.use('/login', login)
 app.use('/registration', registration)
+app.use('/search', search)
 
 app.use((req, res, next)=>{
     if(!req.session.userid){

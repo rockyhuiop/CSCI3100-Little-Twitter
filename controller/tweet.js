@@ -825,7 +825,17 @@ const TweetRecommandation = async(relatedUserList) => {
 const FetchTweetByContent = async(specificContent) => {
     const ContentFilter = {$regex: specificContent}
     const FetchedTweet = await Tweet.find({Content: ContentFilter, SuspensionStatus: false})
-    return FetchedTweet
+    var SearchedTweet = []
+    var fetchedTweet = {}
+    var tweet = {}
+    for (let i = 0, len = FetchedTweet.length; i<len; i++){
+        fetchedTweet = FetchedTweet[i]
+        const Creator = await User.findOne({tweetID:fetchedTweet.CreatorUserID})
+        const CreatorUserName = Creator.name
+        tweet = await AggregTweetSummary(fetchedTweet, CreatorUserName)
+        SearchedTweet.push(tweet)
+    }
+    return SearchedTweet
 }
 
 module.exports = {

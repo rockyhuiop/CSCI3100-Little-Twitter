@@ -296,15 +296,7 @@ router.get('/TweetRecommend/', (req, res) => {
     })()
 })
 
-//Searching Tweet by Specific Content
 
-router.get('/SearchTweetByContent/', (req, res) => {
-    (async() => {
-        const specificContent = req.body.Content
-        const FetchedTweet = await FetchTweetByContent(specificContent)
-        res.status(200).json({message : FetchedTweet})
-    })()
-})
 
 
 module.exports = router
