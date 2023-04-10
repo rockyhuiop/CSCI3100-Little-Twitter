@@ -728,16 +728,23 @@ const FetchHomeTweet = async(userID) => {
 
 }
 
+// Tweet Recommendation Functionality
 const TweetRecommandation = async(relatedUserList) => {
+
+    const targetUserID = relatedUserList[relatedUserList.length - 1]
+    const targetUser = await User.findOne({tweetID: targetUserID})
+    const DislikeTweetList = targetUser.dislikedTweetID
 
     var possibleTweet = []
     const filter = relatedUserList.length ? { CreatorUserID: { $nin: relatedUserList } } : {}
+    filter["tweetID"] = {$nin : DislikeTweetList}
     filter["SuspensionStatus"] = false
     
     // fetching all tweets that the creator is not linked to the users
     possibleTweet = await Tweet.find(filter)
+    console.log(possibleTweet)
     if (possibleTweet.length == 0){
-        possibleTweet = await Tweet.find({CreatorUserID: { $ne : relatedUserList[relatedUserList.length-1]}, SuspensionStatus: false})
+        possibleTweet = await Tweet.find({CreatorUserID: { $ne : relatedUserList[relatedUserList.length-1]}, tweetID : {$nin : DislikeTweetList},SuspensionStatus: false})
     }
 
     // ranking the fetched tweets
@@ -814,6 +821,13 @@ const TweetRecommandation = async(relatedUserList) => {
     
 }
 
+// Searching Tweet by specific content
+const FetchTweetByContent = async(specificContent) => {
+    const ContentFilter = {$regex: specificContent}
+    const FetchedTweet = await Tweet.find({Content: ContentFilter, SuspensionStatus: false})
+    return FetchedTweet
+}
+
 module.exports = {
     CreateTweet,
     ReTweet,
@@ -835,4 +849,5 @@ module.exports = {
     FetchHomeTweet,
     FetchComment,
     TweetRecommandation,
+    FetchTweetByContent,
 }

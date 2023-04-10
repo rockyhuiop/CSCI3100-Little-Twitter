@@ -18,6 +18,7 @@ const {
     FetchHomeTweet,
     FetchComment,
     TweetRecommandation,
+    FetchTweetByContent,
 } = require('../controller/tweet')
 const { del } = require('express/lib/application')
 
@@ -292,6 +293,16 @@ router.get('/TweetRecommend/', (req, res) => {
         relatedUserList.push(userID)
         const recommandedTweet = await TweetRecommandation(relatedUserList)
         res.status(200).json({message : recommandedTweet})
+    })()
+})
+
+//Searching Tweet by Specific Content
+
+router.get('/SearchTweetByContent/', (req, res) => {
+    (async() => {
+        const specificContent = req.body.Content
+        const FetchedTweet = await FetchTweetByContent(specificContent)
+        res.status(200).json({message : FetchedTweet})
     })()
 })
 
