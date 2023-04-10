@@ -31,9 +31,9 @@ const loggedInLinks = [
         name: "Bookmark",
     },
     {
-        to: "/message",
+        to: "/notification",
         icon: MessageSquare,
-        name: "Message",
+        name: "Notification",
     },
     {
         to: "/profile",
