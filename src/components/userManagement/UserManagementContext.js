@@ -19,7 +19,6 @@ const UserManagementProvider = ({ children }) => {
 
     const [query, setQuery] = useState("");
     const filtered = useMemo(() => {
-        console.log(users, query);
         if (!users) {
             return null;
         }
