@@ -79,15 +79,15 @@ export const CalTime = (mon_time) => {
         dur += (time[i] - t[i]) * 60 ** (2 - i);
     }
     var final = 0;
-    dur -= parseInt(region.slice(4, 6)) * 60 * 60;
-    day += dur / 60 / 60 / 24;
+    dur -= (parseInt(region.slice(4, 6)) * 60 * 60);
+    day += (dur / 60 / 60 / 24);
     if (day < 1) {
-        if (dur < 60) {
-            final = dur + " sec";
-        } else if (dur < 60 * 60) {
-            final = Math.round(dur / 60) + " min";
+        if (day * 24 * 60 < 1) {
+            final = Math.round(day * 24 * 60 * 60) + " sec";
+        } else if (day * 24 < 1) {
+            final = Math.round(day * 24 * 60 ) + " min";
         } else {
-            final = Math.round(dur / (60 * 60)) + " h";
+            final = Math.round(day * 24 ) + " h";
         }
     } else if (day < 30) {
         final = Math.round(day) + " d";
@@ -96,6 +96,11 @@ export const CalTime = (mon_time) => {
     } else {
         final = Math.round(day / 365) + " yr";
     }
-
+    console.log(yr)
+    console.log(month)
+    console.log(day)
+    console.log(dur)
+    console.log(dur+day*24*3600)
+    
     return [final, dur + day * 24 * 3600];
 };
