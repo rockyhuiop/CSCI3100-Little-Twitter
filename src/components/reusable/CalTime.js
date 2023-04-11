@@ -96,11 +96,6 @@ export const CalTime = (mon_time) => {
     } else {
         final = Math.round(day / 365) + " yr";
     }
-    console.log(yr)
-    console.log(month)
-    console.log(day)
-    console.log(dur)
-    console.log(dur+day*24*3600)
     
     return [final, dur + day * 24 * 3600];
 };
