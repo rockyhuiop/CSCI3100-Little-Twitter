@@ -2,11 +2,12 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import styles from "./search.module.css";
-import { set } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
     const [onInput, setOnInput] = useState(styles.box);
     const [content, setContent] = useState("")
+    const nav = useNavigate();
 
     const handleOnInput = () => {
         setOnInput(styles.box+" "+styles.oninput);
@@ -17,16 +18,30 @@ const Search = () => {
     
     const handleSubmit = async (e) =>{
         e.preventDefault()
-
-        const response = await fetch("/home/SearchTweetByContent/"+content, {
-            method: "GET",
-            headers: {
-                "Content-Type":
-                    "application/x-www-form-urlencoded;charset=UTF-8",
-            },
-        });
-        const json = await response.json();
-        console.log(json)
+        if (content!=""){
+            const response = await fetch("/search/SearchTweetByContent/"+content, {
+                method: "GET",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
+            const json = await response.json();
+            console.log(json);
+            nav("/explore",{
+                state :{
+                    search : true,
+                    data : json.message,
+                }
+            })
+        } else{
+            nav("/explore",{
+                state :{
+                    search : false,
+                    data : [],
+                }
+            })
+        }
     }
 
     return (
