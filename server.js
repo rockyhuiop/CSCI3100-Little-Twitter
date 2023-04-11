@@ -28,6 +28,8 @@ const user = require('./routes/user-route.js')
 const dashboard = require('./routes/dashboard-route.js')
 const tweet = require('./routes/tweet-route')
 const search = require('./routes/search-route.js')
+const conversation = require('./routes/conservations-route.js')
+const message = require('./routes/messages-route.js')
 
 
 app = express()
@@ -69,6 +71,8 @@ app.use('/profile', profile)
 app.use('/user', user)
 app.use('/dashboard', dashboard)
 app.use('/tweet', tweet)
+app.use('/conversation', conversation)
+app.use('/message', message)
 
 app.all('*', (req, res)=>{
     res.status(404).json({error: "Not Found"})
