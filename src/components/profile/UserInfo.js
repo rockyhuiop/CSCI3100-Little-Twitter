@@ -21,7 +21,10 @@ const UserInfo = ({ user, setData }) => {
             <Biography user={user} />
             <div className={styles.stats}>
                 <Stat name={"Following"} count={user.followings.length} />
-                <Stat name={"Followers"} count={user.followers.length} />
+                <Stat
+                    name={(p) => `Follower${p ? "s" : ""}`}
+                    count={user.followers.length}
+                />
             </div>
             <FollowInfo user={user} />
         </div>

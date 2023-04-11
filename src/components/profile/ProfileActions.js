@@ -31,7 +31,7 @@ const ProfileActions = ({ user, setData }) => {
     const followOrUnfollowUser = async () => {
         try {
             // this route follows or unfollows a user
-            const response = await fetch(`/user/${user.tweetID}`, {
+            const response = await fetch(`/user/follow/${user.tweetID}`, {
                 method: "POST",
             });
             const json = await response.json();

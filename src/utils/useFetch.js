@@ -17,9 +17,9 @@ export const useFetch = (url, options, manual = false) => {
             setData(json.data);
         }
         setIsLoading(false);
-        // we assume that the user WILL NOT CHANGE url AND options
+        // we assume that the user WILL NOT CHANGE the options
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [url]);
 
     useEffect(() => {
         if (!manual) {
