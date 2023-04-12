@@ -26,6 +26,7 @@ const Profile = () => {
         error,
         makeRequest,
         setData,
+        resetError,
     } = useFetch(url, {}, true);
 
     // I don't start the request immediately since the request may not be needed
@@ -34,7 +35,11 @@ const Profile = () => {
         if (tweetID) {
             makeRequest();
         }
-    }, [tweetID, makeRequest]);
+    }, [tweetID, isLoggedIn, makeRequest]);
+
+    useEffect(() => {
+        resetError();
+    }, [isLoggedIn, resetError]);
 
     // a safety net: so that it doesn't go to the next lines when error occurs
     if (error) {

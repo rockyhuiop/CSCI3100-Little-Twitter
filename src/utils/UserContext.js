@@ -15,12 +15,12 @@ const UserContext = createContext({});
 export const useUser = () => {
     return useContext(UserContext);
 };
-
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const [error, setError] = useState(false);
     const [message, setMessage] = useState({
         variant: "",
         message: "",
@@ -33,15 +33,20 @@ const UserProvider = ({ children }) => {
     const fetchProfileAndSetUser = async () => {
         console.log("[UserContext] fetching user profile...");
         setIsLoading(true);
-        const profile = await fetch("/profile");
-        // probably because the user is unauthorized
-        if (!profile.ok) {
+        setError(null);
+        try {
+            const profile = await fetch("/profile");
+            // probably because the user is unauthorized
+            if (!profile.ok) {
+                setIsLoading(false);
+                return;
+            }
+            const profileJSON = await profile.json();
+            setUser(profileJSON.data);
             setIsLoading(false);
-            return;
+        } catch (error) {
+            setError(error.message);
         }
-        const profileJSON = await profile.json();
-        setUser(profileJSON.data);
-        setIsLoading(false);
     };
 
     const register = async (values) => {
@@ -64,8 +69,8 @@ const UserProvider = ({ children }) => {
             });
             setOpen(true);
             return null;
-        } catch (err) {
-            return err;
+        } catch (error) {
+            return error;
         }
     };
 
@@ -124,10 +129,11 @@ const UserProvider = ({ children }) => {
                     register,
                     user,
                     setUser,
-                    isProfileLoading: isLoading,
+                    isLoading,
                     isLoggedIn: user !== null,
                     isAdmin: user && user.userType === "admin",
                     refreshUser: fetchProfileAndSetUser,
+                    error,
                 }}
             >
                 {children}
