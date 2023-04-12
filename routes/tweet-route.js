@@ -16,9 +16,9 @@ const {
     FetchFollowing,
     FetchTweet,
     FetchHomeTweet,
+    FetchTweetComment,
     FetchComment,
     TweetRecommandation,
-    FetchTweetByContent,
 } = require('../controller/tweet')
 const { del } = require('express/lib/application')
 
@@ -279,8 +279,20 @@ router.get('/fetchTweet/:tweetID', (req, res) => {
 router.get('/FetchComment/:tweetID', (req, res) => {
     (async() => {
         const {tweetID:tweetID} = req.params
-        const CommentList = await FetchComment(tweetID)
+        const CommentList = await FetchTweetComment(tweetID)
         res.status(200).json({message: CommentList})
+    })()
+})
+
+router.get('/FetchComment/:commentID', (req,res) => {
+    (async() => {
+        const {commentID: commentID} = req.params
+        const targetComment = await FetchComment(commentID)
+        if (targetComment.length > 0){
+            res.status(200).json({message: targetComment[0]})
+        }else{
+            res.status(200).json({message: "the comment is removed or suspended"})
+        }
     })()
 })
 

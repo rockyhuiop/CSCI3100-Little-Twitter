@@ -517,7 +517,33 @@ const FetchReplyComment = async(commentID) => {
     return ReplyCommentList
 }
 
-const FetchComment = async(tweetID) => {
+const FetchComment = async(commentID) => {
+    const targetComment = await Comment.find({commentID: commentID, SuspensionStatus: false})
+    
+    var fetchedCommet = []
+    
+    if (targetComment.length > 0){
+
+        const Creator = await User.findOne({tweetID:targetComment[0].CreatorUserID})
+        const CreatorUserName = Creator.name
+
+        const Comment = {
+            CommentID: targetComment[0].commentID,
+            CreatorUserID: targetComment[0].CreatorUserID,
+            CreatorUserName: CreatorUserName,
+            CreatTime : targetComment[0].CreateTime,
+            Content: targetComment[0].Content,
+            LikeCount: targetComment[0].LikeCount,
+            DisLikeCount: targetComment[0].DisLikeCount,
+        }
+
+        fetchedCommet.push(Comment)
+    }
+
+    return fetchedCommet
+}
+
+const FetchTweetComment = async(tweetID) => {
     const FetchCommentList = await Comment.find({corrTweetID:tweetID, SuspensionStatus:false})
     
     var CommentList = []
@@ -857,6 +883,7 @@ module.exports = {
     FetchFollowing,
     FetchTweet,
     FetchHomeTweet,
+    FetchTweetComment,
     FetchComment,
     TweetRecommandation,
     FetchTweetByContent,

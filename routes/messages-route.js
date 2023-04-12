@@ -5,7 +5,7 @@ router = express.Router()
 
 //add message
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
     (async() => {
         const newMessage = new Message(
             {
@@ -27,8 +27,10 @@ router.post("/", (req, res) => {
 
 //get message
 
-router.get("/:conversationID", (req, res) => {
+router.get('/:conversationID"', (req, res) => {
+
     const {conversationID: conversationID} = req.params
+
     (async() => {
         try{
             const messages = await Message.find({
