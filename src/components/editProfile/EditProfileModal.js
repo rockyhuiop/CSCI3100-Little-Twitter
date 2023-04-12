@@ -90,7 +90,7 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
             {/* I placed the banner OUTSIDE of the modal body because banner need to have no margin. Noramlly all contents should be inside modal body */}
             <EditableBanner
                 onBannerChange={bannerChanged}
-                url={bannerURL || (user.banner && SERVER_ADDRESS + user.banner)}
+                url={bannerURL || (user.banner && SERVER_ADDRESS + user.banner.replace("\\","/"))}
             />
             <ModalBody>
                 <div className={styles.avatar}>
@@ -99,7 +99,7 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
                         onAvatarChange={avatarChanged}
                         avatar={
                             avatarURL ||
-                            (user.avatar && SERVER_ADDRESS + user.avatar)
+                            (user.avatar && SERVER_ADDRESS + user.avatar.replace("\\","/"))
                         }
                         username={user.name}
                     />
