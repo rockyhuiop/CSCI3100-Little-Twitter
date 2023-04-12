@@ -16,7 +16,7 @@ import NavAddTweet from "../navbar/NavAddTweet";
 const TweetActions = ({ tweetStatistic, tweet }) => {
     const { isLoggedIn, user: currentUser } = useUser();
     const [likes, setLikes] = useState(tweetStatistic.likeCount);
-    const [isLiked, setIsLiked] = useState(currentUser.likedTweetID.includes( tweet.tweetId ));
+    const [isLiked, setIsLiked] = useState(isLoggedIn ? currentUser.likedTweetID.includes( tweet.tweetId ) : false);
     const [retweets, setRetweets] = useState(tweetStatistic.retweetCount);
     const { isShowing, onClose, onOpen } = useModal();
     
