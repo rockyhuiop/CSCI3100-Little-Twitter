@@ -12,10 +12,17 @@ const Notification = () => {
 
     ]);
     useEffect(() => {
-        if (!isLoggedIn) {
-            nav("/", { replace: true });
-        } else{
-            const fetchNotif = async() =>{
+        const fetchNotif = async() =>{
+            const check_log = await fetch("/home", {
+                method: "GET",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
+            if (!check_log.ok) {
+                nav("/", { replace: true });
+            } else{
                 const new_fol=[];
                 const notification = await fetch("/user/notification/",
                     {
@@ -38,10 +45,10 @@ const Notification = () => {
                 }
                 setFol(new_fol);
             }
-
-            fetchNotif();
-            
         }
+        fetchNotif();
+            
+        
     },[]);
     return (
         <>
