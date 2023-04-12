@@ -14,23 +14,30 @@ import NavAddTweet from "../navbar/NavAddTweet";
 //import "./Tweet.css";
 
 const TweetActions = ({ tweetStatistic, tweet }) => {
+    const { isLoggedIn, user: currentUser } = useUser();
     const [likes, setLikes] = useState(tweetStatistic.likeCount);
-    const [isLiked, setIsLiked] = useState(false);
+    const [isLiked, setIsLiked] = useState(currentUser.likedTweetID.includes( tweet.tweetId ));
     const [retweets, setRetweets] = useState(tweetStatistic.retweetCount);
     const { isShowing, onClose, onOpen } = useModal();
-    const { isLoggedIn } = useUser();
-
+    
     if (!isLoggedIn) {
         return null;
     }
 
-    const handleLike = (e) => {
+    const handleLike = async (e) => {
         e.preventDefault();
         if (!isLiked) {
             setLikes(likes + 1);
         } else {
             setLikes(likes - 1);
         }
+        const like = await fetch("/home/likeTweet/"+tweet.tweetId, {
+            method: "PATCH",
+            headers: {
+                "Content-Type":
+                    "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+        });
         setIsLiked(!isLiked);
     };
 
