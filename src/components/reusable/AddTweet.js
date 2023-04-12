@@ -3,9 +3,11 @@ import { Image } from "react-feather";
 import defaultUser from "../../assets/default.jpg";
 import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
+import { useUser } from "../../utils/UserContext";
 
 const AddTweet = ({ msg, btn }) => {
     const WORD_LIMIT = 120;
+    const { user: currentUser } = useUser();
     const [file, setFile] = useState(null);
     const [text, setText] = useState("");
     const [error, setError] = useState(null);
@@ -63,7 +65,7 @@ const AddTweet = ({ msg, btn }) => {
             <div className={styles.row}>
                 <img
                     className={styles.avatar}
-                    src={defaultUser}
+                    src={currentUser.avatar ? currentUser.avatar : defaultUser}
                     alt="Avatar of user"
                 />
                 <textarea
