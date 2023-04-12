@@ -284,7 +284,7 @@ router.get('/FetchComment/:tweetID', (req, res) => {
     })()
 })
 
-router.get('/FetchComment/:commentID', (req,res) => {
+router.get('/FetchCommentByCommentID/:commentID', (req,res) => {
     (async() => {
         const {commentID: commentID} = req.params
         const targetComment = await FetchComment(commentID)
