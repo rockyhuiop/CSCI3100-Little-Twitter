@@ -34,7 +34,17 @@ const Tweet = ({ tweet, type, isModal }) => {
             }
         }
     };
-
+    const follow = async (id) => {
+        const fol = await fetch("/user/follow/" + id, {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                    "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+        });
+        const fol_json = await fol.json();
+        refreshUser();
+    };
 
     const bookmark = async (id) => {
         const bm = await fetch("/user/bookmark/" + id, {
@@ -45,7 +55,6 @@ const Tweet = ({ tweet, type, isModal }) => {
             },
         });
         const bm_json = await bm.json();
-        console.log(bm_json);
         refreshUser();
     };
 
@@ -89,7 +98,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                             {isLoggedIn && !isModal ? (
                                 <IconMenu
                                     clickHandlers={[
-                                        null,
+                                        () => follow(tweet.user.userId),
                                         () => bookmark(tweet.tweetId),
                                     ]}
                                     icons={[
