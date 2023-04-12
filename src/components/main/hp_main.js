@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useUser } from "../../utils/UserContext";
 import AddTweet from "../reusable/AddTweet";
 import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
@@ -7,7 +6,7 @@ import styles from "./hp_main.module.css";
 import { CalTime } from "../reusable/CalTime";
 
 const Hp_main = () => {
-    const { isLoggedIn } = useUser();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [tweets, setTweets] = useState([
         /*{
             tweetId: "1",
@@ -47,37 +46,17 @@ const Hp_main = () => {
     const btn = "Tweet";
 
     useEffect(() => {
-        const checklog = async () => {
+        const fetchHome = async () => {
             const new_tw = [];
-            if (!isLoggedIn) {
-                const not_login = await fetch("/FetchAllTweet", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded;charset=UTF-8",
-                    },
-                });
-                const not_log_json = await not_login.json();
-                for (var i = 0; i < not_log_json.message.length; i++) {
-                    new_tw.push({
-                        tweetId: not_log_json.message[i].TweetID,
-                        text: not_log_json.message[i].Content,
-                        user: {
-                            userId: not_log_json.message[i].CreatorUserID,
-                            name: not_log_json.message[i].CreatorUserName,
-                            profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
-                        },
-                        media: "",
-                        date: CalTime(not_log_json.message[i].CreateTime)[0],
-                        likeCount: not_log_json.message[i].LikeCount,
-                        commentCount: not_log_json.message[i].CommentCount,
-                        retweetCount: not_log_json.message[i].ReTweetCount,
-                        viewCount: 1000,
-                    });
-                }
-                setTweets(new_tw);
-            } else if (isLoggedIn) {
+            const check_log = await fetch("/home", {
+                method: "GET",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
+            if (check_log.ok){
+                setIsLoggedIn(true);
                 const login = await fetch("/home/fetchHomeTweet", {
                     method: "GET",
                     headers: {
@@ -105,9 +84,40 @@ const Hp_main = () => {
                     });
                 }
                 setTweets(new_tw);
+            } else{
+                setIsLoggedIn(false);
+                const not_login = await fetch("/FetchAllTweet", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded;charset=UTF-8",
+                    },
+                });
+                const not_log_json = await not_login.json();
+                for (var i = 0; i < not_log_json.message.length; i++) {
+                    new_tw.push({
+                        tweetId: not_log_json.message[i].TweetID,
+                        text: not_log_json.message[i].Content,
+                        user: {
+                            userId: not_log_json.message[i].CreatorUserID,
+                            name: not_log_json.message[i].CreatorUserName,
+                            profile_image_url:
+                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                        },
+                        media: "",
+                        date: CalTime(not_log_json.message[i].CreateTime)[0],
+                        likeCount: not_log_json.message[i].LikeCount,
+                        commentCount: not_log_json.message[i].CommentCount,
+                        retweetCount: not_log_json.message[i].ReTweetCount,
+                        viewCount: 1000,
+                    });
+                }
+                setTweets(new_tw);
             }
+
+            
         };
-        checklog();
+        fetchHome();
     }, []);
 
     return (
