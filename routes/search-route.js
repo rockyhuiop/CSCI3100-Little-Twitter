@@ -16,4 +16,25 @@ router.get('/SearchTweetByContent/:Content', (req, res) => {
     })()
 })
 
+//find user
+router.get('/SearchUserById/:id', async (req, res)=>{
+    const { id } = req.params
+    try {
+        let user = await User.findOne({ tweetID: id}).select('-password -userType');
+        if (user) {
+            return res.status(200).json({
+                data: user,
+                state: "Success"
+            })
+        } else {
+            return res.status(200).json({ error: "User doesn't exist" });
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: error });
+    }
+    
+})
+
+
 module.exports = router
