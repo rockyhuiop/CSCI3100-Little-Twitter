@@ -3,10 +3,9 @@ import Tabs from "../reusable/Tabs";
 import Tweet from "../tweet/Tweet";
 import styles from "./filter.module.css";
 import { CalTime } from "../reusable/CalTime";
-import { useUser } from "../../utils/UserContext";
 
 const Filter = (search, data) => {
-    const { isLoggedIn } = useUser();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [tweets, setTweets] = useState([
         /*{
             tweetId: 1,
@@ -38,10 +37,17 @@ const Filter = (search, data) => {
     useEffect(() => {
         const fetchall = async (search, data) => {
             const new_tw = [];
-
+            const check_log = await fetch("/home", {
+                method: "GET",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
             
             if (!search.search){
-                if (!isLoggedIn) {
+                if (!check_log) {
+                    setIsLoggedIn(false);
                     const not_login = await fetch("/FetchAllTweet", {
                         method: "GET",
                         headers: {
@@ -71,7 +77,8 @@ const Filter = (search, data) => {
                         });
                     }
                     setTweets(new_tw);
-                } else if (isLoggedIn) {
+                } else if (check_log) {
+                    setIsLoggedIn(true);
                     const login = await fetch("/home/TweetRecommend", {
                         method: "GET",
                         headers: {
@@ -132,7 +139,7 @@ const Filter = (search, data) => {
             setTweetsRec(new_tw_rec);
         };
         fetchall(search, data);
-    }, [isLoggedIn,search]);
+    }, [search]);
     return (
         <Tabs tabNames={isLoggedIn ? ["Recommend", "Popular", "Recent"] : ["Popular", "Recent"]}>
             <div className={styles.con}>
