@@ -6,9 +6,11 @@ import styles from "./hp_main.module.css";
 import { CalTime } from "../reusable/CalTime";
 import { SERVER_ADDRESS } from "../../utils/constants";
 import defaultUser from "../../assets/default.jpg";
+import CenteredStatus from "../reusable/CenteredStatus";
 
 const Hp_main = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [tweets, setTweets] = useState([
         /*{
             tweetId: "1",
@@ -49,6 +51,7 @@ const Hp_main = () => {
 
     useEffect(() => {
         const fetchHome = async () => {
+            setIsLoading(true);
             const new_tw = [];
             const check_log = await fetch("/home", {
                 method: "GET",
@@ -59,6 +62,7 @@ const Hp_main = () => {
             });
             if (check_log.ok){
                 setIsLoggedIn(true);
+                
                 const login = await fetch("/home/fetchHomeTweet", {
                     method: "GET",
                     headers: {
@@ -137,9 +141,10 @@ const Hp_main = () => {
                     });
                 }
                 setTweets(new_tw);
+                
             }
 
-            
+            setIsLoading(false); 
         };
         fetchHome();
     }, []);
@@ -150,7 +155,7 @@ const Hp_main = () => {
                 <div className={styles.header}>
                     <h3>Home</h3>
                 </div>
-                {isLoggedIn ? <AddTweet msg={msg} btn={btn} /> : null}
+                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : isLoggedIn ? <AddTweet msg={msg} btn={btn} /> : null}
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}

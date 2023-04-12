@@ -6,8 +6,10 @@ import { useUser } from "../../utils/UserContext";
 import { CalTime } from "../reusable/CalTime";
 import { SERVER_ADDRESS } from "../../utils/constants";
 import defaultUser from "../../assets/default.jpg";
+import CenteredStatus from "../reusable/CenteredStatus";
 const Bookmark = () => {
     const nav = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const { user: currentUser } = useUser();
     const [tweets, setTweets] = useState([
         /*{
@@ -22,6 +24,7 @@ const Bookmark = () => {
     ]);
     useEffect(() => {
         const fetchBookmark = async () => {
+            setIsLoading(true);
             const check_log = await fetch("/home", {
                 method: "GET",
                 headers: {
@@ -56,7 +59,6 @@ const Bookmark = () => {
                         }
                     );
                     const creator_json = await creator.json();
-                    console.log(bookmark_json)
                     new_tw.push({
                         tweetId: bookmark_json.message[0].TweetID,
                         text: bookmark_json.message[0].Content,
@@ -76,6 +78,7 @@ const Bookmark = () => {
                 }
                 setTweets(new_tw);
             }
+            setIsLoading(false);
         };
         fetchBookmark();
     }, [currentUser]);
@@ -83,6 +86,7 @@ const Bookmark = () => {
     return (
         <>
             <div className={styles.title}>Bookmarks</div>
+            {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
             {tweets.map((tweet) => (
                 <Tweet key={tweet.tweetId} tweet={tweet} />
             ))}

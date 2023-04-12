@@ -5,9 +5,11 @@ import styles from "./filter.module.css";
 import { CalTime } from "../reusable/CalTime";
 import { SERVER_ADDRESS } from "../../utils/constants";
 import defaultUser from "../../assets/default.jpg";
+import CenteredStatus from "../reusable/CenteredStatus";
 
 const Filter = (search, data) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [tweets, setTweets] = useState([
         /*{
             tweetId: 1,
@@ -38,6 +40,7 @@ const Filter = (search, data) => {
 
     useEffect(() => {
         const fetchall = async (search, data) => {
+            setIsLoading(true);
             const new_tw = [];
             const check_log = await fetch("/home", {
                 method: "GET",
@@ -161,10 +164,13 @@ const Filter = (search, data) => {
             const new_tw_rec=[...new_tw].sort((a, b) => a.dur - b.dur);
             setTweetsPop(new_tw_pop);
             setTweetsRec(new_tw_rec);
+            setIsLoading(false);
         };
         fetchall(search, data);
     }, [search]);
     return (
+    <>
+        {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
         <Tabs tabNames={isLoggedIn ? ["Recommend", "Popular", "Recent"] : ["Popular", "Recent"]}>
             <div className={styles.con}>
                 {tweets
@@ -188,6 +194,7 @@ const Filter = (search, data) => {
                     ))}
             </div>
         </Tabs>
+    </>
     );
 };
 export default Filter;
