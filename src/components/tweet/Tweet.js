@@ -98,7 +98,7 @@ const Tweet = ({ tweet, type }) => {
                                     <FontAwesomeIcon icon={faUserXmark} />,
                                     <FontAwesomeIcon icon={faBookmark} />,
                                 ]}
-                                names={["Unfollow", "Bookmark"]}
+                                names={[currentUser.followings.includes(tweet.user.userId) ? "Unfollow" : "Follow", currentUser.bookmark.includes(tweet.tweetId) ? "Unbookmark" : "Bookmark"]}
                                 keySuffix={
                                     type == "comment"
                                         ? tweet.tweetId
