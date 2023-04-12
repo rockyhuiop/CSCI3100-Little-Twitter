@@ -6,8 +6,9 @@ import Button from "./Button";
 
 const AddTweet = ({ msg, btn }) => {
     const WORD_LIMIT = 120;
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState(null);
     const [text, setText] = useState("");
+    const [error, setError] = useState(null);
     const ref = useRef(null);
     const textareaRef = useRef(null);
 
@@ -24,6 +25,26 @@ const AddTweet = ({ msg, btn }) => {
             setText(e.target.value);
         }
     };
+    const formData = new FormData();
+
+    const handleSubmit = async (e) =>{
+        try {
+            formData.append("Content", text);
+            if (file) {
+                formData.append("images", file);
+            }
+            const response = await fetch("/home", {
+                method: "POST",
+                body: formData,
+            });
+            const json = await response.json();
+            if (json.error) {
+                throw new Error(json.error);
+            } 
+        } catch (error) {
+            setError(error);
+        }
+    }
 
     useEffect(() => {
         if (textareaRef) {
@@ -38,7 +59,7 @@ const AddTweet = ({ msg, btn }) => {
     }, [textareaRef, text]);
 
     return (
-        <form className={styles.form} name="hp-addtw">
+        <form className={styles.form} name="hp-addtw" onSubmit={handleSubmit}>
             <div className={styles.row}>
                 <img
                     className={styles.avatar}
