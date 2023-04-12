@@ -20,7 +20,7 @@ const Tweet = ({ tweet, type, isModal }) => {
     };
 
     // const userUrl = "/" + tweet.user.userId;
-    const userUrl = "/profile";
+    const userUrl = "/profile/"+tweet.user.userId;
     // const tweetUrl = userUrl + "/" + tweet.tweetId;
     const tweetUrl = "/tweet/" + tweet.tweetId;
 
@@ -35,13 +35,6 @@ const Tweet = ({ tweet, type, isModal }) => {
         }
     };
 
-    const checkbookmark = async (id) => {
-        if (currentUser.bookmark.includes(id)) {
-            return true;
-        } else {
-            return false;
-        }
-    };
 
     const bookmark = async (id) => {
         const bm = await fetch("/user/bookmark/" + id, {
