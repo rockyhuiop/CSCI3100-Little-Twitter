@@ -15,7 +15,11 @@ const NavAddTweet = ({ isShowing, onClose, isReply, tweet }) => {
                 <ModalCross />
             </ModalHeader>
             <ModalBody>
-                {isReply ? <Tweet tweet={tweet} type={"root"} /> : ""}
+                {isReply ? (
+                    <Tweet tweet={tweet} type={"root"} isModal={true} />
+                ) : (
+                    ""
+                )}
                 <AddTweet msg={msg} btn={btn} tweet={tweet} />
             </ModalBody>
         </Modal>

@@ -38,7 +38,7 @@ const TweetDetails = ({ tweet, type }) => {
     // const userUrl = "/" + tweet.user.userId;
     const userUrl = "/profile";
     // const tweetUrl = userUrl + "/" + tweet.tweetId;
-    const tweetUrl = userUrl + "/tweet";
+    const tweetUrl = "/tweet/" + tweet.tweetId;
 
     return (
         <div

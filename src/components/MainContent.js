@@ -15,7 +15,7 @@ const MainContent = () => {
                 <Route exact path="/" element={<Homepage />} />
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/profile/:tweetID?" element={<Profile />} />{" "}
-                <Route path="/profile/tweet" element={<TweetPage />} />
+                <Route path="/tweet/:tweetId?" element={<TweetPage />} />
                 <Route path="/bookmark" element={<Bookmark_page />} />
                 <Route path="/notification" element={<Notification_page />} />
                 <Route path="/manage/users" element={<UserManagement />} />

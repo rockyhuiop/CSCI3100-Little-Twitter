@@ -9,7 +9,7 @@ import TweetActions from "./TweetActions.js";
 import { useUser } from "../../utils/UserContext";
 import { Bookmark } from "react-feather";
 
-const Tweet = ({ tweet, type }) => {
+const Tweet = ({ tweet, type, isModal }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
     const navigate = useNavigate();
     const tweetStatistic = {
@@ -22,27 +22,29 @@ const Tweet = ({ tweet, type }) => {
     // const userUrl = "/" + tweet.user.userId;
     const userUrl = "/profile";
     // const tweetUrl = userUrl + "/" + tweet.tweetId;
-    const tweetUrl = userUrl + "/tweet";
+    const tweetUrl = "/tweet/" + tweet.tweetId;
 
     const navigateToTweetUrl = (e) => {
-        if (
-            e.target.tagName == "DIV" &&
-            !e.target.classList.contains("MuiBackdrop-root")
-        ) {
-            navigate(tweetUrl);
+        if (!isModal) {
+            if (
+                e.target.tagName == "DIV" &&
+                !e.target.classList.contains("MuiBackdrop-root")
+            ) {
+                navigate(tweetUrl);
+            }
         }
     };
 
-    const checkbookmark = async(id) =>{
-        if (currentUser.bookmark.includes(id)){
+    const checkbookmark = async (id) => {
+        if (currentUser.bookmark.includes(id)) {
             return true;
         } else {
-            return false
+            return false;
         }
-    }
+    };
 
-    const bookmark = async(id) =>{
-        const bm = await fetch("/user/bookmark/"+id, {
+    const bookmark = async (id) => {
+        const bm = await fetch("/user/bookmark/" + id, {
             method: "POST",
             headers: {
                 "Content-Type":
@@ -52,7 +54,7 @@ const Tweet = ({ tweet, type }) => {
         const bm_json = await bm.json();
         console.log(bm_json);
         refreshUser();
-    }
+    };
 
     return (
         <div
@@ -91,22 +93,37 @@ const Tweet = ({ tweet, type }) => {
                                 e.preventDefault();
                             }}
                         >
-                            {isLoggedIn ?
-                            <IconMenu
-                                clickHandlers={[null, ()=>bookmark(tweet.tweetId)]}
-                                icons={[
-                                    <FontAwesomeIcon icon={faUserXmark} />,
-                                    <FontAwesomeIcon icon={faBookmark} />,
-                                ]}
-                                names={[currentUser.followings.includes(tweet.user.userId) ? "Unfollow" : "Follow", currentUser.bookmark.includes(tweet.tweetId) ? "Unbookmark" : "Bookmark"]}
-                                keySuffix={
-                                    type == "comment"
-                                        ? tweet.tweetId
-                                        : tweet.commentId
-                                }
-                            />
-                            : " "
-                            }
+                            {isLoggedIn && !isModal ? (
+                                <IconMenu
+                                    clickHandlers={[
+                                        null,
+                                        () => bookmark(tweet.tweetId),
+                                    ]}
+                                    icons={[
+                                        <FontAwesomeIcon icon={faUserXmark} />,
+                                        <FontAwesomeIcon icon={faBookmark} />,
+                                    ]}
+                                    names={[
+                                        currentUser.followings.includes(
+                                            tweet.user.userId
+                                        )
+                                            ? "Unfollow"
+                                            : "Follow",
+                                        currentUser.bookmark.includes(
+                                            tweet.tweetId
+                                        )
+                                            ? "Unbookmark"
+                                            : "Bookmark",
+                                    ]}
+                                    keySuffix={
+                                        type == "comment"
+                                            ? tweet.tweetId
+                                            : tweet.commentId
+                                    }
+                                />
+                            ) : (
+                                " "
+                            )}
                         </div>
                     </div>
                     <small className="tweet__replyinfo">
@@ -122,10 +139,14 @@ const Tweet = ({ tweet, type }) => {
                         )}
                     </small>
                     <div className="tweet__content">{tweet.text}</div>
-                    <TweetActions
-                        tweetStatistic={tweetStatistic}
-                        tweet={tweet}
-                    />
+                    {!isModal ? (
+                        <TweetActions
+                            tweetStatistic={tweetStatistic}
+                            tweet={tweet}
+                        />
+                    ) : (
+                        ""
+                    )}
                 </div>
             </div>
         </div>

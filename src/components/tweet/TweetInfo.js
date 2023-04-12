@@ -14,7 +14,7 @@ const TweetInfo = ({ tweet, isComment }) => {
     const msg = "Tweet your reply";
     const btn = "Reply";
 
-    const [comments, setComments] = useState([
+    /*const [comments, setComments] = useState([
         {
             commentId: "1",
             rootTweet: {
@@ -102,6 +102,7 @@ const TweetInfo = ({ tweet, isComment }) => {
         retweetCount: 6,
         viewCount: 1000,
     });
+*/
 
     return (
         <div className="container">
@@ -125,12 +126,8 @@ const TweetInfo = ({ tweet, isComment }) => {
                     type={isComment ? "comment" : "regular"}
                 />
                 <AddTweet msg={msg} btn={btn} />
-                {comments.map((tweet) => (
-                    <Tweet
-                        key={tweet.commentId}
-                        tweet={tweet}
-                        type={"comment"}
-                    />
+                {tweet.comments.map((comm) => (
+                    <Tweet key={comm.commentId} tweet={comm} type={"comment"} />
                 ))}
             </div>
             <div className="searchBar">
