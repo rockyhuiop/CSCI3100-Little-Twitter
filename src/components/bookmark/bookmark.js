@@ -4,6 +4,8 @@ import Tweet from "../tweet/Tweet";
 import styles from "./bookmark.module.css";
 import { useUser } from "../../utils/UserContext";
 import { CalTime } from "../reusable/CalTime";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import defaultUser from "../../assets/default.jpg";
 const Bookmark = () => {
     const nav = useNavigate();
     const { user: currentUser } = useUser();
@@ -43,7 +45,18 @@ const Bookmark = () => {
                         }
                     );
                     const bookmark_json = await bookmark.json();
-
+                    const creator = await fetch(
+                        "/search/SearchUserById/"+bookmark_json.message[0].CreatorUserID,
+                        {
+                            method: "GET",
+                            headers: {
+                                "Content-Type":
+                                    "application/x-www-form-urlencoded;charset=UTF-8",
+                            },
+                        }
+                    );
+                    const creator_json = await creator.json();
+                    console.log(bookmark_json)
                     new_tw.push({
                         tweetId: bookmark_json.message[0].TweetID,
                         text: bookmark_json.message[0].Content,
@@ -51,7 +64,7 @@ const Bookmark = () => {
                             userId: bookmark_json.message[0].CreatorUserID,
                             name: bookmark_json.message[0].CreatorUserName,
                             profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
                         },
                         media: "",
                         date: CalTime(bookmark_json.message[0].CreateTime)[0],

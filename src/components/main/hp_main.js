@@ -4,6 +4,8 @@ import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
 import { CalTime } from "../reusable/CalTime";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import defaultUser from "../../assets/default.jpg";
 
 const Hp_main = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -66,6 +68,17 @@ const Hp_main = () => {
                 });
                 const log_json = await login.json();
                 for (var i = 0; i < log_json.message.length; i++) {
+                    const creator = await fetch(
+                        "/search/SearchUserById/"+log_json.message[i].CreatorUserID,
+                        {
+                            method: "GET",
+                            headers: {
+                                "Content-Type":
+                                    "application/x-www-form-urlencoded;charset=UTF-8",
+                            },
+                        }
+                    );
+                    const creator_json = await creator.json();
                     new_tw.push({
                         tweetId: log_json.message[i].TweetID,
                         text: log_json.message[i].Content,
@@ -73,7 +86,7 @@ const Hp_main = () => {
                             userId: log_json.message[i].CreatorUserID,
                             name: log_json.message[i].CreatorUserName,
                             profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
                         },
                         media: "",
                         date: CalTime(log_json.message[i].CreateTime)[0],
@@ -95,6 +108,17 @@ const Hp_main = () => {
                 });
                 const not_log_json = await not_login.json();
                 for (var i = 0; i < not_log_json.message.length; i++) {
+                    const creator = await fetch(
+                        "/search/SearchUserById/"+not_log_json.message[i].CreatorUserID,
+                        {
+                            method: "GET",
+                            headers: {
+                                "Content-Type":
+                                    "application/x-www-form-urlencoded;charset=UTF-8",
+                            },
+                        }
+                    );
+                    const creator_json = await creator.json();
                     new_tw.push({
                         tweetId: not_log_json.message[i].TweetID,
                         text: not_log_json.message[i].Content,
@@ -102,7 +126,7 @@ const Hp_main = () => {
                             userId: not_log_json.message[i].CreatorUserID,
                             name: not_log_json.message[i].CreatorUserName,
                             profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
                         },
                         media: "",
                         date: CalTime(not_log_json.message[i].CreateTime)[0],

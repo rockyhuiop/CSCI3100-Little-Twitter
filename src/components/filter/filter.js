@@ -3,6 +3,8 @@ import Tabs from "../reusable/Tabs";
 import Tweet from "../tweet/Tweet";
 import styles from "./filter.module.css";
 import { CalTime } from "../reusable/CalTime";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import defaultUser from "../../assets/default.jpg";
 
 const Filter = (search, data) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,7 +48,7 @@ const Filter = (search, data) => {
             });
             
             if (!search.search){
-                if (!check_log) {
+                if (!check_log.ok) {
                     setIsLoggedIn(false);
                     const not_login = await fetch("/FetchAllTweet", {
                         method: "GET",
@@ -58,6 +60,17 @@ const Filter = (search, data) => {
                     const not_log_json = await not_login.json();
                     //const new_tw = [];
                     for (var i = 0; i < not_log_json.message.length; i++) {
+                        const creator = await fetch(
+                            "/search/SearchUserById/"+not_log_json.message[i].CreatorUserID,
+                            {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type":
+                                        "application/x-www-form-urlencoded;charset=UTF-8",
+                                },
+                            }
+                        );
+                        const creator_json = await creator.json();
                         new_tw.push({
                             tweetId: not_log_json.message[i].TweetID,
                             text: not_log_json.message[i].Content,
@@ -65,7 +78,7 @@ const Filter = (search, data) => {
                                 userId: not_log_json.message[i].CreatorUserID,
                                 name: not_log_json.message[i].CreatorUserName,
                                 profile_image_url:
-                                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
                             },
                             media: "",
                             dur: CalTime(not_log_json.message[i].CreateTime)[1],
@@ -77,7 +90,7 @@ const Filter = (search, data) => {
                         });
                     }
                     setTweets(new_tw);
-                } else if (check_log) {
+                } else if (check_log.ok) {
                     setIsLoggedIn(true);
                     const login = await fetch("/home/TweetRecommend", {
                         method: "GET",
@@ -89,6 +102,17 @@ const Filter = (search, data) => {
                     const log_json = await login.json();
                     //const new_tw = [];
                     for (var i = 0; i < log_json.message.length; i++) {
+                        const creator = await fetch(
+                            "/search/SearchUserById/"+log_json.message[i].CreatorUserID,
+                            {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type":
+                                        "application/x-www-form-urlencoded;charset=UTF-8",
+                                },
+                            }
+                        );
+                        const creator_json = await creator.json();
                         new_tw.push({
                             tweetId: log_json.message[i].TweetID,
                             text: log_json.message[i].Content,
@@ -96,7 +120,7 @@ const Filter = (search, data) => {
                                 userId: log_json.message[i].CreatorUserID,
                                 name: log_json.message[i].CreatorUserName,
                                 profile_image_url:
-                                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
                             },
                             media: "",
                             dur: CalTime(log_json.message[i].CreateTime)[1],
