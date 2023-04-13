@@ -54,6 +54,7 @@ const AddTweet = ({ msg, btn, url, type }) => {
             if (response.ok) {
                 setText("");
             }
+            window.location.reload(true);
         } else {
             try {
                 formData.append("Content", text);
