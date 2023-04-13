@@ -24,16 +24,16 @@ io.on("connection", (socket) => {
 
     console.log("a user connected.")
     //storing the userID and SocketID for Logged in User
-    socket.on("addUser", userID => {
+    socket.on("addUser", (userID) => {
         addUser(userID, socket.id)
         io.emit("getUsers", onlineUsers)
     })
 
-    socket.on("sendMessage", ({userID, receiverID, text}) => {
+    socket.on("sendMessage", ({senderID, receiverID, text}) => {
         console.log(receiverID)
         const user = findUser(receiverID)
         io.to(user.socketID).emit("getMessage",{
-            userID: userID,
+            senderID: senderID,
             text: text
         })
     })

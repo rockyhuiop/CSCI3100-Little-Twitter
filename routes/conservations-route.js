@@ -26,7 +26,7 @@ router.post("/", (req, res) => {
     
 })
 
-//get conersation
+//get conersation by logged in user
 
 router.get("/:userID", (req, res) => {
     (async() => {
@@ -34,6 +34,22 @@ router.get("/:userID", (req, res) => {
         try{
             const conversation = await Conversation.find({
                 members : {$in: [userID]},
+            })
+            res.status(200).json(conversation)
+        }catch(err){
+            res.status(500).json(err)
+        }
+    })()
+
+})
+
+//get conversation by both logged in users and his friends
+router.get("/search/:firstUserID/:secondUserID", (req, res) => {
+    (async() => {
+        const {firstUserID:firstUserID, secondUserID: secondUserID} = req.params
+        try{
+            const conversation = await Conversation.findOne({
+                members : {$all: [firstUserID, secondUserID]},
             })
             res.status(200).json(conversation)
         }catch(err){

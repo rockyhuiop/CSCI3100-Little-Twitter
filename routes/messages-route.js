@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 
 //get message
 
-router.get('/:conversationID"', (req, res) => {
+router.get('/:conversationID', (req, res) => {
 
     (async() => {
         const {conversationID: conversationID} = req.params
