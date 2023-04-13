@@ -36,6 +36,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                 !e.target.classList.contains("MuiBackdrop-root")
             ) {
                 navigate(tweetUrl);
+                window.location.reload();
             }
         }
     };
