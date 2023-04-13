@@ -60,9 +60,9 @@ const Hp_main = () => {
                         "application/x-www-form-urlencoded;charset=UTF-8",
                 },
             });
-            if (check_log.ok){
+            if (check_log.ok) {
                 setIsLoggedIn(true);
-                
+
                 const login = await fetch("/home/fetchHomeTweet", {
                     method: "GET",
                     headers: {
@@ -73,7 +73,8 @@ const Hp_main = () => {
                 const log_json = await login.json();
                 for (var i = 0; i < log_json.message.length; i++) {
                     const creator = await fetch(
-                        "/search/SearchUserById/"+log_json.message[i].CreatorUserID,
+                        "/search/SearchUserById/" +
+                            log_json.message[i].CreatorUserID,
                         {
                             method: "GET",
                             headers: {
@@ -89,8 +90,10 @@ const Hp_main = () => {
                         user: {
                             userId: log_json.message[i].CreatorUserID,
                             name: log_json.message[i].CreatorUserName,
-                            profile_image_url:
-                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
+                            profile_image_url: creator_json.data.avatar
+                                ? SERVER_ADDRESS +
+                                  creator_json.data.avatar.replace("\\", "/")
+                                : defaultUser,
                         },
                         media: "",
                         date: CalTime(log_json.message[i].CreateTime)[0],
@@ -99,10 +102,10 @@ const Hp_main = () => {
                         retweetCount: log_json.message[i].ReTweetCount,
                         viewCount: 1000,
                     });
-                    setTweets(new_tw);
+                    setTweets([...new_tw]);
                 }
-                //setTweets(new_tw);
-            } else{
+                setTweets(new_tw);
+            } else {
                 setIsLoggedIn(false);
                 const not_login = await fetch("/FetchAllTweet", {
                     method: "GET",
@@ -114,7 +117,8 @@ const Hp_main = () => {
                 const not_log_json = await not_login.json();
                 for (var i = 0; i < not_log_json.message.length; i++) {
                     const creator = await fetch(
-                        "/search/SearchUserById/"+not_log_json.message[i].CreatorUserID,
+                        "/search/SearchUserById/" +
+                            not_log_json.message[i].CreatorUserID,
                         {
                             method: "GET",
                             headers: {
@@ -130,8 +134,10 @@ const Hp_main = () => {
                         user: {
                             userId: not_log_json.message[i].CreatorUserID,
                             name: not_log_json.message[i].CreatorUserName,
-                            profile_image_url:
-                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
+                            profile_image_url: creator_json.data.avatar
+                                ? SERVER_ADDRESS +
+                                  creator_json.data.avatar.replace("\\", "/")
+                                : defaultUser,
                         },
                         media: "",
                         date: CalTime(not_log_json.message[i].CreateTime)[0],
@@ -140,13 +146,12 @@ const Hp_main = () => {
                         retweetCount: not_log_json.message[i].ReTweetCount,
                         viewCount: 1000,
                     });
-                    setTweets(new_tw);
+                    setTweets([...new_tw]);
                 }
                 //setTweets(new_tw);
-                
             }
 
-            setIsLoading(false); 
+            setIsLoading(false);
         };
         fetchHome();
     }, []);
@@ -157,11 +162,19 @@ const Hp_main = () => {
                 <div className={styles.header}>
                     <h3>Home</h3>
                 </div>
-                {isLoading ? ""  : isLoggedIn ? <AddTweet msg={msg} btn={btn} /> : null}
+                {isLoading ? (
+                    ""
+                ) : isLoggedIn ? (
+                    <AddTweet msg={msg} btn={btn} />
+                ) : null}
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}
-                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : ""}
+                {isLoading ? (
+                    <CenteredStatus>{"Loading..."}</CenteredStatus>
+                ) : (
+                    ""
+                )}
             </div>
             <div className={styles.searchBar}>
                 <Search />

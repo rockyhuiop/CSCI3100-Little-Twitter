@@ -30,13 +30,8 @@ const Filter = (search, data) => {
             },
         },*/
     ]);
-    const [tweetsPop, setTweetsPop] = useState([
-
-    ]);
-    const [tweetsRec, setTweetsRec] = useState([
-
-    ]);
-
+    const [tweetsPop, setTweetsPop] = useState([]);
+    const [tweetsRec, setTweetsRec] = useState([]);
 
     useEffect(() => {
         const fetchall = async (search, data) => {
@@ -49,8 +44,8 @@ const Filter = (search, data) => {
                         "application/x-www-form-urlencoded;charset=UTF-8",
                 },
             });
-            
-            if (!search.search){
+
+            if (!search.search) {
                 if (!check_log.ok) {
                     setIsLoggedIn(false);
                     const not_login = await fetch("/FetchAllTweet", {
@@ -64,7 +59,8 @@ const Filter = (search, data) => {
                     //const new_tw = [];
                     for (var i = 0; i < not_log_json.message.length; i++) {
                         const creator = await fetch(
-                            "/search/SearchUserById/"+not_log_json.message[i].CreatorUserID,
+                            "/search/SearchUserById/" +
+                                not_log_json.message[i].CreatorUserID,
                             {
                                 method: "GET",
                                 headers: {
@@ -80,18 +76,25 @@ const Filter = (search, data) => {
                             user: {
                                 userId: not_log_json.message[i].CreatorUserID,
                                 name: not_log_json.message[i].CreatorUserName,
-                                profile_image_url:
-                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
+                                profile_image_url: creator_json.data.avatar
+                                    ? SERVER_ADDRESS +
+                                      creator_json.data.avatar.replace(
+                                          "\\",
+                                          "/"
+                                      )
+                                    : defaultUser,
                             },
                             media: "",
                             dur: CalTime(not_log_json.message[i].CreateTime)[1],
-                            date: CalTime(not_log_json.message[i].CreateTime)[0],
+                            date: CalTime(
+                                not_log_json.message[i].CreateTime
+                            )[0],
                             likeCount: not_log_json.message[i].LikeCount,
                             commentCount: not_log_json.message[i].CommentCount,
                             retweetCount: not_log_json.message[i].ReTweetCount,
                             viewCount: 1000,
                         });
-                        setTweets(new_tw);
+                        setTweets([...new_tw]);
                     }
                     //setTweets(new_tw);
                 } else if (check_log.ok) {
@@ -107,7 +110,8 @@ const Filter = (search, data) => {
                     //const new_tw = [];
                     for (var i = 0; i < log_json.message.length; i++) {
                         const creator = await fetch(
-                            "/search/SearchUserById/"+log_json.message[i].CreatorUserID,
+                            "/search/SearchUserById/" +
+                                log_json.message[i].CreatorUserID,
                             {
                                 method: "GET",
                                 headers: {
@@ -123,8 +127,13 @@ const Filter = (search, data) => {
                             user: {
                                 userId: log_json.message[i].CreatorUserID,
                                 name: log_json.message[i].CreatorUserName,
-                                profile_image_url:
-                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
+                                profile_image_url: creator_json.data.avatar
+                                    ? SERVER_ADDRESS +
+                                      creator_json.data.avatar.replace(
+                                          "\\",
+                                          "/"
+                                      )
+                                    : defaultUser,
                             },
                             media: "",
                             dur: CalTime(log_json.message[i].CreateTime)[1],
@@ -134,13 +143,13 @@ const Filter = (search, data) => {
                             retweetCount: log_json.message[i].ReTweetCount,
                             viewCount: 1000,
                         });
-                        setTweets(new_tw);
+                        setTweets([...new_tw]);
                     }
-                    
-                    //setTweets(new_tw);       
+
+                    //setTweets(new_tw);
                 }
-            } else{
-                for (var i = 0; i < search.data.length; i++){
+            } else {
+                for (var i = 0; i < search.data.length; i++) {
                     new_tw.push({
                         tweetId: search.data[i].TweetID,
                         text: search.data[i].Content,
@@ -157,14 +166,16 @@ const Filter = (search, data) => {
                         commentCount: search.data[i].CommentCount,
                         retweetCount: search.data[i].ReTweetCount,
                         viewCount: 1000,
-                    }); 
-                    setTweets(new_tw);
+                    });
+                    setTweets([...new_tw]);
                 }
-                
+
                 //setTweets(new_tw);
             }
-            const new_tw_pop=[...new_tw].sort((a, b) => b.likeCount - a.likeCount);
-            const new_tw_rec=[...new_tw].sort((a, b) => a.dur - b.dur);
+            const new_tw_pop = [...new_tw].sort(
+                (a, b) => b.likeCount - a.likeCount
+            );
+            const new_tw_rec = [...new_tw].sort((a, b) => a.dur - b.dur);
             setTweetsPop(new_tw_pop);
             setTweetsRec(new_tw_rec);
             setIsLoading(false);
@@ -172,35 +183,52 @@ const Filter = (search, data) => {
         fetchall(search, data);
     }, [search]);
     return (
-    <>
-        
-        <Tabs tabNames={isLoggedIn ? ["Recommend", "Popular", "Recent"] : ["Popular", "Recent"]}>
-            <div className={styles.con}>
-                {tweets
-                    //.sort((a, b) => b.likeCount - a.likeCount)
-                    .map((tweet) => (
-                        <Tweet key={tweet.tweetId} tweet={tweet} />
-                    ))}
-                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
-            </div>
-            <div className={styles.con}>
-                {tweetsPop
-                    //.sort((a, b) => b.likeCount - a.likeCount)
-                    .map((tweet) => (
-                        <Tweet key={tweet.tweetId} tweet={tweet} />
-                    ))}
-                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
-            </div>
-            <div className={styles.con}>
-                {tweetsRec
-                    //.sort((a, b) => a.dur - b.dur)
-                    .map((tweet) => (
-                        <Tweet key={tweet.tweetId} tweet={tweet} />
-                    ))}
-                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
-            </div>
-        </Tabs>
-    </>
+        <>
+            <Tabs
+                tabNames={
+                    isLoggedIn
+                        ? ["Recommend", "Popular", "Recent"]
+                        : ["Popular", "Recent"]
+                }
+            >
+                <div className={styles.con}>
+                    {tweets
+                        //.sort((a, b) => b.likeCount - a.likeCount)
+                        .map((tweet) => (
+                            <Tweet key={tweet.tweetId} tweet={tweet} />
+                        ))}
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+                <div className={styles.con}>
+                    {tweetsPop
+                        //.sort((a, b) => b.likeCount - a.likeCount)
+                        .map((tweet) => (
+                            <Tweet key={tweet.tweetId} tweet={tweet} />
+                        ))}
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+                <div className={styles.con}>
+                    {tweetsRec
+                        //.sort((a, b) => a.dur - b.dur)
+                        .map((tweet) => (
+                            <Tweet key={tweet.tweetId} tweet={tweet} />
+                        ))}
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+            </Tabs>
+        </>
     );
 };
 export default Filter;
