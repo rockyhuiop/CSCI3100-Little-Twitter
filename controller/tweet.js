@@ -68,6 +68,12 @@ const CreateTweet = async (userID, body, files) => {
 
 }
 
+const RecordRetweetID = async(userid, retweetID) => {
+    const Creator = await User.findOne({tweetID: userid})
+    Creator.retweetedTweetID.push(retweetID)
+    await Creator.save()
+}
+
 const ReTweet = async (retweetID,userid, body, files) => {
 
     const Content = body.Content
@@ -118,6 +124,9 @@ const ReTweet = async (retweetID,userid, body, files) => {
 
     //Increment the Tweet Counter
     await IncreTweetCount()
+
+    //Record the Retweet Tweet ID
+    await RecordRetweetID(userid, retweetID)
 
 }
 
