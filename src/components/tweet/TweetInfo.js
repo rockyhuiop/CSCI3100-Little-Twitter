@@ -110,6 +110,13 @@ const TweetInfo = ({
     });
 */
 
+    let commenturl = "";
+    if (isComment) {
+        commenturl = "/tweet/replycomment/" + tweet.tweetId;
+    } else {
+        commenturl = "/tweet/comment/" + tweet.tweetId;
+    }
+
     return (
         <div className="container">
             <div className="content">
@@ -133,7 +140,12 @@ const TweetInfo = ({
                     type={isComment ? "comment" : "regular"}
                     isTweetAuthor={isTweetAuthor}
                 />
-                <AddTweet msg={msg} btn={btn} tweetId={tweet.tweetId} />
+                <AddTweet
+                    msg={msg}
+                    btn={btn}
+                    url={commenturl}
+                    type={"comment"}
+                />
                 {tweet.comments.map((comm) => (
                     <Tweet key={comm.commentId} tweet={comm} type={"comment"} />
                 ))}

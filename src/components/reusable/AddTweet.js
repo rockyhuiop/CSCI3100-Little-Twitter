@@ -6,7 +6,7 @@ import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
 import { SERVER_ADDRESS } from "../../utils/constants";
 
-const AddTweet = ({ msg, btn, tweetId }) => {
+const AddTweet = ({ msg, btn, url, type }) => {
     const WORD_LIMIT = 120;
     const { user: currentUser } = useUser();
     const [file, setFile] = useState(null);
@@ -31,30 +31,30 @@ const AddTweet = ({ msg, btn, tweetId }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (tweetId){
+        if (type == "comment") {
             var details = {
-                "Content": text,
+                Content: text,
             };
-            
+
             var con = [];
             for (var property in details) {
-              var encodedKey = encodeURIComponent(property);
-              var encodedValue = encodeURIComponent(details[property]);
-              con.push(encodedKey + "=" + encodedValue);
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                con.push(encodedKey + "=" + encodedValue);
             }
-    
-            const response = await fetch("/home/comment/"+tweetId,{
+
+            const response = await fetch(url, {
                 method: "POST",
                 body: con.join("&"),
                 headers: {
-                    "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8"
-                }
-            })
-            if (response.ok){
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
+            if (response.ok) {
                 setText("");
             }
-        } else{
-
+        } else {
             try {
                 formData.append("Content", text);
                 if (file) {
@@ -64,7 +64,7 @@ const AddTweet = ({ msg, btn, tweetId }) => {
                     method: "POST",
                     body: formData,
                 });
-                if (response.ok){
+                if (response.ok) {
                     setText("");
                     setFile(null);
                 }
@@ -96,7 +96,12 @@ const AddTweet = ({ msg, btn, tweetId }) => {
             <div className={styles.row}>
                 <img
                     className={styles.avatar}
-                    src={currentUser.avatar ? SERVER_ADDRESS+currentUser.avatar.replace("\\","/") : defaultUser}
+                    src={
+                        currentUser.avatar
+                            ? SERVER_ADDRESS +
+                              currentUser.avatar.replace("\\", "/")
+                            : defaultUser
+                    }
                     alt="Avatar of user"
                 />
                 <textarea
@@ -114,16 +119,25 @@ const AddTweet = ({ msg, btn, tweetId }) => {
             </p>
             <div className={styles["add-file-row"]}>
                 <div className={styles.left}>
-                    <Image onClick={choosePicture} className={styles.select} />
-                    {/* hide the file input */}
-                    <input
-                        className={styles.file}
-                        onChange={(e) => setFile(e.target.files[0])}
-                        type="file"
-                        multiple={false}
-                        ref={ref}
-                    />
-                    <span>{getFileNames()}</span>
+                    {type ? (
+                        ""
+                    ) : (
+                        <div>
+                            <Image
+                                onClick={choosePicture}
+                                className={styles.select}
+                            />
+                            {/* hide the file input */}
+                            <input
+                                className={styles.file}
+                                onChange={(e) => setFile(e.target.files[0])}
+                                type="file"
+                                multiple={false}
+                                ref={ref}
+                            />
+                            <span>{getFileNames()}</span>
+                        </div>
+                    )}
                 </div>
                 <Button>{btn}</Button>
             </div>
