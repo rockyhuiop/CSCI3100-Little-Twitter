@@ -57,7 +57,7 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
         e.preventDefault();
         if (!isRetweeted){
         var details = {
-            "Content": "Retweet",
+            "Content": tweet.text,
         };
         
         var ret = [];
