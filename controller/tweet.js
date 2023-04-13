@@ -6,7 +6,7 @@ const Counter = require('../model/Counter')
 const {
     IncreTweetCount,
     IncreCommentCount,
-} = require('../controller/counter')
+} = require('./counter')
 
 const nextTweetID = async () => { 
     const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
