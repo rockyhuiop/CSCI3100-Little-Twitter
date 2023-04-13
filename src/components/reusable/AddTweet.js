@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Image } from "react-feather";
 import defaultUser from "../../assets/default.jpg";
+import { useUser } from "../../utils/UserContext";
 import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
-import { useUser } from "../../utils/UserContext";
 
 const AddTweet = ({ msg, btn }) => {
     const WORD_LIMIT = 120;
@@ -29,7 +29,7 @@ const AddTweet = ({ msg, btn }) => {
     };
     const formData = new FormData();
 
-    const handleSubmit = async (e) =>{
+    const handleSubmit = async (e) => {
         try {
             formData.append("Content", text);
             if (file) {
@@ -42,11 +42,11 @@ const AddTweet = ({ msg, btn }) => {
             const json = await response.json();
             if (json.error) {
                 throw new Error(json.error);
-            } 
+            }
         } catch (error) {
             setError(error);
         }
-    }
+    };
 
     useEffect(() => {
         if (textareaRef) {
@@ -96,6 +96,7 @@ const AddTweet = ({ msg, btn }) => {
                 </div>
                 <Button>{btn}</Button>
             </div>
+            <p>{error}</p>
         </form>
     );
 };

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Banner from "../components/profile/Banner";
 import ProfileHeader from "../components/profile/ProfileHeader";
-import ProfileTabs from "../components/profile/ProfileTabs";
 import UserInfo from "../components/profile/UserInfo";
 import CenteredStatus from "../components/reusable/CenteredStatus";
 import { useFetch } from "../utils/useFetch";
@@ -70,7 +69,8 @@ const Profile = () => {
             <ProfileHeader user={userShown} />
             <Banner user={userShown} />
             <UserInfo user={userShown} setData={setData} />
-            <ProfileTabs user={userShown} />
+            {/* nobody got time for this */}
+            {/* <ProfileTabs user={userShown} /> */}
         </div>
     );
 };
