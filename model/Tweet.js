@@ -19,7 +19,7 @@ const TweetSchema = new Schema({
     },
     Content:{
         type: String,
-        required: true,
+        required: false,
     },
     UrlList:{
         type: Array,
