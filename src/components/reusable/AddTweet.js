@@ -30,6 +30,7 @@ const AddTweet = ({ msg, btn }) => {
     const formData = new FormData();
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
             formData.append("Content", text);
             if (file) {
@@ -39,10 +40,15 @@ const AddTweet = ({ msg, btn }) => {
                 method: "POST",
                 body: formData,
             });
+            if (response.ok){
+                setText("");
+                setFile(null);
+            }
             const json = await response.json();
             if (json.error) {
                 throw new Error(json.error);
             }
+            window.location.reload(true);
         } catch (error) {
             setError(error);
         }
