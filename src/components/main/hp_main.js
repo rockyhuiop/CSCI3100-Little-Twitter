@@ -60,20 +60,15 @@ const Hp_main = () => {
                 const login = await fetch("/home/fetchHomeTweet");
                 const log_json = await login.json();
                 for (let i = 0; i < log_json.message.length; i++) {
-                    const creator = await fetch(
-                        "/search/SearchUserById/" +
-                            log_json.message[i].CreatorUserID
-                    );
-                    const creator_json = await creator.json();
                     new_tw.push({
                         tweetId: log_json.message[i].TweetID,
                         text: log_json.message[i].Content,
                         user: {
                             userId: log_json.message[i].CreatorUserID,
                             name: log_json.message[i].CreatorUserName,
-                            profile_image_url: creator_json.data[0].avatar
+                            profile_image_url: log_json.message[i].CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                  creator_json.data[0].avatar.replace("\\", "/")
+                                log_json.message[i].CreatorAvastar.replace("\\", "/")
                                 : defaultUser,
                         },
                         media: "",
@@ -92,20 +87,15 @@ const Hp_main = () => {
                 const not_login = await fetch("/FetchAllTweet");
                 const not_log_json = await not_login.json();
                 for (let i = 0; i < not_log_json.message.length; i++) {
-                    const creator = await fetch(
-                        "/search/SearchUserById/" +
-                            not_log_json.message[i].CreatorUserID
-                    );
-                    const creator_json = await creator.json();
                     new_tw.push({
                         tweetId: not_log_json.message[i].TweetID,
                         text: not_log_json.message[i].Content,
                         user: {
                             userId: not_log_json.message[i].CreatorUserID,
                             name: not_log_json.message[i].CreatorUserName,
-                            profile_image_url: creator_json.data[0].avatar
+                            profile_image_url: not_log_json.message[i].CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                  creator_json.data[0].avatar.replace("\\", "/")
+                                not_log_json.message[i].CreatorAvastar.replace("\\", "/")
                                 : defaultUser,
                         },
                         media: "",

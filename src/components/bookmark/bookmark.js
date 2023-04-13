@@ -36,20 +36,15 @@ const Bookmark = () => {
                         "/home/FetchTweet/" + currentUser.bookmark[j]
                     );
                     const bookmark_json = await bookmark.json();
-                    const creator = await fetch(
-                        "/search/SearchUserById/" +
-                            bookmark_json.message[0].CreatorUserID
-                    );
-                    const creator_json = await creator.json();
                     new_tw.push({
                         tweetId: bookmark_json.message[0].TweetID,
                         text: bookmark_json.message[0].Content,
                         user: {
                             userId: bookmark_json.message[0].CreatorUserID,
                             name: bookmark_json.message[0].CreatorUserName,
-                            profile_image_url: creator_json.data[0].avatar
+                            profile_image_url: bookmark_json.message[0].CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                  creator_json.data[0].avatar.replace("\\", "/")
+                                bookmark_json.message[0].CreatorAvastar.replace("\\", "/")
                                 : defaultUser,
                         },
                         media: "",
@@ -60,9 +55,9 @@ const Bookmark = () => {
                         imageList: bookmark_json.message[0].ImageList,
                         viewCount: 1000,
                     });
-                    setTweets(new_tw);
+                    
                 }
-                //setTweets(new_tw);
+                setTweets(new_tw);
             }
             setIsLoading(false);
         };

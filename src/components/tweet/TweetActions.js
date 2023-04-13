@@ -20,6 +20,9 @@ const TweetActions = ({ tweetStatistic, tweet }) => {
         isLoggedIn ? currentUser.likedTweetID.includes(tweet.tweetId) : false
     );
     const [retweets, setRetweets] = useState(tweetStatistic.retweetCount);
+    const [isRetweeted, setIsRetweeted] = useState(
+        isLoggedIn ? currentUser.likedTweetID.includes(tweet.tweetId) : false
+    );
     const { isShowing, onClose, onOpen } = useModal();
 
     let tweetUrl = "";
@@ -50,8 +53,27 @@ const TweetActions = ({ tweetStatistic, tweet }) => {
         setIsLiked(!isLiked);
     };
 
-    const handleRetweet = (e) => {
+    const handleRetweet = async(e) => {
         e.preventDefault();
+
+        var details = {
+            "Content": "Retweet",
+        };
+        
+        var ret = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            ret.push(encodedKey + "=" + encodedValue);
+        }
+
+        const response = await fetch("/home/retweet/"+tweet.tweetId,{
+            method: "POST",
+            body: ret.join("&"),
+            headers: {
+                "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8"
+            }
+        })
         setRetweets(retweets + 1);
     };
 
