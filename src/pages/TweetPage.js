@@ -61,7 +61,10 @@ const TweetPage = () => {
                         name: tweetjson.message[0].CreatorUserName,
                         profile_image_url: tweetjson.message[0].CreatorAvastar
                             ? SERVER_ADDRESS +
-                            tweetjson.message[0].CreatorAvastar.replace("\\", "/")
+                              tweetjson.message[0].CreatorAvastar.replace(
+                                  "\\",
+                                  "/"
+                              )
                             : defaultUser,
                     },
                     media: "",
@@ -85,14 +88,18 @@ const TweetPage = () => {
                                 .CreatorUserID,
                             name: tweetjson.message[0].Comment[i]
                                 .CreatorUserName,
-                            profile_image_url: tweetjson.message[0].CreatorAvastar
+                            profile_image_url: tweetjson.message[0]
+                                .CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                    tweetjson.message[0].CreatorAvastar.replace("\\", "/")
+                                  tweetjson.message[0].CreatorAvastar.replace(
+                                      "\\",
+                                      "/"
+                                  )
                                 : defaultUser,
                         },
                         media: "",
                         date: distance(
-                            tweetjson.message[0].Comment[i].CreateTime
+                            tweetjson.message[0].Comment[i].CreatTime
                         ),
                         likeCount: tweetjson.message[0].Comment[i].LikeCount,
                         commentCount:
