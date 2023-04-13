@@ -19,7 +19,8 @@ const ProfileHeader = ({ user }) => {
             />
             <h2>{user.name}</h2>
             <p className={styles.faint}>
-                Followed by {user.followers.length} users
+                Followed by {user.followers.length} user
+                {user.followers.length === 1 ? "" : "s"}
             </p>
         </div>
     );

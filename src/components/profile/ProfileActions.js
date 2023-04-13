@@ -12,7 +12,10 @@ const ProfileActions = ({ user, setData }) => {
     const { setUser, user: currentUser, refreshUser } = useUser();
     const [open, setOpen] = useState(false);
     const [hasFollowed, setHasFollowed] = useState(() => {
-        return !!user && user.followers.some((u) => u === currentUser.tweetID);
+        return (
+            !!currentUser &&
+            user.followers.some((u) => u === currentUser.tweetID)
+        );
     });
 
     const afterEdit = (data) => {
@@ -72,7 +75,7 @@ const ProfileActions = ({ user, setData }) => {
 
     return (
         <div className={styles.group}>
-            {user && !isCurrentUser() ? (
+            {!isCurrentUser() ? (
                 <Button scheme={"primary"} onClick={followOrUnfollowUser}>
                     {hasFollowed ? "Unfollow" : "Follow"}
                 </Button>

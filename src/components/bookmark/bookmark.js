@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import defaultUser from "../../assets/default.jpg";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import { distance } from "../../utils/distance";
+import { useUser } from "../../utils/UserContext";
+import CenteredStatus from "../reusable/CenteredStatus";
 import Tweet from "../tweet/Tweet";
 import styles from "./bookmark.module.css";
-import { useUser } from "../../utils/UserContext";
-import { CalTime } from "../reusable/CalTime";
+
 const Bookmark = () => {
     const nav = useNavigate();
-    const { isLoggedIn, user: currentUser } = useUser();
+    const [isLoading, setIsLoading] = useState(false);
+    const { user: currentUser } = useUser();
     const [tweets, setTweets] = useState([
         /*{
             tweetId: 1,
@@ -20,42 +25,41 @@ const Bookmark = () => {
     ]);
     useEffect(() => {
         const fetchBookmark = async () => {
-            if (!isLoggedIn) {
+            setIsLoading(true);
+            const check_log = await fetch("/home");
+            if (!check_log.ok) {
                 nav("/", { replace: true });
-            } else if (isLoggedIn) {
+            } else if (check_log.ok) {
                 const new_tw = [];
-                for (var j = 0; j < currentUser.bookmark.length; j++) {
+                for (let j = 0; j < currentUser.bookmark.length; j++) {
                     const bookmark = await fetch(
-                        "/home/FetchTweet/" + currentUser.bookmark[j],
-                        {
-                            method: "GET",
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded;charset=UTF-8",
-                            },
-                        }
+                        "/home/FetchTweet/" + currentUser.bookmark[j]
                     );
                     const bookmark_json = await bookmark.json();
-
                     new_tw.push({
                         tweetId: bookmark_json.message[0].TweetID,
                         text: bookmark_json.message[0].Content,
                         user: {
                             userId: bookmark_json.message[0].CreatorUserID,
                             name: bookmark_json.message[0].CreatorUserName,
-                            profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                            profile_image_url: bookmark_json.message[0].CreatorAvastar
+                                ? SERVER_ADDRESS +
+                                bookmark_json.message[0].CreatorAvastar.replace("\\", "/")
+                                : defaultUser,
                         },
                         media: "",
-                        date: CalTime(bookmark_json.message[0].CreateTime)[0],
+                        date: distance(bookmark_json.message[0].CreateTime),
                         likeCount: bookmark_json.message[0].LikeCount,
                         commentCount: bookmark_json.message[0].Comment.length,
                         retweetCount: bookmark_json.message[0].ReTweetCount,
+                        imageList: bookmark_json.message[0].ImageList,
                         viewCount: 1000,
                     });
+                    
                 }
                 setTweets(new_tw);
             }
+            setIsLoading(false);
         };
         fetchBookmark();
     }, [currentUser]);
@@ -66,6 +70,7 @@ const Bookmark = () => {
             {tweets.map((tweet) => (
                 <Tweet key={tweet.tweetId} tweet={tweet} />
             ))}
+            {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
         </>
     );
 };

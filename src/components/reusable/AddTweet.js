@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Image } from "react-feather";
 import defaultUser from "../../assets/default.jpg";
+import { useUser } from "../../utils/UserContext";
 import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
+import { SERVER_ADDRESS } from "../../utils/constants";
 
-const AddTweet = ({ msg, btn }) => {
+const AddTweet = ({ msg, btn, url, type }) => {
     const WORD_LIMIT = 120;
-    const [file, setFile] = useState("");
+    const { user: currentUser } = useUser();
+    const [file, setFile] = useState(null);
     const [text, setText] = useState("");
+    const [error, setError] = useState(null);
     const ref = useRef(null);
     const textareaRef = useRef(null);
-
     const choosePicture = () => {
         ref.current.click();
     };
@@ -22,6 +25,58 @@ const AddTweet = ({ msg, btn }) => {
     const updateTextarea = (e) => {
         if (e.target.value.length <= WORD_LIMIT) {
             setText(e.target.value);
+        }
+    };
+    const formData = new FormData();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (type == "comment") {
+            var details = {
+                Content: text,
+            };
+
+            var con = [];
+            for (var property in details) {
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                con.push(encodedKey + "=" + encodedValue);
+            }
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: con.join("&"),
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
+            if (response.ok) {
+                setText("");
+            }
+            window.location.reload(true);
+        } else {
+            try {
+                formData.append("Content", text);
+                if (file) {
+                    formData.append("images", file);
+                }
+                const response = await fetch("/home", {
+                    method: "POST",
+                    body: formData,
+                });
+                if (response.ok) {
+                    setText("");
+                    setFile(null);
+                }
+                const json = await response.json();
+                if (json.error) {
+                    throw new Error(json.error);
+                }
+                window.location.reload(true);
+            } catch (error) {
+                setError(error);
+            }
         }
     };
 
@@ -38,11 +93,16 @@ const AddTweet = ({ msg, btn }) => {
     }, [textareaRef, text]);
 
     return (
-        <form className={styles.form} name="hp-addtw">
+        <form className={styles.form} name="hp-addtw" onSubmit={handleSubmit}>
             <div className={styles.row}>
                 <img
                     className={styles.avatar}
-                    src={defaultUser}
+                    src={
+                        currentUser.avatar
+                            ? SERVER_ADDRESS +
+                              currentUser.avatar.replace("\\", "/")
+                            : defaultUser
+                    }
                     alt="Avatar of user"
                 />
                 <textarea
@@ -60,19 +120,29 @@ const AddTweet = ({ msg, btn }) => {
             </p>
             <div className={styles["add-file-row"]}>
                 <div className={styles.left}>
-                    <Image onClick={choosePicture} className={styles.select} />
-                    {/* hide the file input */}
-                    <input
-                        className={styles.file}
-                        onChange={(e) => setFile(e.target.files[0])}
-                        type="file"
-                        multiple={false}
-                        ref={ref}
-                    />
-                    <span>{getFileNames()}</span>
+                    {type ? (
+                        ""
+                    ) : (
+                        <div>
+                            <Image
+                                onClick={choosePicture}
+                                className={styles.select}
+                            />
+                            {/* hide the file input */}
+                            <input
+                                className={styles.file}
+                                onChange={(e) => setFile(e.target.files[0])}
+                                type="file"
+                                multiple={false}
+                                ref={ref}
+                            />
+                            <span>{getFileNames()}</span>
+                        </div>
+                    )}
                 </div>
                 <Button>{btn}</Button>
             </div>
+            <p>{error}</p>
         </form>
     );
 };

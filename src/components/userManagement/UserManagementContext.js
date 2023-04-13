@@ -19,7 +19,6 @@ const UserManagementProvider = ({ children }) => {
 
     const [query, setQuery] = useState("");
     const filtered = useMemo(() => {
-        console.log(users, query);
         if (!users) {
             return null;
         }
@@ -43,6 +42,11 @@ const UserManagementProvider = ({ children }) => {
         }
     };
 
+    const removeUser = (_id) => {
+        const copy = users.filter((user) => user._id !== _id);
+        setUsers(copy);
+    };
+
     return (
         <UsersManagementContext.Provider
             value={{
@@ -53,6 +57,7 @@ const UserManagementProvider = ({ children }) => {
                 setQuery,
                 query,
                 updateUser,
+                removeUser,
             }}
         >
             {children}

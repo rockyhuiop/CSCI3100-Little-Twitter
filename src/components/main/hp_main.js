@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { useUser } from "../../utils/UserContext";
+import defaultUser from "../../assets/default.jpg";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import { distance } from "../../utils/distance";
 import AddTweet from "../reusable/AddTweet";
+import CenteredStatus from "../reusable/CenteredStatus";
 import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
-import { CalTime } from "../reusable/CalTime";
 
 const Hp_main = () => {
-    const { isLoggedIn } = useUser();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [tweets, setTweets] = useState([
         /*{
             tweetId: "1",
@@ -47,67 +50,70 @@ const Hp_main = () => {
     const btn = "Tweet";
 
     useEffect(() => {
-        const checklog = async () => {
+        const fetchHome = async () => {
+            setIsLoading(true);
             const new_tw = [];
-            if (!isLoggedIn) {
-                const not_login = await fetch("/FetchAllTweet", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded;charset=UTF-8",
-                    },
-                });
-                const not_log_json = await not_login.json();
-                for (var i = 0; i < not_log_json.message.length; i++) {
-                    new_tw.push({
-                        tweetId: not_log_json.message[i].TweetID,
-                        text: not_log_json.message[i].Content,
-                        user: {
-                            userId: not_log_json.message[i].CreatorUserID,
-                            name: not_log_json.message[i].CreatorUserName,
-                            profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
-                        },
-                        media: "",
-                        date: CalTime(not_log_json.message[i].CreateTime)[0],
-                        likeCount: not_log_json.message[i].LikeCount,
-                        commentCount: not_log_json.message[i].CommentCount,
-                        retweetCount: not_log_json.message[i].ReTweetCount,
-                        viewCount: 1000,
-                    });
-                }
-                setTweets(new_tw);
-            } else if (isLoggedIn) {
-                const login = await fetch("/home/fetchHomeTweet", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded;charset=UTF-8",
-                    },
-                });
+            const check_log = await fetch("/home");
+            if (check_log.ok) {
+                setIsLoggedIn(true);
+
+                const login = await fetch("/home/fetchHomeTweet");
                 const log_json = await login.json();
-                for (var i = 0; i < log_json.message.length; i++) {
+                for (let i = 0; i < log_json.message.length; i++) {
                     new_tw.push({
                         tweetId: log_json.message[i].TweetID,
                         text: log_json.message[i].Content,
                         user: {
                             userId: log_json.message[i].CreatorUserID,
                             name: log_json.message[i].CreatorUserName,
-                            profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                            profile_image_url: log_json.message[i].CreatorAvastar
+                                ? SERVER_ADDRESS +
+                                log_json.message[i].CreatorAvastar.replace("\\", "/")
+                                : defaultUser,
                         },
                         media: "",
-                        date: CalTime(log_json.message[i].CreateTime)[0],
+                        date: distance(log_json.message[i].CreateTime),
                         likeCount: log_json.message[i].LikeCount,
                         commentCount: log_json.message[i].CommentCount,
                         retweetCount: log_json.message[i].ReTweetCount,
+                        imageList: log_json.message[i].ImageList,
                         viewCount: 1000,
                     });
+                    setTweets([...new_tw]);
                 }
                 setTweets(new_tw);
+            } else {
+                setIsLoggedIn(false);
+                const not_login = await fetch("/FetchAllTweet");
+                const not_log_json = await not_login.json();
+                for (let i = 0; i < not_log_json.message.length; i++) {
+                    new_tw.push({
+                        tweetId: not_log_json.message[i].TweetID,
+                        text: not_log_json.message[i].Content,
+                        user: {
+                            userId: not_log_json.message[i].CreatorUserID,
+                            name: not_log_json.message[i].CreatorUserName,
+                            profile_image_url: not_log_json.message[i].CreatorAvastar
+                                ? SERVER_ADDRESS +
+                                not_log_json.message[i].CreatorAvastar.replace("\\", "/")
+                                : defaultUser,
+                        },
+                        media: "",
+                        date: distance(not_log_json.message[i].CreateTime),
+                        likeCount: not_log_json.message[i].LikeCount,
+                        commentCount: not_log_json.message[i].CommentCount,
+                        retweetCount: not_log_json.message[i].ReTweetCount,
+                        imageList: not_log_json.message[i].ImageList,
+                        viewCount: 1000,
+                    });
+                    setTweets([...new_tw]);
+                }
+                //setTweets(new_tw);
             }
+
+            setIsLoading(false);
         };
-        checklog();
+        fetchHome();
     }, []);
 
     return (
@@ -116,10 +122,19 @@ const Hp_main = () => {
                 <div className={styles.header}>
                     <h3>Home</h3>
                 </div>
-                {isLoggedIn ? <AddTweet msg={msg} btn={btn} /> : null}
+                {isLoading ? (
+                    ""
+                ) : isLoggedIn ? (
+                    <AddTweet msg={msg} btn={btn} />
+                ) : null}
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}
+                {isLoading ? (
+                    <CenteredStatus>{"Loading..."}</CenteredStatus>
+                ) : (
+                    ""
+                )}
             </div>
             <div className={styles.searchBar}>
                 <Search />

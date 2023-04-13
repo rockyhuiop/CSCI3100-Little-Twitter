@@ -196,7 +196,7 @@ a:link {
 }
 
 .tweet__title button {
-    color: #68757e;
+    color: /*#68757e*/ #000000;
 }
 
 .tweet__static__content {
@@ -219,4 +219,14 @@ a:link {
 .like button:hover {
     color: #ea3d6b;
     background-color: #f8dbe2;
+}
+
+.liked button {
+    color: #ea3d6b;
+}
+
+.tweet__img {
+    width: 200px;
+
+    margin-right: 8px;
 }

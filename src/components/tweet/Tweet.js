@@ -8,8 +8,9 @@ import "./Tweet.css";
 import TweetActions from "./TweetActions.js";
 import { useUser } from "../../utils/UserContext";
 import { Bookmark } from "react-feather";
+import { useState } from "react";
 
-const Tweet = ({ tweet, type }) => {
+const Tweet = ({ tweet, type, isModal }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
     const navigate = useNavigate();
     const tweetStatistic = {
@@ -20,29 +21,39 @@ const Tweet = ({ tweet, type }) => {
     };
 
     // const userUrl = "/" + tweet.user.userId;
-    const userUrl = "/profile";
-    // const tweetUrl = userUrl + "/" + tweet.tweetId;
-    const tweetUrl = userUrl + "/tweet";
-
-    const navigateToTweetUrl = (e) => {
-        if (
-            e.target.tagName == "DIV" &&
-            !e.target.classList.contains("MuiBackdrop-root")
-        ) {
-            navigate(tweetUrl);
-        }
-    };
-
-    const checkbookmark = async(id) =>{
-        if (currentUser.bookmark.includes(id)){
-            return true;
-        } else {
-            return false
-        }
+    const userUrl = "/profile/" + tweet.user.userId;
+    let tweetUrl = "";
+    if (type == "comment" || type == "middle") {
+        tweetUrl = "/comment/" + tweet.commentId;
+    } else {
+        tweetUrl = "/tweet/" + tweet.tweetId;
     }
 
-    const bookmark = async(id) =>{
-        const bm = await fetch("/user/bookmark/"+id, {
+    const navigateToTweetUrl = (e) => {
+        if (!isModal) {
+            if (
+                e.target.tagName == "DIV" &&
+                !e.target.classList.contains("MuiBackdrop-root")
+            ) {
+                navigate(tweetUrl);
+                window.location.reload();
+            }
+        }
+    };
+    const follow = async (id) => {
+        const fol = await fetch("/user/follow/" + id, {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                    "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+        });
+        const fol_json = await fol.json();
+        refreshUser();
+    };
+
+    const bookmark = async (id) => {
+        const bm = await fetch("/user/bookmark/" + id, {
             method: "POST",
             headers: {
                 "Content-Type":
@@ -50,13 +61,15 @@ const Tweet = ({ tweet, type }) => {
             },
         });
         const bm_json = await bm.json();
-        console.log(bm_json);
         refreshUser();
-    }
+    };
+
 
     return (
         <div
-            className={type == "root" ? "tweet_root" : "tweet"}
+            className={
+                type == "root" || type == "middle" ? "tweet_root" : "tweet"
+            }
             onClick={navigateToTweetUrl}
         >
             <div className="tweet__header">
@@ -70,7 +83,11 @@ const Tweet = ({ tweet, type }) => {
                             />
                         </Link>
                     </div>
-                    {type == "root" ? <div className="stick"></div> : ""}
+                    {type == "root" || type == "middle" ? (
+                        <div className="stick"></div>
+                    ) : (
+                        ""
+                    )}
                 </div>
 
                 <div className="tweet__container">
@@ -91,26 +108,70 @@ const Tweet = ({ tweet, type }) => {
                                 e.preventDefault();
                             }}
                         >
-                            {isLoggedIn ?
-                            <IconMenu
-                                clickHandlers={[null, ()=>bookmark(tweet.tweetId)]}
-                                icons={[
-                                    <FontAwesomeIcon icon={faUserXmark} />,
-                                    <FontAwesomeIcon icon={faBookmark} />,
-                                ]}
-                                names={["Unfollow", "Bookmark"]}
-                                keySuffix={
-                                    type == "comment"
-                                        ? tweet.tweetId
-                                        : tweet.commentId
-                                }
-                            />
-                            : " "
-                            }
+                            {isLoggedIn && !isModal ? (
+                                currentUser.tweetID == tweet.user.userId ? (
+                                    <IconMenu
+                                        clickHandlers={[
+                                            () => bookmark(tweet.tweetId),
+                                        ]}
+                                        icons={[
+                                            <FontAwesomeIcon
+                                                icon={faBookmark}
+                                            />,
+                                        ]}
+                                        names={[
+                                            currentUser.bookmark.includes(
+                                                tweet.tweetId
+                                            )
+                                                ? "Unbookmark"
+                                                : "Bookmark",
+                                        ]}
+                                        keySuffix={
+                                            type == "comment"
+                                                ? tweet.tweetId
+                                                : tweet.commentId
+                                        }
+                                    />
+                                ) : (
+                                    <IconMenu
+                                        clickHandlers={[
+                                            () => follow(tweet.user.userId),
+                                            () => bookmark(tweet.tweetId),
+                                        ]}
+                                        icons={[
+                                            <FontAwesomeIcon
+                                                icon={faUserXmark}
+                                            />,
+                                            <FontAwesomeIcon
+                                                icon={faBookmark}
+                                            />,
+                                        ]}
+                                        names={[
+                                            currentUser.followings.includes(
+                                                tweet.user.userId
+                                            )
+                                                ? "Unfollow"
+                                                : "Follow",
+                                            currentUser.bookmark.includes(
+                                                tweet.tweetId
+                                            )
+                                                ? "Unbookmark"
+                                                : "Bookmark",
+                                        ]}
+                                        keySuffix={
+                                            type == "comment"
+                                                ? tweet.tweetId
+                                                : tweet.commentId
+                                        }
+                                    />
+                                )
+                            ) : (
+                                " "
+                            )}
                         </div>
                     </div>
                     <small className="tweet__replyinfo">
-                        {type == "comment" ? (
+                        {type == "comment" || type == "middle" ? (
                             <div>
                                 Replying to{" "}
                                 <Link to={userUrl}>
@@ -121,11 +182,30 @@ const Tweet = ({ tweet, type }) => {
                             ""
                         )}
                     </small>
+                    {tweet.imageList ?
+                        <div className="tweet__content">
+                        
+                            {tweet.imageList.map((img)=>(
+                                <img
+                                    key={img}
+                                    src={img}
+                                    alt="img"
+                                    className="tweet__img"
+                                />
+                            ))}   
+                        </div>
+                    :
+                    ""
+                    }
                     <div className="tweet__content">{tweet.text}</div>
-                    <TweetActions
-                        tweetStatistic={tweetStatistic}
-                        tweet={tweet}
-                    />
+                    {!isModal ? (
+                        <TweetActions
+                            tweetStatistic={tweetStatistic}
+                            tweet={tweet}
+                        />
+                    ) : (
+                        ""
+                    )}
                 </div>
             </div>
         </div>

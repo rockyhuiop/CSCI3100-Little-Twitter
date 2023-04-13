@@ -19,7 +19,7 @@ const Avatar = ({ user: { avatar, username }, size, reduceMargin }) => {
             <img
                 className={className}
                 alt={`Avatar of user ${username}`}
-                src={avatar ? SERVER_ADDRESS + avatar : defaultUser}
+                src={avatar ? SERVER_ADDRESS + avatar.replace("\\","/") : defaultUser}
             ></img>
         </div>
     );

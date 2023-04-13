@@ -7,17 +7,23 @@ import IconMenu from "../reusable/IconMenu.js";
 import "./TweetDetail.css";
 import TweetActions from "./TweetActions.js";
 import { useEffect } from "react";
+import { useUser } from "../../utils/UserContext";
+import { SERVER_ADDRESS } from "../../utils/constants";
 
-const TweetDetails = ({ tweet, type }) => {
-    const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
+const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
+    const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
+    //const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
 
-    const tweetStatistic = {
-        commentCount: tweet.commentCount,
-        retweetCount: tweet.retweetCount,
-        likeCount: tweet.likeCount,
-        viewCount: tweet.viewCount,
-    };
+    const tweetStatistic = tweet
+        ? {
+              commentCount: tweet.commentCount,
+              retweetCount: tweet.retweetCount,
+              likeCount: tweet.likeCount,
+              //viewCount: tweet.viewCount,
+          }
+        : {};
 
+    /*
     const handleViewCount = (viewCount) => {
         let screenViewCount = 0;
         if (viewCount >= 1000000) {
@@ -30,15 +36,41 @@ const TweetDetails = ({ tweet, type }) => {
         }
         return screenViewCount;
     };
+    */
+    const follow = async (id) => {
+        const fol = await fetch("/user/follow/" + id, {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                    "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+        });
+        const fol_json = await fol.json();
+        refreshUser();
+    };
 
+    const bookmark = async (id) => {
+        const bm = await fetch("/user/bookmark/" + id, {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                    "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+        });
+        const bm_json = await bm.json();
+        refreshUser();
+    };
+
+    /*
     useEffect(() => {
         setScreenViewCount(handleViewCount(tweet.viewCount));
     }, [screenViewCount]);
+    */
 
     // const userUrl = "/" + tweet.user.userId;
     const userUrl = "/profile";
     // const tweetUrl = userUrl + "/" + tweet.tweetId;
-    const tweetUrl = userUrl + "/tweet";
+    const tweetUrl = "/tweet/" + tweet.tweetId;
 
     return (
         <div
@@ -87,12 +119,25 @@ const TweetDetails = ({ tweet, type }) => {
                             }}
                         >
                             <IconMenu
-                                clickHandlers={[null, null]}
+                                clickHandlers={
+                                    currentUser.tweetID == tweet.user.userId
+                                        ? [null, null, null]
+                                        : [null, null]
+                                }
                                 icons={[
+                                    currentUser.tweetID == tweet.user.userId ? (
+                                        <FontAwesomeIcon icon={faUserXmark} />
+                                    ) : (
+                                        ""
+                                    ),
                                     <FontAwesomeIcon icon={faUserXmark} />,
                                     <FontAwesomeIcon icon={faBookmark} />,
                                 ]}
-                                names={["Unfollow", "Bookmark"]}
+                                names={
+                                    currentUser.tweetID == tweet.user.userId
+                                        ? ["Edit", "Unfollow", "Bookmark"]
+                                        : ["Unfollow", "Bookmark"]
+                                }
                                 keySuffix={tweet.tweetId}
                             />
                         </div>
@@ -109,14 +154,23 @@ const TweetDetails = ({ tweet, type }) => {
                     ""
                 )}
             </small>
+            {tweet.imageList ? (
+                <div className="tweet__static__content">
+                    {tweet.imageList.map((img) => (
+                        <img
+                            key={img}
+                            src={SERVER_ADDRESS + img}
+                            alt="img"
+                            className="tweet__img"
+                        />
+                    ))}
+                </div>
+            ) : (
+                " "
+            )}
             <div className="tweet__static__content">{tweet.text}</div>
             <div className="tweet__timeInfo info">
-                <span>{tweet.created_at}</span>
-                <span>
-                    {" · "}
-                    <b>{screenViewCount}</b>
-                    {" Views"}
-                </span>
+                <span>{tweet.date} ago</span>
             </div>
             <div className="tweet__statistic info">
                 {tweet.retweetCount != 0 ? (
@@ -134,7 +188,11 @@ const TweetDetails = ({ tweet, type }) => {
                     ""
                 )}
             </div>
-            <TweetActions tweetStatistic={tweetStatistic} tweet={tweet} />
+            <TweetActions
+                tweetStatistic={tweetStatistic}
+                tweet={tweet}
+                isComment={type == "comment"}
+            />
         </div>
     );
 };

@@ -13,7 +13,7 @@ const Explore = () => {
     return (
         <>
             <Search />
-            <Filter search={location.state.search} data={location.state.data}/>
+            <Filter search={location.state.search} data={location.state.data} content={location.state.content}/>
         </>
     );
 };

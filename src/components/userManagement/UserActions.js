@@ -1,6 +1,6 @@
 import { Snackbar } from "@mui/material";
 import { useState } from "react";
-import { Delete, Edit, Pause } from "react-feather";
+import { Delete, Edit } from "react-feather";
 import EditProfileModal from "../editProfile/EditProfileModal";
 import Button from "../reusable/Button";
 import IconMenu from "../reusable/IconMenu";
@@ -28,9 +28,10 @@ const UserActions = ({ user }) => {
         onOpen: onDeleteOpen,
     } = useModal();
     const [open, setOpen] = useState(false);
-    const { updateUser } = useUserMangement();
+    const [deleteError, setDeleteError] = useState("");
+    const { updateUser, removeUser } = useUserMangement();
 
-    const onPause = () => {};
+    // const onPause = () => {};
 
     const onEdit = () => {
         onEditOpen();
@@ -48,14 +49,42 @@ const UserActions = ({ user }) => {
         setOpen(true);
     };
 
+    const deleteBtnClicked = async () => {
+        try {
+            const response = await fetch(`/dashboard/${user.tweetID}`, {
+                method: "DELETE",
+            });
+            const json = await response.json();
+
+            if (!json.data) {
+                throw new Error("cannot delete user");
+            } else if (json.error) {
+                throw new Error(json.error);
+            }
+            if (json.data && json.data.deletedCount === 0) {
+                throw new Error(
+                    "User cannot be deleted. Perhaps he is already not in the database?"
+                );
+            } else {
+                removeUser(user._id);
+                setDeleteError("");
+                onDeleteClose();
+            }
+        } catch (error) {
+            setDeleteError(error.message ? error.message : error);
+        }
+    };
+
     return (
         <td>
             <IconMenu
-                names={["Suspend", "Edit", "Remove"]}
+                // names={["Suspend", "Edit", "Remove"]}
+                names={["Edit", "Remove"]}
                 keySuffix={user.id}
-                clickHandlers={[onPause, onEdit, onDelete]}
+                // clickHandlers={[onPause, onEdit, onDelete]}
+                clickHandlers={[onEdit, onDelete]}
                 icons={[
-                    <Pause size={16} />,
+                    // <Pause size={16} />,
                     <Edit size={16} />,
                     <Delete size={16} />,
                 ]}
@@ -79,10 +108,11 @@ const UserActions = ({ user }) => {
                     <Button
                         size="big"
                         scheme={"danger"}
-                        onClick={onDeleteClose}
+                        onClick={deleteBtnClicked}
                     >
                         Delete User!
                     </Button>
+                    <p>{deleteError}</p>
                 </ModalBody>
             </Modal>
             <Snackbar

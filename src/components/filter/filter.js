@@ -1,162 +1,227 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import defaultUser from "../../assets/default.jpg";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import { distance } from "../../utils/distance";
+import CenteredStatus from "../reusable/CenteredStatus";
 import Tabs from "../reusable/Tabs";
+import People from "../tweet/People";
 import Tweet from "../tweet/Tweet";
 import styles from "./filter.module.css";
-import { CalTime } from "../reusable/CalTime";
-import { useUser } from "../../utils/UserContext";
 
 const Filter = (search, data) => {
-    const { isLoggedIn } = useUser();
-    const [tweets, setTweets] = useState([
-        /*{
-            tweetId: 1,
-            text: "Hello, Twitter!",
-            user: {
-                name: "John Doe",
-                screen_name: "john_doe",
-                profile_image_url: "https://example.com/john_doe.jpg",
-            },
-        },
-        {
-            tweetId: 2,
-            text: "Hello, Twitter!",
-            user: {
-                name: "John Doe",
-                screen_name: "john_doe",
-                profile_image_url: "https://example.com/john_doe.jpg",
-            },
-        },*/
-    ]);
-    const [tweetsPop, setTweetsPop] = useState([
-
-    ]);
-    const [tweetsRec, setTweetsRec] = useState([
-
-    ]);
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [tweets, setTweets] = useState([]);
+    const [tweetsPop, setTweetsPop] = useState([]);
+    const [tweetsRec, setTweetsRec] = useState([]);
+    const [ppl, setPpl] = useState([]);
 
     useEffect(() => {
-        const fetchall = async (search, data) => {
+        const fetchall = async (search) => {
+            setIsLoading(true);
             const new_tw = [];
-
-            
-            if (!search.search){
-                if (!isLoggedIn) {
-                    const not_login = await fetch("/FetchAllTweet", {
-                        method: "GET",
-                        headers: {
-                            "Content-Type":
-                                "application/x-www-form-urlencoded;charset=UTF-8",
-                        },
-                    });
+            const check_log = await fetch("/home");
+            if (!check_log.ok) {
+                setIsLoggedIn(false);
+            } else {
+                setIsLoggedIn(true);
+            }
+            if (!search.search) {
+                if (!check_log.ok) {
+                    setIsLoggedIn(false);
+                    const not_login = await fetch("/FetchAllTweet");
                     const not_log_json = await not_login.json();
+                    console.log(not_log_json);
                     //const new_tw = [];
-                    for (var i = 0; i < not_log_json.message.length; i++) {
+                    for (let i = 0; i < not_log_json.message.length; i++) {
                         new_tw.push({
                             tweetId: not_log_json.message[i].TweetID,
                             text: not_log_json.message[i].Content,
                             user: {
                                 userId: not_log_json.message[i].CreatorUserID,
                                 name: not_log_json.message[i].CreatorUserName,
-                                profile_image_url:
-                                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                profile_image_url: not_log_json.message[i].CreatorAvastar
+                                    ? SERVER_ADDRESS +
+                                    not_log_json.message[i].CreatorAvastar.replace(
+                                          "\\",
+                                          "/"
+                                      )
+                                    : defaultUser,
                             },
                             media: "",
-                            dur: CalTime(not_log_json.message[i].CreateTime)[1],
-                            date: CalTime(not_log_json.message[i].CreateTime)[0],
+                            date: distance(not_log_json.message[i].CreateTime),
                             likeCount: not_log_json.message[i].LikeCount,
                             commentCount: not_log_json.message[i].CommentCount,
                             retweetCount: not_log_json.message[i].ReTweetCount,
+                            imageList: not_log_json.message[i].ImageList,
                             viewCount: 1000,
                         });
+                        setTweets(new_tw);
                     }
-                    setTweets(new_tw);
-                } else if (isLoggedIn) {
-                    const login = await fetch("/home/TweetRecommend", {
-                        method: "GET",
-                        headers: {
-                            "Content-Type":
-                                "application/x-www-form-urlencoded;charset=UTF-8",
-                        },
-                    });
+                    //setTweets(new_tw);
+                } else if (check_log.ok) {
+                    setIsLoggedIn(true);
+                    const login = await fetch("/home/TweetRecommend");
                     const log_json = await login.json();
                     //const new_tw = [];
-                    for (var i = 0; i < log_json.message.length; i++) {
+                    for (let i = 0; i < log_json.message.length; i++) {
                         new_tw.push({
                             tweetId: log_json.message[i].TweetID,
                             text: log_json.message[i].Content,
                             user: {
                                 userId: log_json.message[i].CreatorUserID,
                                 name: log_json.message[i].CreatorUserName,
-                                profile_image_url:
-                                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                profile_image_url: log_json.message[i].CreatorAvastar
+                                    ? SERVER_ADDRESS +
+                                    log_json.message[i].CreatorAvastar.replace(
+                                          "\\",
+                                          "/"
+                                      )
+                                    : defaultUser,
                             },
                             media: "",
-                            dur: CalTime(log_json.message[i].CreateTime)[1],
-                            date: CalTime(log_json.message[i].CreateTime)[0],
+                            date: distance(log_json.message[i].CreateTime),
                             likeCount: log_json.message[i].LikeCount,
                             commentCount: log_json.message[i].CommentCount,
                             retweetCount: log_json.message[i].ReTweetCount,
+                            imageList: log_json.message[i].ImageList,
                             viewCount: 1000,
                         });
+                        setTweets(new_tw);
                     }
-                    
-                    setTweets(new_tw);       
+
+                    //setTweets(new_tw);
                 }
-            } else{
-                for (var i = 0; i < search.data.length; i++){
+            } else {
+                const ppl = await fetch(
+                    "/search/SearchUserById/" + search.content
+                );
+                const ppl_json = await ppl.json();
+                console.log(ppl_json.data);
+                const new_ppl = [];
+                for (let i = 0; i < ppl_json.data.length; i++) {
+                    new_ppl.push({
+                        userId: ppl_json.data[i].tweetID,
+                        name: ppl_json.data[i].name,
+                        followers: ppl_json.data[i].followers,
+                        profile_image_url: ppl_json.data[i].avatar
+                            ? SERVER_ADDRESS +
+                              ppl_json.data[i].avatar.replace("\\", "/")
+                            : defaultUser,
+                    });
+                    setPpl(new_ppl);
+                }
+
+                for (let i = 0; i < search.data.length; i++) {
                     new_tw.push({
                         tweetId: search.data[i].TweetID,
                         text: search.data[i].Content,
                         user: {
                             userId: search.data[i].CreatorUserID,
                             name: search.data[i].CreatorUserName,
-                            profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                            profile_image_url: search.data[i].CreatorAvastar
+                                ? SERVER_ADDRESS +
+                                search.data[i].CreatorAvastar.replace("\\", "/")
+                                : defaultUser,
                         },
                         media: "",
-                        dur: CalTime(search.data[i].CreateTime)[1],
-                        date: CalTime(search.data[i].CreateTime)[0],
+                        date: distance(search.data[i].CreateTime),
                         likeCount: search.data[i].LikeCount,
                         commentCount: search.data[i].CommentCount,
                         retweetCount: search.data[i].ReTweetCount,
+                        imageList: search.data[i].ImageList,
                         viewCount: 1000,
-                    }); 
+                    });
+                    setTweets(new_tw);
                 }
-                
-                setTweets(new_tw);
             }
-            const new_tw_pop=[...new_tw].sort((a, b) => b.likeCount - a.likeCount);
-            const new_tw_rec=[...new_tw].sort((a, b) => a.dur - b.dur);
+            const new_tw_pop = new_tw.sort((a, b) => b.likeCount - a.likeCount);
+            const new_tw_rec = new_tw.sort((a, b) => a.dur - b.dur);
             setTweetsPop(new_tw_pop);
             setTweetsRec(new_tw_rec);
+            setIsLoading(false);
         };
         fetchall(search, data);
-    }, [isLoggedIn,search]);
+    }, [search]);
     return (
-        <Tabs tabNames={isLoggedIn ? ["Recommend", "Popular", "Recent"] : ["Popular", "Recent"]}>
-            <div className={styles.con}>
-                {tweets
-                    //.sort((a, b) => b.likeCount - a.likeCount)
-                    .map((tweet) => (
+        <>
+        { isLoggedIn ?
+            <Tabs
+                tabNames={["Recommend", "Popular", "Recent", "People"]}
+            >
+                <div className={styles.con}>
+                    {tweets.map((tweet) => (
                         <Tweet key={tweet.tweetId} tweet={tweet} />
                     ))}
-            </div>
-            <div className={styles.con}>
-                {tweetsPop
-                    //.sort((a, b) => b.likeCount - a.likeCount)
-                    .map((tweet) => (
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+
+                <div className={styles.con}>
+                    {tweetsPop.map((tweet) => (
                         <Tweet key={tweet.tweetId} tweet={tweet} />
                     ))}
-            </div>
-            <div className={styles.con}>
-                {tweetsRec
-                    //.sort((a, b) => a.dur - b.dur)
-                    .map((tweet) => (
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+                <div className={styles.con}>
+                    {tweetsRec.map((tweet) => (
                         <Tweet key={tweet.tweetId} tweet={tweet} />
                     ))}
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+                <div className={styles.con}>
+                    {ppl
+                        //.sort((a, b) => a.dur - b.dur)
+                        .map((ppl) => (
+                            <People key={ppl.userId} tweet={ppl} />
+                        ))}
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+            </Tabs>
+        :
+            <Tabs
+            tabNames={["Popular", "Recent"]}
+            >
+
+            <div className={styles.con}>
+                {tweetsPop.map((tweet) => (
+                    <Tweet key={tweet.tweetId} tweet={tweet} />
+                ))}
+                {isLoading ? (
+                    <CenteredStatus>{"Loading..."}</CenteredStatus>
+                ) : (
+                    " "
+                )}
             </div>
-        </Tabs>
+            <div className={styles.con}>
+                {tweetsRec.map((tweet) => (
+                    <Tweet key={tweet.tweetId} tweet={tweet} />
+                ))}
+                {isLoading ? (
+                    <CenteredStatus>{"Loading..."}</CenteredStatus>
+                ) : (
+                    " "
+                )}
+            </div>
+
+            </Tabs>
+        }
+        </>
     );
 };
 export default Filter;
