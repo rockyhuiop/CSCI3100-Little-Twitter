@@ -153,7 +153,32 @@ router.get('/notification' , async(req, res) =>{
     return res.status(200).json({data: new_followers_detail})
 })
 
+//get user followings
 
+router.get('/followings/:id', async(req, res) => {
+    const {id} = req.params
+    try{
+      let user = await User.findOne({tweetID: id})
+      if (user) {
+        const followings = await Promise.all(
+          user.followings.map((userID) => {
+            return User.findOne({tweetID: userID})
+          })
+        )
+        let followingslist = []
+        followings.map((followinguser) => {
+          const {tweetID, name, avastar} = followinguser
+          followingslist.push({tweetID, name, avastar})
+        })
+        return res.status(200).json({followingslist})
+      }else{
+        return res.status(200).json({error: "User doesn't exist"})
+      }
+    }catch (error) {
+      console.log(error)
+      return res.status(400).json({error: error})
+    }
+  })
 
 //find user
 router.get('/:id', async (req, res)=>{
@@ -175,31 +200,6 @@ router.get('/:id', async (req, res)=>{
     
 })
 
-//get user followings
 
-router.get('/followings/:id', async(req, res) => {
-  const {id} = req.params
-  try{
-    let user = await User.findOne({tweetID: id})
-    if (user) {
-      const followings = await Promise.all(
-        user.followings.map((userID) => {
-          return User.findOne({tweetID: userID})
-        })
-      )
-      let followingslist = []
-      followings.map((followinguser) => {
-        const {tweetID, name, avastar} = followinguser
-        followingslist.push({tweetID, name, avastar})
-      })
-      return res.status(200).json({followingslist})
-    }else{
-      return res.status(200).json({error: "User doesn't exist"})
-    }
-  }catch (error) {
-    console.log(error)
-    return res.status(400).json({error: error})
-  }
-})
 
 module.exports = router
