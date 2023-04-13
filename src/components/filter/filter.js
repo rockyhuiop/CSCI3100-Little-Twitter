@@ -76,9 +76,9 @@ const Filter = (search, data) => {
                             user: {
                                 userId: not_log_json.message[i].CreatorUserID,
                                 name: not_log_json.message[i].CreatorUserName,
-                                profile_image_url: creator_json.data.avatar
+                                profile_image_url: creator_json.data[0].avatar
                                     ? SERVER_ADDRESS +
-                                      creator_json.data.avatar.replace(
+                                      creator_json.data[0].avatar.replace(
                                           "\\",
                                           "/"
                                       )
@@ -127,9 +127,9 @@ const Filter = (search, data) => {
                             user: {
                                 userId: log_json.message[i].CreatorUserID,
                                 name: log_json.message[i].CreatorUserName,
-                                profile_image_url: creator_json.data.avatar
+                                profile_image_url: creator_json.data[0].avatar
                                     ? SERVER_ADDRESS +
-                                      creator_json.data.avatar.replace(
+                                      creator_json.data[0].avatar.replace(
                                           "\\",
                                           "/"
                                       )

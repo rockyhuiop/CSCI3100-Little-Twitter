@@ -66,7 +66,7 @@ const Bookmark = () => {
                             userId: bookmark_json.message[0].CreatorUserID,
                             name: bookmark_json.message[0].CreatorUserName,
                             profile_image_url:
-                                creator_json.data.avatar ? SERVER_ADDRESS+creator_json.data.avatar.replace("\\","/") : defaultUser,
+                                creator_json.data[0].avatar ? SERVER_ADDRESS+creator_json.data[0].avatar.replace("\\","/") : defaultUser,
                         },
                         media: "",
                         date: CalTime(bookmark_json.message[0].CreateTime)[0],
