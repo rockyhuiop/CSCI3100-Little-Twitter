@@ -184,7 +184,7 @@ router.get('/followings/:id', async(req, res) => {
 router.get('/:id', async (req, res)=>{
     const { id } = req.params
     try {
-        let user = await User.find({ $or: [{ tweetID: id }, { name: id }]}).select('-password -userType');
+        let user = await User.findOne({ tweetID: id}).select('-password -userType');
         if (user) {
             return res.status(200).json({
                 data: user,
