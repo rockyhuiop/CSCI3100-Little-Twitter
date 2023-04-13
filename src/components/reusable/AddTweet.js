@@ -4,6 +4,7 @@ import defaultUser from "../../assets/default.jpg";
 import { useUser } from "../../utils/UserContext";
 import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
+import { SERVER_ADDRESS } from "../../utils/constants";
 
 const AddTweet = ({ msg, btn }) => {
     const WORD_LIMIT = 120;
@@ -71,7 +72,7 @@ const AddTweet = ({ msg, btn }) => {
             <div className={styles.row}>
                 <img
                     className={styles.avatar}
-                    src={currentUser.avatar ? currentUser.avatar : defaultUser}
+                    src={currentUser.avatar ? SERVER_ADDRESS+currentUser.avatar.replace("\\","/") : defaultUser}
                     alt="Avatar of user"
                 />
                 <textarea

@@ -7,8 +7,10 @@ import IconMenu from "../reusable/IconMenu.js";
 import "./TweetDetail.css";
 import TweetActions from "./TweetActions.js";
 import { useEffect } from "react";
+import { useUser } from "../../utils/UserContext";
 
 const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
+    const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
     const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
 
     const tweetStatistic = tweet
@@ -31,6 +33,29 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
             screenViewCount = "" + viewCount;
         }
         return screenViewCount;
+    };
+    const follow = async (id) => {
+        const fol = await fetch("/user/follow/" + id, {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                    "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+        });
+        const fol_json = await fol.json();
+        refreshUser();
+    };
+
+    const bookmark = async (id) => {
+        const bm = await fetch("/user/bookmark/" + id, {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                    "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+        });
+        const bm_json = await bm.json();
+        refreshUser();
     };
 
     useEffect(() => {
@@ -90,12 +115,12 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                         >
                             <IconMenu
                                 clickHandlers={
-                                    isTweetAuthor
+                                    currentUser.tweetID == tweet.user.userId
                                         ? [null, null, null]
                                         : [null, null]
                                 }
                                 icons={[
-                                    isTweetAuthor ? (
+                                    currentUser.tweetID == tweet.user.userId ? (
                                         <FontAwesomeIcon icon={faUserXmark} />
                                     ) : (
                                         ""
@@ -104,7 +129,7 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                                     <FontAwesomeIcon icon={faBookmark} />,
                                 ]}
                                 names={
-                                    isTweetAuthor
+                                    currentUser.tweetID == tweet.user.userId
                                         ? ["Edit", "Unfollow", "Bookmark"]
                                         : ["Unfollow", "Bookmark"]
                                 }

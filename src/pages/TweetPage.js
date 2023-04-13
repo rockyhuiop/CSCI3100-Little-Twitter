@@ -6,6 +6,8 @@ import { CalTime } from "../components/reusable/CalTime";
 import { useUser } from "../utils/UserContext";
 import { useFetch } from "../utils/useFetch";
 import CenteredStatus from "../components/reusable/CenteredStatus";
+import defaultUser from "../assets/default.jpg";
+import { SERVER_ADDRESS } from "../utils/constants";
 
 /*const tweet = {
     commentId: "1",
@@ -44,6 +46,7 @@ import CenteredStatus from "../components/reusable/CenteredStatus";
 
 const TweetPage = () => {
     const [tweet, setTweet] = useState(null);
+    const { user: currentUser } = useUser();
 
     const { tweetId } = useParams();
     const url = `/tweet/fetchTweet/${tweetId}`;
@@ -59,6 +62,17 @@ const TweetPage = () => {
             });
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
+                const creator = await fetch(
+                    "/search/SearchUserById/"+tweetjson.message[0].CreatorUserID,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type":
+                                "application/x-www-form-urlencoded;charset=UTF-8",
+                        },
+                    }
+                );
+                const creator_json = await creator.json();
                 const tweetobj = {
                     tweetId: tweetjson.message[0].TweetID,
                     text: tweetjson.message[0].Content,
@@ -66,7 +80,7 @@ const TweetPage = () => {
                         userId: tweetjson.message[0].CreatorUserID,
                         name: tweetjson.message[0].CreatorUserName,
                         profile_image_url:
-                            "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                            creator_json.data[0].avatar ? SERVER_ADDRESS+creator_json.data[0].avatar.replace("\\","/") : defaultUser,
                     },
                     media: "",
                     date: CalTime(tweetjson.message[0].CreateTime)[0],
@@ -77,6 +91,18 @@ const TweetPage = () => {
                 };
                 const comments = [];
                 for (var i = 0; i < tweetjson.message[0].Comment.length; i++) {
+                    const creator = await fetch(
+                        "/search/SearchUserById/"+tweetjson.message[0].Comment[i]
+                        .CreatorUserID,
+                        {
+                            method: "GET",
+                            headers: {
+                                "Content-Type":
+                                    "application/x-www-form-urlencoded;charset=UTF-8",
+                            },
+                        }
+                    );
+                    const creator_json = await creator.json();
                     const comment = {
                         commentId: tweetjson.message[0].Comment[i].CommentID,
                         rootTweet: tweetobj,
@@ -89,7 +115,7 @@ const TweetPage = () => {
                             name: tweetjson.message[0].Comment[i]
                                 .CreatorUserName,
                             profile_image_url:
-                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                creator_json.data[0].avatar ? SERVER_ADDRESS+creator_json.data[0].avatar.replace("\\","/") : defaultUser,
                         },
                         media: "",
                         date: CalTime(
