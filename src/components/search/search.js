@@ -32,6 +32,7 @@ const Search = () => {
                 state :{
                     search : true,
                     data : json.message,
+                    content : content,
                 }
             })
         } else{

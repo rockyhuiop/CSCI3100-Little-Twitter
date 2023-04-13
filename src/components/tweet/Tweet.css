@@ -177,6 +177,7 @@ a:link {
 
 .tweet__action button {
     padding: 9px;
+    
 }
 
 .tweet__title {
@@ -196,7 +197,7 @@ a:link {
 }
 
 .tweet__title button {
-    color: #68757e;
+    color: /*#68757e*/#000000;
 }
 
 .tweet__static__content {
