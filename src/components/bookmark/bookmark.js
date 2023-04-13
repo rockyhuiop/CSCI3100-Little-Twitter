@@ -73,6 +73,7 @@ const Bookmark = () => {
                         likeCount: bookmark_json.message[0].LikeCount,
                         commentCount: bookmark_json.message[0].Comment.length,
                         retweetCount: bookmark_json.message[0].ReTweetCount,
+                        imageList: bookmark_json.message[0].ImageList,
                         viewCount: 1000,
                     });
                     setTweets(new_tw);

@@ -221,3 +221,9 @@ a:link {
     color: #ea3d6b;
     background-color: #f8dbe2;
 }
+.tweet__img {
+    width: 200px;
+
+
+    margin-right: 8px;
+}

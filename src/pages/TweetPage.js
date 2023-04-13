@@ -87,6 +87,7 @@ const TweetPage = () => {
                     likeCount: tweetjson.message[0].LikeCount,
                     commentCount: tweetjson.message[0].Comment.length,
                     retweetCount: tweetjson.message[0].ReTweetCount,
+                    imageList: tweetjson.message[0].ImageList,
                     viewCount: 1000,
                 };
                 const comments = [];

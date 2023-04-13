@@ -8,6 +8,7 @@ import "./TweetDetail.css";
 import TweetActions from "./TweetActions.js";
 import { useEffect } from "react";
 import { useUser } from "../../utils/UserContext";
+import { SERVER_ADDRESS } from "../../utils/constants";
 
 const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
@@ -149,6 +150,18 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                     ""
                 )}
             </small>
+            <div className="tweet__static__content">
+
+                {tweet.imageList.map((img)=>(
+                    <img
+                        key={img}
+                        src={SERVER_ADDRESS+img}
+                        alt="img"
+                        className="tweet__img"
+                    />
+                ))}   
+                        
+            </div>
             <div className="tweet__static__content">{tweet.text}</div>
             <div className="tweet__timeInfo info">
                 <span>{tweet.date} ago</span>

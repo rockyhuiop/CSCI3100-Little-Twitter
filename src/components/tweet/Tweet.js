@@ -180,6 +180,18 @@ const Tweet = ({ tweet, type, isModal }) => {
                             ""
                         )}
                     </small>
+                    <div className="tweet__content">
+
+                    {tweet.imageList.map((img)=>(
+                        <img
+                            key={img}
+                            src={img}
+                            alt="img"
+                            className="tweet__img"
+                        />
+                    ))}   
+                        
+                    </div>
                     <div className="tweet__content">{tweet.text}</div>
                     {!isModal ? (
                         <TweetActions

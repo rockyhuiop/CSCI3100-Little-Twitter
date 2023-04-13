@@ -100,6 +100,7 @@ const Hp_main = () => {
                         likeCount: log_json.message[i].LikeCount,
                         commentCount: log_json.message[i].CommentCount,
                         retweetCount: log_json.message[i].ReTweetCount,
+                        imageList: log_json.message[i].ImageList,
                         viewCount: 1000,
                     });
                     setTweets([...new_tw]);
@@ -144,6 +145,7 @@ const Hp_main = () => {
                         likeCount: not_log_json.message[i].LikeCount,
                         commentCount: not_log_json.message[i].CommentCount,
                         retweetCount: not_log_json.message[i].ReTweetCount,
+                        imageList: not_log_json.message[i].ImageList,
                         viewCount: 1000,
                     });
                     setTweets([...new_tw]);

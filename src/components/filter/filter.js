@@ -98,6 +98,7 @@ const Filter = (search, data) => {
                             likeCount: not_log_json.message[i].LikeCount,
                             commentCount: not_log_json.message[i].CommentCount,
                             retweetCount: not_log_json.message[i].ReTweetCount,
+                            imageList: not_log_json.message[i].ImageList,
                             viewCount: 1000,
                         });
                         setTweets([...new_tw]);
@@ -147,6 +148,7 @@ const Filter = (search, data) => {
                             likeCount: log_json.message[i].LikeCount,
                             commentCount: log_json.message[i].CommentCount,
                             retweetCount: log_json.message[i].ReTweetCount,
+                            imageList: log_json.message[i].ImageList,
                             viewCount: 1000,
                         });
                         setTweets([...new_tw]);
@@ -167,7 +169,6 @@ const Filter = (search, data) => {
                     }
                 );
                 const ppl_json = await ppl.json();
-                console.log(ppl_json.data);
                 const new_ppl=[];
                 for (var i=0;i<ppl_json.data.length;i++){
                     new_ppl.push({
@@ -220,6 +221,7 @@ const Filter = (search, data) => {
                         likeCount: search.data[i].LikeCount,
                         commentCount: search.data[i].CommentCount,
                         retweetCount: search.data[i].ReTweetCount,
+                        imageList: search.data[i].ImageList,
                         viewCount: 1000,
                     });
                     setTweets([...new_tw]);
