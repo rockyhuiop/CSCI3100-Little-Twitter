@@ -91,7 +91,7 @@ const Filter = (search, data) => {
                             retweetCount: not_log_json.message[i].ReTweetCount,
                             viewCount: 1000,
                         });
-                        setTweets(new_tw);
+                        setTweets([...new_tw]);
                     }
                     //setTweets(new_tw);
                 } else if (check_log.ok) {
@@ -134,7 +134,7 @@ const Filter = (search, data) => {
                             retweetCount: log_json.message[i].ReTweetCount,
                             viewCount: 1000,
                         });
-                        setTweets(new_tw);
+                        setTweets([...new_tw]);
                     }
                     
                     //setTweets(new_tw);       
@@ -158,7 +158,7 @@ const Filter = (search, data) => {
                         retweetCount: search.data[i].ReTweetCount,
                         viewCount: 1000,
                     }); 
-                    setTweets(new_tw);
+                    setTweets([...new_tw]);
                 }
                 
                 //setTweets(new_tw);

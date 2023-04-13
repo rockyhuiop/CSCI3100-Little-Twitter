@@ -99,9 +99,9 @@ const Hp_main = () => {
                         retweetCount: log_json.message[i].ReTweetCount,
                         viewCount: 1000,
                     });
-                    setTweets(new_tw);
+                    setTweets([...new_tw]);
                 }
-                //setTweets(new_tw);
+                setTweets(new_tw);
             } else{
                 setIsLoggedIn(false);
                 const not_login = await fetch("/FetchAllTweet", {
@@ -140,7 +140,7 @@ const Hp_main = () => {
                         retweetCount: not_log_json.message[i].ReTweetCount,
                         viewCount: 1000,
                     });
-                    setTweets(new_tw);
+                    setTweets([...new_tw]);
                 }
                 //setTweets(new_tw);
                 
