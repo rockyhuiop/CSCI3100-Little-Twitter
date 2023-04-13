@@ -537,6 +537,12 @@ const FetchComment = async(commentID) => {
             DisLikeCount: targetComment[0].DisLikeCount,
         }
 
+        //collecting the reply accordingly
+
+        const ReplyCommentList = await FetchReplyComment(targetComment[0].commentID)
+
+        Comment['ReplyComment'] = ReplyCommentList
+
         fetchedCommet.push(Comment)
     }
 
@@ -650,7 +656,7 @@ const FetchTweet = async(tweetID) => {
         
         //collecting the related comments
 
-        const CommentList = await FetchComment(fetchTweet.tweetID)
+        const CommentList = await FetchTweetComment(fetchTweet.tweetID)
 
         tweet['Comment'] = CommentList
 
