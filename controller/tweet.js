@@ -49,7 +49,7 @@ const CreateTweet = async (userID, body, files) => {
         newTweet.UrlList = UrlList
     }
 
-    if (files.length > 0){
+    if (files !== undefined && files.length > 0){
 
         var ImageList = []
 
