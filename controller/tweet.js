@@ -676,7 +676,7 @@ const FetchTweet = async(tweetID) => {
     return TweetList
 }
 
-const AggregTweetSummary = async(fetchTweet, CreatorUserName) => {
+const AggregTweetSummary = async(fetchTweet, CreatorUserName, Avastar) => {
 
     var tweet = {}
 
@@ -684,6 +684,7 @@ const AggregTweetSummary = async(fetchTweet, CreatorUserName) => {
         TweetID: fetchTweet.tweetID,
         CreatorUserID : fetchTweet.CreatorUserID,
         CreatorUserName: CreatorUserName,
+        CreatorAvastar: Avastar,
         CreateTime : fetchTweet.CreateTime,
         Content : fetchTweet.Content,
         LikeCount : fetchTweet.LikeCount,
@@ -757,8 +758,9 @@ const FetchHomeTweet = async(userID) => {
         var fetchTweet = FetchTweetList[i]
         const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
+        const Avastar = Creator.avatar
 
-        tweet = await AggregTweetSummary(fetchTweet, CreatorUserName)
+        tweet = await AggregTweetSummary(fetchTweet, CreatorUserName, Avastar)
 
         TweetList.push(tweet)
 
