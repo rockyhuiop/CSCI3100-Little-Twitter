@@ -109,9 +109,6 @@ const TweetInfo = ({
         viewCount: 1000,
     });
 */
-    window.onload = () => {
-        window.location.reload();
-    };
 
     return (
         <div className="container">
