@@ -12,17 +12,18 @@ import { SERVER_ADDRESS } from "../../utils/constants";
 
 const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
-    const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
+    //const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
 
     const tweetStatistic = tweet
         ? {
               commentCount: tweet.commentCount,
               retweetCount: tweet.retweetCount,
               likeCount: tweet.likeCount,
-              viewCount: tweet.viewCount,
+              //viewCount: tweet.viewCount,
           }
         : {};
 
+    /*
     const handleViewCount = (viewCount) => {
         let screenViewCount = 0;
         if (viewCount >= 1000000) {
@@ -35,6 +36,7 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
         }
         return screenViewCount;
     };
+    */
     const follow = async (id) => {
         const fol = await fetch("/user/follow/" + id, {
             method: "POST",
@@ -59,9 +61,11 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
         refreshUser();
     };
 
+    /*
     useEffect(() => {
         setScreenViewCount(handleViewCount(tweet.viewCount));
     }, [screenViewCount]);
+    */
 
     // const userUrl = "/" + tweet.user.userId;
     const userUrl = "/profile";
@@ -150,30 +154,23 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                     ""
                 )}
             </small>
-            {tweet.imageList.length ?
-            <div className="tweet__static__content">
-
-                {tweet.imageList.map((img)=>(
-                    <img
-                        key={img}
-                        src={SERVER_ADDRESS+img}
-                        alt="img"
-                        className="tweet__img"
-                    />
-                ))}   
-                        
-            </div>
-            :
-            " "
-            }
+            {tweet.imageList ? (
+                <div className="tweet__static__content">
+                    {tweet.imageList.map((img) => (
+                        <img
+                            key={img}
+                            src={SERVER_ADDRESS + img}
+                            alt="img"
+                            className="tweet__img"
+                        />
+                    ))}
+                </div>
+            ) : (
+                " "
+            )}
             <div className="tweet__static__content">{tweet.text}</div>
             <div className="tweet__timeInfo info">
                 <span>{tweet.date} ago</span>
-                <span>
-                    {" · "}
-                    <b>{screenViewCount}</b>
-                    {" Views"}
-                </span>
             </div>
             <div className="tweet__statistic info">
                 {tweet.retweetCount != 0 ? (
@@ -191,7 +188,11 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                     ""
                 )}
             </div>
-            <TweetActions tweetStatistic={tweetStatistic} tweet={tweet} />
+            <TweetActions
+                tweetStatistic={tweetStatistic}
+                tweet={tweet}
+                isComment={type == "comment"}
+            />
         </div>
     );
 };

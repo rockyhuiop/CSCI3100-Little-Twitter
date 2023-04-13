@@ -13,7 +13,7 @@ import NavAddTweet from "../navbar/NavAddTweet";
 
 //import "./Tweet.css";
 
-const TweetActions = ({ tweetStatistic, tweet }) => {
+const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
     const { isLoggedIn, user: currentUser } = useUser();
     const [likes, setLikes] = useState(tweetStatistic.likeCount);
     const [isLiked, setIsLiked] = useState(
@@ -26,10 +26,10 @@ const TweetActions = ({ tweetStatistic, tweet }) => {
     const { isShowing, onClose, onOpen } = useModal();
 
     let tweetUrl = "";
-    if (tweet.commentId) {
-        tweetUrl = "/comment/" + tweet.tweetId;
+    if (isComment) {
+        tweetUrl = "https://localhost:8123/comment/" + tweet.tweetId;
     } else {
-        tweetUrl = "/tweet/" + tweet.tweetId;
+        tweetUrl = "https://localhost:8123/tweet/" + tweet.tweetId;
     }
 
     if (!isLoggedIn) {
@@ -98,6 +98,7 @@ const TweetActions = ({ tweetStatistic, tweet }) => {
                     onClose={onClose}
                     tweet={tweet}
                     isReply={true}
+                    isComment={isComment}
                 />
                 <span>{tweetStatistic.commentCount}</span>
             </div>
