@@ -150,6 +150,7 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                     ""
                 )}
             </small>
+            {tweet.imageList.length ?
             <div className="tweet__static__content">
 
                 {tweet.imageList.map((img)=>(
@@ -162,6 +163,9 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                 ))}   
                         
             </div>
+            :
+            " "
+            }
             <div className="tweet__static__content">{tweet.text}</div>
             <div className="tweet__timeInfo info">
                 <span>{tweet.date} ago</span>
