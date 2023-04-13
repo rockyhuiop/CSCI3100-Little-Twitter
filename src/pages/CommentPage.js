@@ -172,7 +172,7 @@ const CommentPage = () => {
                 };
                 fetchRootTweet();
 
-                if (tweet.CorrCommentID) {
+                if (tweet.corrCommentID) {
                     const rootcommenturl = `/tweet/FetchCommentByCommentID/${tweet.corrCommentID}`;
                     const fetchRootComment = async () => {
                         const tweetitem = await fetch(rootcommenturl, {
@@ -192,7 +192,7 @@ const CommentPage = () => {
                                     ? tweetjson.message.CorrCommentID
                                     : tweetjson.message.CorrTweetID,
                                 //in_reply_to_userId: tweet.user.userId,
-                                text: tweetjson.message.ReplyComment[i].Content,
+                                text: tweetjson.message.Content,
                                 user: {
                                     userId: tweetjson.message.CreatorUserID,
                                     name: tweetjson.message.CreatorUserName,
@@ -202,35 +202,30 @@ const CommentPage = () => {
                                 media: "",
                                 date: CalTime(tweetjson.message.CreatTime)[0],
                                 likeCount: tweetjson.message.LikeCount,
-                                commentCount: tweetjson.message.ReplyComment[i]
-                                    .ReplyComment
-                                    ? tweetjson.message.ReplyComment[i]
-                                          .ReplyComment.length
+                                commentCount: tweetjson.message.ReplyComment
+                                    ? tweetjson.message.ReplyComment.length
                                     : 0,
                                 retweetCount: 20,
                                 viewCount: 2000,
                             };
 
-                            if (tweet.corrCommentID) {
-                                const parentcommenturl = `/tweet/FetchCommentByCommentID/${commentobj.CorrCommentID}`;
-                                const parentcommentitem = await fetch(
-                                    parentcommenturl,
-                                    {
-                                        method: "GET",
-                                        headers: {
-                                            "Content-Type":
-                                                "application/x-www-form-urlencoded;charset=UTF-8",
-                                        },
-                                    }
-                                );
-                                if (parentcommentitem.ok) {
-                                    const parentcommentjson =
-                                        await parentcommentitem.json();
-                                    const parentuserid =
-                                        parentcommentjson.message.CreatorUserID;
-                                    commentobj.in_reply_to_userId =
-                                        parentuserid;
+                            const parentcommenturl = `/tweet/FetchCommentByCommentID/${commentobj.in_reply_to_tweetId}`;
+                            const parentcommentitem = await fetch(
+                                parentcommenturl,
+                                {
+                                    method: "GET",
+                                    headers: {
+                                        "Content-Type":
+                                            "application/x-www-form-urlencoded;charset=UTF-8",
+                                    },
                                 }
+                            );
+                            if (parentcommentitem.ok) {
+                                const parentcommentjson =
+                                    await parentcommentitem.json();
+                                const parentuserid =
+                                    parentcommentjson.message.CreatorUserID;
+                                commentobj.in_reply_to_userId = parentuserid;
                             }
 
                             setRootComment(commentobj);

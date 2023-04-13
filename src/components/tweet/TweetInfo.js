@@ -1,7 +1,7 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconButton } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import AddTweet from "../reusable/AddTweet";
 import Search from "../search/search";
@@ -109,6 +109,9 @@ const TweetInfo = ({
         viewCount: 1000,
     });
 */
+    window.onload = () => {
+        window.location.reload();
+    };
 
     return (
         <div className="container">
@@ -127,6 +130,7 @@ const TweetInfo = ({
                     <h3>Tweet</h3>
                 </div>
                 {isComment ? <Tweet tweet={rootTweet} type="root" /> : ""}
+                {rootComment ? <Tweet tweet={rootComment} type="middle" /> : ""}
                 <TweetDetails
                     tweet={tweet}
                     type={isComment ? "comment" : "regular"}

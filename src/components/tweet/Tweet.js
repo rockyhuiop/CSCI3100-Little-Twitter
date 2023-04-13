@@ -23,7 +23,7 @@ const Tweet = ({ tweet, type, isModal }) => {
     // const userUrl = "/" + tweet.user.userId;
     const userUrl = "/profile/" + tweet.user.userId;
     let tweetUrl = "";
-    if (type == "comment") {
+    if (type == "comment" || type == "middle") {
         tweetUrl = "/comment/" + tweet.commentId;
     } else {
         tweetUrl = "/tweet/" + tweet.tweetId;
@@ -64,7 +64,9 @@ const Tweet = ({ tweet, type, isModal }) => {
     };
     return (
         <div
-            className={type == "root" ? "tweet_root" : "tweet"}
+            className={
+                type == "root" || type == "middle" ? "tweet_root" : "tweet"
+            }
             onClick={navigateToTweetUrl}
         >
             <div className="tweet__header">
@@ -78,7 +80,11 @@ const Tweet = ({ tweet, type, isModal }) => {
                             />
                         </Link>
                     </div>
-                    {type == "root" ? <div className="stick"></div> : ""}
+                    {type == "root" || type == "middle" ? (
+                        <div className="stick"></div>
+                    ) : (
+                        ""
+                    )}
                 </div>
 
                 <div className="tweet__container">
@@ -162,7 +168,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                         </div>
                     </div>
                     <small className="tweet__replyinfo">
-                        {type == "comment" ? (
+                        {type == "comment" || type == "middle" ? (
                             <div>
                                 Replying to{" "}
                                 <Link to={userUrl}>
