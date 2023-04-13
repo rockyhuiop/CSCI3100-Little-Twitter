@@ -91,8 +91,9 @@ const Filter = (search, data) => {
                             retweetCount: not_log_json.message[i].ReTweetCount,
                             viewCount: 1000,
                         });
+                        setTweets(new_tw);
                     }
-                    setTweets(new_tw);
+                    //setTweets(new_tw);
                 } else if (check_log.ok) {
                     setIsLoggedIn(true);
                     const login = await fetch("/home/TweetRecommend", {
@@ -133,9 +134,10 @@ const Filter = (search, data) => {
                             retweetCount: log_json.message[i].ReTweetCount,
                             viewCount: 1000,
                         });
+                        setTweets(new_tw);
                     }
                     
-                    setTweets(new_tw);       
+                    //setTweets(new_tw);       
                 }
             } else{
                 for (var i = 0; i < search.data.length; i++){
@@ -156,9 +158,10 @@ const Filter = (search, data) => {
                         retweetCount: search.data[i].ReTweetCount,
                         viewCount: 1000,
                     }); 
+                    setTweets(new_tw);
                 }
                 
-                setTweets(new_tw);
+                //setTweets(new_tw);
             }
             const new_tw_pop=[...new_tw].sort((a, b) => b.likeCount - a.likeCount);
             const new_tw_rec=[...new_tw].sort((a, b) => a.dur - b.dur);
@@ -170,7 +173,7 @@ const Filter = (search, data) => {
     }, [search]);
     return (
     <>
-        {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
+        
         <Tabs tabNames={isLoggedIn ? ["Recommend", "Popular", "Recent"] : ["Popular", "Recent"]}>
             <div className={styles.con}>
                 {tweets
@@ -178,6 +181,7 @@ const Filter = (search, data) => {
                     .map((tweet) => (
                         <Tweet key={tweet.tweetId} tweet={tweet} />
                     ))}
+                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
             </div>
             <div className={styles.con}>
                 {tweetsPop
@@ -185,6 +189,7 @@ const Filter = (search, data) => {
                     .map((tweet) => (
                         <Tweet key={tweet.tweetId} tweet={tweet} />
                     ))}
+                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
             </div>
             <div className={styles.con}>
                 {tweetsRec
@@ -192,6 +197,7 @@ const Filter = (search, data) => {
                     .map((tweet) => (
                         <Tweet key={tweet.tweetId} tweet={tweet} />
                     ))}
+                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
             </div>
         </Tabs>
     </>

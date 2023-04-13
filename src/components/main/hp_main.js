@@ -99,8 +99,9 @@ const Hp_main = () => {
                         retweetCount: log_json.message[i].ReTweetCount,
                         viewCount: 1000,
                     });
+                    setTweets(new_tw);
                 }
-                setTweets(new_tw);
+                //setTweets(new_tw);
             } else{
                 setIsLoggedIn(false);
                 const not_login = await fetch("/FetchAllTweet", {
@@ -139,8 +140,9 @@ const Hp_main = () => {
                         retweetCount: not_log_json.message[i].ReTweetCount,
                         viewCount: 1000,
                     });
+                    setTweets(new_tw);
                 }
-                setTweets(new_tw);
+                //setTweets(new_tw);
                 
             }
 
@@ -155,10 +157,11 @@ const Hp_main = () => {
                 <div className={styles.header}>
                     <h3>Home</h3>
                 </div>
-                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : isLoggedIn ? <AddTweet msg={msg} btn={btn} /> : null}
+                {isLoading ? ""  : isLoggedIn ? <AddTweet msg={msg} btn={btn} /> : null}
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}
+                {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : ""}
             </div>
             <div className={styles.searchBar}>
                 <Search />

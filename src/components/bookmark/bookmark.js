@@ -75,8 +75,9 @@ const Bookmark = () => {
                         retweetCount: bookmark_json.message[0].ReTweetCount,
                         viewCount: 1000,
                     });
+                    setTweets(new_tw);
                 }
-                setTweets(new_tw);
+                //setTweets(new_tw);
             }
             setIsLoading(false);
         };
@@ -86,10 +87,10 @@ const Bookmark = () => {
     return (
         <>
             <div className={styles.title}>Bookmarks</div>
-            {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
             {tweets.map((tweet) => (
                 <Tweet key={tweet.tweetId} tweet={tweet} />
             ))}
+            {isLoading ? <CenteredStatus>{"Loading..."}</CenteredStatus> : " "}
         </>
     );
 };
