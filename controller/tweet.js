@@ -852,8 +852,9 @@ const TweetRecommandation = async(relatedUserList) => {
         var recommandedTweet = await Tweet.findOne({tweetID: RecommendedTweetIDList[i]})
         const Creator = await User.findOne({tweetID:recommandedTweet.CreatorUserID})
         const CreatorUserName = Creator.name
+        const Avastar = Creator.avatar
 
-        tweet = await AggregTweetSummary(recommandedTweet, CreatorUserName)
+        tweet = await AggregTweetSummary(recommandedTweet, CreatorUserName, Avastar)
 
         RecommendedTweetList.push(tweet)
 
@@ -875,7 +876,8 @@ const FetchTweetByContent = async(specificContent) => {
         fetchedTweet = FetchedTweet[i]
         const Creator = await User.findOne({tweetID:fetchedTweet.CreatorUserID})
         const CreatorUserName = Creator.name
-        tweet = await AggregTweetSummary(fetchedTweet, CreatorUserName)
+        const Avastar = Creator.avatar
+        tweet = await AggregTweetSummary(fetchedTweet, CreatorUserName, Avastar)
         SearchedTweet.push(tweet)
     }
     return SearchedTweet
