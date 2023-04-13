@@ -27,6 +27,9 @@
         "react-feather": "^2.0.10",
         "react-router-dom": "^6.7.0",
         "react-scripts": "^5.0.1",
+        "socket.io-client": "^4.6.1",
+        "timeago": "^1.6.7",
+        "timeago.js": "^4.0.2",
         "web-vitals": "^2.1.4",
         "yup": "^1.0.2"
     },

@@ -1,4 +1,11 @@
-import { Bookmark, Hash, Home, MessageSquare, User } from "react-feather";
+import {
+    Bookmark,
+    Hash,
+    Home,
+    MessageSquare,
+    MessageCircle,
+    User,
+} from "react-feather";
 import { useUser } from "../../utils/UserContext";
 import NavbarItems from "./NavbarItems";
 import styles from "./UserLinks.module.css";
@@ -25,6 +32,11 @@ const notLoggedInLinks = [
 // when the user is logged in, show all of these
 const loggedInLinks = [
     ...notLoggedInLinks,
+    {
+        to: "/chatbox",
+        icon: MessageCircle,
+        name: "Chatbox",
+    },
     {
         to: "/bookmark",
         icon: Bookmark,
