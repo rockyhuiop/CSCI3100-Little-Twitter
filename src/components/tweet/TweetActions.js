@@ -21,7 +21,7 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
     );
     const [retweets, setRetweets] = useState(tweetStatistic.retweetCount);
     const [isRetweeted, setIsRetweeted] = useState(
-        isLoggedIn ? currentUser.likedTweetID.includes(tweet.tweetId) : false
+        isLoggedIn ? currentUser.retweetedTweetID.includes(tweet.tweetId) : false
     );
     const { isShowing, onClose, onOpen } = useModal();
 
@@ -55,7 +55,7 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
 
     const handleRetweet = async(e) => {
         e.preventDefault();
-
+        if (!isRetweeted){
         var details = {
             "Content": "Retweet",
         };
@@ -75,6 +75,8 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
             }
         })
         setRetweets(retweets + 1);
+        setIsRetweeted(true)
+        }
     };
 
     const handleComment = (e) => {
