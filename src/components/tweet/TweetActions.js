@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IconButton from "@mui/material/IconButton";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "../../utils/UserContext";
 import { useModal } from "../reusable/modal/useModal";
 import NavAddTweet from "../navbar/NavAddTweet";
@@ -21,6 +21,9 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
     );
     const [retweets, setRetweets] = useState(tweetStatistic.retweetCount);
     const { isShowing, onClose, onOpen } = useModal();
+    const [likecss, setLikecss] = useState(
+        isLiked ? "tweet__action liked" : "tweet__action like"
+    );
 
     let tweetUrl = "";
     if (isComment) {
@@ -37,8 +40,10 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
         e.preventDefault();
         if (!isLiked) {
             setLikes(likes + 1);
+            setLikecss("tweet__action liked");
         } else {
             setLikes(likes - 1);
+            setLikecss("tweet__action like");
         }
         const like = await fetch("/home/likeTweet/" + tweet.tweetId, {
             method: "PATCH",
@@ -86,7 +91,7 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
                 </IconButton>
                 <span>{retweets}</span>
             </div>
-            <div className="tweet__action like">
+            <div className={likecss}>
                 <IconButton size="small" onClick={handleLike}>
                     <FontAwesomeIcon icon={faHeart} />
                 </IconButton>
