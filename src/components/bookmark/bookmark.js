@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import defaultUser from "../../assets/default.jpg";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import { distance } from "../../utils/distance";
+import { useUser } from "../../utils/UserContext";
+import CenteredStatus from "../reusable/CenteredStatus";
 import Tweet from "../tweet/Tweet";
 import styles from "./bookmark.module.css";
-import { useUser } from "../../utils/UserContext";
-import { CalTime } from "../reusable/CalTime";
-import { SERVER_ADDRESS } from "../../utils/constants";
-import defaultUser from "../../assets/default.jpg";
-import CenteredStatus from "../reusable/CenteredStatus";
+
 const Bookmark = () => {
     const nav = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -25,38 +26,19 @@ const Bookmark = () => {
     useEffect(() => {
         const fetchBookmark = async () => {
             setIsLoading(true);
-            const check_log = await fetch("/home", {
-                method: "GET",
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
+            const check_log = await fetch("/home");
             if (!check_log.ok) {
                 nav("/", { replace: true });
             } else if (check_log.ok) {
                 const new_tw = [];
-                for (var j = 0; j < currentUser.bookmark.length; j++) {
+                for (let j = 0; j < currentUser.bookmark.length; j++) {
                     const bookmark = await fetch(
-                        "/home/FetchTweet/" + currentUser.bookmark[j],
-                        {
-                            method: "GET",
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded;charset=UTF-8",
-                            },
-                        }
+                        "/home/FetchTweet/" + currentUser.bookmark[j]
                     );
                     const bookmark_json = await bookmark.json();
                     const creator = await fetch(
-                        "/search/SearchUserById/"+bookmark_json.message[0].CreatorUserID,
-                        {
-                            method: "GET",
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded;charset=UTF-8",
-                            },
-                        }
+                        "/search/SearchUserById/" +
+                            bookmark_json.message[0].CreatorUserID
                     );
                     const creator_json = await creator.json();
                     new_tw.push({
@@ -65,11 +47,13 @@ const Bookmark = () => {
                         user: {
                             userId: bookmark_json.message[0].CreatorUserID,
                             name: bookmark_json.message[0].CreatorUserName,
-                            profile_image_url:
-                                creator_json.data[0].avatar ? SERVER_ADDRESS+creator_json.data[0].avatar.replace("\\","/") : defaultUser,
+                            profile_image_url: creator_json.data[0].avatar
+                                ? SERVER_ADDRESS +
+                                  creator_json.data[0].avatar.replace("\\", "/")
+                                : defaultUser,
                         },
                         media: "",
-                        date: CalTime(bookmark_json.message[0].CreateTime)[0],
+                        date: distance(bookmark_json.message[0].CreateTime),
                         likeCount: bookmark_json.message[0].LikeCount,
                         commentCount: bookmark_json.message[0].Comment.length,
                         retweetCount: bookmark_json.message[0].ReTweetCount,

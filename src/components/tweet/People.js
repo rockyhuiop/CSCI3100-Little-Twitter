@@ -1,32 +1,21 @@
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { faUserXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import IconMenu from "../reusable/IconMenu.js";
-import "./Tweet.css";
-import TweetActions from "./TweetActions.js";
 import { useUser } from "../../utils/UserContext";
-import { Bookmark } from "react-feather";
-import { useState } from "react";
 import Button from "../reusable/Button.js";
-import { colors } from "@mui/material";
-
+import "./Tweet.css";
 
 const People = ({ tweet, type, isModal }) => {
-    const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
+    const { user: currentUser, refreshUser } = useUser();
     const navigate = useNavigate();
-    console.log(tweet)
 
     // const userUrl = "/" + tweet.user.userId;
     const userUrl = "/profile/" + tweet.userId;
     let tweetUrl = "";
 
-
     const navigateToTweetUrl = (e) => {
         if (!isModal) {
             if (
-                e.target.tagName == "DIV" &&
+                e.target.tagName === "DIV" &&
                 !e.target.classList.contains("MuiBackdrop-root")
             ) {
                 navigate(tweetUrl);
@@ -35,21 +24,21 @@ const People = ({ tweet, type, isModal }) => {
         }
     };
     const follow = async (id) => {
-        const fol = await fetch("/user/follow/" + id, {
+        await fetch("/user/follow/" + id, {
             method: "POST",
             headers: {
                 "Content-Type":
                     "application/x-www-form-urlencoded;charset=UTF-8",
             },
         });
-        const fol_json = await fol.json();
+        // const fol_json = await fol.json();
         refreshUser();
     };
 
     return (
         <div
             className={
-                type == "root" || type == "middle" ? "tweet_root" : "tweet"
+                type === "root" || type === "middle" ? "tweet_root" : "tweet"
             }
             onClick={navigateToTweetUrl}
         >
@@ -64,7 +53,7 @@ const People = ({ tweet, type, isModal }) => {
                             />
                         </Link>
                     </div>
-                    {type == "root" || type == "middle" ? (
+                    {type === "root" || type === "middle" ? (
                         <div className="stick"></div>
                     ) : (
                         ""
@@ -77,24 +66,30 @@ const People = ({ tweet, type, isModal }) => {
                             <span className="tweet__username">
                                 <Link to={userUrl}>{tweet.name}</Link>{" "}
                             </span>
-                            <span className="tweet__uid">
-                                @{tweet.userId}
-                            </span>
-
+                            <span className="tweet__uid">@{tweet.userId}</span>
                         </div>
-                        <div style={{color: "#000000"}}
+                        <div
+                            style={{ color: "#000000" }}
                             onClick={(e) => {
                                 e.preventDefault();
                             }}
                         >
-                        {   currentUser.tweetID==tweet.userId ?
-                            " "
-                            :
-                            <Button  onClick={() => follow(tweet.userId)}>{currentUser.followings.includes(tweet.userId) ? "Unfollow" : "Follow"}</Button>
-                        }
+                            {currentUser.tweetID === tweet.userId ? (
+                                " "
+                            ) : (
+                                <Button onClick={() => follow(tweet.userId)}>
+                                    {currentUser.followings.includes(
+                                        tweet.userId
+                                    )
+                                        ? "Unfollow"
+                                        : "Follow"}
+                                </Button>
+                            )}
                         </div>
                     </div>
-                    <div className="tweet__content">{tweet.followers.length} Followers</div>
+                    <div className="tweet__content">
+                        {tweet.followers.length} Followers
+                    </div>
                 </div>
             </div>
         </div>

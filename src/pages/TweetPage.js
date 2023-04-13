@@ -1,13 +1,10 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import TweetInfo from "../components/tweet/TweetInfo";
-import { CalTime } from "../components/reusable/CalTime";
-import { useUser } from "../utils/UserContext";
-import { useFetch } from "../utils/useFetch";
-import CenteredStatus from "../components/reusable/CenteredStatus";
 import defaultUser from "../assets/default.jpg";
+import TweetInfo from "../components/tweet/TweetInfo";
 import { SERVER_ADDRESS } from "../utils/constants";
+import { distance } from "../utils/distance";
+import { useUser } from "../utils/UserContext";
 
 /*const tweet = {
     commentId: "1",
@@ -53,24 +50,12 @@ const TweetPage = () => {
 
     useEffect(() => {
         const fetchTweet = async () => {
-            const tweetitem = await fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
+            const tweetitem = await fetch(url);
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
                 const creator = await fetch(
-                    "/search/SearchUserById/"+tweetjson.message[0].CreatorUserID,
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type":
-                                "application/x-www-form-urlencoded;charset=UTF-8",
-                        },
-                    }
+                    "/search/SearchUserById/" +
+                        tweetjson.message[0].CreatorUserID
                 );
                 const creator_json = await creator.json();
                 const tweetobj = {
@@ -79,11 +64,13 @@ const TweetPage = () => {
                     user: {
                         userId: tweetjson.message[0].CreatorUserID,
                         name: tweetjson.message[0].CreatorUserName,
-                        profile_image_url:
-                            creator_json.data[0].avatar ? SERVER_ADDRESS+creator_json.data[0].avatar.replace("\\","/") : defaultUser,
+                        profile_image_url: creator_json.data[0].avatar
+                            ? SERVER_ADDRESS +
+                              creator_json.data[0].avatar.replace("\\", "/")
+                            : defaultUser,
                     },
                     media: "",
-                    date: CalTime(tweetjson.message[0].CreateTime)[0],
+                    date: distance(tweetjson.message[0].CreateTime),
                     likeCount: tweetjson.message[0].LikeCount,
                     commentCount: tweetjson.message[0].Comment.length,
                     retweetCount: tweetjson.message[0].ReTweetCount,
@@ -91,17 +78,10 @@ const TweetPage = () => {
                     viewCount: 1000,
                 };
                 const comments = [];
-                for (var i = 0; i < tweetjson.message[0].Comment.length; i++) {
+                for (let i = 0; i < tweetjson.message[0].Comment.length; i++) {
                     const creator = await fetch(
-                        "/search/SearchUserById/"+tweetjson.message[0].Comment[i]
-                        .CreatorUserID,
-                        {
-                            method: "GET",
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded;charset=UTF-8",
-                            },
-                        }
+                        "/search/SearchUserById/" +
+                            tweetjson.message[0].Comment[i].CreatorUserID
                     );
                     const creator_json = await creator.json();
                     const comment = {
@@ -115,13 +95,15 @@ const TweetPage = () => {
                                 .CreatorUserID,
                             name: tweetjson.message[0].Comment[i]
                                 .CreatorUserName,
-                            profile_image_url:
-                                creator_json.data[0].avatar ? SERVER_ADDRESS+creator_json.data[0].avatar.replace("\\","/") : defaultUser,
+                            profile_image_url: creator_json.data[0].avatar
+                                ? SERVER_ADDRESS +
+                                  creator_json.data[0].avatar.replace("\\", "/")
+                                : defaultUser,
                         },
                         media: "",
-                        date: CalTime(
-                            tweetjson.message[0].Comment[i].CreatTime
-                        )[0],
+                        date: distance(
+                            tweetjson.message[0].Comment[i].CreateTime
+                        ),
                         likeCount: tweetjson.message[0].Comment[i].LikeCount,
                         commentCount:
                             tweetjson.message[0].Comment[i].ReplyComment.length,

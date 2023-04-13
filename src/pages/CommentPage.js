@@ -1,11 +1,7 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TweetInfo from "../components/tweet/TweetInfo";
-import { CalTime } from "../components/reusable/CalTime";
-import { useUser } from "../utils/UserContext";
-import { useFetch } from "../utils/useFetch";
-import CenteredStatus from "../components/reusable/CenteredStatus";
+import { distance } from "../utils/distance";
 
 /*const tweet = {
     commentId: "1",
@@ -54,13 +50,7 @@ const CommentPage = () => {
 
     useEffect(() => {
         const fetchTweet = async () => {
-            const tweetitem = await fetch(commurl, {
-                method: "GET",
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
+            const tweetitem = await fetch(commurl);
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
                 const tweetobj = {
@@ -81,7 +71,7 @@ const CommentPage = () => {
                             "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                     },
                     media: "",
-                    date: CalTime(tweetjson.message.CreatTime)[0],
+                    date: distance(tweetjson.message.CreatTime),
                     likeCount: tweetjson.message.LikeCount,
                     commentCount: tweetjson.message.ReplyComment
                         ? tweetjson.message.ReplyComment.length
@@ -92,7 +82,7 @@ const CommentPage = () => {
                 const comments = [];
                 if (tweetjson.message.ReplyComment) {
                     for (
-                        var i = 0;
+                        let i = 0;
                         i < tweetjson.message.ReplyComment.length;
                         i++
                     ) {
@@ -112,9 +102,9 @@ const CommentPage = () => {
                                     "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                             },
                             media: "",
-                            date: CalTime(
+                            date: distance(
                                 tweetjson.message.ReplyComment[i].CreatTime
-                            )[0],
+                            ),
                             likeCount:
                                 tweetjson.message.ReplyComment[i].LikeCount,
                             commentCount: tweetjson.message.ReplyComment[i]
@@ -142,13 +132,7 @@ const CommentPage = () => {
             if (tweet) {
                 const rooturl = `/tweet/fetchTweet/${tweet.corrTweetID}`;
                 const fetchRootTweet = async () => {
-                    const tweetitem = await fetch(rooturl, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type":
-                                "application/x-www-form-urlencoded;charset=UTF-8",
-                        },
-                    });
+                    const tweetitem = await fetch(rooturl);
                     if (tweetitem.ok) {
                         const tweetjson = await tweetitem.json();
                         const tweetobj = {
@@ -161,7 +145,7 @@ const CommentPage = () => {
                                     "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                             },
                             media: "",
-                            date: CalTime(tweetjson.message[0].CreateTime)[0],
+                            date: distance(tweetjson.message[0].CreateTime),
                             likeCount: tweetjson.message[0].LikeCount,
                             commentCount: tweetjson.message[0].Comment.length,
                             retweetCount: tweetjson.message[0].ReTweetCount,
@@ -175,13 +159,7 @@ const CommentPage = () => {
                 if (tweet.corrCommentID) {
                     const rootcommenturl = `/tweet/FetchCommentByCommentID/${tweet.corrCommentID}`;
                     const fetchRootComment = async () => {
-                        const tweetitem = await fetch(rootcommenturl, {
-                            method: "GET",
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded;charset=UTF-8",
-                            },
-                        });
+                        const tweetitem = await fetch(rootcommenturl);
 
                         if (tweetitem.ok) {
                             const tweetjson = await tweetitem.json();
@@ -200,7 +178,7 @@ const CommentPage = () => {
                                         "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                                 },
                                 media: "",
-                                date: CalTime(tweetjson.message.CreatTime)[0],
+                                date: distance(tweetjson.message.CreatTime),
                                 likeCount: tweetjson.message.LikeCount,
                                 commentCount: tweetjson.message.ReplyComment
                                     ? tweetjson.message.ReplyComment.length
@@ -211,14 +189,7 @@ const CommentPage = () => {
 
                             const parentcommenturl = `/tweet/FetchCommentByCommentID/${commentobj.in_reply_to_tweetId}`;
                             const parentcommentitem = await fetch(
-                                parentcommenturl,
-                                {
-                                    method: "GET",
-                                    headers: {
-                                        "Content-Type":
-                                            "application/x-www-form-urlencoded;charset=UTF-8",
-                                    },
-                                }
+                                parentcommenturl
                             );
                             if (parentcommentitem.ok) {
                                 const parentcommentjson =

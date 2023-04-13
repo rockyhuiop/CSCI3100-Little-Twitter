@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
+import defaultUser from "../../assets/default.jpg";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import { distance } from "../../utils/distance";
 import AddTweet from "../reusable/AddTweet";
+import CenteredStatus from "../reusable/CenteredStatus";
 import Search from "../search/search";
 import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
-import { CalTime } from "../reusable/CalTime";
-import { SERVER_ADDRESS } from "../../utils/constants";
-import defaultUser from "../../assets/default.jpg";
-import CenteredStatus from "../reusable/CenteredStatus";
 
 const Hp_main = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,35 +53,16 @@ const Hp_main = () => {
         const fetchHome = async () => {
             setIsLoading(true);
             const new_tw = [];
-            const check_log = await fetch("/home", {
-                method: "GET",
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8",
-                },
-            });
+            const check_log = await fetch("/home");
             if (check_log.ok) {
                 setIsLoggedIn(true);
 
-                const login = await fetch("/home/fetchHomeTweet", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded;charset=UTF-8",
-                    },
-                });
+                const login = await fetch("/home/fetchHomeTweet");
                 const log_json = await login.json();
-                for (var i = 0; i < log_json.message.length; i++) {
+                for (let i = 0; i < log_json.message.length; i++) {
                     const creator = await fetch(
                         "/search/SearchUserById/" +
-                            log_json.message[i].CreatorUserID,
-                        {
-                            method: "GET",
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded;charset=UTF-8",
-                            },
-                        }
+                            log_json.message[i].CreatorUserID
                     );
                     const creator_json = await creator.json();
                     new_tw.push({
@@ -96,7 +77,7 @@ const Hp_main = () => {
                                 : defaultUser,
                         },
                         media: "",
-                        date: CalTime(log_json.message[i].CreateTime)[0],
+                        date: distance(log_json.message[i].CreateTime),
                         likeCount: log_json.message[i].LikeCount,
                         commentCount: log_json.message[i].CommentCount,
                         retweetCount: log_json.message[i].ReTweetCount,
@@ -108,25 +89,12 @@ const Hp_main = () => {
                 setTweets(new_tw);
             } else {
                 setIsLoggedIn(false);
-                const not_login = await fetch("/FetchAllTweet", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded;charset=UTF-8",
-                    },
-                });
+                const not_login = await fetch("/FetchAllTweet");
                 const not_log_json = await not_login.json();
-                for (var i = 0; i < not_log_json.message.length; i++) {
+                for (let i = 0; i < not_log_json.message.length; i++) {
                     const creator = await fetch(
                         "/search/SearchUserById/" +
-                            not_log_json.message[i].CreatorUserID,
-                        {
-                            method: "GET",
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded;charset=UTF-8",
-                            },
-                        }
+                            not_log_json.message[i].CreatorUserID
                     );
                     const creator_json = await creator.json();
                     new_tw.push({
@@ -141,7 +109,7 @@ const Hp_main = () => {
                                 : defaultUser,
                         },
                         media: "",
-                        date: CalTime(not_log_json.message[i].CreateTime)[0],
+                        date: distance(not_log_json.message[i].CreateTime),
                         likeCount: not_log_json.message[i].LikeCount,
                         commentCount: not_log_json.message[i].CommentCount,
                         retweetCount: not_log_json.message[i].ReTweetCount,
