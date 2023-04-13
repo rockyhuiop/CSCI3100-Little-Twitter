@@ -8,10 +8,10 @@
 }
 
 .chatMenuInput {
-    width: 90%;
+    width: 100%;
     padding: 10px 0;
     border: none;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid var(--clr-border-grey);
 }
 
 .chatBox {
@@ -23,6 +23,7 @@
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    border-left: 1px solid var(--clr-border-grey);
 }
 
 .chatBoxTop {
@@ -60,10 +61,6 @@
     cursor: pointer;
     background-color: #00acee;
     color: white;
-}
-
-.chatOnline {
-    flex: 3;
 }
 
 .chatMenuWrapper,
