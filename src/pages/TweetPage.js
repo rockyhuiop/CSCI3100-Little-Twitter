@@ -53,20 +53,15 @@ const TweetPage = () => {
             const tweetitem = await fetch(url);
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
-                const creator = await fetch(
-                    "/search/SearchUserById/" +
-                        tweetjson.message[0].CreatorUserID
-                );
-                const creator_json = await creator.json();
                 const tweetobj = {
                     tweetId: tweetjson.message[0].TweetID,
                     text: tweetjson.message[0].Content,
                     user: {
                         userId: tweetjson.message[0].CreatorUserID,
                         name: tweetjson.message[0].CreatorUserName,
-                        profile_image_url: creator_json.data[0].avatar
+                        profile_image_url: tweetjson.message[0].CreatorAvastar
                             ? SERVER_ADDRESS +
-                              creator_json.data[0].avatar.replace("\\", "/")
+                            tweetjson.message[0].CreatorAvastar.replace("\\", "/")
                             : defaultUser,
                     },
                     media: "",
@@ -79,11 +74,6 @@ const TweetPage = () => {
                 };
                 const comments = [];
                 for (let i = 0; i < tweetjson.message[0].Comment.length; i++) {
-                    const creator = await fetch(
-                        "/search/SearchUserById/" +
-                            tweetjson.message[0].Comment[i].CreatorUserID
-                    );
-                    const creator_json = await creator.json();
                     const comment = {
                         commentId: tweetjson.message[0].Comment[i].CommentID,
                         rootTweet: tweetobj,
@@ -95,9 +85,9 @@ const TweetPage = () => {
                                 .CreatorUserID,
                             name: tweetjson.message[0].Comment[i]
                                 .CreatorUserName,
-                            profile_image_url: creator_json.data[0].avatar
+                            profile_image_url: tweetjson.message[0].CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                  creator_json.data[0].avatar.replace("\\", "/")
+                                    tweetjson.message[0].CreatorAvastar.replace("\\", "/")
                                 : defaultUser,
                         },
                         media: "",

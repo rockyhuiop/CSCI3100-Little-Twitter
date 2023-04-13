@@ -34,20 +34,15 @@ const Filter = (search, data) => {
                     console.log(not_log_json);
                     //const new_tw = [];
                     for (let i = 0; i < not_log_json.message.length; i++) {
-                        const creator = await fetch(
-                            "/search/SearchUserById/" +
-                                not_log_json.message[i].CreatorUserID
-                        );
-                        const creator_json = await creator.json();
                         new_tw.push({
                             tweetId: not_log_json.message[i].TweetID,
                             text: not_log_json.message[i].Content,
                             user: {
                                 userId: not_log_json.message[i].CreatorUserID,
                                 name: not_log_json.message[i].CreatorUserName,
-                                profile_image_url: creator_json.data[0].avatar
+                                profile_image_url: not_log_json.message[i].CreatorAvastar
                                     ? SERVER_ADDRESS +
-                                      creator_json.data[0].avatar.replace(
+                                    not_log_json.message[i].CreatorAvastar.replace(
                                           "\\",
                                           "/"
                                       )
@@ -70,20 +65,15 @@ const Filter = (search, data) => {
                     const log_json = await login.json();
                     //const new_tw = [];
                     for (let i = 0; i < log_json.message.length; i++) {
-                        const creator = await fetch(
-                            "/search/SearchUserById/" +
-                                log_json.message[i].CreatorUserID
-                        );
-                        const creator_json = await creator.json();
                         new_tw.push({
                             tweetId: log_json.message[i].TweetID,
                             text: log_json.message[i].Content,
                             user: {
                                 userId: log_json.message[i].CreatorUserID,
                                 name: log_json.message[i].CreatorUserName,
-                                profile_image_url: creator_json.data[0].avatar
+                                profile_image_url: log_json.message[i].CreatorAvastar
                                     ? SERVER_ADDRESS +
-                                      creator_json.data[0].avatar.replace(
+                                    log_json.message[i].CreatorAvastar.replace(
                                           "\\",
                                           "/"
                                       )
@@ -123,19 +113,15 @@ const Filter = (search, data) => {
                 }
 
                 for (let i = 0; i < search.data.length; i++) {
-                    const creator = await fetch(
-                        "/search/SearchUserById/" + search.data[i].CreatorUserID
-                    );
-                    const creator_json = await creator.json();
                     new_tw.push({
                         tweetId: search.data[i].TweetID,
                         text: search.data[i].Content,
                         user: {
                             userId: search.data[i].CreatorUserID,
                             name: search.data[i].CreatorUserName,
-                            profile_image_url: creator_json.data[0].avatar
+                            profile_image_url: search.data[i].CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                  creator_json.data[0].avatar.replace("\\", "/")
+                                search.data[i].CreatorAvastar.replace("\\", "/")
                                 : defaultUser,
                         },
                         media: "",
@@ -159,12 +145,9 @@ const Filter = (search, data) => {
     }, [search]);
     return (
         <>
+        { isLoggedIn ?
             <Tabs
-                tabNames={
-                    isLoggedIn
-                        ? ["Recommend", "Popular", "Recent", "People"]
-                        : ["Popular", "Recent", "People"]
-                }
+                tabNames={["Recommend", "Popular", "Recent", "People"]}
             >
                 <div className={styles.con}>
                     {tweets.map((tweet) => (
@@ -210,6 +193,34 @@ const Filter = (search, data) => {
                     )}
                 </div>
             </Tabs>
+        :
+            <Tabs
+            tabNames={["Popular", "Recent"]}
+            >
+
+            <div className={styles.con}>
+                {tweetsPop.map((tweet) => (
+                    <Tweet key={tweet.tweetId} tweet={tweet} />
+                ))}
+                {isLoading ? (
+                    <CenteredStatus>{"Loading..."}</CenteredStatus>
+                ) : (
+                    " "
+                )}
+            </div>
+            <div className={styles.con}>
+                {tweetsRec.map((tweet) => (
+                    <Tweet key={tweet.tweetId} tweet={tweet} />
+                ))}
+                {isLoading ? (
+                    <CenteredStatus>{"Loading..."}</CenteredStatus>
+                ) : (
+                    " "
+                )}
+            </div>
+
+            </Tabs>
+        }
         </>
     );
 };
