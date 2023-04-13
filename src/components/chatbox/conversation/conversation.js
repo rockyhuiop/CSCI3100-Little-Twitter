@@ -16,7 +16,7 @@ const Conversation = ({ conversation, currentUser }) => {
         const getUser = async () => {
             try {
                 const res = await axios.get("/user/" + chatinguserID);
-                setUser(res.data.data[0]);
+                setUser(res.data.data);
             } catch (err) {
                 console.log(err);
             }

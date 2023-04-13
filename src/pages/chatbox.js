@@ -151,7 +151,7 @@ const Chatbox = () => {
                                 <div className="chatBoxBottom">
                                     <textarea
                                         className="chatMessageInput"
-                                        placeholder="write something..."
+                                        placeholder="Start a new message"
                                         onChange={(e) =>
                                             setNewMessage(e.target.value)
                                         }
@@ -166,9 +166,17 @@ const Chatbox = () => {
                                 </div>
                             </>
                         ) : (
-                            <span className="NotSelectedConversationText">
-                                Please Select the Conservation on the Left
-                            </span>
+                            <body>
+                                <span className="NotSelectedConversationText">
+                                    <h1>Select a message</h1>
+                                </span>
+                                <span className="NotSelectedConversationText">
+                                    <h3>
+                                        Choose from your existing convserations,
+                                        start a new one or just keep diving
+                                    </h3>
+                                </span>
+                            </body>
                         )}
                     </div>
                 </div>
