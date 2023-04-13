@@ -9,7 +9,13 @@ import Tweet from "./Tweet";
 import TweetDetails from "./TweetDetail";
 import "./TweetInfo.css";
 
-const TweetInfo = ({ tweet, isComment }) => {
+const TweetInfo = ({
+    tweet,
+    isComment,
+    rootTweet,
+    isTweetAuthor,
+    rootComment,
+}) => {
     let navigate = useNavigate();
     const msg = "Tweet your reply";
     const btn = "Reply";
@@ -120,10 +126,11 @@ const TweetInfo = ({ tweet, isComment }) => {
                     </div>
                     <h3>Tweet</h3>
                 </div>
-                {isComment ? <Tweet tweet={tweet.rootTweet} type="root" /> : ""}
+                {isComment ? <Tweet tweet={rootTweet} type="root" /> : ""}
                 <TweetDetails
                     tweet={tweet}
                     type={isComment ? "comment" : "regular"}
+                    isTweetAuthor={isTweetAuthor}
                 />
                 <AddTweet msg={msg} btn={btn} />
                 {tweet.comments.map((comm) => (

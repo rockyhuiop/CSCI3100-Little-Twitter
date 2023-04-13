@@ -16,10 +16,19 @@ import NavAddTweet from "../navbar/NavAddTweet";
 const TweetActions = ({ tweetStatistic, tweet }) => {
     const { isLoggedIn, user: currentUser } = useUser();
     const [likes, setLikes] = useState(tweetStatistic.likeCount);
-    const [isLiked, setIsLiked] = useState(isLoggedIn ? currentUser.likedTweetID.includes( tweet.tweetId ) : false);
+    const [isLiked, setIsLiked] = useState(
+        isLoggedIn ? currentUser.likedTweetID.includes(tweet.tweetId) : false
+    );
     const [retweets, setRetweets] = useState(tweetStatistic.retweetCount);
     const { isShowing, onClose, onOpen } = useModal();
-    
+
+    let tweetUrl = "";
+    if (tweet.commentId) {
+        tweetUrl = "/comment/" + tweet.tweetId;
+    } else {
+        tweetUrl = "/tweet/" + tweet.tweetId;
+    }
+
     if (!isLoggedIn) {
         return null;
     }
@@ -31,7 +40,7 @@ const TweetActions = ({ tweetStatistic, tweet }) => {
         } else {
             setLikes(likes - 1);
         }
-        const like = await fetch("/home/likeTweet/"+tweet.tweetId, {
+        const like = await fetch("/home/likeTweet/" + tweet.tweetId, {
             method: "PATCH",
             headers: {
                 "Content-Type":
@@ -53,6 +62,7 @@ const TweetActions = ({ tweetStatistic, tweet }) => {
 
     const handleShare = (e) => {
         e.preventDefault();
+        navigator.clipboard.writeText(tweetUrl);
     };
 
     return (

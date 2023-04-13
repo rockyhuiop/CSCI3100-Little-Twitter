@@ -5,6 +5,7 @@ import Homepage from "../pages/homepage";
 import Notification_page from "../pages/notification_page";
 import Profile from "../pages/Profile";
 import TweetPage from "../pages/TweetPage";
+import CommentPage from "../pages/CommentPage";
 import UserManagement from "../pages/UserManagement";
 import styles from "./MainContent.module.css";
 
@@ -14,8 +15,9 @@ const MainContent = () => {
             <Routes>
                 <Route exact path="/" element={<Homepage />} />
                 <Route path="/explore" element={<Explore />} />
-                <Route path="/profile/:tweetID?" element={<Profile />} />{" "}
+                <Route path="/profile/:tweetID?" element={<Profile />} />
                 <Route path="/tweet/:tweetId?" element={<TweetPage />} />
+                <Route path="/comment/:commentId?" element={<CommentPage />} />
                 <Route path="/bookmark" element={<Bookmark_page />} />
                 <Route path="/notification" element={<Notification_page />} />
                 <Route path="/manage/users" element={<UserManagement />} />

@@ -8,15 +8,17 @@ import "./TweetDetail.css";
 import TweetActions from "./TweetActions.js";
 import { useEffect } from "react";
 
-const TweetDetails = ({ tweet, type }) => {
+const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
     const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
 
-    const tweetStatistic = {
-        commentCount: tweet.commentCount,
-        retweetCount: tweet.retweetCount,
-        likeCount: tweet.likeCount,
-        viewCount: tweet.viewCount,
-    };
+    const tweetStatistic = tweet
+        ? {
+              commentCount: tweet.commentCount,
+              retweetCount: tweet.retweetCount,
+              likeCount: tweet.likeCount,
+              viewCount: tweet.viewCount,
+          }
+        : {};
 
     const handleViewCount = (viewCount) => {
         let screenViewCount = 0;
@@ -87,12 +89,25 @@ const TweetDetails = ({ tweet, type }) => {
                             }}
                         >
                             <IconMenu
-                                clickHandlers={[null, null]}
+                                clickHandlers={
+                                    isTweetAuthor
+                                        ? [null, null, null]
+                                        : [null, null]
+                                }
                                 icons={[
+                                    isTweetAuthor ? (
+                                        <FontAwesomeIcon icon={faUserXmark} />
+                                    ) : (
+                                        ""
+                                    ),
                                     <FontAwesomeIcon icon={faUserXmark} />,
                                     <FontAwesomeIcon icon={faBookmark} />,
                                 ]}
-                                names={["Unfollow", "Bookmark"]}
+                                names={
+                                    isTweetAuthor
+                                        ? ["Edit", "Unfollow", "Bookmark"]
+                                        : ["Unfollow", "Bookmark"]
+                                }
                                 keySuffix={tweet.tweetId}
                             />
                         </div>
@@ -111,7 +126,7 @@ const TweetDetails = ({ tweet, type }) => {
             </small>
             <div className="tweet__static__content">{tweet.text}</div>
             <div className="tweet__timeInfo info">
-                <span>{tweet.created_at}</span>
+                <span>{tweet.date} ago</span>
                 <span>
                     {" · "}
                     <b>{screenViewCount}</b>

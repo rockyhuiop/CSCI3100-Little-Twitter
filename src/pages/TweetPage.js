@@ -48,66 +48,72 @@ const TweetPage = () => {
     const { tweetId } = useParams();
     const url = `/tweet/fetchTweet/${tweetId}`;
 
-    const fetchTweet = async () => {
-        const tweetitem = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type":
-                    "application/x-www-form-urlencoded;charset=UTF-8",
-            },
-        });
-        if (tweetitem.ok) {
-            const tweetjson = await tweetitem.json();
-            const tweetobj = {
-                tweetId: tweetjson.message[0].TweetID,
-                text: tweetjson.message[0].Content,
-                user: {
-                    userId: tweetjson.message[0].CreatorUserID,
-                    name: tweetjson.message[0].CreatorUserName,
-                    profile_image_url:
-                        "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+    useEffect(() => {
+        const fetchTweet = async () => {
+            const tweetitem = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
                 },
-                media: "",
-                date: CalTime(tweetjson.message[0].CreateTime)[0],
-                likeCount: tweetjson.message[0].LikeCount,
-                commentCount: tweetjson.message[0].Comment.length,
-                retweetCount: tweetjson.message[0].ReTweetCount,
-                viewCount: 1000,
-            };
-            const comments = [];
-            for (var i = 0; i < tweetjson.message[0].Comment.length; i++) {
-                const comment = {
-                    commentId: tweetjson.message[0].Comment[i].commentID,
-                    rootTweet: tweetobj,
-                    in_reply_to_userId: tweetobj.tweetId,
-                    in_reply_to_userId: tweetobj.userId,
-                    text: tweetjson.message[0].Comment[i].Content,
+            });
+            if (tweetitem.ok) {
+                const tweetjson = await tweetitem.json();
+                const tweetobj = {
+                    tweetId: tweetjson.message[0].TweetID,
+                    text: tweetjson.message[0].Content,
                     user: {
-                        userId: tweetjson.message[0].Comment[i].CreatorUserID,
-                        name: tweetjson.message[0].Comment[i].CreatorUserName,
+                        userId: tweetjson.message[0].CreatorUserID,
+                        name: tweetjson.message[0].CreatorUserName,
                         profile_image_url:
                             "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                     },
                     media: "",
-                    date: CalTime(tweetjson.message[0].Comment[i].CreatTime)[0],
-                    likeCount: tweetjson.message[0].Comment[i].LikeCount,
-                    commentCount:
-                        tweetjson.message[0].Comment[i].ReplyComment.length,
-                    retweetCount: 20,
-                    viewCount: 2000,
+                    date: CalTime(tweetjson.message[0].CreateTime)[0],
+                    likeCount: tweetjson.message[0].LikeCount,
+                    commentCount: tweetjson.message[0].Comment.length,
+                    retweetCount: tweetjson.message[0].ReTweetCount,
+                    viewCount: 1000,
                 };
-                comments.push(comment);
+                const comments = [];
+                for (var i = 0; i < tweetjson.message[0].Comment.length; i++) {
+                    const comment = {
+                        commentId: tweetjson.message[0].Comment[i].CommentID,
+                        rootTweet: tweetobj,
+                        in_reply_to_tweetId: tweetobj.tweetId,
+                        in_reply_to_userId: tweetobj.user.userId,
+                        text: tweetjson.message[0].Comment[i].Content,
+                        user: {
+                            userId: tweetjson.message[0].Comment[i]
+                                .CreatorUserID,
+                            name: tweetjson.message[0].Comment[i]
+                                .CreatorUserName,
+                            profile_image_url:
+                                "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                        },
+                        media: "",
+                        date: CalTime(
+                            tweetjson.message[0].Comment[i].CreatTime
+                        )[0],
+                        likeCount: tweetjson.message[0].Comment[i].LikeCount,
+                        commentCount:
+                            tweetjson.message[0].Comment[i].ReplyComment.length,
+                        retweetCount: 20,
+                        viewCount: 2000,
+                    };
+                    comments.push(comment);
+                }
+                tweetobj.comments = comments;
+                setTweet(tweetobj);
             }
-            tweetobj.comments = comments;
-            setTweet(tweetobj);
-        }
-    };
-    fetchTweet();
+        };
+        fetchTweet();
+    });
 
-    return tweet == null ? (
-        ""
-    ) : (
-        <TweetInfo tweet={tweet} isComment={tweet.commentId != undefined} />
-    );
+    useEffect(() => {
+        setTimeout(() => {}, 1000);
+    });
+
+    return tweet == null ? "" : <TweetInfo tweet={tweet} isComment={false} />;
 };
 export default TweetPage;

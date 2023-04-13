@@ -8,6 +8,7 @@ import "./Tweet.css";
 import TweetActions from "./TweetActions.js";
 import { useUser } from "../../utils/UserContext";
 import { Bookmark } from "react-feather";
+import { useState } from "react";
 
 const Tweet = ({ tweet, type, isModal }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
@@ -20,9 +21,13 @@ const Tweet = ({ tweet, type, isModal }) => {
     };
 
     // const userUrl = "/" + tweet.user.userId;
-    const userUrl = "/profile/"+tweet.user.userId;
-    // const tweetUrl = userUrl + "/" + tweet.tweetId;
-    const tweetUrl = "/tweet/" + tweet.tweetId;
+    const userUrl = "/profile/" + tweet.user.userId;
+    let tweetUrl = "";
+    if (type == "comment") {
+        tweetUrl = "/comment/" + tweet.commentId;
+    } else {
+        tweetUrl = "/tweet/" + tweet.tweetId;
+    }
 
     const navigateToTweetUrl = (e) => {
         if (!isModal) {
@@ -57,102 +62,109 @@ const Tweet = ({ tweet, type, isModal }) => {
         const bm_json = await bm.json();
         refreshUser();
     };
-
-    return (
-        <div
-            className={type == "root" ? "tweet_root" : "tweet"}
-            onClick={navigateToTweetUrl}
-        >
-            <div className="tweet__header">
-                <div className="avatarColumn">
-                    <div className="tweet__headercontainer">
-                        <Link to={userUrl}>
-                            <img
-                                src={tweet.user.profile_image_url}
-                                alt="Avatar"
-                                className="tweet__avatar"
-                            />
-                        </Link>
-                    </div>
-                    {type == "root" ? <div className="stick"></div> : ""}
-                </div>
-
-                <div className="tweet__container">
-                    <div className="tweet__title">
-                        <div className="tweet__userinfo">
-                            <span className="tweet__username">
-                                <Link to={userUrl}>{tweet.user.name}</Link>{" "}
-                            </span>
-                            <span className="tweet__uid">
-                                @{tweet.user.userId}
-                            </span>
-                            <span className="tweet__timestamp">
-                                &nbsp;· {tweet.date + " ago"}
-                            </span>
-                        </div>
-                        <div
-                            onClick={(e) => {
-                                e.preventDefault();
-                            }}
-                        >
-                            {isLoggedIn && !isModal ? (
-                                <IconMenu
-                                    clickHandlers={[
-                                        () => follow(tweet.user.userId),
-                                        () => bookmark(tweet.tweetId),
-                                    ]}
-                                    icons={[
-                                        <FontAwesomeIcon icon={faUserXmark} />,
-                                        <FontAwesomeIcon icon={faBookmark} />,
-                                    ]}
-                                    names={[
-                                        currentUser.followings.includes(
-                                            tweet.user.userId
-                                        )
-                                            ? "Unfollow"
-                                            : "Follow",
-                                        currentUser.bookmark.includes(
-                                            tweet.tweetId
-                                        )
-                                            ? "Unbookmark"
-                                            : "Bookmark",
-                                    ]}
-                                    keySuffix={
-                                        type == "comment"
-                                            ? tweet.tweetId
-                                            : tweet.commentId
-                                    }
+    if (tweet) {
+        return (
+            <div
+                className={type == "root" ? "tweet_root" : "tweet"}
+                onClick={navigateToTweetUrl}
+            >
+                <div className="tweet__header">
+                    <div className="avatarColumn">
+                        <div className="tweet__headercontainer">
+                            <Link to={userUrl}>
+                                <img
+                                    src={tweet.user.profile_image_url}
+                                    alt="Avatar"
+                                    className="tweet__avatar"
                                 />
-                            ) : (
-                                " "
-                            )}
+                            </Link>
                         </div>
+                        {type == "root" ? <div className="stick"></div> : ""}
                     </div>
-                    <small className="tweet__replyinfo">
-                        {type == "comment" ? (
-                            <div>
-                                Replying to{" "}
-                                <Link to={userUrl}>
-                                    @{tweet.in_reply_to_userId}
-                                </Link>
+
+                    <div className="tweet__container">
+                        <div className="tweet__title">
+                            <div className="tweet__userinfo">
+                                <span className="tweet__username">
+                                    <Link to={userUrl}>{tweet.user.name}</Link>{" "}
+                                </span>
+                                <span className="tweet__uid">
+                                    @{tweet.user.userId}
+                                </span>
+                                <span className="tweet__timestamp">
+                                    &nbsp;· {tweet.date + " ago"}
+                                </span>
                             </div>
+                            <div
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                }}
+                            >
+                                {isLoggedIn && !isModal ? (
+                                    <IconMenu
+                                        clickHandlers={[
+                                            () => follow(tweet.user.userId),
+                                            () => bookmark(tweet.tweetId),
+                                        ]}
+                                        icons={[
+                                            <FontAwesomeIcon
+                                                icon={faUserXmark}
+                                            />,
+                                            <FontAwesomeIcon
+                                                icon={faBookmark}
+                                            />,
+                                        ]}
+                                        names={[
+                                            currentUser.followings.includes(
+                                                tweet.user.userId
+                                            )
+                                                ? "Unfollow"
+                                                : "Follow",
+                                            currentUser.bookmark.includes(
+                                                tweet.tweetId
+                                            )
+                                                ? "Unbookmark"
+                                                : "Bookmark",
+                                        ]}
+                                        keySuffix={
+                                            type == "comment"
+                                                ? tweet.tweetId
+                                                : tweet.commentId
+                                        }
+                                    />
+                                ) : (
+                                    " "
+                                )}
+                            </div>
+                        </div>
+                        <small className="tweet__replyinfo">
+                            {type == "comment" ? (
+                                <div>
+                                    Replying to{" "}
+                                    <Link to={userUrl}>
+                                        @{tweet.in_reply_to_userId}
+                                    </Link>
+                                </div>
+                            ) : (
+                                ""
+                            )}
+                        </small>
+                        <div className="tweet__content">{tweet.text}</div>
+                        {!isModal ? (
+                            <TweetActions
+                                tweetStatistic={tweetStatistic}
+                                tweet={tweet}
+                            />
                         ) : (
                             ""
                         )}
-                    </small>
-                    <div className="tweet__content">{tweet.text}</div>
-                    {!isModal ? (
-                        <TweetActions
-                            tweetStatistic={tweetStatistic}
-                            tweet={tweet}
-                        />
-                    ) : (
-                        ""
-                    )}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return;
+    }
 };
 
 export default Tweet;
