@@ -112,76 +112,73 @@ const Chatbox = () => {
     }, [messages]);
 
     return (
-        <>
-            <div className="messenger">
-                <div className="chatMenu">
-                    <Topbar />
-                    <div className="chatMenuWrapper">
-                        <input
-                            placeholder="Search for friends"
-                            className="chatMenuInput"
-                        />
-                        {conversations.map((c) => (
-                            <div onClick={() => setCurrentChat(c)}>
-                                <Conversation
-                                    conversation={c}
-                                    currentUser={currentUser}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="chatBox">
-                    <div className="chatBoxWrapper">
-                        {currentChat ? (
-                            <>
-                                <div className="chatBoxTop">
-                                    {messages.map((m) => (
-                                        <div ref={scrollRef}>
-                                            <Message
-                                                message={m}
-                                                own={
-                                                    m.sender ===
-                                                    currentUser.tweetID
-                                                }
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="chatBoxBottom">
-                                    <textarea
-                                        className="chatMessageInput"
-                                        placeholder="Start a new message"
-                                        onChange={(e) =>
-                                            setNewMessage(e.target.value)
-                                        }
-                                        value={newMessage}
-                                    ></textarea>
-                                    <button
-                                        className="chatSubmitButton"
-                                        onClick={handleSubmit}
-                                    >
-                                        Send
-                                    </button>
-                                </div>
-                            </>
-                        ) : (
-                            <body>
-                                <span className="NotSelectedConversationText">
-                                    <h1>Select a message</h1>
-                                </span>
-                                <span className="NotSelectedConversationText">
-                                    <h3>
-                                        Choose from your existing convserations,
-                                        start a new one or just keep diving
-                                    </h3>
-                                </span>
-                            </body>
-                        )}
-                    </div>
+        <div className="messenger">
+            <div className="chatMenu">
+                <Topbar />
+                <div className="chatMenuWrapper">
+                    <input
+                        placeholder="Search for friends"
+                        className="chatMenuInput"
+                    />
+                    {conversations.map((c) => (
+                        <div onClick={() => setCurrentChat(c)}>
+                            <Conversation
+                                conversation={c}
+                                currentUser={currentUser}
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
-        </>
+            <div className="chatBox">
+                <div className="chatBoxWrapper">
+                    {currentChat ? (
+                        <>
+                            <div className="chatBoxTop">
+                                {messages.map((m) => (
+                                    <div ref={scrollRef}>
+                                        <Message
+                                            message={m}
+                                            own={
+                                                m.sender === currentUser.tweetID
+                                            }
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="chatBoxBottom">
+                                <textarea
+                                    className="chatMessageInput"
+                                    placeholder="Start a new message"
+                                    onChange={(e) =>
+                                        setNewMessage(e.target.value)
+                                    }
+                                    value={newMessage}
+                                ></textarea>
+                                <button
+                                    className="chatSubmitButton"
+                                    onClick={handleSubmit}
+                                >
+                                    Send
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <body>
+                            <span className="NotSelectedConversationText">
+                                <h1>Select a message</h1>
+                            </span>
+                            <span className="NotSelectedConversationText">
+                                <h3>
+                                    Choose from your existing convserations,
+                                    start a new one or just keep diving
+                                </h3>
+                            </span>
+                        </body>
+                    )}
+                </div>
+            </div>
+        </div>
     );
 };
 

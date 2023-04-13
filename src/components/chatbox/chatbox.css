@@ -104,8 +104,4 @@
     .chatBox {
         flex: 10;
     }
-
-    .chatOnline {
-        flex: 1px;
-    }
 }
