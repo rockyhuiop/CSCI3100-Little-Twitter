@@ -8,11 +8,11 @@ router.get('/', (req, res)=>{
     res.status(200).json({state: "Success"})
 })
 
-router.post('/', (req, res) =>{
+router.post('/',async (req, res) =>{
     User.findOne({$or: [
         { email: req.body.email },
         { tweetID: req.body.tweetID}
-      ]}).then((user) => {
+      ]}).then(async (user) => {
         if(user){
             return res.status(400).json({error: "Account already exist"})
         } else {
@@ -34,8 +34,8 @@ router.post('/', (req, res) =>{
                 tweetID: req.body.tweetID,
                 followers: []
             })
-            newFollow.save()
-            newUser.save()
+            await newFollow.save()
+            await newUser.save()
             return res.status(200).json({message: "account created"})
         }
     })
