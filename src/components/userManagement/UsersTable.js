@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import UserActions from "./UserActions";
 import { useUserMangement } from "./UserManagementContext";
 import styles from "./UsersTable.module.css";
@@ -31,10 +32,20 @@ const UsersTable = () => {
                     return (
                         <tr key={user._id}>
                             <td onClick={() => copyID(user._id)}>
-                                {abridgedID(user)}
+                                <Link to={`/profile/${user.tweetID}`}>
+                                    {abridgedID(user)}
+                                </Link>
                             </td>
-                            <td>{user.name}</td>
-                            <td>{user.tweetID}</td>
+                            <td>
+                                <Link to={`/profile/${user.tweetID}`}>
+                                    {user.name}
+                                </Link>
+                            </td>
+                            <td>
+                                <Link to={`/profile/${user.tweetID}`}>
+                                    {user.tweetID}
+                                </Link>
+                            </td>
                             <UserActions user={user} />
                         </tr>
                     );
