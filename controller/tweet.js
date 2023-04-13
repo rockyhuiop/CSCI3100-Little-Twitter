@@ -498,6 +498,7 @@ const FetchReplyComment = async(commentID) => {
 
         replyComment = {
             CommentID: fetchReplyComment.commentID,
+            CorrCommentID: fetchReplyComment.corrCommentID,
             CreatorUserID: fetchReplyComment.CreatorUserID,
             CreatorUserName: CreatorUserName,
             CreatTime : fetchReplyComment.CreateTime,
@@ -527,7 +528,7 @@ const FetchComment = async(commentID) => {
         const Creator = await User.findOne({tweetID:targetComment[0].CreatorUserID})
         const CreatorUserName = Creator.name
 
-        const Comment = {
+        const Commentobj = {
             CommentID: targetComment[0].commentID,
             CreatorUserID: targetComment[0].CreatorUserID,
             CreatorUserName: CreatorUserName,
@@ -537,13 +538,21 @@ const FetchComment = async(commentID) => {
             DisLikeCount: targetComment[0].DisLikeCount,
         }
 
-        //collecting the reply accordingly
+        //finding the corrTweetID
+        if ( targetComment[0].corrTweetID !== undefined){
+            Commentobj['CorrTweetID'] = targetComment[0].corrTweetID
+        }else{
+            const ParentComment = await Comment.findOne({CommentID: targetComment[0].corrCommentID})
+            Commentobj['CorrTweetID'] = ParentComment.corrTweetID
+            Commentobj['CorrCommentID'] =  targetComment[0].corrCommentID
+        }
 
+        //collecting the reply accordingly
         const ReplyCommentList = await FetchReplyComment(targetComment[0].commentID)
 
-        Comment['ReplyComment'] = ReplyCommentList
+        Commentobj['ReplyComment'] = ReplyCommentList
 
-        fetchedCommet.push(Comment)
+        fetchedCommet.push(Commentobj)
     }
 
     return fetchedCommet
@@ -566,6 +575,7 @@ const FetchTweetComment = async(tweetID) => {
 
         comment = {
             CommentID: fetchComment.commentID,
+            CorrTweetID: fetchComment.corrTweetID,
             CreatorUserID: fetchComment.CreatorUserID,
             CreatorUserName: CreatorUserName,
             CreatTime : fetchComment.CreateTime,
