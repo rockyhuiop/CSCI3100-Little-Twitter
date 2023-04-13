@@ -6,7 +6,7 @@ import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
 import { SERVER_ADDRESS } from "../../utils/constants";
 
-const AddTweet = ({ msg, btn }) => {
+const AddTweet = ({ msg, btn, tweetId }) => {
     const WORD_LIMIT = 120;
     const { user: currentUser } = useUser();
     const [file, setFile] = useState(null);
@@ -14,7 +14,6 @@ const AddTweet = ({ msg, btn }) => {
     const [error, setError] = useState(null);
     const ref = useRef(null);
     const textareaRef = useRef(null);
-
     const choosePicture = () => {
         ref.current.click();
     };
@@ -32,26 +31,51 @@ const AddTweet = ({ msg, btn }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            formData.append("Content", text);
-            if (file) {
-                formData.append("images", file);
+        if (tweetId){
+            var details = {
+                "Content": text,
+            };
+            
+            var con = [];
+            for (var property in details) {
+              var encodedKey = encodeURIComponent(property);
+              var encodedValue = encodeURIComponent(details[property]);
+              con.push(encodedKey + "=" + encodedValue);
             }
-            const response = await fetch("/home", {
+    
+            const response = await fetch("/home/comment/"+tweetId,{
                 method: "POST",
-                body: formData,
-            });
+                body: con.join("&"),
+                headers: {
+                    "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8"
+                }
+            })
             if (response.ok){
                 setText("");
-                setFile(null);
             }
-            const json = await response.json();
-            if (json.error) {
-                throw new Error(json.error);
+        } else{
+
+            try {
+                formData.append("Content", text);
+                if (file) {
+                    formData.append("images", file);
+                }
+                const response = await fetch("/home", {
+                    method: "POST",
+                    body: formData,
+                });
+                if (response.ok){
+                    setText("");
+                    setFile(null);
+                }
+                const json = await response.json();
+                if (json.error) {
+                    throw new Error(json.error);
+                }
+                window.location.reload(true);
+            } catch (error) {
+                setError(error);
             }
-            window.location.reload(true);
-        } catch (error) {
-            setError(error);
         }
     };
 

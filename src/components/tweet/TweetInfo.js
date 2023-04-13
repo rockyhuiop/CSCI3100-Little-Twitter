@@ -133,7 +133,7 @@ const TweetInfo = ({
                     type={isComment ? "comment" : "regular"}
                     isTweetAuthor={isTweetAuthor}
                 />
-                <AddTweet msg={msg} btn={btn} />
+                <AddTweet msg={msg} btn={btn} tweetId={tweet.tweetId} />
                 {tweet.comments.map((comm) => (
                     <Tweet key={comm.commentId} tweet={comm} type={"comment"} />
                 ))}
