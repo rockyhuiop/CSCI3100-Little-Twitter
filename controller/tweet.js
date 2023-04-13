@@ -622,11 +622,13 @@ const FetchTweet = async(tweetID) => {
 
         const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
+        const Avastar = Creator.avatar
 
         tweet = {
             TweetID: fetchTweet.tweetID,
             CreatorUserID : fetchTweet.CreatorUserID,
             CreatorUserName: CreatorUserName,
+            CreatorAvastar: Avastar,
             CreateTime : fetchTweet.CreateTime,
             Content : fetchTweet.Content,
             LikeCount : fetchTweet.LikeCount,
