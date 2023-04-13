@@ -477,9 +477,8 @@ const TweetCommentCount = async(tweetID) => {
 
 const FetchFollowing = async(userID) => {
     const targetUser = await User.findOne({tweetID:userID})
-    const followings = await targetUser.followings
+    const followings = targetUser.followings
     return followings
-    
 }
 
 const FetchReplyComment = async(commentID) => {
