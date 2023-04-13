@@ -96,6 +96,32 @@ const Tweet = ({ tweet, type, isModal }) => {
                             }}
                         >
                             {isLoggedIn && !isModal ? (
+                                
+                                
+                                currentUser.tweetID==tweet.user.userId? 
+                                
+                                <IconMenu
+                                    clickHandlers={[
+                                        () => bookmark(tweet.tweetId),
+                                    ]}
+                                    icons={[
+                                        <FontAwesomeIcon icon={faBookmark} />,
+                                    ]}
+                                    names={[
+                                        currentUser.bookmark.includes(
+                                            tweet.tweetId
+                                        )
+                                            ? "Unbookmark"
+                                            : "Bookmark",
+                                    ]}
+                                    keySuffix={
+                                        type == "comment"
+                                            ? tweet.tweetId
+                                            : tweet.commentId
+                                    }
+                                />
+
+                                :
                                 <IconMenu
                                     clickHandlers={[
                                         () => follow(tweet.user.userId),
