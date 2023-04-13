@@ -10,12 +10,13 @@ router.post('/', (req, res) => {
         const newMessage = new Message(
             {
                 conversationID : req.body.conversationID,
-                sender : req.body.senderID,
+                sender : req.body.sender,
                 text : req.body.text
             }
         )
 
         try {
+            console.log(req.body)
             const savedMessage = await newMessage.save()
             res.status(200).json(savedMessage)
         }catch(err){
@@ -29,9 +30,8 @@ router.post('/', (req, res) => {
 
 router.get('/:conversationID"', (req, res) => {
 
-    const {conversationID: conversationID} = req.params
-
     (async() => {
+        const {conversationID: conversationID} = req.params
         try{
             const messages = await Message.find({
                 conversationID: conversationID,

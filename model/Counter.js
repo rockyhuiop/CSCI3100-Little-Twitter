@@ -14,4 +14,4 @@ const CounterSchema = new Schema({
     },
 });
 
-module.exports = User = mongoose.model("Counter", CounterSchema);
+module.exports = Counter = mongoose.model("Counter", CounterSchema);

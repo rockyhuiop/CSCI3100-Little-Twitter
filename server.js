@@ -41,6 +41,7 @@ const corsOption = {
 
 app.use(cors(corsOption))
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
 app.use(sessions({
     secret: process.env.SECRET,
     saveUninitialized:true,

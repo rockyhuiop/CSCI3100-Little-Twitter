@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
 
-const ConservationSchema = new mongoose.Schema(
+const Schema = mongoose.Schema
+
+const ConservationSchema = new Schema(
     {
         members: {
             type: Array,
@@ -9,4 +11,4 @@ const ConservationSchema = new mongoose.Schema(
     {timestamps: true}
 )
 
-module.exports = mongoose.model("Conversation", ConservationSchema)
+module.exports = Conversation = mongoose.model("Conversation", ConservationSchema)
