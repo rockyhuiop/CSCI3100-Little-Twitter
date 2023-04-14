@@ -21,7 +21,7 @@ router.get('/SearchTweetByContent/:Content', (req, res) => {
 router.get('/SearchUserById/:id', async (req, res)=>{
     const { id } = req.params
     try {
-        let user = await User.find({ $or: [{ tweetID: id }, { name: id }]}).select('-password -userType');
+        let user = await User.find({ $or: [{ tweetID: {$regex: new RegExp(`^${id}`)} }, { name: {$regex: new RegExp(`^${id}`)} }]}).select('-password -userType');
         if (user) {
             return res.status(200).json({
                 data: user,
