@@ -7,7 +7,6 @@ const TweetSchema = new Schema({
     tweetID:{
         type: String,
         required: true,
-        unique: true,
     },
     CreateTime:{
         type: Date,

@@ -59,4 +59,20 @@ router.get("/search/:firstUserID/:secondUserID", (req, res) => {
 
 })
 
+router.post("/create/:firstUserID/:secondUserID", (req, res) => {
+    (async() => {
+        const {firstUserID:firstUserID, secondUserID: secondUserID} = req.params
+        try{
+            const conversation = new Conversation({
+                members: [firstUserID, secondUserID]
+            })
+            await conversation.save()
+            res.status(200).json(conversation)
+        }catch(err){
+            res.status(500).json(err)
+        }
+
+    })()
+})
+
 module.exports = router
