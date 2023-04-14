@@ -120,10 +120,7 @@ const ReTweet = async (retweetID,userid, body, files) => {
 
     }
 
-
-
     await newTweet.save()
-
 
     //Increment Retweet Count
     await IncreReTweetCount(retweetID)
