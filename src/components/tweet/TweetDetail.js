@@ -10,10 +10,17 @@ import { useEffect } from "react";
 import { useUser } from "../../utils/UserContext";
 import { SERVER_ADDRESS } from "../../utils/constants";
 
-const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
+const TweetDetails = ({ tweet, type,  }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
+    var isTweetAuthor=false;
+    if (currentUser==null){
+        isTweetAuthor=false;
+    }else if (currentUser.tweetID == tweet.user.userId){
+        isTweetAuthor=true;
+    } else{
+        isTweetAuthor=false;
+    }
     //const [screenViewCount, setScreenViewCount] = useState(tweet.viewCount);
-
     const tweetStatistic = tweet
         ? {
               commentCount: tweet.commentCount,
@@ -120,12 +127,12 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                         >
                             <IconMenu
                                 clickHandlers={
-                                    currentUser.tweetID == tweet.user.userId
+                                    isTweetAuthor
                                         ? [null, null, null]
                                         : [null, null]
                                 }
                                 icons={[
-                                    currentUser.tweetID == tweet.user.userId ? (
+                                    isTweetAuthor ? (
                                         <FontAwesomeIcon icon={faUserXmark} />
                                     ) : (
                                         ""
@@ -134,7 +141,7 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
                                     <FontAwesomeIcon icon={faBookmark} />,
                                 ]}
                                 names={
-                                    currentUser.tweetID == tweet.user.userId
+                                    isTweetAuthor
                                         ? ["Edit", "Unfollow", "Bookmark"]
                                         : ["Unfollow", "Bookmark"]
                                 }

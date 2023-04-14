@@ -88,10 +88,10 @@ const TweetPage = () => {
                                 .CreatorUserID,
                             name: tweetjson.message[0].Comment[i]
                                 .CreatorUserName,
-                            profile_image_url: tweetjson.message[0]
+                            profile_image_url: tweetjson.message[0].Comment[i]
                                 .CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                  tweetjson.message[0].CreatorAvastar.replace(
+                                  tweetjson.message[0].Comment[i].CreatorAvastar.replace(
                                       "\\",
                                       "/"
                                   )

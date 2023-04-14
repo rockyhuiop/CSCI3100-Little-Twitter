@@ -9,6 +9,15 @@ import Button from "./Button";
 const AddTweet = ({ msg, btn, url, type }) => {
     const WORD_LIMIT = 120;
     const { user: currentUser } = useUser();
+    var avatar=defaultUser;
+    if (currentUser==null){
+        avatar=defaultUser
+    } else if (currentUser.avatar){
+        avatar=
+        SERVER_ADDRESS+currentUser.avatar.replace("\\", "/");
+    } else{
+        avatar=defaultUser
+    }
     const [file, setFile] = useState(null);
     const [text, setText] = useState("");
     const [error, setError] = useState(null);
@@ -98,10 +107,11 @@ const AddTweet = ({ msg, btn, url, type }) => {
                 <img
                     className={styles.avatar}
                     src={
+                        avatar/*
                         currentUser.avatar
                             ? SERVER_ADDRESS +
                               currentUser.avatar.replace("\\", "/")
-                            : defaultUser
+                            : defaultUser*/
                     }
                     alt="Avatar of user"
                 />
