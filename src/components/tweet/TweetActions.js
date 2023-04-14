@@ -122,12 +122,17 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
                 />
                 <span>{tweetStatistic.commentCount}</span>
             </div>
-            <div className="tweet__action retweet">
-                <IconButton size="small" onClick={handleRetweet}>
-                    <FontAwesomeIcon icon={faRetweet} />
-                </IconButton>
-                <span>{retweets}</span>
-            </div>
+            {isComment ? (
+                ""
+            ) : (
+                <div className="tweet__action retweet">
+                    <IconButton size="small" onClick={handleRetweet}>
+                        <FontAwesomeIcon icon={faRetweet} />
+                    </IconButton>
+                    <span>{retweets}</span>
+                </div>
+            )}
+
             <div className={likecss}>
                 <IconButton size="small" onClick={handleLike}>
                     <FontAwesomeIcon icon={faHeart} />

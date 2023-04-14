@@ -208,6 +208,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                         <TweetActions
                             tweetStatistic={tweetStatistic}
                             tweet={tweet}
+                            isComment={type == "comment" || type == "middle"}
                         />
                     ) : (
                         ""
