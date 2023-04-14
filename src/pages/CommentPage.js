@@ -71,7 +71,10 @@ const CommentPage = () => {
                         userId: tweetjson.message.CreatorUserID,
                         name: tweetjson.message.CreatorUserName,
                         profile_image_url:
-                            "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                            tweetjson.message.CreatorAvastar
+                            ? SERVER_ADDRESS +
+                            tweetjson.message.CreatorAvastar.replace("\\", "/")
+                            : defaultUser,
                     },
                     media: "",
                     date: distance(tweetjson.message.CreatTime),
@@ -102,7 +105,10 @@ const CommentPage = () => {
                                 name: tweetjson.message.ReplyComment[i]
                                     .CreatorUserName,
                                 profile_image_url:
-                                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
+                                    tweetjson.message.ReplyComment[i].CreatorAvastar
+                                    ? SERVER_ADDRESS +
+                                    tweetjson.message.ReplyComment[i].CreatorAvastar.replace("\\", "/")
+                                    : defaultUser,
                             },
                             media: "",
                             date: distance(
