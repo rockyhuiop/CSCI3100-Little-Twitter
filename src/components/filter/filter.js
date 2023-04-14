@@ -65,6 +65,24 @@ const Filter = (search, data) => {
                     setIsLoggedIn(true);
                     const login = await fetch("/home/TweetRecommend");
                     const log_json = await login.json();
+                    const ppl = await fetch(
+                        "/search/UserRecommendation"
+                    );
+                    const ppl_json = await ppl.json();
+                    console.log(ppl_json.User_Recommend);
+                    const new_ppl = [];
+                    for (let i = 0; i < ppl_json.User_Recommend.length; i++) {
+                        new_ppl.push({
+                            userId: ppl_json.User_Recommend[i].tweetID,
+                            name: ppl_json.User_Recommend[i].name,
+                            followers: ppl_json.User_Recommend[i].followers,
+                            profile_image_url: ppl_json.User_Recommend[i].avatar
+                                ? SERVER_ADDRESS +
+                                ppl_json.User_Recommend[i].avatar.replace("\\", "/")
+                                : defaultUser,
+                        });
+                        setPpl(new_ppl);
+                    }
                     //const new_tw = [];
                     for (let i = 0; i < log_json.message.length; i++) {
                         console.log(distance(log_json.message[i].CreateTime))
