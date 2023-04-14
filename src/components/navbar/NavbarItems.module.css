@@ -7,6 +7,6 @@
 
 @media (max-width: 960px) {
     .links {
-        --spacing: 1rem !important;
+        --spacing: 0.7rem !important;
     }
 }

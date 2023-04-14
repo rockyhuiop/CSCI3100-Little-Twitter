@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Image } from "react-feather";
 import defaultUser from "../../assets/default.jpg";
+import { SERVER_ADDRESS } from "../../utils/constants";
 import { useUser } from "../../utils/UserContext";
 import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
-import { SERVER_ADDRESS } from "../../utils/constants";
 
 const AddTweet = ({ msg, btn, url, type }) => {
     const WORD_LIMIT = 120;
@@ -31,15 +31,15 @@ const AddTweet = ({ msg, btn, url, type }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (type == "comment") {
-            var details = {
+        if (type === "comment") {
+            let details = {
                 Content: text,
             };
 
-            var con = [];
-            for (var property in details) {
-                var encodedKey = encodeURIComponent(property);
-                var encodedValue = encodeURIComponent(details[property]);
+            let con = [];
+            for (let property in details) {
+                let encodedKey = encodeURIComponent(property);
+                let encodedValue = encodeURIComponent(details[property]);
                 con.push(encodedKey + "=" + encodedValue);
             }
 
@@ -123,7 +123,7 @@ const AddTweet = ({ msg, btn, url, type }) => {
                     {type ? (
                         ""
                     ) : (
-                        <div>
+                        <Fragment>
                             <Image
                                 onClick={choosePicture}
                                 className={styles.select}
@@ -137,7 +137,7 @@ const AddTweet = ({ msg, btn, url, type }) => {
                                 ref={ref}
                             />
                             <span>{getFileNames()}</span>
-                        </div>
+                        </Fragment>
                     )}
                 </div>
                 <Button>{btn}</Button>

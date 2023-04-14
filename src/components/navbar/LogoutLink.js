@@ -5,7 +5,7 @@ import styles from "./LogoutLink.module.css";
 import NavbarItem from "./NavbarItem";
 
 const LogoutLink = () => {
-    const { logout, isLoggedIn } = useUser();
+    const { logout, isLoggedIn, isAdmin } = useUser();
 
     if (!isLoggedIn) {
         return null;
@@ -13,7 +13,7 @@ const LogoutLink = () => {
 
     return (
         <Fragment>
-            <div className={styles.spacing}>
+            <div className={isAdmin ? styles["spacing-admin"] : styles.spacing}>
                 <NavbarItem
                     name={"Logout"}
                     icon={LogOut}

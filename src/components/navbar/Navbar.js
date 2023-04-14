@@ -17,11 +17,18 @@ const Navbar = () => {
         setIsShowing(!isShowing);
     };
 
+    const handleClick = (event) => {
+        // if user clicks on the link, remove the menu
+        if (event.target.tagName !== "P" && event.target.tagName !== "DIV") {
+            setIsShowing(false);
+        }
+    };
+
     return (
         <div className={styles.navbar}>
             <div className={styles.top}>
                 {/* shows twitter logo and text */}
-                <Link to="/" className={styles.branding}>
+                <Link to="/" className={styles.branding} onClick={handleClick}>
                     <Twitter size={36} />
                     <h2>Twitter</h2>
                 </Link>
@@ -32,6 +39,7 @@ const Navbar = () => {
                     styles.body,
                     isShowing ? styles.show : styles.hide
                 )}
+                onClick={handleClick}
             >
                 <UserLinks />
                 <LogoutLink />

@@ -2,8 +2,8 @@ import {
     Bookmark,
     Hash,
     Home,
-    MessageSquare,
     MessageCircle,
+    MessageSquare,
     User,
 } from "react-feather";
 import { useUser } from "../../utils/UserContext";
@@ -55,12 +55,13 @@ const loggedInLinks = [
 ];
 
 const UserLinks = () => {
-    const { isLoggedIn } = useUser();
+    const { isLoggedIn, isAdmin } = useUser();
 
     return (
         <div className={styles.container}>
             <NavbarItems
                 links={isLoggedIn ? loggedInLinks : notLoggedInLinks}
+                spacing={isAdmin ? 24 : 32}
             />
         </div>
     );
