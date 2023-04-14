@@ -12,6 +12,14 @@ import { useState } from "react";
 
 const Tweet = ({ tweet, type, isModal }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
+    var isTweetAuthor=false;
+    if (currentUser==null){
+        isTweetAuthor=false;
+    }else if (currentUser.tweetID == tweet.user.userId){
+        isTweetAuthor=true;
+    } else{
+        isTweetAuthor=false;
+    }
     const navigate = useNavigate();
     const tweetStatistic = {
         commentCount: tweet.commentCount,
