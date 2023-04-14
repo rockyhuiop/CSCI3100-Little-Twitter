@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const https = require('https')
 const fs = require("fs");
 const cors = require("cors")
+const morgan = require("morgan")
 
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
@@ -42,6 +43,7 @@ const corsOption = {
 app.use(cors(corsOption))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
+app.use(morgan('dev'))
 app.use(sessions({
     secret: process.env.SECRET,
     saveUninitialized:true,
