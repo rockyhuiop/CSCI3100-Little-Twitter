@@ -40,7 +40,9 @@ const Chatbox = () => {
     }, [arrivalMessage, currentChat]);
 
     useEffect(() => {
-        socket.current.emit("addUser", currentUser.tweetID);
+        if (currentUser){
+            socket.current.emit("addUser", currentUser.tweetID);
+        }
     }, [currentUser]);
 
     //fetching all the conversation room for the login in user
@@ -57,7 +59,7 @@ const Chatbox = () => {
             }
         };
         getConversations();
-    }, [currentUser.tweetID]);
+    }, [currentUser?currentUser.tweetID:currentUser]);
 
     //tackling user input for search
     useEffect(() => {
