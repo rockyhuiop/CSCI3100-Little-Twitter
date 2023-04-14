@@ -43,7 +43,9 @@ router.get('/UserRecommendation/', async (req, res) => {
     const currUser = await User.findOne({tweetID: req.session.userid})
     console.log(currUser)
     const followingLists = currUser.followings
-    const User_Recommend = await User.find({tweetID: {$nin : followingLists}, followers : {$in : followingLists}}).select('-password -userType')
+    var filter = followingLists
+    filter.push(currUser.tweetID)
+    const User_Recommend = await User.find({tweetID: {$nin : filter}, followers : {$in : followingLists}}).select('-password -userType')
     return res.status(200).json({User_Recommend})
   
   })
