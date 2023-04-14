@@ -65,7 +65,8 @@ const Chatbox = () => {
     useEffect(() => {
         const saveSearchTerm = async (searchTerm) => {
             const res = await axios.get("/SearchUserById/" + searchTerm);
-            setSearchResult(res.data);
+            console.log(res);
+            setSearchResult(res.data.data);
         };
         saveSearchTerm();
     }, [searchTerm]);
@@ -142,7 +143,11 @@ const Chatbox = () => {
                               </div>
                           ))
                         : searchResult.map((searchedUser) => (
-                              <div onClick={findConversations(searchedUser)}>
+                              <div
+                                  onClick={findConversations(
+                                      searchedUser.tweetID
+                                  )}
+                              >
                                   <SearchedUser searchedUser={searchedUser} />
                               </div>
                           ))}
