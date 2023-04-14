@@ -7,6 +7,7 @@ import Tabs from "../reusable/Tabs";
 import People from "../tweet/People";
 import Tweet from "../tweet/Tweet";
 import styles from "./filter.module.css";
+import {CalTime} from "../../utils/CalTime"
 
 const Filter = (search, data) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -49,6 +50,7 @@ const Filter = (search, data) => {
                                     : defaultUser,
                             },
                             media: "",
+                            dur: CalTime(not_log_json.message[i].CreateTime)[1],
                             date: distance(not_log_json.message[i].CreateTime),
                             likeCount: not_log_json.message[i].LikeCount,
                             commentCount: not_log_json.message[i].CommentCount,
@@ -56,7 +58,7 @@ const Filter = (search, data) => {
                             imageList: not_log_json.message[i].ImageList,
                             viewCount: 1000,
                         });
-                        setTweets(new_tw);
+                        setTweets([...new_tw]);
                     }
                     //setTweets(new_tw);
                 } else if (check_log.ok) {
@@ -65,6 +67,7 @@ const Filter = (search, data) => {
                     const log_json = await login.json();
                     //const new_tw = [];
                     for (let i = 0; i < log_json.message.length; i++) {
+                        console.log(distance(log_json.message[i].CreateTime))
                         new_tw.push({
                             tweetId: log_json.message[i].TweetID,
                             text: log_json.message[i].Content,
@@ -80,6 +83,7 @@ const Filter = (search, data) => {
                                     : defaultUser,
                             },
                             media: "",
+                            dur: CalTime(log_json.message[i].CreateTime)[1],
                             date: distance(log_json.message[i].CreateTime),
                             likeCount: log_json.message[i].LikeCount,
                             commentCount: log_json.message[i].CommentCount,
@@ -87,7 +91,7 @@ const Filter = (search, data) => {
                             imageList: log_json.message[i].ImageList,
                             viewCount: 1000,
                         });
-                        setTweets(new_tw);
+                        setTweets([...new_tw]);
                     }
 
                     //setTweets(new_tw);
@@ -125,6 +129,7 @@ const Filter = (search, data) => {
                                 : defaultUser,
                         },
                         media: "",
+                        dur: CalTime(search.data[i].CreateTime)[1],
                         date: distance(search.data[i].CreateTime),
                         likeCount: search.data[i].LikeCount,
                         commentCount: search.data[i].CommentCount,
@@ -132,11 +137,11 @@ const Filter = (search, data) => {
                         imageList: search.data[i].ImageList,
                         viewCount: 1000,
                     });
-                    setTweets(new_tw);
+                    setTweets([...new_tw]);
                 }
             }
-            const new_tw_pop = new_tw.sort((a, b) => b.likeCount - a.likeCount);
-            const new_tw_rec = new_tw.sort((a, b) => a.dur - b.dur);
+            const new_tw_pop = [...new_tw].sort((a, b) => b.likeCount - a.likeCount);
+            const new_tw_rec = [...new_tw].sort((a, b) => a.dur - b.dur);
             setTweetsPop(new_tw_pop);
             setTweetsRec(new_tw_rec);
             setIsLoading(false);
