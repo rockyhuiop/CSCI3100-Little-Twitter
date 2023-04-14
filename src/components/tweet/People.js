@@ -69,7 +69,6 @@ const People = ({ tweet, type, isModal }) => {
                             <span className="tweet__uid">@{tweet.userId}</span>
                         </div>
                         <div
-                            style={{ color: "#000000" }}
                             onClick={(e) => {
                                 e.preventDefault();
                             }}
@@ -78,11 +77,13 @@ const People = ({ tweet, type, isModal }) => {
                                 " "
                             ) : (
                                 <Button onClick={() => follow(tweet.userId)}>
-                                    {currentUser.followings.includes(
-                                        tweet.userId
-                                    )
-                                        ? "Unfollow"
-                                        : "Follow"}
+                                    <span style={{ color: "#fff" }}>
+                                        {currentUser.followings.includes(
+                                            tweet.userId
+                                        )
+                                            ? "Unfollow"
+                                            : "Follow"}
+                                    </span>
                                 </Button>
                             )}
                         </div>
