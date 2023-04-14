@@ -216,6 +216,10 @@ a:link {
     background-color: #d6f6d6;
 }
 
+.retweeted button {
+    color: #21c644;
+}
+
 .like button:hover {
     color: #ea3d6b;
     background-color: #f8dbe2;

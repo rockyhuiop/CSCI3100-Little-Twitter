@@ -33,6 +33,9 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
     const [likecss, setLikecss] = useState(
         isLiked ? "tweet__action liked" : "tweet__action like"
     );
+    const [retweetcss, setRetweetcss] = useState(
+        isRetweeted ? "tweet__action retweeted" : "tweet__action retweet"
+    );
 
     let tweetUrl = "";
     if (isComment) {
@@ -125,7 +128,7 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
             {isComment ? (
                 ""
             ) : (
-                <div className="tweet__action retweet">
+                <div className={retweetcss}>
                     <IconButton size="small" onClick={handleRetweet}>
                         <FontAwesomeIcon icon={faRetweet} />
                     </IconButton>
