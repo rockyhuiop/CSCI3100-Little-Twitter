@@ -40,7 +40,7 @@ const Chatbox = () => {
     }, [arrivalMessage, currentChat]);
 
     useEffect(() => {
-        if (currentUser){
+        if (currentUser) {
             socket.current.emit("addUser", currentUser.tweetID);
         }
     }, [currentUser]);
@@ -59,20 +59,27 @@ const Chatbox = () => {
             }
         };
         getConversations();
-    }, [currentUser?currentUser.tweetID:currentUser]);
+    }, [currentUser ? currentUser.tweetID : currentUser]);
 
     //tackling user input for search
-    useEffect(() => {
-        const saveSearchTerm = async (searchTerm) => {
-            const res = await axios.get("/SearchUserById/" + searchTerm);
-            console.log(res);
-            setSearchResult(res.data.data);
-        };
-        saveSearchTerm();
-    }, [searchTerm]);
+    //useEffect(() => {
+    //   const saveSearchTerm = async (searchTerm) => {
+    //        console.log(searchTerm)
+    //       const res = await axios.get("/SearchUserById/" + searchTerm);
+    //       console.log(res);
+    //       setSearchResult(res.data.data);
+    //   };
+    //   saveSearchTerm();
+    //}, [searchTerm]);
 
     function handleInputChange(event) {
-        setSearchTerm(event.target.value);
+        setSearchTerm(event);
+        const saveSearchTerm = async (searchTerm) => {
+            const res = await axios.get("/search/SearchUserById/" + searchTerm);
+            console.log(res.data.data);
+            setSearchResult(res.data.data);
+        };
+        saveSearchTerm(event.target.value);
     }
 
     function findConversations(targetUserID) {}

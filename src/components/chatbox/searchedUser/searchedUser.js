@@ -4,7 +4,7 @@ import defaultUser from "../../../assets/default.jpg";
 import { SERVER_ADDRESS } from "../../../utils/constants";
 import "./searchedUser.css";
 
-const SearchedUser = ({ searchedUser }) => {
+const SearchedUser = (searchedUser) => {
     const user = searchedUser;
 
     return (
