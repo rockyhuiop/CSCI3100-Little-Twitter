@@ -14,6 +14,12 @@
     font-weight: 500;
 }
 
+.conversationUserID {
+    font-weight: 50;
+    font-size: small;
+    color: grey;
+}
+
 .conversationImg {
     width: 40px;
     height: 40px;

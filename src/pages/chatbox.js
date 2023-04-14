@@ -1,13 +1,12 @@
 import "../components/chatbox/chatbox.css";
 import Topbar from "../components/chatbox/topbar/topbar";
+import MessageTopbar from "../components/chatbox/messageTopbar/messageTopbar";
 import Conversation from "../components/chatbox/conversation/conversation";
 import Message from "../components/chatbox/message/message";
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../utils/UserContext";
 import axios from "axios";
-import { SERVER_ADDRESS } from "../utils/constants";
 import { io } from "socket.io-client";
-//axios.defaults.baseURL = SERVER_ADDRESS;
 
 const Chatbox = () => {
     const [conversations, setConversations] = useState([]);
@@ -15,7 +14,6 @@ const Chatbox = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [arrivalMessage, setArrivalMessage] = useState(null);
-    const [onlineUsers, setOnlineUsers] = useState([]);
     const socket = useRef();
     // get the login in user information
     const { user: currentUser } = useUser();
@@ -40,13 +38,6 @@ const Chatbox = () => {
 
     useEffect(() => {
         socket.current.emit("addUser", currentUser.tweetID);
-        socket.current.on("getUsers", (onlineUsers) => {
-            setOnlineUsers(
-                currentUser.followings.filter((followingUserID) =>
-                    onlineUsers.some((user) => user.userID === followingUserID)
-                )
-            );
-        });
     }, [currentUser]);
 
     //fetching all the conversation room for the login in user
@@ -135,6 +126,10 @@ const Chatbox = () => {
                     {currentChat ? (
                         <>
                             <div className="chatBoxTop">
+                                <MessageTopbar
+                                    currentChat={currentChat}
+                                    currentUser={currentUser}
+                                />
                                 {messages.map((m) => (
                                     <div ref={scrollRef}>
                                         <Message

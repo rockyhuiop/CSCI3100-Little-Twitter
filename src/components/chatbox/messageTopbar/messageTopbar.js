@@ -1,14 +1,14 @@
-import axios from "axios";
+import "./messageTopbar.css";
 import { useEffect, useState } from "react";
 import defaultUser from "../../../assets/default.jpg";
 import { SERVER_ADDRESS } from "../../../utils/constants";
-import "./conversation.css";
+import axios from "axios";
 
-const Conversation = ({ conversation, currentUser }) => {
+const MessageTopbar = ({ currentChat, currentUser }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const chatinguserID = conversation.members.find(
+        const chatinguserID = currentChat.members.find(
             (m) => m !== currentUser.tweetID
         );
 
@@ -22,25 +22,18 @@ const Conversation = ({ conversation, currentUser }) => {
             }
         };
         getUser();
-    }, [currentUser, conversation]);
+    }, [currentChat, currentUser]);
 
     return (
-        <div className="conversation">
+        <div className="messageTopbarContainer">
             <img
-                className="conversationImg"
+                className="messageConversationImg"
                 src={user?.avatar ? SERVER_ADDRESS + user.avatar : defaultUser}
                 alt=""
             />
-            <span className="conversationName">
-                <p>
-                    {user?.name}{" "}
-                    <span className="conversationUserID">
-                        {" @" + user?.tweetID}
-                    </span>
-                </p>
-            </span>
+            <span className="messageConversationName">{user?.name}</span>
         </div>
     );
 };
 
-export default Conversation;
+export default MessageTopbar;

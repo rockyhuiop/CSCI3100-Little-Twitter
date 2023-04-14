@@ -1,7 +1,5 @@
 import "./topbar.css";
 import { Mail } from "react-feather";
-import { Link } from "react-router-dom";
-import { useUser } from "../../../utils/UserContext";
 
 export default function Topbar() {
     return (
