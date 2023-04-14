@@ -7,7 +7,7 @@ import Tabs from "../reusable/Tabs";
 import People from "../tweet/People";
 import Tweet from "../tweet/Tweet";
 import styles from "./filter.module.css";
-import {CalTime} from "../../utils/CalTime"
+import { differenceInBusinessDays, differenceInSeconds } from "date-fns";
 
 const Filter = (search, data) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,7 +50,7 @@ const Filter = (search, data) => {
                                     : defaultUser,
                             },
                             media: "",
-                            dur: CalTime(not_log_json.message[i].CreateTime)[1],
+                            dur: differenceInSeconds(new Date(not_log_json.message[i].CreateTime), new Date()),
                             date: distance(not_log_json.message[i].CreateTime),
                             likeCount: not_log_json.message[i].LikeCount,
                             commentCount: not_log_json.message[i].CommentCount,
@@ -85,7 +85,6 @@ const Filter = (search, data) => {
                     }
                     //const new_tw = [];
                     for (let i = 0; i < log_json.message.length; i++) {
-                        console.log(distance(log_json.message[i].CreateTime))
                         new_tw.push({
                             tweetId: log_json.message[i].TweetID,
                             text: log_json.message[i].Content,
@@ -101,7 +100,7 @@ const Filter = (search, data) => {
                                     : defaultUser,
                             },
                             media: "",
-                            dur: CalTime(log_json.message[i].CreateTime)[1],
+                            dur: differenceInSeconds(new Date(log_json.message[i].CreateTime), new Date()),
                             date: distance(log_json.message[i].CreateTime),
                             likeCount: log_json.message[i].LikeCount,
                             commentCount: log_json.message[i].CommentCount,
@@ -147,7 +146,7 @@ const Filter = (search, data) => {
                                 : defaultUser,
                         },
                         media: "",
-                        dur: CalTime(search.data[i].CreateTime)[1],
+                        dur: differenceInSeconds(new Date(search.data[i].CreateTime), new Date()),
                         date: distance(search.data[i].CreateTime),
                         likeCount: search.data[i].LikeCount,
                         commentCount: search.data[i].CommentCount,
@@ -159,7 +158,7 @@ const Filter = (search, data) => {
                 }
             }
             const new_tw_pop = [...new_tw].sort((a, b) => b.likeCount - a.likeCount);
-            const new_tw_rec = [...new_tw].sort((a, b) => a.dur - b.dur);
+            const new_tw_rec = [...new_tw].sort((a, b) => b.dur - a.dur);
             setTweetsPop(new_tw_pop);
             setTweetsRec(new_tw_rec);
             setIsLoading(false);
