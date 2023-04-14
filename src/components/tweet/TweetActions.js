@@ -58,7 +58,7 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
         if (!isComment) {
             likeurl = "/home/likeTweet/" + tweet.tweetId;
         } else {
-            likeurl = "/home/likeComment/" + tweet.tweetId;
+            likeurl = "/home/likeComment/" + tweet.commentId;
         }
         const like = await fetch(likeurl, {
             method: "PATCH",
