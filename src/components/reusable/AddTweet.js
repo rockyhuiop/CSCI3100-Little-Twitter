@@ -95,16 +95,21 @@ const AddTweet = ({ msg, btn, url, type }) => {
     return (
         <form className={styles.form} name="hp-addtw" onSubmit={handleSubmit}>
             <div className={styles.row}>
-                <img
-                    className={styles.avatar}
-                    src={
-                        currentUser.avatar
-                            ? SERVER_ADDRESS +
-                              currentUser.avatar.replace("\\", "/")
-                            : defaultUser
-                    }
-                    alt="Avatar of user"
-                />
+                {currentUser ? (
+                    <img
+                        className={styles.avatar}
+                        src={
+                            currentUser.avatar
+                                ? SERVER_ADDRESS +
+                                  currentUser.avatar.replace("\\", "/")
+                                : defaultUser
+                        }
+                        alt="Avatar of user"
+                    />
+                ) : (
+                    ""
+                )}
+
                 <textarea
                     onChange={(e) => updateTextarea(e)}
                     value={text}

@@ -68,133 +68,142 @@ const TweetDetails = ({ tweet, type, isTweetAuthor }) => {
     */
 
     // const userUrl = "/" + tweet.user.userId;
-    const userUrl = "/profile";
+    const userUrl = "/profile/" + tweet.user.userId;
     // const tweetUrl = userUrl + "/" + tweet.tweetId;
     const tweetUrl = "/tweet/" + tweet.tweetId;
 
-    return (
-        <div
-            className={
-                type == "comment" ? "tweet__static_bottom" : "tweet__static"
-            }
-        >
-            <div className="tweet__header">
-                <div className="avatarColumn">
+    if (currentUser) {
+        return (
+            <div
+                className={
+                    type == "comment" ? "tweet__static_bottom" : "tweet__static"
+                }
+            >
+                <div className="tweet__header">
+                    <div className="avatarColumn">
+                        {type == "comment" ? (
+                            <div className="stick_bottom"></div>
+                        ) : (
+                            ""
+                        )}
+
+                        <div className="tweet__headercontainer">
+                            <Link to={userUrl}>
+                                <img
+                                    src={tweet.user.profile_image_url}
+                                    alt="Avatar"
+                                    className="tweet__avatar"
+                                />
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="tweet__container">
+                        <div
+                            className={
+                                type == "comment"
+                                    ? "tweet__title_bottom"
+                                    : "tweet__title"
+                            }
+                        >
+                            <div className="tweet__static__userinfo">
+                                <span className="tweet__username">
+                                    <Link to={userUrl}>{tweet.user.name}</Link>{" "}
+                                </span>
+                                <small className="tweet__uid">
+                                    @{tweet.user.userId}
+                                </small>
+                            </div>
+                            <div
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                }}
+                            >
+                                <IconMenu
+                                    clickHandlers={
+                                        currentUser.tweetID == tweet.user.userId
+                                            ? [null, null, null]
+                                            : [null, null]
+                                    }
+                                    icons={[
+                                        currentUser.tweetID ==
+                                        tweet.user.userId ? (
+                                            <FontAwesomeIcon
+                                                icon={faUserXmark}
+                                            />
+                                        ) : (
+                                            ""
+                                        ),
+                                        <FontAwesomeIcon icon={faUserXmark} />,
+                                        <FontAwesomeIcon icon={faBookmark} />,
+                                    ]}
+                                    names={
+                                        currentUser.tweetID == tweet.user.userId
+                                            ? ["Edit", "Unfollow", "Bookmark"]
+                                            : ["Unfollow", "Bookmark"]
+                                    }
+                                    keySuffix={tweet.tweetId}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <small className="tweet__replyinfo_static">
                     {type == "comment" ? (
-                        <div className="stick_bottom"></div>
+                        <div>
+                            Replying to{" "}
+                            <Link to={userUrl}>
+                                @{tweet.in_reply_to_userId}
+                            </Link>
+                        </div>
                     ) : (
                         ""
                     )}
-
-                    <div className="tweet__headercontainer">
-                        <Link to={userUrl}>
+                </small>
+                {tweet.imageList ? (
+                    <div className="tweet__static__content">
+                        {tweet.imageList.map((img) => (
                             <img
-                                src={tweet.user.profile_image_url}
-                                alt="Avatar"
-                                className="tweet__avatar"
+                                key={img}
+                                src={SERVER_ADDRESS + img}
+                                alt="img"
+                                className="tweet__img"
                             />
-                        </Link>
-                    </div>
-                </div>
-
-                <div className="tweet__container">
-                    <div
-                        className={
-                            type == "comment"
-                                ? "tweet__title_bottom"
-                                : "tweet__title"
-                        }
-                    >
-                        <div className="tweet__static__userinfo">
-                            <span className="tweet__username">
-                                <Link to={userUrl}>{tweet.user.name}</Link>{" "}
-                            </span>
-                            <small className="tweet__uid">
-                                @{tweet.user.userId}
-                            </small>
-                        </div>
-                        <div
-                            onClick={(e) => {
-                                e.preventDefault();
-                            }}
-                        >
-                            <IconMenu
-                                clickHandlers={
-                                    currentUser.tweetID == tweet.user.userId
-                                        ? [null, null, null]
-                                        : [null, null]
-                                }
-                                icons={[
-                                    currentUser.tweetID == tweet.user.userId ? (
-                                        <FontAwesomeIcon icon={faUserXmark} />
-                                    ) : (
-                                        ""
-                                    ),
-                                    <FontAwesomeIcon icon={faUserXmark} />,
-                                    <FontAwesomeIcon icon={faBookmark} />,
-                                ]}
-                                names={
-                                    currentUser.tweetID == tweet.user.userId
-                                        ? ["Edit", "Unfollow", "Bookmark"]
-                                        : ["Unfollow", "Bookmark"]
-                                }
-                                keySuffix={tweet.tweetId}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <small className="tweet__replyinfo_static">
-                {type == "comment" ? (
-                    <div>
-                        Replying to{" "}
-                        <Link to={userUrl}>@{tweet.in_reply_to_userId}</Link>
+                        ))}
                     </div>
                 ) : (
-                    ""
+                    " "
                 )}
-            </small>
-            {tweet.imageList ? (
-                <div className="tweet__static__content">
-                    {tweet.imageList.map((img) => (
-                        <img
-                            key={img}
-                            src={SERVER_ADDRESS + img}
-                            alt="img"
-                            className="tweet__img"
-                        />
-                    ))}
+                <div className="tweet__static__content">{tweet.text}</div>
+                <div className="tweet__timeInfo info">
+                    <span>{tweet.date} ago</span>
                 </div>
-            ) : (
-                " "
-            )}
-            <div className="tweet__static__content">{tweet.text}</div>
-            <div className="tweet__timeInfo info">
-                <span>{tweet.date} ago</span>
+                <div className="tweet__statistic info">
+                    {tweet.retweetCount != 0 ? (
+                        <span>
+                            <b>{tweet.retweetCount}</b> Retweets
+                        </span>
+                    ) : (
+                        ""
+                    )}
+                    {tweet.likeCount != 0 ? (
+                        <span>
+                            <b>{tweet.likeCount}</b> Likes
+                        </span>
+                    ) : (
+                        ""
+                    )}
+                </div>
+                <TweetActions
+                    tweetStatistic={tweetStatistic}
+                    tweet={tweet}
+                    isComment={type == "comment"}
+                />
             </div>
-            <div className="tweet__statistic info">
-                {tweet.retweetCount != 0 ? (
-                    <span>
-                        <b>{tweet.retweetCount}</b> Retweets
-                    </span>
-                ) : (
-                    ""
-                )}
-                {tweet.likeCount != 0 ? (
-                    <span>
-                        <b>{tweet.likeCount}</b> Likes
-                    </span>
-                ) : (
-                    ""
-                )}
-            </div>
-            <TweetActions
-                tweetStatistic={tweetStatistic}
-                tweet={tweet}
-                isComment={type == "comment"}
-            />
-        </div>
-    );
+        );
+    } else {
+        return;
+    }
 };
 
 export default TweetDetails;

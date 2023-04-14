@@ -47,7 +47,6 @@ const CommentPage = () => {
     const [rootComment, setRootComment] = useState(null);
     const [isTweetAuthor, setIsTweetAuthor] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const { user: currentUser } = useUser();
 
     const { commentId } = useParams();
     const commurl = `/tweet/FetchCommentByCommentID/${commentId}`;
@@ -57,11 +56,6 @@ const CommentPage = () => {
             const tweetitem = await fetch(commurl);
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
-                const creator = await fetch(
-                    "/search/SearchUserById/" +
-                        tweetjson.message[0].CreatorUserID
-                );
-                const creator_json = await creator.json();
                 const tweetobj = {
                     tweetId: tweetjson.message.CommentID,
                     corrTweetID: tweetjson.message.CorrTweetID,
@@ -107,13 +101,8 @@ const CommentPage = () => {
                                     .CreatorUserID,
                                 name: tweetjson.message.ReplyComment[i]
                                     .CreatorUserName,
-                                profile_image_url: creator_json.data[0].avatar
-                                    ? SERVER_ADDRESS +
-                                      creator_json.data[0].avatar.replace(
-                                          "\\",
-                                          "/"
-                                      )
-                                    : defaultUser,
+                                profile_image_url:
+                                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                             },
                             media: "",
                             date: distance(
@@ -149,24 +138,14 @@ const CommentPage = () => {
                     const tweetitem = await fetch(rooturl);
                     if (tweetitem.ok) {
                         const tweetjson = await tweetitem.json();
-                        const creator = await fetch(
-                            "/search/SearchUserById/" +
-                                tweetjson.message[0].CreatorUserID
-                        );
-                        const creator_json = await creator.json();
                         const tweetobj = {
                             tweetId: tweetjson.message[0].TweetID,
                             text: tweetjson.message[0].Content,
                             user: {
                                 userId: tweetjson.message[0].CreatorUserID,
                                 name: tweetjson.message[0].CreatorUserName,
-                                profile_image_url: creator_json.data[0].avatar
-                                    ? SERVER_ADDRESS +
-                                      creator_json.data[0].avatar.replace(
-                                          "\\",
-                                          "/"
-                                      )
-                                    : defaultUser,
+                                profile_image_url:
+                                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                             },
                             media: "",
                             date: distance(tweetjson.message[0].CreateTime),
@@ -187,11 +166,6 @@ const CommentPage = () => {
 
                         if (tweetitem.ok) {
                             const tweetjson = await tweetitem.json();
-                            const creator = await fetch(
-                                "/search/SearchUserById/" +
-                                    tweetjson.message.CreatorUserID
-                            );
-                            const creator_json = await creator.json();
                             const commentobj = {
                                 commentId: tweetjson.message.CommentID,
                                 in_reply_to_tweetId: tweetjson.message
@@ -203,14 +177,8 @@ const CommentPage = () => {
                                 user: {
                                     userId: tweetjson.message.CreatorUserID,
                                     name: tweetjson.message.CreatorUserName,
-                                    profile_image_url: creator_json.data[0]
-                                        .avatar
-                                        ? SERVER_ADDRESS +
-                                          creator_json.data[0].avatar.replace(
-                                              "\\",
-                                              "/"
-                                          )
-                                        : defaultUser,
+                                    profile_image_url:
+                                        "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
                                 },
                                 media: "",
                                 date: distance(tweetjson.message.CreatTime),
