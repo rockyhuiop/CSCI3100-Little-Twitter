@@ -5,6 +5,8 @@
 
 .chatMenu {
     flex: 3.5;
+    height: 100%;
+    overflow-y: hidden;
 }
 
 .chatMenuInput {
@@ -15,7 +17,8 @@
 }
 
 .chatBox {
-    flex: 5.5;
+    height: 100%;
+    width: 600px;
 }
 
 .chatBoxWrapper {

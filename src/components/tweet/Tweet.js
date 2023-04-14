@@ -12,6 +12,14 @@ import { useState } from "react";
 
 const Tweet = ({ tweet, type, isModal }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
+    var isTweetAuthor = false;
+    if (currentUser == null) {
+        isTweetAuthor = false;
+    } else if (currentUser.tweetID == tweet.user.userId) {
+        isTweetAuthor = true;
+    } else {
+        isTweetAuthor = false;
+    }
     const navigate = useNavigate();
     const tweetStatistic = {
         commentCount: tweet.commentCount,
@@ -63,7 +71,6 @@ const Tweet = ({ tweet, type, isModal }) => {
         const bm_json = await bm.json();
         refreshUser();
     };
-
 
     return (
         <div
@@ -182,21 +189,20 @@ const Tweet = ({ tweet, type, isModal }) => {
                             ""
                         )}
                     </small>
-                    {tweet.imageList ?
+                    {tweet.imageList ? (
                         <div className="tweet__content">
-                        
-                            {tweet.imageList.map((img)=>(
+                            {tweet.imageList.map((img) => (
                                 <img
                                     key={img}
                                     src={img}
                                     alt="img"
                                     className="tweet__img"
                                 />
-                            ))}   
+                            ))}
                         </div>
-                    :
-                    ""
-                    }
+                    ) : (
+                        ""
+                    )}
                     <div className="tweet__content">{tweet.text}</div>
                     {!isModal ? (
                         <TweetActions
