@@ -200,6 +200,18 @@ router.get('/:id', async (req, res)=>{
     
 })
 
+//User Recommendation
+router.get('/recommendation', async (req, res) => {
+
+  console.log("done")
+
+  const currUser = await User.findOne({tweetID: req.session.userid})
+  const followingLists = currUser.followings
+  const User_Recommend = await User.find({followers : {$in : followingLists}})
+  return res.status(200).json({User_Recommend})
+
+})
+
 
 
 module.exports = router
