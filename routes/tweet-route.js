@@ -114,12 +114,18 @@ router.post('/retweet/:tweetID', upload.array('images', 10), (req, res) =>{
 
         const {tweetID: retweetID} = req.params
 
-        await ReTweet(retweetID, req.session.userid, req.body, req.files)
+        try{
+            await ReTweet(retweetID, req.session.userid, req.body, req.files)
+            res.status(200).json({message: "success, posted retweet"})
+        }catch(err){
+            res.status(500).json(err)
+        }
+
+        
     }
     )()
 
-    res.status(200).json({message: "success, posted retweet"})
-
+    
 })
 
 //Posting Comment on Tweet

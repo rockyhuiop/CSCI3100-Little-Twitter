@@ -6,7 +6,7 @@ const Counter = require('../model/Counter')
 const {
     IncreTweetCount,
     IncreCommentCount,
-} = require('../controller/counter')
+} = require('./counter')
 
 const nextTweetID = async () => { 
     const TweetCounter = await Counter.findOne({TargetToCount:"Tweet"})
@@ -49,7 +49,7 @@ const CreateTweet = async (userID, body, files) => {
         newTweet.UrlList = UrlList
     }
 
-    if (files.length > 0){
+    if (files !== undefined && files.length > 0){
 
         var ImageList = []
 
@@ -66,6 +66,12 @@ const CreateTweet = async (userID, body, files) => {
     //Increment the Tweet Counter
     await IncreTweetCount()
 
+}
+
+const RecordRetweetID = async(userid, retweetID) => {
+    const Creator = await User.findOne({tweetID: userid})
+    Creator.retweetedTweetID.push(retweetID)
+    await Creator.save()
 }
 
 const ReTweet = async (retweetID,userid, body, files) => {
@@ -94,11 +100,15 @@ const ReTweet = async (retweetID,userid, body, files) => {
         SuspensionStatus: false
     })
 
+
+
     if (UrlList !== undefined){
         newTweet.UrlList = UrlList
     }
 
-    if (files.length > 0){
+
+
+    if (files !== undefined && files.length > 0){
 
         var ImageList = []
 
@@ -110,7 +120,6 @@ const ReTweet = async (retweetID,userid, body, files) => {
 
     }
 
-
     await newTweet.save()
 
     //Increment Retweet Count
@@ -118,6 +127,9 @@ const ReTweet = async (retweetID,userid, body, files) => {
 
     //Increment the Tweet Counter
     await IncreTweetCount()
+
+    //Record the Retweet Tweet ID
+    await RecordRetweetID(userid, retweetID)
 
 }
 
@@ -477,9 +489,8 @@ const TweetCommentCount = async(tweetID) => {
 
 const FetchFollowing = async(userID) => {
     const targetUser = await User.findOne({tweetID:userID})
-    const followings = await targetUser.followings
+    const followings = targetUser.followings
     return followings
-    
 }
 
 const FetchReplyComment = async(commentID) => {
@@ -495,12 +506,14 @@ const FetchReplyComment = async(commentID) => {
 
         const Creator = await User.findOne({tweetID:fetchReplyComment.CreatorUserID})
         const CreatorUserName = Creator.name
+        const CreatorAvastar = Creator.avatar
 
         replyComment = {
             CommentID: fetchReplyComment.commentID,
             CorrCommentID: fetchReplyComment.corrCommentID,
             CreatorUserID: fetchReplyComment.CreatorUserID,
             CreatorUserName: CreatorUserName,
+            CreatorAvastar: CreatorAvastar,
             CreatTime : fetchReplyComment.CreateTime,
             Content: fetchReplyComment.Content,
             LikeCount: fetchReplyComment.LikeCount,
@@ -527,11 +540,13 @@ const FetchComment = async(commentID) => {
 
         const Creator = await User.findOne({tweetID:targetComment[0].CreatorUserID})
         const CreatorUserName = Creator.name
+        const CreatorAvastar = Creator.avatar
 
         const Commentobj = {
             CommentID: targetComment[0].commentID,
             CreatorUserID: targetComment[0].CreatorUserID,
             CreatorUserName: CreatorUserName,
+            CreatorAvastar: CreatorAvastar,
             CreatTime : targetComment[0].CreateTime,
             Content: targetComment[0].Content,
             LikeCount: targetComment[0].LikeCount,
@@ -572,12 +587,14 @@ const FetchTweetComment = async(tweetID) => {
 
         const Creator = await User.findOne({tweetID:fetchComment.CreatorUserID})
         const CreatorUserName = Creator.name
+        const CreatorAvastar = Creator.avatar
 
         comment = {
             CommentID: fetchComment.commentID,
             CorrTweetID: fetchComment.corrTweetID,
             CreatorUserID: fetchComment.CreatorUserID,
             CreatorUserName: CreatorUserName,
+            CreatorAvastar: CreatorAvastar,
             CreatTime : fetchComment.CreateTime,
             Content: fetchComment.Content,
             LikeCount: fetchComment.LikeCount,
@@ -614,11 +631,13 @@ const FetchTweet = async(tweetID) => {
 
         const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
+        const Avastar = Creator.avatar
 
         tweet = {
             TweetID: fetchTweet.tweetID,
             CreatorUserID : fetchTweet.CreatorUserID,
             CreatorUserName: CreatorUserName,
+            CreatorAvastar: Avastar,
             CreateTime : fetchTweet.CreateTime,
             Content : fetchTweet.Content,
             LikeCount : fetchTweet.LikeCount,
@@ -643,12 +662,14 @@ const FetchTweet = async(tweetID) => {
 
                 const ReTweetCreator = await User.findOne({tweetID:ReTweetInfo[0].CreatorUserID})
                 const ReTweetCreatorUserName = ReTweetCreator.name
+                const ReTweetCreatorUserAvastar = ReTweetCreator.avatar
 
                 tweet['ReTweet'] = {
                     Status: "Success",
                     TweetID: ReTweetInfo[0].tweetID,
                     CreatorUserID: ReTweetInfo[0].CreatorUserID,
                     CreatorUserName: ReTweetCreatorUserName,
+                    CreatorAvastar: ReTweetCreatorUserAvastar,
                     CreateTime : ReTweetInfo[0].CreateTime,
                     Content: ReTweetInfo[0].Content,
                 }
@@ -677,7 +698,7 @@ const FetchTweet = async(tweetID) => {
     return TweetList
 }
 
-const AggregTweetSummary = async(fetchTweet, CreatorUserName) => {
+const AggregTweetSummary = async(fetchTweet, CreatorUserName, Avastar) => {
 
     var tweet = {}
 
@@ -685,6 +706,7 @@ const AggregTweetSummary = async(fetchTweet, CreatorUserName) => {
         TweetID: fetchTweet.tweetID,
         CreatorUserID : fetchTweet.CreatorUserID,
         CreatorUserName: CreatorUserName,
+        CreatorAvastar: Avastar,
         CreateTime : fetchTweet.CreateTime,
         Content : fetchTweet.Content,
         LikeCount : fetchTweet.LikeCount,
@@ -709,11 +731,13 @@ const AggregTweetSummary = async(fetchTweet, CreatorUserName) => {
 
             const ReTweetCreator = await User.findOne({tweetID:ReTweetInfo[0].CreatorUserID})
             const ReTweetCreatorUserName = ReTweetCreator.name
+            const ReTweetCreatorUserAvastar = ReTweetCreator.avatar
 
             tweet['ReTweet'] = {
                 Status: "Success",
                 CreatorUserID: ReTweetInfo[0].CreatorUserID,
                 CreatorUserName: ReTweetCreatorUserName,
+                CreatorAvastar: ReTweetCreatorUserAvastar,
                 CreateTime : ReTweetInfo[0].CreateTime,
                 Content: ReTweetInfo[0].Content,
             }
@@ -758,8 +782,9 @@ const FetchHomeTweet = async(userID) => {
         var fetchTweet = FetchTweetList[i]
         const Creator = await User.findOne({tweetID:fetchTweet.CreatorUserID})
         const CreatorUserName = Creator.name
+        const Avastar = Creator.avatar
 
-        tweet = await AggregTweetSummary(fetchTweet, CreatorUserName)
+        tweet = await AggregTweetSummary(fetchTweet, CreatorUserName, Avastar)
 
         TweetList.push(tweet)
 
@@ -851,8 +876,9 @@ const TweetRecommandation = async(relatedUserList) => {
         var recommandedTweet = await Tweet.findOne({tweetID: RecommendedTweetIDList[i]})
         const Creator = await User.findOne({tweetID:recommandedTweet.CreatorUserID})
         const CreatorUserName = Creator.name
+        const Avastar = Creator.avatar
 
-        tweet = await AggregTweetSummary(recommandedTweet, CreatorUserName)
+        tweet = await AggregTweetSummary(recommandedTweet, CreatorUserName, Avastar)
 
         RecommendedTweetList.push(tweet)
 
@@ -874,7 +900,8 @@ const FetchTweetByContent = async(specificContent) => {
         fetchedTweet = FetchedTweet[i]
         const Creator = await User.findOne({tweetID:fetchedTweet.CreatorUserID})
         const CreatorUserName = Creator.name
-        tweet = await AggregTweetSummary(fetchedTweet, CreatorUserName)
+        const Avastar = Creator.avatar
+        tweet = await AggregTweetSummary(fetchedTweet, CreatorUserName, Avastar)
         SearchedTweet.push(tweet)
     }
     return SearchedTweet

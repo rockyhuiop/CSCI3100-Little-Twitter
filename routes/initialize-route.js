@@ -2,7 +2,9 @@ const express = require('express')
 const Counter = require('../model/Counter')
 const {
     initializeDB,
-} = require('../controller/counter')
+    initizalizedRetweetID,
+    resetRetweetID,
+} = require('../controller/initizalizer')
 
 router = express.Router()
 
@@ -22,5 +24,16 @@ router.post('/setup', (req, res)=>{
         }
 })
 })
+
+router.post('/initizalizeRetweetIDInUser', (req, res) => {
+    (async() => {
+
+        await initizalizedRetweetID()
+
+    })()
+
+    return res.status(200).json({message: "success"})
+})
+
 
 module.exports = router

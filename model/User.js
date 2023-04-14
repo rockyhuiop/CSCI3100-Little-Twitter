@@ -38,6 +38,9 @@ const UserSchema = new Schema({
     dislikedTweetID:{
         type: Array,
     },
+    retweetedTweetID:{
+        type: Array,
+    },
     likedCommentID:{
         type: Array,
     },
