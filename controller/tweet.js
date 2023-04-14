@@ -100,9 +100,13 @@ const ReTweet = async (retweetID,userid, body, files) => {
         SuspensionStatus: false
     })
 
+
+
     if (UrlList !== undefined){
         newTweet.UrlList = UrlList
     }
+
+
 
     if (files !== undefined && files.length > 0){
 
@@ -117,7 +121,9 @@ const ReTweet = async (retweetID,userid, body, files) => {
     }
 
 
+
     await newTweet.save()
+
 
     //Increment Retweet Count
     await IncreReTweetCount(retweetID)
