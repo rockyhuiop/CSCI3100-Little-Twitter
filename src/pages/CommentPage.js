@@ -95,7 +95,7 @@ const CommentPage = () => {
                         i++
                     ) {
                         const comment = {
-                            commentId:
+                            tweetId:
                                 tweetjson.message.ReplyComment[i].CommentID,
                             rootTweet: tweetobj,
                             in_reply_to_tweetId: tweetobj.tweetId,
@@ -183,7 +183,7 @@ const CommentPage = () => {
                         if (tweetitem.ok) {
                             const tweetjson = await tweetitem.json();
                             const commentobj = {
-                                commentId: tweetjson.message.CommentID,
+                                tweetId: tweetjson.message.CommentID,
                                 in_reply_to_tweetId: tweetjson.message
                                     .CorrCommentID
                                     ? tweetjson.message.CorrCommentID

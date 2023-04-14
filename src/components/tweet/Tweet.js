@@ -32,7 +32,7 @@ const Tweet = ({ tweet, type, isModal }) => {
     const userUrl = "/profile/" + tweet.user.userId;
     let tweetUrl = "";
     if (type == "comment" || type == "middle") {
-        tweetUrl = "/comment/" + tweet.commentId;
+        tweetUrl = "/comment/" + tweet.tweetId;
     } else {
         tweetUrl = "/tweet/" + tweet.tweetId;
     }
@@ -133,11 +133,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                                                 ? "Unbookmark"
                                                 : "Bookmark",
                                         ]}
-                                        keySuffix={
-                                            type == "comment"
-                                                ? tweet.tweetId
-                                                : tweet.commentId
-                                        }
+                                        keySuffix={tweet.tweetId}
                                     />
                                 ) : (
                                     <IconMenu
@@ -165,11 +161,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                                                 ? "Unbookmark"
                                                 : "Bookmark",
                                         ]}
-                                        keySuffix={
-                                            type == "comment"
-                                                ? tweet.tweetId
-                                                : tweet.commentId
-                                        }
+                                        keySuffix={tweet.tweetId}
                                     />
                                 )
                             ) : (

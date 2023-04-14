@@ -147,7 +147,7 @@ const TweetInfo = ({
                     type={"comment"}
                 />
                 {tweet.comments.map((comm) => (
-                    <Tweet key={comm.commentId} tweet={comm} type={"comment"} />
+                    <Tweet key={comm.tweetId} tweet={comm} type={"comment"} />
                 ))}
             </div>
             <div className="searchBar">

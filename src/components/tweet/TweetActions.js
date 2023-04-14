@@ -36,9 +36,9 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
 
     let tweetUrl = "";
     if (isComment) {
-        tweetUrl = "https://localhost:8123/comment/" + tweet.tweetId;
+        tweetUrl = "localhost:8123/comment/" + tweet.tweetId;
     } else {
-        tweetUrl = "https://localhost:8123/tweet/" + tweet.tweetId;
+        tweetUrl = "localhost:8123/tweet/" + tweet.tweetId;
     }
 
     if (!isLoggedIn) {
@@ -58,7 +58,7 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
         if (!isComment) {
             likeurl = "/home/likeTweet/" + tweet.tweetId;
         } else {
-            likeurl = "/home/likeComment/" + tweet.commentId;
+            likeurl = "/home/likeComment/" + tweet.tweetId;
         }
         const like = await fetch(likeurl, {
             method: "PATCH",

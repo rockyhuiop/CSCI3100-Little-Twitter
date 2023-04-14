@@ -77,7 +77,7 @@ const TweetDetails = ({ tweet, type }) => {
     // const userUrl = "/" + tweet.user.userId;
     const userUrl = "/profile/" + tweet.user.userId;
     // const tweetUrl = userUrl + "/" + tweet.tweetId;
-    const tweetUrl = "/tweet/" + tweet.tweetId;
+    //const tweetUrl = "/tweet/" + tweet.tweetId;
 
     if (currentUser) {
         return (
@@ -186,7 +186,7 @@ const TweetDetails = ({ tweet, type }) => {
                     <span>{tweet.date} ago</span>
                 </div>
                 <div className="tweet__statistic info">
-                    {tweet.retweetCount != 0 ? (
+                    {tweet.retweetCount != 0 && type != "comment" ? (
                         <span>
                             <b>{tweet.retweetCount}</b> Retweets
                         </span>

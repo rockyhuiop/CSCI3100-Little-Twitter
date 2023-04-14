@@ -78,7 +78,7 @@ const TweetPage = () => {
                 const comments = [];
                 for (let i = 0; i < tweetjson.message[0].Comment.length; i++) {
                     const comment = {
-                        commentId: tweetjson.message[0].Comment[i].CommentID,
+                        tweetId: tweetjson.message[0].Comment[i].CommentID,
                         rootTweet: tweetobj,
                         in_reply_to_tweetId: tweetobj.tweetId,
                         in_reply_to_userId: tweetobj.user.userId,
