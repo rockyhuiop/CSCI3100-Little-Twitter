@@ -17,11 +17,17 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
     const { isLoggedIn, user: currentUser } = useUser();
     const [likes, setLikes] = useState(tweetStatistic.likeCount);
     const [isLiked, setIsLiked] = useState(
-        isLoggedIn ? currentUser.likedTweetID.includes(tweet.tweetId) : false
+        isLoggedIn
+            ? isComment
+                ? currentUser.likedCommentID.includes(tweet.tweetId)
+                : currentUser.likedTweetID.includes(tweet.tweetId)
+            : false
     );
     const [retweets, setRetweets] = useState(tweetStatistic.retweetCount);
     const [isRetweeted, setIsRetweeted] = useState(
-        isLoggedIn ? currentUser.retweetedTweetID.includes(tweet.tweetId) : false
+        isLoggedIn
+            ? currentUser.retweetedTweetID.includes(tweet.tweetId)
+            : false
     );
     const { isShowing, onClose, onOpen } = useModal();
     const [likecss, setLikecss] = useState(
@@ -48,7 +54,13 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
             setLikes(likes - 1);
             setLikecss("tweet__action like");
         }
-        const like = await fetch("/home/likeTweet/" + tweet.tweetId, {
+        let likeurl = "";
+        if (!isComment) {
+            likeurl = "/home/likeTweet/" + tweet.tweetId;
+        } else {
+            likeurl = "/home/likeComment/" + tweet.tweetId;
+        }
+        const like = await fetch(likeurl, {
             method: "PATCH",
             headers: {
                 "Content-Type":
@@ -58,29 +70,30 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
         setIsLiked(!isLiked);
     };
 
-    const handleRetweet = async(e) => {
+    const handleRetweet = async (e) => {
         e.preventDefault();
-        if (!isRetweeted){
-        var details = {
-            "Content": tweet.text,
-        };
-        
-        var ret = [];
-        for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            ret.push(encodedKey + "=" + encodedValue);
-        }
+        if (!isRetweeted) {
+            var details = {
+                Content: tweet.text,
+            };
 
-        const response = await fetch("/home/retweet/"+tweet.tweetId,{
-            method: "POST",
-            body: ret.join("&"),
-            headers: {
-                "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8"
+            var ret = [];
+            for (var property in details) {
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                ret.push(encodedKey + "=" + encodedValue);
             }
-        })
-        setRetweets(retweets + 1);
-        setIsRetweeted(true)
+
+            const response = await fetch("/home/retweet/" + tweet.tweetId, {
+                method: "POST",
+                body: ret.join("&"),
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8",
+                },
+            });
+            setRetweets(retweets + 1);
+            setIsRetweeted(true);
         }
     };
 
