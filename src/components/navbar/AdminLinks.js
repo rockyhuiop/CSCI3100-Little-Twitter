@@ -8,11 +8,13 @@ const adminLinks = [
         icon: Users,
         name: "User Management",
     },
+    /*
     {
         to: "/manage/tweets",
         icon: MessageSquare,
         name: "Tweets Managment",
     },
+    */
 ];
 
 const AdminLinks = () => {
