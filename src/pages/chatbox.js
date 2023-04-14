@@ -3,6 +3,7 @@ import Topbar from "../components/chatbox/topbar/topbar";
 import MessageTopbar from "../components/chatbox/messageTopbar/messageTopbar";
 import Conversation from "../components/chatbox/conversation/conversation";
 import Message from "../components/chatbox/message/message";
+import SearchedUser from "../components/chatbox/searchedUser/searchedUser";
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../utils/UserContext";
 import axios from "axios";
@@ -14,6 +15,8 @@ const Chatbox = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [arrivalMessage, setArrivalMessage] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResult, setSearchResult] = useState([]);
     const socket = useRef();
     // get the login in user information
     const { user: currentUser } = useUser();
@@ -37,7 +40,9 @@ const Chatbox = () => {
     }, [arrivalMessage, currentChat]);
 
     useEffect(() => {
-        socket.current.emit("addUser", currentUser.tweetID);
+        if (currentUser) {
+            socket.current.emit("addUser", currentUser.tweetID);
+        }
     }, [currentUser]);
 
     //fetching all the conversation room for the login in user
@@ -54,7 +59,30 @@ const Chatbox = () => {
             }
         };
         getConversations();
-    }, [currentUser.tweetID]);
+    }, [currentUser ? currentUser.tweetID : currentUser]);
+
+    //tackling user input for search
+    //useEffect(() => {
+    //   const saveSearchTerm = async (searchTerm) => {
+    //        console.log(searchTerm)
+    //       const res = await axios.get("/SearchUserById/" + searchTerm);
+    //       console.log(res);
+    //       setSearchResult(res.data.data);
+    //   };
+    //   saveSearchTerm();
+    //}, [searchTerm]);
+
+    function handleInputChange(event) {
+        setSearchTerm(event);
+        const saveSearchTerm = async (searchTerm) => {
+            const res = await axios.get("/search/SearchUserById/" + searchTerm);
+            console.log(res.data.data);
+            setSearchResult(res.data.data);
+        };
+        saveSearchTerm(event.target.value);
+    }
+
+    function findConversations(targetUserID) {}
 
     //fetching all the message of the current Selected conservation
     useEffect(() => {
@@ -110,15 +138,26 @@ const Chatbox = () => {
                     <input
                         placeholder="Search for friends"
                         className="chatMenuInput"
+                        onChange={handleInputChange}
                     />
-                    {conversations.map((c) => (
-                        <div onClick={() => setCurrentChat(c)}>
-                            <Conversation
-                                conversation={c}
-                                currentUser={currentUser}
-                            />
-                        </div>
-                    ))}
+                    {searchTerm == ""
+                        ? conversations.map((c) => (
+                              <div onClick={() => setCurrentChat(c)}>
+                                  <Conversation
+                                      conversation={c}
+                                      currentUser={currentUser}
+                                  />
+                              </div>
+                          ))
+                        : searchResult.map((searchedUser) => (
+                              <div
+                                  onClick={findConversations(
+                                      searchedUser.tweetID
+                                  )}
+                              >
+                                  <SearchedUser searchedUser={searchedUser} />
+                              </div>
+                          ))}
                 </div>
             </div>
             <div className="chatBox">
