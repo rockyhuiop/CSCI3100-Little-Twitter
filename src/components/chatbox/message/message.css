@@ -16,6 +16,11 @@
     margin-right: 10px;
 }
 
+.messageImg:hover {
+    opacity: 0.8;
+    transition: 200ms;
+}
+
 .messageText {
     padding: 10px;
     border-radius: 20px;

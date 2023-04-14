@@ -11,18 +11,33 @@
 }
 
 .conversationName {
+    position: relative;
+    top: 0;
+    left: 0;
     font-weight: 500;
 }
 
+.conversationUserName {
+    position: relative;
+    top: 0;
+    left: 0;
+    font-weight: 500;
+    font-size: large;
+    color: grey;
+}
+
 .conversationUserID {
+    position: relative;
+    top: 0;
+    left: 0;
     font-weight: 50;
-    font-size: small;
+    font-size: x-small;
     color: grey;
 }
 
 .conversationImg {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;

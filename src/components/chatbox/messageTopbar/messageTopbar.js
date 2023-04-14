@@ -1,4 +1,5 @@
 import "./messageTopbar.css";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import defaultUser from "../../../assets/default.jpg";
 import { SERVER_ADDRESS } from "../../../utils/constants";
@@ -6,6 +7,7 @@ import axios from "axios";
 
 const MessageTopbar = ({ currentChat, currentUser }) => {
     const [user, setUser] = useState(null);
+    const [userUrl, serUserUrl] = useState(null);
 
     useEffect(() => {
         const chatinguserID = currentChat.members.find(
@@ -17,6 +19,7 @@ const MessageTopbar = ({ currentChat, currentUser }) => {
             try {
                 const res = await axios.get("/user/" + chatinguserID);
                 setUser(res.data.data);
+                serUserUrl("/profile/" + res.data.data.tweetID);
             } catch (err) {
                 console.log(err);
             }
@@ -26,12 +29,21 @@ const MessageTopbar = ({ currentChat, currentUser }) => {
 
     return (
         <div className="messageTopbarContainer">
-            <img
-                className="messageConversationImg"
-                src={user?.avatar ? SERVER_ADDRESS + user.avatar : defaultUser}
-                alt=""
-            />
-            <span className="messageConversationName">{user?.name}</span>
+            <Link to={userUrl}>
+                <img
+                    className="messageConversationImg"
+                    src={
+                        user?.avatar
+                            ? SERVER_ADDRESS + user.avatar
+                            : defaultUser
+                    }
+                    alt=""
+                />
+            </Link>
+
+            <Link to={userUrl}>
+                <span className="messageConversationName">{user?.name}</span>
+            </Link>
         </div>
     );
 };

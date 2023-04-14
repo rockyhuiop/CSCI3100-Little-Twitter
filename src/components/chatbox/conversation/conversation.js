@@ -33,7 +33,7 @@ const Conversation = ({ conversation, currentUser }) => {
             />
             <span className="conversationName">
                 <p>
-                    {user?.name}{" "}
+                    <span className="conversationUserName">{user?.name} </span>
                     <span className="conversationUserID">
                         {" @" + user?.tweetID}
                     </span>
