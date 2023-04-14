@@ -9,6 +9,9 @@ import TweetActions from "./TweetActions.js";
 import { useUser } from "../../utils/UserContext";
 import { Bookmark } from "react-feather";
 import { useState } from "react";
+import defaultUser from "../../assets/default.jpg";
+import { SERVER_ADDRESS } from "../../utils/constants";
+import { distance } from "../../utils/distance";
 
 const Tweet = ({ tweet, type, isModal }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
@@ -35,6 +38,24 @@ const Tweet = ({ tweet, type, isModal }) => {
         tweetUrl = "/comment/" + tweet.tweetId;
     } else {
         tweetUrl = "/tweet/" + tweet.tweetId;
+    }
+
+    let tweetitem = tweet;
+    if (tweet.retweet) {
+        console.log(tweet.retweet);
+        tweetUrl = "/tweet/" + tweet.retweet.TweetID;
+        tweetitem.retweetor = tweet.user.userId;
+        tweetitem.tweetId = tweet.retweet.TweetID;
+        tweetitem.user = {
+            userId: tweet.retweet.CreatorUserID,
+            name: tweet.retweet.CreatorUserName,
+            profile_image_url: tweet.retweet.CreatorAvastar
+                ? SERVER_ADDRESS +
+                  tweet.retweet.CreatorAvastar.replace("\\", "/")
+                : defaultUser,
+        };
+        tweetitem.date = tweet.date;
+        tweetitem.text = tweet.retweet.Content;
     }
 
     const navigateToTweetUrl = (e) => {
@@ -84,7 +105,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                     <div className="tweet__headercontainer">
                         <Link to={userUrl}>
                             <img
-                                src={tweet.user.profile_image_url}
+                                src={tweetitem.user.profile_image_url}
                                 alt="Avatar"
                                 className="tweet__avatar"
                             />
@@ -98,16 +119,28 @@ const Tweet = ({ tweet, type, isModal }) => {
                 </div>
 
                 <div className="tweet__container">
+                    <small className="tweet__replyinfo">
+                        {tweetitem.retweetor ? (
+                            <div>
+                                <Link to={"/profile/" + tweetitem.retweetor}>
+                                    @{tweetitem.retweetor}
+                                </Link>{" "}
+                                Retweeted
+                            </div>
+                        ) : (
+                            ""
+                        )}
+                    </small>
                     <div className="tweet__title">
                         <div className="tweet__userinfo">
                             <span className="tweet__username">
-                                <Link to={userUrl}>{tweet.user.name}</Link>{" "}
+                                <Link to={userUrl}>{tweetitem.user.name}</Link>{" "}
                             </span>
                             <span className="tweet__uid">
-                                @{tweet.user.userId}
+                                @{tweetitem.user.userId}
                             </span>
                             <span className="tweet__timestamp">
-                                &nbsp;· {tweet.date + " ago"}
+                                &nbsp;· {tweetitem.date + " ago"}
                             </span>
                         </div>
                         <div
@@ -116,10 +149,10 @@ const Tweet = ({ tweet, type, isModal }) => {
                             }}
                         >
                             {isLoggedIn && !isModal ? (
-                                currentUser.tweetID == tweet.user.userId ? (
+                                currentUser.tweetID == tweetitem.user.userId ? (
                                     <IconMenu
                                         clickHandlers={[
-                                            () => bookmark(tweet.tweetId),
+                                            () => bookmark(tweetitem.tweetId),
                                         ]}
                                         icons={[
                                             <FontAwesomeIcon
@@ -128,18 +161,18 @@ const Tweet = ({ tweet, type, isModal }) => {
                                         ]}
                                         names={[
                                             currentUser.bookmark.includes(
-                                                tweet.tweetId
+                                                tweetitem.tweetId
                                             )
                                                 ? "Unbookmark"
                                                 : "Bookmark",
                                         ]}
-                                        keySuffix={tweet.tweetId}
+                                        keySuffix={tweetitem.tweetId}
                                     />
                                 ) : (
                                     <IconMenu
                                         clickHandlers={[
-                                            () => follow(tweet.user.userId),
-                                            () => bookmark(tweet.tweetId),
+                                            () => follow(tweetitem.user.userId),
+                                            () => bookmark(tweetitem.tweetId),
                                         ]}
                                         icons={[
                                             <FontAwesomeIcon
@@ -151,17 +184,17 @@ const Tweet = ({ tweet, type, isModal }) => {
                                         ]}
                                         names={[
                                             currentUser.followings.includes(
-                                                tweet.user.userId
+                                                tweetitem.user.userId
                                             )
                                                 ? "Unfollow"
                                                 : "Follow",
                                             currentUser.bookmark.includes(
-                                                tweet.tweetId
+                                                tweetitem.tweetId
                                             )
                                                 ? "Unbookmark"
                                                 : "Bookmark",
                                         ]}
-                                        keySuffix={tweet.tweetId}
+                                        keySuffix={tweetitem.tweetId}
                                     />
                                 )
                             ) : (
@@ -169,21 +202,27 @@ const Tweet = ({ tweet, type, isModal }) => {
                             )}
                         </div>
                     </div>
+
                     <small className="tweet__replyinfo">
                         {type == "comment" || type == "middle" ? (
                             <div>
                                 Replying to{" "}
-                                <Link to={userUrl}>
-                                    @{tweet.in_reply_to_userId}
+                                <Link
+                                    to={
+                                        "/profile/" +
+                                        tweetitem.in_reply_to_userId
+                                    }
+                                >
+                                    @{tweetitem.in_reply_to_userId}
                                 </Link>
                             </div>
                         ) : (
                             ""
                         )}
                     </small>
-                    {tweet.imageList ? (
+                    {tweetitem.imageList ? (
                         <div className="tweet__content">
-                            {tweet.imageList.map((img) => (
+                            {tweetitem.imageList.map((img) => (
                                 <img
                                     key={img}
                                     src={img}
@@ -195,11 +234,11 @@ const Tweet = ({ tweet, type, isModal }) => {
                     ) : (
                         ""
                     )}
-                    <div className="tweet__content">{tweet.text}</div>
+                    <div className="tweet__content">{tweetitem.text}</div>
                     {!isModal ? (
                         <TweetActions
                             tweetStatistic={tweetStatistic}
-                            tweet={tweet}
+                            tweet={tweetitem}
                             isComment={type == "comment" || type == "middle"}
                         />
                     ) : (

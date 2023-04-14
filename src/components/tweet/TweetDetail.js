@@ -126,31 +126,54 @@ const TweetDetails = ({ tweet, type }) => {
                                     e.preventDefault();
                                 }}
                             >
-                                <IconMenu
-                                    clickHandlers={
-                                        currentUser.tweetID == tweet.user.userId
-                                            ? [null, null, null]
-                                            : [null, null]
-                                    }
-                                    icons={[
-                                        currentUser.tweetID ==
-                                        tweet.user.userId ? (
+                                {currentUser.tweetID == tweet.user.userId ? (
+                                    <IconMenu
+                                        clickHandlers={[
+                                            () => bookmark(tweet.tweetId),
+                                        ]}
+                                        icons={[
+                                            <FontAwesomeIcon
+                                                icon={faBookmark}
+                                            />,
+                                        ]}
+                                        names={[
+                                            currentUser.bookmark.includes(
+                                                tweet.tweetId
+                                            )
+                                                ? "Unbookmark"
+                                                : "Bookmark",
+                                        ]}
+                                        keySuffix={tweet.tweetId}
+                                    />
+                                ) : (
+                                    <IconMenu
+                                        clickHandlers={[
+                                            () => follow(tweet.user.userId),
+                                            () => bookmark(tweet.tweetId),
+                                        ]}
+                                        icons={[
                                             <FontAwesomeIcon
                                                 icon={faUserXmark}
-                                            />
-                                        ) : (
-                                            ""
-                                        ),
-                                        <FontAwesomeIcon icon={faUserXmark} />,
-                                        <FontAwesomeIcon icon={faBookmark} />,
-                                    ]}
-                                    names={
-                                        currentUser.tweetID == tweet.user.userId
-                                            ? ["Edit", "Unfollow", "Bookmark"]
-                                            : ["Unfollow", "Bookmark"]
-                                    }
-                                    keySuffix={tweet.tweetId}
-                                />
+                                            />,
+                                            <FontAwesomeIcon
+                                                icon={faBookmark}
+                                            />,
+                                        ]}
+                                        names={[
+                                            currentUser.followings.includes(
+                                                tweet.user.userId
+                                            )
+                                                ? "Unfollow"
+                                                : "Follow",
+                                            currentUser.bookmark.includes(
+                                                tweet.tweetId
+                                            )
+                                                ? "Unbookmark"
+                                                : "Bookmark",
+                                        ]}
+                                        keySuffix={tweet.tweetId}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>

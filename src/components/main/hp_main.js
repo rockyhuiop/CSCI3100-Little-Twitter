@@ -66,12 +66,17 @@ const Hp_main = () => {
                         user: {
                             userId: log_json.message[i].CreatorUserID,
                             name: log_json.message[i].CreatorUserName,
-                            profile_image_url: log_json.message[i].CreatorAvastar
+                            profile_image_url: log_json.message[i]
+                                .CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                log_json.message[i].CreatorAvastar.replace("\\", "/")
+                                  log_json.message[i].CreatorAvastar.replace(
+                                      "\\",
+                                      "/"
+                                  )
                                 : defaultUser,
                         },
                         media: "",
+                        retweet: log_json.message[i].ReTweet,
                         date: distance(log_json.message[i].CreateTime),
                         likeCount: log_json.message[i].LikeCount,
                         commentCount: log_json.message[i].CommentCount,
@@ -93,12 +98,16 @@ const Hp_main = () => {
                         user: {
                             userId: not_log_json.message[i].CreatorUserID,
                             name: not_log_json.message[i].CreatorUserName,
-                            profile_image_url: not_log_json.message[i].CreatorAvastar
+                            profile_image_url: not_log_json.message[i]
+                                .CreatorAvastar
                                 ? SERVER_ADDRESS +
-                                not_log_json.message[i].CreatorAvastar.replace("\\", "/")
+                                  not_log_json.message[
+                                      i
+                                  ].CreatorAvastar.replace("\\", "/")
                                 : defaultUser,
                         },
                         media: "",
+                        retweet: not_log_json.message[i].ReTweet,
                         date: distance(not_log_json.message[i].CreateTime),
                         likeCount: not_log_json.message[i].LikeCount,
                         commentCount: not_log_json.message[i].CommentCount,

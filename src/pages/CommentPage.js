@@ -164,6 +164,7 @@ const CommentPage = () => {
                                     : defaultUser,
                             },
                             media: "",
+                            retweet: tweetjson.message[0].ReTweet,
                             date: distance(tweetjson.message[0].CreateTime),
                             likeCount: tweetjson.message[0].LikeCount,
                             commentCount: tweetjson.message[0].Comment.length,
