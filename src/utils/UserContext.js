@@ -31,7 +31,7 @@ const UserProvider = ({ children }) => {
     };
 
     const fetchProfileAndSetUser = async () => {
-        console.log("[UserContext] fetching user profile...");
+        // console.log("[UserContext] fetching user profile...");
         setIsLoading(true);
         setError(null);
         try {
@@ -94,14 +94,14 @@ const UserProvider = ({ children }) => {
             message: "Logged In.",
         });
         setOpen(true);
-        console.log("[UserContext] user has logged in and got his profile.");
+        // console.log("[UserContext] user has logged in and got his profile.");
         return null;
     };
 
     const logout = async () => {
         const response = await fetch("/logout");
         if (response.ok) {
-            console.log("[UserContext] user has logged out");
+            // console.log("[UserContext] user has logged out");
             setUser(null);
             setMessage({ variant: "success", message: "Logged out" });
             navigate("/");

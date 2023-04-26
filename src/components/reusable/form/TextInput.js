@@ -10,11 +10,11 @@ const TextInput = ({ label, ...props }) => {
 
     return (
         <div className={styles.group}>
-            <label htmlFor="name">{label}</label>
+            <label htmlFor={field.name}>{label}</label>
             {props.type !== "textarea" ? (
-                <input {...field} {...props} />
+                <input id={field.name} {...field} {...props} />
             ) : (
-                <textarea {...field} {...props}></textarea>
+                <textarea id={field.name} {...field} {...props}></textarea>
             )}
             {meta.touched && meta.error ? (
                 <p className={styles.error}>{meta.error}</p>

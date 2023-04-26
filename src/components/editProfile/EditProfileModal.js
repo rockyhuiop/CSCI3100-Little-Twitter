@@ -39,7 +39,7 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
             if (avatar) {
                 formData.append("avatar", avatar);
             }
-            const response = await fetch("/profile/update", {
+            const response = await fetch("profile/update", {
                 method: "POST",
                 body: formData,
             });
@@ -90,7 +90,11 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
             {/* I placed the banner OUTSIDE of the modal body because banner need to have no margin. Noramlly all contents should be inside modal body */}
             <EditableBanner
                 onBannerChange={bannerChanged}
-                url={bannerURL || (user.banner && SERVER_ADDRESS + user.banner.replace("\\","/"))}
+                url={
+                    bannerURL ||
+                    (user.banner &&
+                        SERVER_ADDRESS + user.banner.replace("\\", "/"))
+                }
             />
             <ModalBody>
                 <div className={styles.avatar}>
@@ -99,7 +103,8 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
                         onAvatarChange={avatarChanged}
                         avatar={
                             avatarURL ||
-                            (user.avatar && SERVER_ADDRESS + user.avatar.replace("\\","/"))
+                            (user.avatar &&
+                                SERVER_ADDRESS + user.avatar.replace("\\", "/"))
                         }
                         username={user.name}
                     />

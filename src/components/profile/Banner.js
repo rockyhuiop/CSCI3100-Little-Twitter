@@ -12,11 +12,14 @@ const Banner = ({ user: { banner } }) => {
     // The gradient-banner class is the background
     // This class will not be applied when there is a banner url
     if (banner) {
-        style.backgroundImage = `url(${SERVER_ADDRESS + banner.replace("\\","/")})`;
+        style.backgroundImage = `url(${
+            SERVER_ADDRESS + banner.replace("\\", "/")
+        })`;
     }
 
     return (
         <div
+            aria-label="banner"
             style={style}
             className={classnames(
                 banner ? "" : styles["gradient-banner"],
