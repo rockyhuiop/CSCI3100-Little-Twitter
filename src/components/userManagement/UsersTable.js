@@ -27,7 +27,7 @@ const UsersTable = () => {
                     <th>actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody data-testid="users-table">
                 {filtered.map((user) => {
                     return (
                         <tr key={user._id}>

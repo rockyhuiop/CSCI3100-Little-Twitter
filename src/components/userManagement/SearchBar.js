@@ -24,7 +24,7 @@ const SearchBar = () => {
     };
 
     return (
-        <div className={styles.bar} onClick={onClick}>
+        <div className={styles.bar} onClick={onClick} role="search">
             <Search />
             <input
                 placeholder={"Search Users"}
