@@ -10,6 +10,7 @@ const FancyInput = ({ label, ...props }) => {
                 {...field}
                 {...props}
                 className={styles.input}
+                id={field.name}
                 placeholder={props.name}
             />
             <label htmlFor={props.name || props.id} className={styles.label}>

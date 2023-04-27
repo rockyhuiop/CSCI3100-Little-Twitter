@@ -13,6 +13,7 @@ const FancyPasswordInput = ({ label, ...props }) => {
                 <input
                     {...field}
                     {...props}
+                    id={field.name}
                     className={styles.input}
                     type={isPasswordShowing ? "text" : "password"}
                     placeholder={props.name}
