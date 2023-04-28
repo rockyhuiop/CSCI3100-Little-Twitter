@@ -75,14 +75,36 @@ const Chatbox = () => {
     function handleInputChange(event) {
         setSearchTerm(event);
         const saveSearchTerm = async (searchTerm) => {
-            const res = await axios.get("/search/SearchUserById/" + searchTerm);
-            console.log(res.data.data);
-            setSearchResult(res.data.data);
+            try {
+                var res = await axios.get(
+                    "/search/SearchUserById/" + searchTerm
+                );
+                console.log(res.data.data);
+                setSearchResult(res.data.data);
+            } catch (err) {
+                res = await axios.get(
+                    "/conversation/search/" + currentUser.tweetID
+                );
+                console.log(res.data.data);
+                setSearchResult(res.data.data);
+            }
         };
         saveSearchTerm(event.target.value);
     }
 
-    function findConversations(targetUserID) {}
+    function findConversations(targetUserID, currentUserID) {
+        (async () => {
+            var existingConversations = await axios.get(
+                "/conversation/search/" + targetUserID + "/" + currentUserID
+            );
+            if (existingConversations.data == undefined) {
+                existingConversations = await axios.post(
+                    "/conversation/create/" + targetUserID + "/" + currentUserID
+                );
+            }
+            setCurrentChat(existingConversations.data);
+        })();
+    }
 
     //fetching all the message of the current Selected conservation
     useEffect(() => {
@@ -140,7 +162,7 @@ const Chatbox = () => {
                         className="chatMenuInput"
                         onChange={handleInputChange}
                     />
-                    {searchTerm == ""
+                    {searchTerm === ""
                         ? conversations.map((c) => (
                               <div onClick={() => setCurrentChat(c)}>
                                   <Conversation
@@ -151,9 +173,12 @@ const Chatbox = () => {
                           ))
                         : searchResult.map((searchedUser) => (
                               <div
-                                  onClick={findConversations(
-                                      searchedUser.tweetID
-                                  )}
+                                  onClick={() =>
+                                      findConversations(
+                                          searchedUser.tweetID,
+                                          currentUser.tweetID
+                                      )
+                                  }
                               >
                                   <SearchedUser searchedUser={searchedUser} />
                               </div>
