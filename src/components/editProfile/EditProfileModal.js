@@ -10,6 +10,15 @@ import EditableBanner from "./EditableBanner";
 import EditProfileForm from "./EditProfileForm";
 import styles from "./EditProfileModal.module.css";
 
+/**
+ * The edit profile form, shown as a modal
+ *
+ * user: the user to be edited (I didn't use the current user since the admin
+ * page also uses it)
+ * onClose: what to do when the modal closes
+ * isShowing: is this modal showing?
+ * editCallback: what to do when the profile is updated
+ */
 const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
     const formRef = useRef(null);
     const [error, setError] = useState(null);

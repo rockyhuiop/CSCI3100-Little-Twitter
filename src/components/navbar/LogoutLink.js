@@ -4,6 +4,9 @@ import { useUser } from "../../utils/UserContext";
 import styles from "./LogoutLink.module.css";
 import NavbarItem from "./NavbarItem";
 
+/**
+ * It is a logout button, but with the styling of a link
+ */
 const LogoutLink = () => {
     const { logout, isLoggedIn, isAdmin } = useUser();
 

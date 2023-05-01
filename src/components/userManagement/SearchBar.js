@@ -3,6 +3,11 @@ import { Search } from "react-feather";
 import styles from "./SearchBar.module.css";
 import { useUserMangement } from "./UserManagementContext";
 
+/**
+ * The big searach bar on top of the users' table
+ * It will find users by _id OR tweetID.
+ * The logic of filtering is inside the context hook
+ */
 const SearchBar = () => {
     const ref = useRef(null);
     const { setQuery, query } = useUserMangement();

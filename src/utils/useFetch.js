@@ -2,6 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 
 /**
  * A hook wrapping fetch, just pass the arguments just like the normal fetch function
+ * @param {string} url the url used
+ * @param {RequestInit} options passed to fetch
+ * @param {boolean} manual will it automatically fetch things upon render. If false, the user has to call the makeRequest hook to start a request
  */
 export const useFetch = (url, options, manual = false) => {
     const [data, setData] = useState(null);
@@ -29,6 +32,7 @@ export const useFetch = (url, options, manual = false) => {
     }, [url]);
 
     useEffect(() => {
+        // if manual is false, that means we want it to be automatic
         if (!manual) {
             makeRequest();
         }

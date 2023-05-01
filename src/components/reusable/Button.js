@@ -29,10 +29,12 @@ const Button = ({
         scheme = "primary";
     }
 
+    // see Button.module.css for the class names
     const buttonClasses = classnames(
         styles.button,
+        // use primary colour scheme by default
         variant ? styles[`${scheme}-${variant}`] : styles[scheme],
-        styles[size] || styles.medium,
+        styles[size] || styles.medium, // use medium size by the default
         additionalClasses || ""
     );
 

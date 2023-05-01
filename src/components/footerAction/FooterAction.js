@@ -5,8 +5,21 @@ import styles from "./FooterAction.module.css";
 import Login from "./Login";
 import Register from "./Register";
 
+/**
+ * The blue bar that is shown when the user is not logged in
+ * It contains a button for Login and Register
+ * When login is clicked, it shows the login form.
+ * When register is clicked, it shows the register form.
+ *
+ * It will not be shown if the user is logged in.
+ */
 const FooterAction = () => {
     const { isLoggedIn } = useUser();
+
+    /**
+     * Two forms cannot show at the same time, so if one shows,
+     * the other one must hide.
+     */
 
     const {
         isShowing: isLogShowing,

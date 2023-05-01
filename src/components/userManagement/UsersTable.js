@@ -3,6 +3,12 @@ import UserActions from "./UserActions";
 import { useUserMangement } from "./UserManagementContext";
 import styles from "./UsersTable.module.css";
 
+/**
+ * Lists all the users in the database in a table
+ * The first row shows their _id, second username, third tweetID
+ * and finally a list of actions admins can do
+ * see UserActions.js for more details.
+ */
 const UsersTable = () => {
     const { filtered } = useUserMangement();
     const abridgedID = (user) => {
@@ -13,6 +19,7 @@ const UsersTable = () => {
         }
     };
 
+    // copy the id to clipboard when it is clicked
     const copyID = (id) => {
         navigator.clipboard.writeText(id);
     };
@@ -27,6 +34,7 @@ const UsersTable = () => {
                     <th>actions</th>
                 </tr>
             </thead>
+            {/* thead and tbody both uses the same role, I have no way but to add this one */}
             <tbody data-testid="users-table">
                 {filtered.map((user) => {
                     return (

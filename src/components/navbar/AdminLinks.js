@@ -1,4 +1,4 @@
-import { MessageSquare, Users } from "react-feather";
+import { Users } from "react-feather";
 import styles from "./AdminLinks.module.css";
 import NavbarItems from "./NavbarItems";
 
@@ -17,6 +17,9 @@ const adminLinks = [
     */
 ];
 
+/**
+ * The list of links below the normal user links
+ */
 const AdminLinks = () => {
     return (
         <div className={styles.container}>

@@ -5,7 +5,7 @@ import TextInput from "../reusable/form/TextInput";
 import styles from "./EditProfileForm.module.css";
 
 // The submit button is outside of the form
-// I have to hook a ref to Formik
+// I have to hook a ref into this Formik component
 const EditProfileForm = forwardRef(({ user, handleSubmit }, ref) => {
     return (
         <Formik

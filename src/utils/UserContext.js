@@ -12,24 +12,36 @@ import SnackBox from "../components/reusable/snack-boxes/SnackBox";
 
 const UserContext = createContext({});
 
+// convenience hook
 export const useUser = () => {
     return useContext(UserContext);
 };
+
+/**
+ * User context contains the authentication flow of this program
+ * Returns the current logged in user and other goodies.
+ */
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    // navigate to the profile page upon login
     const navigate = useNavigate();
+    // for the notification below
     const [open, setOpen] = useState(false);
+    // any kind of fetch error
     const [error, setError] = useState(false);
+    // for the notification below
     const [message, setMessage] = useState({
         variant: "",
         message: "",
     });
 
+    // close the modal
     const handleClose = () => {
         setOpen(false);
     };
 
+    // fetch the full user using the /profile route
     const fetchProfileAndSetUser = async () => {
         // console.log("[UserContext] fetching user profile...");
         setIsLoading(true);
@@ -49,6 +61,7 @@ const UserProvider = ({ children }) => {
         }
     };
 
+    // submit the form to /registration
     const register = async (values) => {
         try {
             const response = await fetch("/registration", {
@@ -74,6 +87,7 @@ const UserProvider = ({ children }) => {
         }
     };
 
+    // submit the form to /login
     // returns null if successful, the error message if not successful
     const login = async (values) => {
         const response = await fetch("/login", {
@@ -98,6 +112,8 @@ const UserProvider = ({ children }) => {
         return null;
     };
 
+    // /logout will take care of the cookie
+    // navigates to the home page after logging out
     const logout = async () => {
         const response = await fetch("/logout");
         if (response.ok) {
@@ -117,6 +133,8 @@ const UserProvider = ({ children }) => {
     };
 
     useEffect(() => {
+        // automatically try to fetch the current user
+        // if there is no logged in user, it does nothing
         fetchProfileAndSetUser();
     }, []);
 

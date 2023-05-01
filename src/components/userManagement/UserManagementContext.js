@@ -3,11 +3,13 @@ import { useFetch } from "../../utils/useFetch";
 
 const UsersManagementContext = createContext();
 
+// convenience hook
 export const useUserMangement = () => {
     return useContext(UsersManagementContext);
 };
 
 const UserManagementProvider = ({ children }) => {
+    // dashboard fetches a list of users
     const { data, isLoading, error } = useFetch("/dashboard/");
     const [users, setUsers] = useState([]);
 
@@ -17,7 +19,9 @@ const UserManagementProvider = ({ children }) => {
         }
     }, [data]);
 
+    // this will be supplied to the search bar
     const [query, setQuery] = useState("");
+    // it will cache the filtered results...
     const filtered = useMemo(() => {
         if (!users) {
             return null;
@@ -33,6 +37,7 @@ const UserManagementProvider = ({ children }) => {
         return filteredUsers;
     }, [query, users]);
 
+    // after editing profile, reflect the changes in the user interface
     const updateUser = (newUserData) => {
         const which = users.findIndex((user) => user._id === newUserData._id);
         if (which !== -1) {
@@ -42,6 +47,7 @@ const UserManagementProvider = ({ children }) => {
         }
     };
 
+    // after deleting a user, reflect the changes in the user interface
     const removeUser = (_id) => {
         const copy = users.filter((user) => user._id !== _id);
         setUsers(copy);

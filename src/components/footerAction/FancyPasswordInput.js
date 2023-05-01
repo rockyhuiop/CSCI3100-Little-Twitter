@@ -3,6 +3,14 @@ import { useState } from "react";
 import { Eye, EyeOff } from "react-feather";
 import styles from "./FancyInput.module.css";
 
+/**
+ * Similar to the FancyInput.js component, but with visibility toggle
+ *
+ * When the eye icon is closed, show the password as dots
+ * When the eye icon is opened, show the password as text
+ *
+ * Receives the usual props of an input
+ */
 const FancyPasswordInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     const [isPasswordShowing, setIsPasswordShowing] = useState(false);
@@ -36,6 +44,7 @@ const FancyPasswordInput = ({ label, ...props }) => {
                     />
                 )}
             </div>
+            {/* show the error below */}
             {meta.touched && meta.error ? (
                 <p className={styles.error}>{meta.error}</p>
             ) : null}

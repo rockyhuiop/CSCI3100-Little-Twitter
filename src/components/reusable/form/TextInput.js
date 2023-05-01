@@ -11,11 +11,13 @@ const TextInput = ({ label, ...props }) => {
     return (
         <div className={styles.group}>
             <label htmlFor={field.name}>{label}</label>
+            {/* textarea uses a different component than input, but it is abstracted away in this component */}
             {props.type !== "textarea" ? (
                 <input id={field.name} {...field} {...props} />
             ) : (
                 <textarea id={field.name} {...field} {...props}></textarea>
             )}
+            {/* show validation errros below the input box */}
             {meta.touched && meta.error ? (
                 <p className={styles.error}>{meta.error}</p>
             ) : null}

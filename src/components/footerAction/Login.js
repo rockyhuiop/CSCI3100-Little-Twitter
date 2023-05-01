@@ -8,6 +8,14 @@ import ModalHeader from "../reusable/modal/ModalHeader";
 import LoginForm from "./LoginForm";
 import styles from "./ModalBodies.module.css";
 
+/**
+ * The login modal
+ *
+ * isShowing: is the modal showing
+ * onClose: what to do when the modal is closed
+ * showRegister: when this function is called, this modal should be closed and
+ * the register form should show. Implemented by the parent component
+ */
 const Login = ({ isShowing, onClose, showRegister }) => {
     const { login } = useUser();
     const [error, setError] = useState("");

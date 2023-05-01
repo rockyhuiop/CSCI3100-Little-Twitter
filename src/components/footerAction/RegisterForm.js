@@ -5,7 +5,11 @@ import FancyInput from "./FancyInput";
 import FancyPasswordInput from "./FancyPasswordInput";
 import styles from "./Forms.module.css";
 
-const LoginForm = ({ handleSubmit }) => {
+/**
+ * The form for register
+ * handleSubmit: what to do after the inputs are validated
+ */
+const RegisterForm = ({ handleSubmit }) => {
     return (
         <Formik
             initialValues={{
@@ -68,4 +72,4 @@ const LoginForm = ({ handleSubmit }) => {
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

@@ -18,6 +18,7 @@ const Tabs = ({ children, tabNames }) => {
             {/* Tab Selector */}
             <div className={styles.selector}>
                 {/* only apply active class if current tab is it  */}
+                {/* render the tabs one by one */}
                 {tabNames.map((name, idx) => {
                     return (
                         <span

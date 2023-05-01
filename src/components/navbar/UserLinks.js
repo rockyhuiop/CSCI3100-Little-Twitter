@@ -54,6 +54,10 @@ const loggedInLinks = [
     },
 ];
 
+/**
+ * Renders a list of links for normal users
+ * If the user is not logged in, only show the homepage and explore page
+ */
 const UserLinks = () => {
     const { isLoggedIn, isAdmin } = useUser();
 

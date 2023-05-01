@@ -5,6 +5,9 @@ import { useModal } from "../reusable/modal/useModal";
 import styles from "./AddTweetButton.module.css";
 import NavAddTweet from "./NavAddTweet";
 
+/**
+ * The big blue button in the navbar
+ */
 const AddTweetButton = () => {
     const { isShowing, onClose, onOpen } = useModal();
     const { isLoggedIn } = useUser();
