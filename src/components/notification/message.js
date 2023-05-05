@@ -1,4 +1,5 @@
 import styles from "./notification.module.css"
+/* a function ti generate the notification message */
 const Message = ({fols}) =>{
     return (
         <>

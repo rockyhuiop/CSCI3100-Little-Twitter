@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../utils/UserContext";
 import Button from "../reusable/Button.js";
 import "./Tweet.css";
-
+/* This module is modified from Tweet.js, most of the it are the same, except for removing the tweet content, tweet reactioon. But show user follower  */
 const People = ({ tweet, type, isModal }) => {
     const { user: currentUser, refreshUser } = useUser();
     const navigate = useNavigate();
 
-    // const userUrl = "/" + tweet.user.userId;
+
     const userUrl = "/profile/" + tweet.userId;
     let tweetUrl = "";
 
@@ -31,7 +31,7 @@ const People = ({ tweet, type, isModal }) => {
                     "application/x-www-form-urlencoded;charset=UTF-8",
             },
         });
-        // const fol_json = await fol.json();
+
         refreshUser();
     };
 

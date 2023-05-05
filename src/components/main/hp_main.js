@@ -9,56 +9,26 @@ import Tweet from "../tweet/Tweet";
 import styles from "./hp_main.module.css";
 
 const Hp_main = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [tweets, setTweets] = useState([
-        /*{
-            tweetId: "1",
-            text: "Hello, Twitter!",
-            user: {
-                userId: "john_doe",
-                name: "John Doe",
-                profile_image_url:
-                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
-            },
-            media: "",
-            date: "",
-            likeCount: 4,
-            commentCount: 5,
-            retweetCount: 6,
-            viewCount: 1000,
-        },
-        {
-            tweetId: "2",
-            text: "Hello, Twitter!",
-            user: {
-                userId: "john_doe",
-                name: "John Doe",
-                profile_image_url:
-                    "https://pbs.twimg.com/profile_images/1632814091319508994/cwm-3OQE_400x400.png",
-            },
-            media: "",
-            date: "",
-            likeCount: 7,
-            commentCount: 8,
-            retweetCount: 9,
-            viewCount: 20000,
-        },*/
+    const [isLoggedIn, setIsLoggedIn] = useState(false);    //to store if the user is logged in
+    const [isLoading, setIsLoading] = useState(false);      //to store if the page is loading
+    const [tweets, setTweets] = useState([                  //tweet list to be shown (bookmark)
     ]);
 
-    const msg = "What's happening?";
-    const btn = "Tweet";
+    const msg = "What's happening?";    //add tweet text area place holder
+    const btn = "Tweet";                //add tweet button text display
 
     useEffect(() => {
+        /* a function to fetch all the tweet to be shown in homepage */
         const fetchHome = async () => {
-            setIsLoading(true);
-            const new_tw = [];
-            const check_log = await fetch("/home");
-            if (check_log.ok) {
+            setIsLoading(true);                         //initially is loading, set to true
+            const new_tw = [];                          //a temp array to store the tweet
+            const check_log = await fetch("/home");     //to check if user is logged in
+            if (check_log.ok) {                         //logged in 
                 setIsLoggedIn(true);
-
+                /* fetch the recommend tweet */
                 const login = await fetch("/home/fetchHomeTweet");
                 const log_json = await login.json();
+                /* push the content of the fetched tweet into new_tw */
                 for (let i = 0; i < log_json.message.length; i++) {
                     new_tw.push({
                         tweetId: log_json.message[i].TweetID,
@@ -66,6 +36,8 @@ const Hp_main = () => {
                         user: {
                             userId: log_json.message[i].CreatorUserID,
                             name: log_json.message[i].CreatorUserName,
+                            /* do some adjustment to the profile image path */
+                            /* use default image path if user's profile image not found */
                             profile_image_url: log_json.message[i]
                                 .CreatorAvastar
                                 ? SERVER_ADDRESS +
@@ -84,13 +56,17 @@ const Hp_main = () => {
                         imageList: log_json.message[i].ImageList,
                         viewCount: 1000,
                     });
+                    /* put the tweet fetched into the tweet list to be shown */
                     setTweets([...new_tw]);
                 }
+                /* put the tweet fetched into the tweet list to be shown */
                 setTweets(new_tw);
-            } else {
+            } else {    //not logged in
                 setIsLoggedIn(false);
+                /* fetch all the tweet */
                 const not_login = await fetch("/FetchAllTweet");
                 const not_log_json = await not_login.json();
+                /* push the content of the fetched tweet into new_tw */
                 for (let i = 0; i < not_log_json.message.length; i++) {
                     new_tw.push({
                         tweetId: not_log_json.message[i].TweetID,
@@ -98,6 +74,8 @@ const Hp_main = () => {
                         user: {
                             userId: not_log_json.message[i].CreatorUserID,
                             name: not_log_json.message[i].CreatorUserName,
+                            /* do some adjustment to the profile image path */
+                            /* use default image path if user's profile image not found */
                             profile_image_url: not_log_json.message[i]
                                 .CreatorAvastar
                                 ? SERVER_ADDRESS +
@@ -115,15 +93,14 @@ const Hp_main = () => {
                         imageList: not_log_json.message[i].ImageList,
                         viewCount: 1000,
                     });
+                    /* put the tweet fetched into the tweet list to be shown */
                     setTweets([...new_tw]);
                 }
-                //setTweets(new_tw);
             }
-
-            setIsLoading(false);
+            setIsLoading(false);    //finish loading
         };
-        fetchHome();
-    }, []);
+        fetchHome();    //run the above function
+    }, []);             //only run once
 
     return (
         <div className={styles.container}>
@@ -131,20 +108,24 @@ const Hp_main = () => {
                 <div className={styles.header}>
                     <h3>Home</h3>
                 </div>
+                {/* hide the addtweet button if user is not logged in */}
                 {isLoading ? (
                     ""
                 ) : isLoggedIn ? (
                     <AddTweet msg={msg} btn={btn} />
                 ) : null}
+                {/* show all the tweet */}
                 {tweets.map((tweet) => (
                     <Tweet key={tweet.tweetId} tweet={tweet} />
                 ))}
+                {/* display loading screen if still loading */}
                 {isLoading ? (
                     <CenteredStatus>{"Loading..."}</CenteredStatus>
                 ) : (
                     ""
                 )}
             </div>
+            {/* search box */}
             <div className={styles.searchBar}>
                 <Search />
             </div>

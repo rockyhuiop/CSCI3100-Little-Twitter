@@ -42,7 +42,6 @@ const Tweet = ({ tweet, type, isModal }) => {
 
     let tweetitem = tweet;
     if (tweet.retweet) {
-        console.log(tweet.retweet);
         tweetUrl = "/tweet/" + tweet.retweet.TweetID;
         tweetitem.retweetor = tweet.user.userId;
         tweetitem.tweetId = tweet.retweet.TweetID;
