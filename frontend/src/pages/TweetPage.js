@@ -42,17 +42,20 @@ import { useUser } from "../utils/UserContext";
 };*/
 
 const TweetPage = () => {
+    // State Dictionary
     const [tweet, setTweet] = useState(null);
     const { user: currentUser } = useUser();
 
     const { tweetId } = useParams();
     const url = `/tweet/fetchTweet/${tweetId}`;
 
+    // Fetch Tweets datas when the components have been rendered
     useEffect(() => {
         const fetchTweet = async () => {
             const tweetitem = await fetch(url);
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
+                // tweets data
                 const tweetobj = {
                     tweetId: tweetjson.message[0].TweetID,
                     text: tweetjson.message[0].Content,
@@ -77,6 +80,7 @@ const TweetPage = () => {
                     viewCount: 1000,
                 };
                 const comments = [];
+                // tweet's comments data
                 for (let i = 0; i < tweetjson.message[0].Comment.length; i++) {
                     const comment = {
                         tweetId: tweetjson.message[0].Comment[i].CommentID,

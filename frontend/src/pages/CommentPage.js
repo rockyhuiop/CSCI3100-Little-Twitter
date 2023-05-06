@@ -42,6 +42,7 @@ import { useUser } from "../utils/UserContext";
 };*/
 
 const CommentPage = () => {
+    // state dictionary
     const [tweet, setTweet] = useState(null);
     const [rootTweet, setRootTweet] = useState(null);
     const [rootComment, setRootComment] = useState(null);
@@ -51,8 +52,10 @@ const CommentPage = () => {
     const { commentId } = useParams();
     const commurl = `/tweet/FetchCommentByCommentID/${commentId}`;
 
+    // fetch tweet data when components have been rendered
     useEffect(() => {
         const fetchTweet = async () => {
+            // fetch comment data
             const tweetitem = await fetch(commurl);
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
@@ -88,6 +91,7 @@ const CommentPage = () => {
                     viewCount: 1000,
                 };
                 const comments = [];
+                // get comment's comment data
                 if (tweetjson.message.ReplyComment) {
                     for (
                         let i = 0;
@@ -143,6 +147,7 @@ const CommentPage = () => {
             }
 
             if (tweet) {
+                // fetch correspond tweet data of this comment
                 const rooturl = `/tweet/fetchTweet/${tweet.corrTweetID}`;
                 const fetchRootTweet = async () => {
                     const tweetitem = await fetch(rooturl);
@@ -177,6 +182,7 @@ const CommentPage = () => {
                 };
                 fetchRootTweet();
 
+                // get correspond comment's data if this comment is to comment a comment (nested comment)
                 if (tweet.corrCommentID) {
                     const rootcommenturl = `/tweet/FetchCommentByCommentID/${tweet.corrCommentID}`;
                     const fetchRootComment = async () => {
