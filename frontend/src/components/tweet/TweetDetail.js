@@ -195,7 +195,7 @@ const TweetDetails = ({ tweet, type }) => {
                         {tweet.imageList.map((img) => (
                             <img
                                 key={img}
-                                src={SERVER_ADDRESS + img}
+                                src={"../" + img}
                                 alt="img"
                                 className="tweet__img"
                             />
