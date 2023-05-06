@@ -120,6 +120,7 @@ const AddTweet = ({ msg, btn, url, type }) => {
 
                 <textarea
                     onChange={(e) => updateTextarea(e)}
+                    required
                     value={text}
                     placeholder={msg}
                     className={styles.input}
