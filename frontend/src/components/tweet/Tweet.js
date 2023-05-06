@@ -224,7 +224,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                             {tweetitem.imageList.map((img) => (
                                 <img
                                     key={img}
-                                    src={img}
+                                    src={"/" + img}
                                     alt="img"
                                     className="tweet__img"
                                 />
