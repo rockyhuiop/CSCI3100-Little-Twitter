@@ -1,0 +1,55 @@
+.box {
+    position: relative;
+    padding: 1rem 0rem;
+}
+
+.password-box {
+    position: relative;
+}
+
+.eye {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    cursor: pointer;
+    color: var(--clr-text);
+}
+
+.input {
+    width: 100%;
+    font-size: 20px;
+    padding: 15px 10px 10px 10px;
+    border: 2px solid var(--clr-text);
+    border-radius: 12px;
+    outline: none;
+}
+
+.input::placeholder {
+    color: transparent;
+}
+
+.input:focus {
+    border: 2px solid var(--clr-pink);
+}
+
+.label {
+    transform: scale(1) translateX(0) translateY(50%);
+    position: absolute;
+    left: 10px;
+    font-size: 20px;
+    pointer-events: none;
+    transition: border 0.25s ease-out 0s, transform 0.2s;
+}
+
+.input:focus ~ .label {
+    color: var(--clr-pink);
+}
+
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+    transform: scale(0.6) translateX(-32%) translateY(-24%);
+}
+
+.error {
+    color: var(--clr-danger);
+}

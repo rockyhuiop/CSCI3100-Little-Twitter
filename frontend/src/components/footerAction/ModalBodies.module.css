@@ -1,0 +1,25 @@
+.container {
+    position: relative;
+    padding: 20px;
+    border-radius: 50px;
+    max-width: 500px;
+}
+
+.container h2 {
+    text-align: center;
+}
+
+.hint {
+    margin-top: 1rem;
+}
+
+.hint span {
+    margin-left: 4px;
+    margin-right: 4px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.error {
+    color: var(--clr-danger);
+}

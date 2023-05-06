@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
+/* general */
+*,
+*::before,
+*::after {
+    /* use save fonts in case Google fails */
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+        "Helvetica Neue", sans-serif;
+
+    /* reset all spacing and all height and width are border height and width */
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* primary colour (twitter blue is the main colour of the webpage */
+    /* secondary colour is supplmentary */
+    --clr-primary: #00acee;
+    --clr-secondary: #292524;
+
+    /* use for errors and dangerous actions such as delete */
+    --clr-danger: #f43f5e;
+
+    /* use for success messages */
+    --clr-success: #16a34a;
+
+    /* a darker variant for main colours */
+    --clr-primary-darker: #0891b2;
+    --clr-secondary-darker: #1c1917;
+    --clr-danger-darker: #be123c;
+
+    /* a lighter variant for main colours */
+    --clr-primary-lighter: #7dd3fc;
+    --clr-secondary-lighter: #d6d3d1;
+    --clr-danger-lighter: #fda4af;
+
+    /* an alias for the colour white (currently "true white") */
+    --clr-white: #ffffff;
+
+    /* faint grey colour for borders */
+    --clr-border-grey: #cfd9de;
+
+    /* diminished grey for small texts */
+    --clr-small-text: #78716c;
+
+    /* the grey colour for texts / input background */
+    --clr-text: #44403c;
+    --clr-text-lighter: #68757e;
+    --clr-text-lightest: #e8eff2;
+
+    /* pink colour? */
+    --clr-pink: #d946ef;
+    --clr-pink-darker: #a21caf;
+    --clr-pink-lighter: #f0abfc;
+
+    /* transparent black */
+    --clr-darker-trans-black: rgba(0, 0, 0, 0.19);
+    --clr-trans-black: rgba(0, 0, 0, 0.24);
+    --clr-lighter-trans-black: rgba(0, 0, 0, 0.3);
+
+    /* an alias for the colour black (currently "true black") */
+    --clr-black: #000000;
+
+    --primary-gradient: linear-gradient(
+        90.13deg,
+        var(--clr-primary) 0.1%,
+        rgba(0, 172, 238, 0.75) 92.68%
+    );
+
+    /* some very cool box-shadows if anyone wants to use it */
+    --shadow-color: 0deg 0% 63%;
+    --shadow-elevation-low: 0px 0.2px 0.2px hsl(var(--shadow-color) / 0.38),
+        0px 0.3px 0.3px -1.4px hsl(var(--shadow-color) / 0.36),
+        0px 0.8px 0.9px -2.7px hsl(var(--shadow-color) / 0.33);
+    --shadow-elevation-medium: 0px 0.2px 0.2px hsl(var(--shadow-color) / 0.32),
+        0px 0.5px 0.5px -0.7px hsl(var(--shadow-color) / 0.31),
+        0px 1px 1.1px -1.4px hsl(var(--shadow-color) / 0.29),
+        0px 2px 2.2px -2.1px hsl(var(--shadow-color) / 0.28),
+        0px 4px 4.4px -2.7px hsl(var(--shadow-color) / 0.27);
+    --shadow-elevation-high: 0px 0.2px 0.2px hsl(var(--shadow-color) / 0.29),
+        0px 0.9px 1px -0.3px hsl(var(--shadow-color) / 0.29),
+        0px 1.6px 1.7px -0.6px hsl(var(--shadow-color) / 0.28),
+        0px 2.4px 2.6px -0.9px hsl(var(--shadow-color) / 0.28),
+        0px 3.5px 3.8px -1.2px hsl(var(--shadow-color) / 0.27),
+        0px 5.2px 5.7px -1.5px hsl(var(--shadow-color) / 0.27),
+        0px 7.5px 8.2px -1.8px hsl(var(--shadow-color) / 0.26),
+        -0.1px 10.5px 11.4px -2.1px hsl(var(--shadow-color) / 0.26),
+        -0.1px 14.6px 15.9px -2.4px hsl(var(--shadow-color) / 0.25),
+        -0.1px 19.8px 21.5px -2.7px hsl(var(--shadow-color) / 0.25);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+input,
+pre,
+code,
+span,
+textarea,
+table {
+    color: var(--clr-text);
+}
+button {
+    cursor: pointer;
+}
+label {
+    color: #68757e;
+}

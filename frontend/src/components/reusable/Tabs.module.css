@@ -1,0 +1,18 @@
+.selector {
+    margin-top: 2rem;
+    display: flex;
+    text-align: center;
+
+    font-size: 1.25rem;
+}
+
+.selector > * {
+    flex-grow: 1;
+    border-bottom: 2px solid var(--clr-border-grey);
+    cursor: pointer;
+}
+
+.active {
+    color: var(--clr-primary);
+    border-bottom: 2px solid var(--clr-primary);
+}

@@ -1,0 +1,7 @@
+.username {
+    font-size: 3rem;
+}
+
+.handle {
+    color: var(--clr-text-lighter);
+}

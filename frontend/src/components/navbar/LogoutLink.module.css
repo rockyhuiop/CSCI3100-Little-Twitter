@@ -1,0 +1,13 @@
+.spacing {
+    margin: 2rem 0;
+}
+
+.spacing-admin {
+    margin: 1.5rem 0;
+}
+
+@media (max-width: 960px) {
+    .spacing-admin {
+        margin: 0.7rem 0;
+    }
+}

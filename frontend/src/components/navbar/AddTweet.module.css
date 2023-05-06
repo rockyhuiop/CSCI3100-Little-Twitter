@@ -1,0 +1,62 @@
+.row {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+.row img {
+    height: 48px;
+    width: 48px;
+}
+.row textarea {
+    overflow: hidden;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 3rem;
+}
+
+.input {
+    resize: none;
+    border-bottom: 1px solid var(--clr-border-grey);
+    padding: 1rem 0.5rem;
+    font-size: 20px;
+    flex-grow: 1;
+    outline: none;
+}
+
+.add-file-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 0;
+}
+
+.add-file-row button {
+    border-radius: 50px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.file {
+    display: none;
+}
+
+.select {
+    cursor: pointer;
+    color: var(--clr-text);
+}
+
+.limit {
+    margin: 1rem 0;
+}
+
+.form {
+    padding: 1rem;
+    border-bottom: 1px solid #e7e5e4;
+}

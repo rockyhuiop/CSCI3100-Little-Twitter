@@ -1,0 +1,11 @@
+.banner {
+    width: 100%;
+    /* random hardcoded value. Might be changed later */
+    height: 315px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.gradient-banner {
+    background-image: var(--primary-gradient);
+}

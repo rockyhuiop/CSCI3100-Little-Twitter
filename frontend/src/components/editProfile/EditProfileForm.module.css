@@ -1,0 +1,4 @@
+/* there is a lot of space between the displaced avatar and the form */
+.form {
+    margin-top: -8rem;
+}

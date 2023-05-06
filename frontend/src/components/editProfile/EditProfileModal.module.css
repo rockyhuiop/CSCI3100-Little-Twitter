@@ -1,0 +1,14 @@
+/* the left section of the header */
+.left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.left svg {
+    cursor: pointer;
+}
+
+.error {
+    color: var(--clr-danger);
+}

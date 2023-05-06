@@ -1,0 +1,12 @@
+.links {
+    display: flex;
+    flex-direction: column;
+    /* in figma it is 64px, but I think it is too big in reality */
+    gap: var(--spacing);
+}
+
+@media (max-width: 960px) {
+    .links {
+        --spacing: 0.7rem !important;
+    }
+}

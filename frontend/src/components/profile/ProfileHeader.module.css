@@ -1,0 +1,21 @@
+.header {
+    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--clr-border-grey);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.arrow {
+    cursor: pointer;
+}
+
+.header h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.faint {
+    font-size: 14px;
+    color: var(--clr-text-lighter);
+}

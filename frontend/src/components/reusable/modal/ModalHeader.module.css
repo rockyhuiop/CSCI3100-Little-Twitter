@@ -1,0 +1,7 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+
+    border-bottom: 1px solid var(--clr-border-grey);
+}

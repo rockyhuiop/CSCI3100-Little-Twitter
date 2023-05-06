@@ -1,0 +1,77 @@
+.navbar {
+    width: 300px;
+    padding: 32px 24px;
+    height: 100%;
+
+    /* no matter where the user scrolls it stays at the left */
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    /* add a nice border to separate the main content with itself */
+    border-right: 1px solid var(--clr-border-grey);
+}
+
+.branding {
+    color: var(--clr-primary);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.branding h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 0px;
+    color: var(--clr-primary);
+}
+
+.menu {
+    display: none;
+}
+
+@media (max-width: 960px) {
+    .navbar {
+        background-color: var(--clr-white);
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        width: 100vw;
+        padding: 0;
+        height: auto;
+    }
+
+    .menu {
+        display: inline-block;
+        height: 2rem;
+        cursor: pointer;
+    }
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 0.5rem 1rem;
+    }
+
+    .branding {
+        display: flex;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .body {
+        padding-left: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--clr-border-grey);
+    }
+}

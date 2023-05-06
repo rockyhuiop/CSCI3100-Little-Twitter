@@ -1,0 +1,24 @@
+.info {
+    padding: 0 32px;
+    position: relative;
+}
+
+.avatar-with-name {
+    display: flex;
+    gap: 16px;
+
+    /* the avatar is raised to the top, so the bottom has too much space */
+    margin-bottom: -4rem;
+}
+
+.stats {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 1280px) {
+    .avatar-with-name {
+        flex-direction: column;
+        margin-bottom: 0rem;
+    }
+}

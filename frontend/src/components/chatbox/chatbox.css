@@ -1,0 +1,110 @@
+.messenger {
+    height: calc(100vh - 5px);
+    display: flex;
+}
+
+.chatMenu {
+    flex: 3.5;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+.chatMenuInput {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid var(--clr-border-grey);
+}
+
+.chatBox {
+    height: 100%;
+    width: 600px;
+}
+
+.chatBoxWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-left: 1px solid var(--clr-border-grey);
+}
+
+.chatBoxTop {
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.chatBoxBottom {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0px;
+}
+
+.chatMessageInput {
+    width: 90%;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: grey;
+}
+
+.chatMessageInput::placeholder {
+    color: white;
+}
+
+.chatSubmitButton {
+    width: 70px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #00acee;
+    color: white;
+}
+
+.chatMenuWrapper,
+.chatBoxWrapper {
+    padding: 5px;
+    height: 100%;
+}
+
+.NotSelectedConversationText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 10%;
+    font-size: 10px;
+    color: gray;
+    cursor: default;
+}
+
+.NotSelectedConversationText h1 {
+    margin-top: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+}
+
+.NotSelectedConversationText h3 {
+    vertical-align: middle;
+    color: gray;
+}
+
+@media screen and (max-width: 768px) {
+    .chatMenu {
+        flex: 1;
+    }
+
+    .chatMenuInput {
+        display: none;
+    }
+
+    .chatBox {
+        flex: 10;
+    }
+}

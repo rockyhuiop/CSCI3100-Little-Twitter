@@ -1,0 +1,25 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e7e5e4;
+    height: 100vh;
+    flex: 10;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+}
+.searchBar {
+    flex: 6;
+}
+
+.header {
+    padding: 10px 20px;
+    border-bottom: 1px solid #e7e5e4;
+}
+
+@media (max-width: 960px) {
+    .searchBar {
+        display: none;
+    }
+}

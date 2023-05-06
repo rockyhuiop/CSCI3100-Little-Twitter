@@ -1,0 +1,9 @@
+.header {
+    padding: 2rem 2rem 1rem 2rem;
+    border-bottom: 2px solid var(--clr-border-grey);
+}
+
+.header h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
