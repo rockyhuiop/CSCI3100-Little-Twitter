@@ -13,7 +13,16 @@ npm install
 node server.js
 ```
 
-2. In a separate terminal, install the dependencies for frontend and run:
+2. In a separate terminal, install the dependencies for backend socket part and run:
+
+```sh
+cd backend
+cd socket
+npm install
+node index.js
+```
+
+3. In a separate terminal, install the dependencies for frontend and run:
 
 ```sh
 cd frontend
@@ -22,6 +31,8 @@ npm start
 ```
 
 Note: the backend server must be running for frontend to work.
+
+Alternatively, `start.bat` can be used to run all the server.
 
 ## Configuration
 
