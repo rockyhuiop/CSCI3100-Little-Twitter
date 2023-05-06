@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+//schema for comments
 const CommentSchema = new Schema({
     commentID:{
         type: String,

@@ -23,8 +23,6 @@ const {
 const { del } = require('express/lib/application')
 
 const multer = require('multer')
-//const storage = multer.memoryStorage()
-//const upload = multer({ storage: storage })
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

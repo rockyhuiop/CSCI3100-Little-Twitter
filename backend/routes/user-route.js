@@ -5,6 +5,7 @@ const Follow = require("../model/Follow.js")
 
 router = express.Router()
 
+//get user by name using query
 router.get('/', async (req, res)=>{
     //can query by name
     let name = req.query.name
@@ -24,6 +25,7 @@ router.get('/', async (req, res)=>{
     }
 })
 
+//bookmark the specific tweet
 router.post('/bookmark/:tweet_post_ID', async (req, res) =>{
     const { tweet_post_ID } = req.params;
     let tweet = await Tweet.findOne({ tweetID: tweet_post_ID });

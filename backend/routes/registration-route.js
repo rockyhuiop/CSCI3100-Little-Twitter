@@ -4,10 +4,12 @@ const Follow = require("../model/Follow.js")
 
 router = express.Router()
 
+//get user
 router.get('/', (req, res)=>{
     res.status(200).json({state: "Success"})
 })
 
+// register user
 router.post('/',async (req, res) =>{
     User.findOne({$or: [
         { email: req.body.email },

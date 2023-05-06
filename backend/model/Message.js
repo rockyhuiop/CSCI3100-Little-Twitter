@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 
+//schema for Message
 const MessageSchema = new Schema(
     {
         conversationID: {

@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+//schema for counter
 const CounterSchema = new Schema({
     TargetToCount:{
         type: String,

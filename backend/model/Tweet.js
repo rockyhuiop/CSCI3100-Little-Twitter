@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+//schema for tweets
 const TweetSchema = new Schema({
     tweetID:{
         type: String,

@@ -4,6 +4,7 @@ const Follow = require('../model/Follow.js')
 
 router = express.Router()
 
+//logout
 router.get('/', async (req, res)=>{
     console.log('user logout')
     let user_id = req.session.userid

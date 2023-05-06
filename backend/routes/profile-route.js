@@ -17,6 +17,7 @@ const upload = multer({ storage })
 
 router = express.Router()
 
+//get user
 router.get('/', async (req, res)=>{
     try {
         let user = await User.findOne({ tweetID: req.session.userid}).select('-password');
@@ -34,6 +35,7 @@ router.get('/', async (req, res)=>{
     }
 })
 
+//update profile
 router.post('/update', upload.fields([{ name: "avatar" }, { name: "banner" }]) ,async (req, res)=>{
     // req.file can be used to access all file properties
   try {
