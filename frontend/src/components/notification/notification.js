@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../utils/UserContext";
 import Message from "./message";
 import styles from "./notification.module.css";
+import { BACK_SER } from "../../utils/constants";
 
 const Notification = () => {
     const { isLoggedIn } = useUser();
@@ -11,13 +12,19 @@ const Notification = () => {
     useEffect(() => {
         /* a function to fetch the new follwer to generate the notification message */
         const fetchNotif = async () => {
-            const check_log = await fetch("/home"); //to check if user is logged in
+            const check_log = await fetch(BACK_SER+"/home",{
+                method: "GET",
+                credentials: "include",
+            }); //to check if user is logged in
             if (!check_log.ok) {
                 nav("/", { replace: true });        //force user go back to homepage if not logged in
             } else {                                //if logged in
                 const new_fol = [];                 //a temp array to store the the new follwer
                 /* fetch the new follower */
-                const notification = await fetch("/user/notification/");
+                const notification = await fetch(BACK_SER+"/user/notification/",{
+                    method: "GET",
+                    credentials: "include",
+                });
                 const notification_json = await notification.json();
                 /* push the content of the fetched follwer into new_fol */
                 for (let i = 0; i < notification_json.data.length; i++) {

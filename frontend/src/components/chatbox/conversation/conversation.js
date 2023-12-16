@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import defaultUser from "../../../assets/default.jpg";
-import { SERVER_ADDRESS } from "../../../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../../../utils/constants";
 import "./conversation.css";
 
 const Conversation = ({ conversation, currentUser }) => {
@@ -15,7 +15,8 @@ const Conversation = ({ conversation, currentUser }) => {
         // fetching all related users of the login user
         const getUser = async () => {
             try {
-                const res = await axios.get("/user/" + chatinguserID);
+                const res = await axios.get(BACK_SER+"/user/" + chatinguserID,
+                { withCredentials: true });
                 setUser(res.data.data);
             } catch (err) {
                 console.log(err);

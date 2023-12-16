@@ -2,7 +2,7 @@ import "./messageTopbar.css";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import defaultUser from "../../../assets/default.jpg";
-import { SERVER_ADDRESS } from "../../../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../../../utils/constants";
 import axios from "axios";
 
 const MessageTopbar = ({ currentChat, currentUser }) => {
@@ -17,7 +17,8 @@ const MessageTopbar = ({ currentChat, currentUser }) => {
         // fetching all related users of the login user
         const getUser = async () => {
             try {
-                const res = await axios.get("/user/" + chatinguserID);
+                const res = await axios.get(BACK_SER+"/user/" + chatinguserID,
+                { withCredentials: true });
                 setUser(res.data.data);
                 serUserUrl("/profile/" + res.data.data.tweetID);
             } catch (err) {

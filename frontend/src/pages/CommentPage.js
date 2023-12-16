@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import defaultUser from "../assets/default.jpg";
 import TweetInfo from "../components/tweet/TweetInfo";
-import { SERVER_ADDRESS } from "../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../utils/constants";
 import { distance } from "../utils/distance";
 import { useUser } from "../utils/UserContext";
 
@@ -48,15 +48,20 @@ const CommentPage = () => {
     const [rootComment, setRootComment] = useState(null);
     const [isTweetAuthor, setIsTweetAuthor] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-
+    
     const { commentId } = useParams();
-    const commurl = `/tweet/FetchCommentByCommentID/${commentId}`;
-
+    const commurl = BACK_SER+`/tweet/FetchCommentByCommentID/${commentId}`;
+    const delay = ms => new Promise(res => setTimeout(res, ms));
     // fetch tweet data when components have been rendered
+
+    
     useEffect(() => {
         const fetchTweet = async () => {
             // fetch comment data
-            const tweetitem = await fetch(commurl);
+            const tweetitem = await fetch(commurl,{
+                method: "GET",
+                credentials: "include",
+            });
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
                 const tweetobj = {
@@ -142,15 +147,18 @@ const CommentPage = () => {
                     setIsTweetAuthor(true);
                 }
                 */
-
                 setTweet(tweetobj);
+                
             }
-
+            
             if (tweet) {
                 // fetch correspond tweet data of this comment
-                const rooturl = `/tweet/fetchTweet/${tweet.corrTweetID}`;
+                const rooturl = BACK_SER+`/tweet/fetchTweet/${tweet.corrTweetID}`;
                 const fetchRootTweet = async () => {
-                    const tweetitem = await fetch(rooturl);
+                    const tweetitem = await fetch(rooturl,{
+                        method: "GET",
+                        credentials: "include",
+                    });
                     if (tweetitem.ok) {
                         const tweetjson = await tweetitem.json();
                         const tweetobj = {
@@ -181,10 +189,9 @@ const CommentPage = () => {
                     }
                 };
                 fetchRootTweet();
-
                 // get correspond comment's data if this comment is to comment a comment (nested comment)
                 if (tweet.corrCommentID) {
-                    const rootcommenturl = `/tweet/FetchCommentByCommentID/${tweet.corrCommentID}`;
+                    const rootcommenturl = BACK_SER+`/tweet/FetchCommentByCommentID/${tweet.corrCommentID}`;
                     const fetchRootComment = async () => {
                         const tweetitem = await fetch(rootcommenturl);
 
@@ -220,9 +227,13 @@ const CommentPage = () => {
                                 viewCount: 2000,
                             };
 
-                            const parentcommenturl = `/tweet/FetchCommentByCommentID/${commentobj.in_reply_to_tweetId}`;
+                            const parentcommenturl = BACK_SER+`/tweet/FetchCommentByCommentID/${commentobj.in_reply_to_tweetId}`;
                             const parentcommentitem = await fetch(
-                                parentcommenturl
+                                parentcommenturl,
+                                {
+                                    method: "GET",
+                                    credentials: "include",
+                                }
                             );
                             if (parentcommentitem.ok) {
                                 const parentcommentjson =
@@ -252,8 +263,15 @@ const CommentPage = () => {
                 }
             }
         };
+        
+        if (!isLoading){
+            return;
+        }
+        
         fetchTweet();
+        
     });
+
 
     return !isLoading ? (
         <TweetInfo

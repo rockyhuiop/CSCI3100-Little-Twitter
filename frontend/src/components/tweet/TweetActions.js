@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../utils/UserContext";
 import { useModal } from "../reusable/modal/useModal";
 import NavAddTweet from "../navbar/NavAddTweet";
+import { BACK_SER } from "../../utils/constants";
 
 //import "./Tweet.css";
 
@@ -63,8 +64,9 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
         } else {
             likeurl = "/home/likeComment/" + tweet.tweetId;
         }
-        const like = await fetch(likeurl, {
+        const like = await fetch(BACK_SER+likeurl, {
             method: "PATCH",
+            credentials: "include",
             headers: {
                 "Content-Type":
                     "application/x-www-form-urlencoded;charset=UTF-8",
@@ -87,8 +89,9 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
                 ret.push(encodedKey + "=" + encodedValue);
             }
 
-            const response = await fetch("/home/retweet/" + tweet.tweetId, {
+            const response = await fetch(BACK_SER+"/home/retweet/" + tweet.tweetId, {
                 method: "POST",
+                credentials: "include",
                 body: ret.join("&"),
                 headers: {
                     "Content-Type":
@@ -97,6 +100,7 @@ const TweetActions = ({ tweetStatistic, tweet, isComment }) => {
             });
             setRetweets(retweets + 1);
             setIsRetweeted(true);
+            setRetweetcss("tweet__action retweeted");
         }
     };
 

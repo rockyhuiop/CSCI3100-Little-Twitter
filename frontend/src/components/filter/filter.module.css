@@ -18,3 +18,14 @@
 .con {
     display: block;
 }
+
+
+.notLog{
+    padding-bottom: 73px;
+}
+
+@media (max-width: 960px) {
+    .notLog{
+        padding-bottom: 49px;
+    }
+}

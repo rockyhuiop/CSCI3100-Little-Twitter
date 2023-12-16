@@ -18,8 +18,15 @@
     border-bottom: 1px solid #e7e5e4;
 }
 
+.notLog{
+    padding-bottom: 73px;
+}
+
 @media (max-width: 960px) {
     .searchBar {
         display: none;
+    }
+    .notLog{
+        padding-bottom: 49px;
     }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import defaultUser from "../../assets/default.jpg";
-import { SERVER_ADDRESS } from "../../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../../utils/constants";
 import { distance } from "../../utils/distance";
 import AddTweet from "../reusable/AddTweet";
 import CenteredStatus from "../reusable/CenteredStatus";
@@ -22,13 +22,20 @@ const Hp_main = () => {
         const fetchHome = async () => {
             setIsLoading(true);                         //initially is loading, set to true
             const new_tw = [];                          //a temp array to store the tweet
-            const check_log = await fetch("/home");     //to check if user is logged in
+            const check_log = await fetch(BACK_SER+"/home",{
+                method: "GET",
+                credentials: "include",
+            });     //to check if user is logged in
             if (check_log.ok) {                         //logged in 
                 setIsLoggedIn(true);
                 /* fetch the recommend tweet */
-                const login = await fetch("/home/fetchHomeTweet");
+                const login = await fetch(BACK_SER+"/home/fetchHomeTweet",{
+                    method: "GET",
+                    credentials: "include",
+                });
                 const log_json = await login.json();
                 /* push the content of the fetched tweet into new_tw */
+                //console.log(log_json)
                 for (let i = 0; i < log_json.message.length; i++) {
                     new_tw.push({
                         tweetId: log_json.message[i].TweetID,
@@ -64,7 +71,10 @@ const Hp_main = () => {
             } else {    //not logged in
                 setIsLoggedIn(false);
                 /* fetch all the tweet */
-                const not_login = await fetch("/FetchAllTweet");
+                const not_login = await fetch(BACK_SER+"/FetchAllTweet",{
+                    method: "GET",
+                    credentials: "include",
+                });
                 const not_log_json = await not_login.json();
                 /* push the content of the fetched tweet into new_tw */
                 for (let i = 0; i < not_log_json.message.length; i++) {
@@ -115,9 +125,11 @@ const Hp_main = () => {
                     <AddTweet msg={msg} btn={btn} />
                 ) : null}
                 {/* show all the tweet */}
-                {tweets.map((tweet) => (
-                    <Tweet key={tweet.tweetId} tweet={tweet} />
-                ))}
+                <div className={isLoggedIn ? "" : styles.notLog}>
+                    {tweets.map((tweet) => (
+                        <Tweet key={tweet.tweetId} tweet={tweet} />
+                    ))}
+                </div>
                 {/* display loading screen if still loading */}
                 {isLoading ? (
                     <CenteredStatus>{"Loading..."}</CenteredStatus>

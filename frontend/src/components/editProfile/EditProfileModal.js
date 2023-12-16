@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { SERVER_ADDRESS } from "../../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../../utils/constants";
 import Button from "../reusable/Button";
 import Modal from "../reusable/modal/Modal";
 import ModalBody from "../reusable/modal/ModalBody";
@@ -48,8 +48,9 @@ const EditProfileModal = ({ user, onClose, isShowing, editCallback }) => {
             if (avatar) {
                 formData.append("avatar", avatar);
             }
-            const response = await fetch("profile/update", {
+            const response = await fetch(BACK_SER+"/profile/update", {
                 method: "POST",
+                credentials: "include",
                 body: formData,
             });
             const json = await response.json();

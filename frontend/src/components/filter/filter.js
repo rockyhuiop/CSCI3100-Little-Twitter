@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import defaultUser from "../../assets/default.jpg";
-import { SERVER_ADDRESS } from "../../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../../utils/constants";
 import { distance } from "../../utils/distance";
 import CenteredStatus from "../reusable/CenteredStatus";
 import Tabs from "../reusable/Tabs";
@@ -23,7 +23,10 @@ const Filter = (search, data) => {
         const fetchall = async (search) => {
             setIsLoading(true);                         //initially is loading, set to true
             const new_tw = [];                          //a temp array to store the tweet
-            const check_log = await fetch("/home");     //to check if user is logged in
+            const check_log = await fetch(BACK_SER+"/home",{
+                method: "GET",
+                credentials: "include",
+            });     //to check if user is logged in
             if (!check_log.ok) {
                 setIsLoggedIn(false);                   //set user is not logged in
             } else {
@@ -33,7 +36,10 @@ const Filter = (search, data) => {
                 if (!check_log.ok) {                    //user is not logged in
                     setIsLoggedIn(false);
                     /* fetch all the tweet */
-                    const not_login = await fetch("/FetchAllTweet");
+                    const not_login = await fetch(BACK_SER+"/FetchAllTweet",{
+                        method: "GET",
+                        credentials: "include",
+                    });
                     const not_log_json = await not_login.json();
                     /* push the content of the fetched tweet into new_tw */
                     for (let i = 0; i < not_log_json.message.length; i++) {
@@ -68,11 +74,18 @@ const Filter = (search, data) => {
                 } else if (check_log.ok) {                              //if user is logged in
                     setIsLoggedIn(true);
                     /* fetch recommend tweet */
-                    const login = await fetch("/home/TweetRecommend");
+                    const login = await fetch(BACK_SER+"/home/TweetRecommend",{
+                        method: "GET",
+                        credentials: "include",
+                    });
                     const log_json = await login.json();
                     /* fetch recommend people */
-                    const ppl = await fetch(
-                        "/search/UserRecommendation"
+                    const ppl = await fetch(BACK_SER+
+                        "/search/UserRecommendation",
+                        {
+                            method: "GET",
+                            credentials: "include",
+                        }
                     );
                     const ppl_json = await ppl.json();
                     const new_ppl = [];         //a temp array to store the people
@@ -125,8 +138,12 @@ const Filter = (search, data) => {
                 }
             } else {                                                //user have searched something
                 /* fetch user mathch user's search */
-                const ppl = await fetch(
-                    "/search/SearchUserById/" + search.content
+                const ppl = await fetch(BACK_SER+
+                    "/search/SearchUserById/" + search.content,
+                    {
+                        method: "GET",
+                        credentials: "include",
+                    }
                 );
                 const ppl_json = await ppl.json();
                 const new_ppl = [];                                 //a temp array to store the people
@@ -240,34 +257,36 @@ const Filter = (search, data) => {
                 </div>
             </Tabs>
         :   /* not logged in */
-            <Tabs
-            tabNames={["Popular", "Recent"]}
-            >
-            {/* show tweet list in popular order */}
-            <div className={styles.con}>
-                {tweetsPop.map((tweet) => (
-                    <Tweet key={tweet.tweetId} tweet={tweet} />
-                ))}
-                {isLoading ? (
-                    <CenteredStatus>{"Loading..."}</CenteredStatus>
-                ) : (
-                    " "
-                )}
+            <div className={styles.notLog}>
+                <Tabs
+                tabNames={["Popular", "Recent"]}
+                >
+                {/* show tweet list in popular order */}
+                <div className={styles.con}>
+                    {tweetsPop.map((tweet) => (
+                        <Tweet key={tweet.tweetId} tweet={tweet} />
+                    ))}
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+                {/* show tweet list in time order */}
+                <div className={styles.con}>
+                    {tweetsRec.map((tweet) => (
+                        <Tweet key={tweet.tweetId} tweet={tweet} />
+                    ))}
+                    {/* display loading screen if still loading */}
+                    {isLoading ? (
+                        <CenteredStatus>{"Loading..."}</CenteredStatus>
+                    ) : (
+                        " "
+                    )}
+                </div>
+                    
+                </Tabs>
             </div>
-            {/* show tweet list in time order */}
-            <div className={styles.con}>
-                {tweetsRec.map((tweet) => (
-                    <Tweet key={tweet.tweetId} tweet={tweet} />
-                ))}
-                {/* display loading screen if still loading */}
-                {isLoading ? (
-                    <CenteredStatus>{"Loading..."}</CenteredStatus>
-                ) : (
-                    " "
-                )}
-            </div>
-
-            </Tabs>
         }
         </>
     );

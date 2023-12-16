@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import defaultUser from "../../assets/default.jpg";
-import { SERVER_ADDRESS } from "../../utils/constants";
+import { BACK_SER , SERVER_ADDRESS } from "../../utils/constants";
 import { distance } from "../../utils/distance";
 import { useUser } from "../../utils/UserContext";
 import CenteredStatus from "../reusable/CenteredStatus";
@@ -14,19 +14,30 @@ const Bookmark = () => {
     const { user: currentUser } = useUser();            //user basic information
     const [tweets, setTweets] = useState([              //tweet list to be shown (bookmark)
     ]);
+    const delay = ms => new Promise(res => setTimeout(res, ms));
     useEffect(() => {
         /* a function to fetch the bookmark of the user */
         const fetchBookmark = async () => {
             setIsLoading(true);                                 //initially is loading, set to true
-            const check_log = await fetch("/home");             //to check if user is logged in
+            const check_log = await fetch(BACK_SER+"/home",{
+                method: "GET",
+                credentials: "include",
+            });             //to check if user is logged in
             if (!check_log.ok) {
                 nav("/", { replace: true });                    //force user go back to homepage if not logged in
             } else if (check_log.ok) {
                 const new_tw = [];  //a temp array to store the tweet (bookmark)
                 /* fetch the bookmark 1 by 1 using the tweetID (currentUser.bookmark) in user bookmark list */
+                while (!currentUser){
+                    await delay(0);
+                }
                 for (let j = 0; j < currentUser.bookmark.length; j++) {
-                    const bookmark = await fetch(
-                        "/home/FetchTweet/" + currentUser.bookmark[j]
+                    const bookmark = await fetch(BACK_SER+
+                        "/home/FetchTweet/" + currentUser.bookmark[j],
+                        {
+                            method: "GET",
+                            credentials: "include",
+                        }
                     );
                     const bookmark_json = await bookmark.json();
                     /* push the content of bookmark fetced into new_tw */
@@ -46,7 +57,7 @@ const Bookmark = () => {
                         media: "",
                         date: distance(bookmark_json.message[0].CreateTime),
                         likeCount: bookmark_json.message[0].LikeCount,
-                        commentCount: bookmark_json.message[0].Comment.length,
+                        commentCount: bookmark_json.message[0].CommentCount,
                         retweetCount: bookmark_json.message[0].ReTweetCount,
                         imageList: bookmark_json.message[0].ImageList,
                         viewCount: 1000,

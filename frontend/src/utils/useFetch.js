@@ -10,7 +10,12 @@ export const useFetch = (url, options, manual = false) => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
-
+    const session_pass=
+    {
+        method: "GET",
+        credentials: "include",
+    }
+    options=Object.assign(options, session_pass)
     const makeRequest = useCallback(async () => {
         try {
             setError(""); // assume there is no error

@@ -6,6 +6,7 @@ import UserInfo from "../components/profile/UserInfo";
 import CenteredStatus from "../components/reusable/CenteredStatus";
 import { useFetch } from "../utils/useFetch";
 import { useUser } from "../utils/UserContext";
+import { BACK_SER } from "../utils/constants";
 
 /*
 The flow looks like this:
@@ -18,7 +19,7 @@ if not use the current user profile
 const Profile = () => {
     const { isLoggedIn, user: currentUser } = useUser();
     const { tweetID } = useParams();
-    const url = tweetID ? `/user/${tweetID}` : "";
+    const url = tweetID ? BACK_SER+`/user/${tweetID}` : "";
     const {
         data: user,
         isLoading,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import defaultUser from "../assets/default.jpg";
 import TweetInfo from "../components/tweet/TweetInfo";
-import { SERVER_ADDRESS } from "../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../utils/constants";
 import { distance } from "../utils/distance";
 import { useUser } from "../utils/UserContext";
 
@@ -47,12 +47,15 @@ const TweetPage = () => {
     const { user: currentUser } = useUser();
 
     const { tweetId } = useParams();
-    const url = `/tweet/fetchTweet/${tweetId}`;
+    const url = BACK_SER+`/tweet/fetchTweet/${tweetId}`;
 
     // Fetch Tweets datas when the components have been rendered
     useEffect(() => {
         const fetchTweet = async () => {
-            const tweetitem = await fetch(url);
+            const tweetitem = await fetch(url,{
+                method: "GET",
+                credentials: "include",
+            });
             if (tweetitem.ok) {
                 const tweetjson = await tweetitem.json();
                 // tweets data
@@ -74,7 +77,7 @@ const TweetPage = () => {
                     retweet: tweetjson.message[0].ReTweet,
                     date: distance(tweetjson.message[0].CreateTime),
                     likeCount: tweetjson.message[0].LikeCount,
-                    commentCount: tweetjson.message[0].Comment.length,
+                    commentCount: tweetjson.message[0].CommentCount,
                     retweetCount: tweetjson.message[0].ReTweetCount,
                     imageList: tweetjson.message[0].ImageList,
                     viewCount: 1000,
@@ -118,7 +121,8 @@ const TweetPage = () => {
             }
         };
         fetchTweet();
-    });
+
+    },[]);
 
     useEffect(() => {
         setTimeout(() => {}, 1000);

@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Image } from "react-feather";
 import defaultUser from "../../assets/default.jpg";
-import { SERVER_ADDRESS } from "../../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../../utils/constants";
 import { useUser } from "../../utils/UserContext";
 import styles from "../navbar/AddTweet.module.css";
 import Button from "./Button";
@@ -53,6 +53,7 @@ const AddTweet = ({ msg, btn, url, type }) => {
 
             const response = await fetch(url, {
                 method: "POST",
+                credentials: "include",
                 body: con.join("&"),
                 headers: {
                     "Content-Type":
@@ -69,8 +70,9 @@ const AddTweet = ({ msg, btn, url, type }) => {
                 if (file) {
                     formData.append("images", file);
                 }
-                const response = await fetch("/home", {
+                const response = await fetch(BACK_SER+"/home", {
                     method: "POST",
+                    credentials: "include",
                     body: formData,
                 });
                 if (response.ok) {

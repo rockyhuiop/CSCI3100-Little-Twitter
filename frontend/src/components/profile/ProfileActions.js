@@ -6,6 +6,7 @@ import Button from "../reusable/Button";
 import { useModal } from "../reusable/modal/useModal";
 import SnackBox from "../reusable/snack-boxes/SnackBox";
 import styles from "./ProfileActions.module.css";
+import { BACK_SER } from "../../utils/constants";
 
 const ProfileActions = ({ user, setData }) => {
     const { onClose, isShowing, onOpen } = useModal();
@@ -34,8 +35,9 @@ const ProfileActions = ({ user, setData }) => {
     const followOrUnfollowUser = async () => {
         try {
             // this route follows or unfollows a user
-            const response = await fetch(`/user/follow/${user.tweetID}`, {
+            const response = await fetch(BACK_SER+`/user/follow/${user.tweetID}`, {
                 method: "POST",
+                credentials: "include",
             });
             const json = await response.json();
             if (json.error) {

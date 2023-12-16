@@ -10,7 +10,7 @@ import { useUser } from "../../utils/UserContext";
 import { Bookmark } from "react-feather";
 import { useState } from "react";
 import defaultUser from "../../assets/default.jpg";
-import { SERVER_ADDRESS } from "../../utils/constants";
+import { BACK_SER, SERVER_ADDRESS } from "../../utils/constants";
 import { distance } from "../../utils/distance";
 
 const Tweet = ({ tweet, type, isModal }) => {
@@ -43,14 +43,16 @@ const Tweet = ({ tweet, type, isModal }) => {
     let tweetitem = tweet;
     if (tweet.retweet) {
         tweetUrl = "/tweet/" + tweet.retweet.TweetID;
-        tweetitem.retweetor = tweet.user.userId;
+        tweetitem.retweetor = tweet.retweet.CreatorUserID;
         tweetitem.tweetId = tweet.retweet.TweetID;
         tweetitem.user = {
-            userId: tweet.retweet.CreatorUserID,
-            name: tweet.retweet.CreatorUserName,
-            profile_image_url: tweet.retweet.CreatorAvastar
-                ? SERVER_ADDRESS +
+            userId: tweet.user.userId,
+            name: tweet.user.name,
+            profile_image_url: tweet.user.profile_image_url
+                /*? SERVER_ADDRESS +
                   tweet.retweet.CreatorAvastar.replace("\\", "/")
+                */
+                ? tweet.user.profile_image_url
                 : defaultUser,
         };
         tweetitem.date = tweet.date;
@@ -69,8 +71,9 @@ const Tweet = ({ tweet, type, isModal }) => {
         }
     };
     const follow = async (id) => {
-        const fol = await fetch("/user/follow/" + id, {
+        const fol = await fetch(BACK_SER+"/user/follow/" + id, {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type":
                     "application/x-www-form-urlencoded;charset=UTF-8",
@@ -81,8 +84,9 @@ const Tweet = ({ tweet, type, isModal }) => {
     };
 
     const bookmark = async (id) => {
-        const bm = await fetch("/user/bookmark/" + id, {
+        const bm = await fetch(BACK_SER+"/user/bookmark/" + id, {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type":
                     "application/x-www-form-urlencoded;charset=UTF-8",
@@ -224,7 +228,7 @@ const Tweet = ({ tweet, type, isModal }) => {
                             {tweetitem.imageList.map((img) => (
                                 <img
                                     key={img}
-                                    src={"/" + img}
+                                    src={SERVER_ADDRESS + img}
                                     alt="img"
                                     className="tweet__img"
                                 />

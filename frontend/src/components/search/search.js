@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./search.module.css";
+import { BACK_SER } from "../../utils/constants";
 
 const Search = () => {
     const [onInput, setOnInput] = useState(styles.box); //to search box style
@@ -21,8 +22,12 @@ const Search = () => {
         e.preventDefault();
         if (content !== "") {   //user search something
             /* fetch the require content */
-            const response = await fetch(
-                "/search/SearchTweetByContent/" + content
+            const response = await fetch(BACK_SER+
+                "/search/SearchTweetByContent/" + content,
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
             );
             const json = await response.json();
             /* force user go to explore page to show the result */
