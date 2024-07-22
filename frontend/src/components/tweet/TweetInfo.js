@@ -8,7 +8,6 @@ import Search from "../search/search";
 import Tweet from "./Tweet";
 import TweetDetails from "./TweetDetail";
 import "./TweetInfo.css";
-import { BACK_SER } from "../../utils/constants";
 
 const TweetInfo = ({
     tweet,
@@ -144,7 +143,7 @@ const TweetInfo = ({
                 <AddTweet
                     msg={msg}
                     btn={btn}
-                    url={BACK_SER+commenturl}
+                    url={commenturl}
                     type={"comment"}
                 />
                 {tweet.comments.map((comm) => (

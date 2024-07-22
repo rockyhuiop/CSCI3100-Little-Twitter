@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../utils/UserContext";
 import Button from "../reusable/Button.js";
 import "./Tweet.css";
-import { BACK_SER } from "../../utils/constants.js";
 /* This module is modified from Tweet.js, most of the it are the same, except for removing the tweet content, tweet reactioon. But show user follower  */
 const People = ({ tweet, type, isModal }) => {
     const { user: currentUser, refreshUser } = useUser();
@@ -25,9 +24,8 @@ const People = ({ tweet, type, isModal }) => {
         }
     };
     const follow = async (id) => {
-        await fetch(BACK_SER+"/user/follow/" + id, {
+        await fetch("/user/follow/" + id, {
             method: "POST",
-            credentials: "include",
             headers: {
                 "Content-Type":
                     "application/x-www-form-urlencoded;charset=UTF-8",

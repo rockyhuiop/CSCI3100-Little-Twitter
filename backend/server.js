@@ -37,8 +37,7 @@ app = express()
 router = express.Router()
 
 const corsOption = {
-    origin: 'http://localhost:8123',
-    credentials: true,
+    origin: 'http://localhost:8123'
 };
 
 app.use(cors(corsOption))
@@ -48,11 +47,7 @@ app.use(morgan('dev'))
 app.use(sessions({
     secret: process.env.SECRET,
     saveUninitialized:true,
-    cookie: { 
-        secure: true, // Set to true if using HTTPS
-        sameSite: 'none', // Set to 'none' if using cross-origin requests
-        maxAge: 86400000,
-    },
+    cookie: { maxAge: 86400000 },
     resave: false 
 }));
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import defaultUser from "../../../assets/default.jpg";
-import { BACK_SER, SERVER_ADDRESS } from "../../../utils/constants";
+import { SERVER_ADDRESS } from "../../../utils/constants";
 import { format } from "timeago.js";
 
 export default function Message({ message, own }) {
@@ -15,8 +15,7 @@ export default function Message({ message, own }) {
         // fetching sender info
         const getUser = async () => {
             try {
-                const res = await axios.get(BACK_SER+"/user/" + senderID,
-                { withCredentials: true });
+                const res = await axios.get("/user/" + senderID);
                 setUser(res.data.data);
                 serUserUrl("/profile/" + res.data.data.tweetID);
             } catch (err) {

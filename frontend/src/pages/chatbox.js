@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react";
 import { useUser } from "../utils/UserContext";
 import axios from "axios";
 import { io } from "socket.io-client";
-import { BACK_SER } from "../utils/constants";
 
 const Chatbox = () => {
     const [conversations, setConversations] = useState([]);
@@ -50,9 +49,8 @@ const Chatbox = () => {
     useEffect(() => {
         const getConversations = async () => {
             try {
-                const res = await axios.get(BACK_SER+
-                    "/conversation/" + currentUser.tweetID,
-                    { withCredentials: true }
+                const res = await axios.get(
+                    "/conversation/" + currentUser.tweetID
                 );
                 // setting the state for conversation room to data we fetched from backend
                 setConversations(res.data);
@@ -78,16 +76,14 @@ const Chatbox = () => {
         setSearchTerm(event);
         const saveSearchTerm = async (searchTerm) => {
             try {
-                var res = await axios.get(BACK_SER+
-                    "/search/SearchUserById/" + searchTerm,
-                    { withCredentials: true }
+                var res = await axios.get(
+                    "/search/SearchUserById/" + searchTerm
                 );
                 console.log(res.data.data);
                 setSearchResult(res.data.data);
             } catch (err) {
-                res = await axios.get(BACK_SER+
-                    "/conversation/search/" + currentUser.tweetID,
-                    { withCredentials: true }
+                res = await axios.get(
+                    "/conversation/search/" + currentUser.tweetID
                 );
                 console.log(res.data.data);
                 setSearchResult(res.data.data);
@@ -98,14 +94,12 @@ const Chatbox = () => {
 
     function findConversations(targetUserID, currentUserID) {
         (async () => {
-            var existingConversations = await axios.get(BACK_SER+
-                "/conversation/search/" + targetUserID + "/" + currentUserID,
-                { withCredentials: true }
+            var existingConversations = await axios.get(
+                "/conversation/search/" + targetUserID + "/" + currentUserID
             );
             if (existingConversations.data == undefined) {
-                existingConversations = await axios.post(BACK_SER+
-                    "/conversation/create/" + targetUserID + "/" + currentUserID, {} ,
-                    { withCredentials: true }
+                existingConversations = await axios.post(
+                    "/conversation/create/" + targetUserID + "/" + currentUserID
                 );
             }
             setCurrentChat(existingConversations.data);
@@ -116,9 +110,7 @@ const Chatbox = () => {
     useEffect(() => {
         const getMessages = async () => {
             try {
-                const res = await axios.get(BACK_SER+"/message/" + currentChat?._id,
-                { withCredentials: true }
-                );
+                const res = await axios.get("/message/" + currentChat?._id);
                 setMessages(res.data);
             } catch (err) {
                 console.log(err);
@@ -147,8 +139,7 @@ const Chatbox = () => {
         });
 
         try {
-            const res = await axios.post(BACK_SER+"/message", message,
-            { withCredentials: true });
+            const res = await axios.post("/message", message);
             // appending new message to current message state
             setMessages([...messages, res.data]);
             setNewMessage("");

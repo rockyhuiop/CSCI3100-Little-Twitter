@@ -12,7 +12,6 @@ import { useModal } from "../reusable/modal/useModal";
 import SnackBox from "../reusable/snack-boxes/SnackBox";
 import styles from "./UserActions.module.css";
 import { useUserMangement } from "./UserManagementContext";
-import { BACK_SER } from "../../utils/constants";
 
 /**
  * The last column of the users' table
@@ -62,9 +61,8 @@ const UserActions = ({ user }) => {
     // by removing it from the users' table, else do nothing.
     const deleteBtnClicked = async () => {
         try {
-            const response = await fetch(BACK_SER+`/dashboard/${user.tweetID}`, {
+            const response = await fetch(`/dashboard/${user.tweetID}`, {
                 method: "DELETE",
-                credentials: "include",
             });
             const json = await response.json();
 

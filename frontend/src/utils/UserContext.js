@@ -9,7 +9,6 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import SnackBox from "../components/reusable/snack-boxes/SnackBox";
-import { BACK_SER } from "./constants";
 
 const UserContext = createContext({});
 
@@ -48,10 +47,7 @@ const UserProvider = ({ children }) => {
         setIsLoading(true);
         setError(null);
         try {
-            const profile = await fetch(BACK_SER+"/profile",{
-                method: "GET",
-                credentials: "include",
-            });
+            const profile = await fetch("/profile");
             // probably because the user is unauthorized
             if (!profile.ok) {
                 setIsLoading(false);
@@ -68,9 +64,8 @@ const UserProvider = ({ children }) => {
     // submit the form to /registration
     const register = async (values) => {
         try {
-            const response = await fetch(BACK_SER+"/registration", {
+            const response = await fetch("/registration", {
                 method: "POST",
-                credentials: "include",
                 body: qs.stringify(values),
                 headers: {
                     "Content-Type":
@@ -95,9 +90,8 @@ const UserProvider = ({ children }) => {
     // submit the form to /login
     // returns null if successful, the error message if not successful
     const login = async (values) => {
-        const response = await fetch(BACK_SER+"/login", {
+        const response = await fetch("/login", {
             method: "POST",
-            credentials: "include",
             body: qs.stringify(values),
             headers: {
                 "Content-Type":
@@ -121,10 +115,7 @@ const UserProvider = ({ children }) => {
     // /logout will take care of the cookie
     // navigates to the home page after logging out
     const logout = async () => {
-        const response = await fetch(BACK_SER+"/logout",{
-            method: "GET",
-            credentials: "include",
-        });
+        const response = await fetch("/logout");
         if (response.ok) {
             // console.log("[UserContext] user has logged out");
             setUser(null);

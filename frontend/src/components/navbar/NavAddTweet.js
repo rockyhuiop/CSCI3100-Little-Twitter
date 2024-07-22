@@ -5,7 +5,6 @@ import ModalBody from "../reusable/modal/ModalBody";
 import ModalCross from "../reusable/modal/ModalCross";
 import ModalHeader from "../reusable/modal/ModalHeader";
 import Tweet from "../tweet/Tweet";
-import { BACK_SER } from "../../utils/constants";
 const NavAddTweet = ({ isShowing, onClose, isReply, tweet, isComment }) => {
     const msg = "What's happening?";
     const btn = "Tweet";
@@ -33,7 +32,7 @@ const NavAddTweet = ({ isShowing, onClose, isReply, tweet, isComment }) => {
                     <AddTweet
                         msg={msg}
                         btn={btn}
-                        url={BACK_SER+commenturl}
+                        url={commenturl}
                         type={"comment"}
                     />
                 ) : (

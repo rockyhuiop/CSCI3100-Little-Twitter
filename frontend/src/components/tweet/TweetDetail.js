@@ -8,7 +8,7 @@ import "./TweetDetail.css";
 import TweetActions from "./TweetActions.js";
 import { useEffect } from "react";
 import { useUser } from "../../utils/UserContext";
-import { BACK_SER, SERVER_ADDRESS } from "../../utils/constants";
+import { SERVER_ADDRESS } from "../../utils/constants";
 
 const TweetDetails = ({ tweet, type }) => {
     const { isLoggedIn, setUser, user: currentUser, refreshUser } = useUser();
@@ -45,9 +45,8 @@ const TweetDetails = ({ tweet, type }) => {
     };
     */
     const follow = async (id) => {
-        const fol = await fetch(BACK_SER+"/user/follow/" + id, {
+        const fol = await fetch("/user/follow/" + id, {
             method: "POST",
-            credentials: "include",
             headers: {
                 "Content-Type":
                     "application/x-www-form-urlencoded;charset=UTF-8",
@@ -58,9 +57,8 @@ const TweetDetails = ({ tweet, type }) => {
     };
 
     const bookmark = async (id) => {
-        const bm = await fetch(BACK_SER+"/user/bookmark/" + id, {
+        const bm = await fetch("/user/bookmark/" + id, {
             method: "POST",
-            credentials: "include",
             headers: {
                 "Content-Type":
                     "application/x-www-form-urlencoded;charset=UTF-8",
@@ -197,7 +195,7 @@ const TweetDetails = ({ tweet, type }) => {
                         {tweet.imageList.map((img) => (
                             <img
                                 key={img}
-                                src={SERVER_ADDRESS+img}
+                                src={"../" + img}
                                 alt="img"
                                 className="tweet__img"
                             />

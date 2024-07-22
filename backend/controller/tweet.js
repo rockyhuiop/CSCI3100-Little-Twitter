@@ -687,10 +687,6 @@ const FetchTweet = async(tweetID) => {
         
         //collecting the related comments
 
-        const commentCount  = await TweetCommentCount(fetchTweet.tweetID)
-
-        tweet['CommentCount'] = commentCount
-        
         const CommentList = await FetchTweetComment(fetchTweet.tweetID)
 
         tweet['Comment'] = CommentList
@@ -744,7 +740,6 @@ const AggregTweetSummary = async(fetchTweet, CreatorUserName, Avastar) => {
                 CreatorAvastar: ReTweetCreatorUserAvastar,
                 CreateTime : ReTweetInfo[0].CreateTime,
                 Content: ReTweetInfo[0].Content,
-                TweetID: ReTweetInfo[0].tweetID,
             }
         }
 

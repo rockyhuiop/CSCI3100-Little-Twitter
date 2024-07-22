@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useFetch } from "../../utils/useFetch";
-import { BACK_SER } from "../../utils/constants";
 
 const UsersManagementContext = createContext();
 
@@ -11,10 +10,7 @@ export const useUserMangement = () => {
 
 const UserManagementProvider = ({ children }) => {
     // dashboard fetches a list of users
-    const { data, isLoading, error } = useFetch(BACK_SER+"/dashboard/",{
-        method: "GET",
-        credentials: "include",
-    });
+    const { data, isLoading, error } = useFetch("/dashboard/");
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
