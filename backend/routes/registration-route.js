@@ -18,6 +18,7 @@ router.post('/',async (req, res) =>{
         if(user){
             return res.status(400).json({error: "Account already exist"})
         } else {
+            try {
             const newUser = new User({
                 tweetID: req.body.tweetID,
                 userType: "user",
@@ -39,6 +40,9 @@ router.post('/',async (req, res) =>{
             await newFollow.save()
             await newUser.save()
             return res.status(200).json({message: "account created"})
+            } catch (err) {
+                return res.status(400).json({ error: "This twitter id is already taken" }) 
+            }
         }
     })
 })

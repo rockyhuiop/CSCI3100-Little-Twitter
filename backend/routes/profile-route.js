@@ -41,7 +41,7 @@ router.post('/update', upload.fields([{ name: "avatar" }, { name: "banner" }]) ,
   try {
     let user = await User.findOne({ tweetID: req.session.userid});
 
-    let {name, email, password} = req.body
+    let {name, email, password, biography } = req.body
 
     if(req.files.avatar){
         if(user.avatar){
@@ -73,6 +73,9 @@ router.post('/update', upload.fields([{ name: "avatar" }, { name: "banner" }]) ,
     }
     if(password){
         user.password = password
+    }
+    if(biography){
+        user.biography = biography
     }
 
     await user.save()
